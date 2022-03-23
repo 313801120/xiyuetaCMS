@@ -1,0 +1,79 @@
+banner部分
+
+<%
+id=getNavNameToID("","banner")
+rs.open "select * from " & db_PREFIX & "ArticleDetail where parentId="& id &" order by sortRank desc" ,conn,1,1
+for i=1 to 4
+if rs.eof then exit for
+%>
+    <div class="item">
+        <a href="javascript:;">
+            <img src="<%=rs("smallImage")%>" /></a>
+    </div>
+<%rs.movenext:next:rs.close%>
+
+
+产品栏目列表
+<%
+id=getNavNameToID("","产品中心")
+if id<>"" then
+rs.open "select * from " & db_PREFIX & "WebColumn where parentid="& id &" order by sortrank desc" ,conn,1,1
+for i=1 to 9
+if rs.eof then exit for
+%>
+<li>
+    <a href="<%=getNavUrl(rs("id"),rs("columnType"))%>">
+        <i class="iconfont icon-jiantou_xiangyouliangci"></i>
+        <%=rs("columnName")%>
+    </a>
+</li><%rs.movenext:next:rs.close
+end if%>
+
+文章列表
+<%
+id=getNavNameToID("","产品中心")
+rs.open "select * from " & db_PREFIX & "ArticleDetail where parentId="& id &" order by sortRank desc" ,conn,1,1
+for i=1 to 5
+if rs.eof then exit for
+%>
+<li>
+<a href="detail.asp?id=<%=rs("id")%>"><%=rs("title")%></a>
+<span><%=format_Time(rs("createTime"),2)%></span>
+</li>
+<%rs.movenext:next:rs.close%>
+
+友情链接
+<%rs.open "select * from " & db_PREFIX & "FriendLink where isThrough=1 order by sortrank asc" ,conn,1,1
+while not rs.eof 
+    response.write("<a href='"& rs("httpurl") &"' target='_blank'>"& rs("title") &"</a>")
+rs.movenext:wend:rs.close
+%>
+
+
+
+底部导航和子导航
+<%rs.open "select * from " & db_PREFIX & "WebColumn where parentId=-1 and isThrough=1 and (columntype='新闻' or columntype='产品' or columntype='文本') order by sortRank asc" ,conn,1,1
+for i=1 to 4
+if rs.eof then exit for
+%>
+<dl>
+    <dt><%=rs("columnName")%></dt>
+
+    <%rsx.open "select * from " & db_PREFIX & "WebColumn where parentId="& rs("id") &" and isThrough=1 order by sortRank asc" ,conn,1,1    
+    while not rsx.eof
+    %>
+    <dd>
+        <a href="<%=getNavUrl(rsx("id"),rsx("columnType"))%>"><%=rsx("columnName")%></a>
+    </dd>
+    <%rsx.movenext:wend:rsx.close%>
+
+</dl>
+<%rs.movenext:next:rs.close%>
+
+
+项目链接网址
+<%=getNavNameToUrl("","产品中心>2021产品")%>
+<%=getNavNameToUrl("","公司简介")%>
+
+<%=cutStr(rs("bodyContent"),50,"...")%>
+

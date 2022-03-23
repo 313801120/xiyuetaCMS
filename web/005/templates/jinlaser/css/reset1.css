@@ -1,0 +1,76 @@
+article,aside,blockquote,body,button,code,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,
+h3,h4,h5,h6,header,hgroup,hr,input,legend,li,menu,nav,ol,p,pre,section,td,textarea,th,ul{
+	margin: 0;
+	padding: 0;
+}
+body {
+	/*font-family: Microsoft Yahei, arial, Hiragino Sans GB, \\5B8B\4F53, sans-serif;*/
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333;
+	background:#fff;
+	font-family: "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif, arial;
+    font-size: 14px;
+    font-weight: 300;
+    outline: 0;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+	user-select: none;
+}
+
+html * {
+	outline: 0;
+	-webkit-text-size-adjust: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+*,
+ :after,
+ :before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.clearfix {
+	zoom: 1
+}
+ul,
+li {
+	list-style: none;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.w1200{
+	width:1200px;
+	margin:0 auto;
+}
+.w570{
+	width:570px;
+}
+img{
+	border:0;
+	display: block;
+	overflow: hidden;
+	max-width: 100%;
+	height:auto;
+}

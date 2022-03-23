@@ -1,0 +1,164 @@
+@media (max-width:640px ){
+    .container{
+        width:96%;
+    }
+    /*footer*/
+	.footer-fluid{
+		padding-top:30px;
+		padding-bottom: 60px;
+	}
+	.footer-left{
+		width:100%;
+		border-right: 0px;
+		padding-right:0px;
+	}
+	.footer-middle{
+		padding-left:0px;
+		width:100%;
+		display: none;
+	}
+	.footer-ewm{
+		width:100%;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.footer-ewm img{
+		margin:0px auto;
+	}
+	.bottoming{
+		display: block;
+    }
+    .header-fluid{
+        padding:5px 0px;
+    }
+    .header-tel{
+        display: none;
+    }
+    .header-daohang{
+        display: block;
+    }
+    .header-daohang i.iconfont{
+        font-size:35px;
+        line-height: 60px;
+    }
+    section{
+        padding:30px 0px;
+    }
+    .logo img{
+        height:60px;
+    }
+    .nav-fluid{
+        display: none;
+    }
+    .nav-fluid .nav{
+        width:100%;
+    }
+    .nav ul>li{
+        width:100%;
+    }
+    .nav ul>li>a::after{
+        width:0px;
+    }
+    .nav ul>li .submenu{
+        display: none;
+        height:0px;
+    }
+    .product-sidebar{
+        width:100%;
+        display: none;
+    }
+    .product-right{
+        width:100%;
+        padding-left:0px;
+    }
+    .product-right .main-title{
+        display: block;
+    }
+    .product-r-title{
+        display: none;
+    }
+    .product-item{
+        width:50%;
+    }
+    .product-more{
+        display: block;
+    }
+    .product-more a{
+        display: block;
+        width:120px;
+        line-height:40px;
+        text-align: center;
+        margin:20px auto 0px;
+        background: #0b9994;
+        color:#fff;
+        border-radius: 5px;
+        overflow: hidden;
+
+    }
+    .reson-item{
+        width:100%;
+    }
+    .news-box{
+        width:100%;
+        margin-right:0px;
+    }
+    .about-img{
+        width:100%;
+        margin-top:0px;
+        padding-right:0px;
+    }
+    .about-info{
+        width:100%;
+        margin-top:10px;
+    }
+    .about-more{
+        margin:20px auto 0px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .sub-sidebar{
+        width:100%;
+    }
+    .sub-sidebar-btn{
+        display: block;
+    }
+    .sub-sidebar-list{
+        display: none;
+    }
+    .sub-sidebar-contact{
+        display: none;
+    }
+    .sub-content-right{
+        width:100%;
+        padding-left:0px;
+        margin-top:20px;
+    }
+    .sub-content-fluid{
+        padding:30px 0px;
+    }
+    .sub-cont-top{
+        display: none;
+    }
+    .sub-about .sub-title h2{
+        font-size:20px;
+        margin-bottom:5px;
+        padding-top:0px;
+    }
+    .sub-contact-form ul li{
+        width:100%;
+    }
+    .main-title .title{
+        font-size:24px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+    .main-title .english{
+        font-size:14px;
+    }
+    .product-list .case-item{
+        width:50%;
+    }
+    .sub-news-item .sub-news-title{
+        line-height: 1.5;
+    }
+}

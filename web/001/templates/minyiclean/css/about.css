@@ -1,0 +1,123 @@
+﻿ @charset "utf-8";
+
+ .pub_page_side_main .cnt .pub_page_main .about_content {
+   min-height: 80vh;
+   padding: 20px 34px;
+   font-size: 14px;
+   line-height: 1.6;
+   border: 1px solid #e5e5e5;
+   background: #fff
+ }
+.new_text {
+    /* padding-bottom: 20px; */
+}
+.new_text h1 {
+    text-align: center;
+    font-size: 23px;
+    color: #032a4d;
+}
+
+.about_content p {
+    font-size: 14px;
+	color: #444;
+	line-height: 25px;
+}
+
+.about_content h2 {
+    background: #F0F0F0;
+    line-height: 40px;
+    border-bottom: 4px solid #032a4d;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: normal;
+    font-size: 20px;
+}
+.newtj{
+    border-top: 1px dashed #ddd;
+	border-bottom: 1px dashed #ddd;
+    margin: 10px auto;
+}
+.newtj ul{
+    overflow: hidden;
+    padding: 10px 0;
+}
+.newtj ul li{
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 25px;
+}
+.newtj ul li:nth-child(3n){
+	margin-right:0;
+}
+.newtj ul li a{
+    color: #666;
+}
+#news_body h2 {
+    background: none;
+    border-left: 6px solid #032a4d;
+    border-bottom: none;
+	padding-left:8px;
+    line-height: 30px;
+	font-weight: bold;
+}
+.mcjs h3{
+	text-align: center;
+    font-size: 20px;
+    color: #009fc7;
+    letter-spacing: 2px;
+    line-height: 30px;
+}
+.mcjs ul li{
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+.mcjs ul li img{
+    float: left;
+    width: 30%;
+}
+.mcjs ul li .mcjsrg{
+	float: right;
+    width: 67%;
+}
+.mcjsrg .mcjstit{
+    font-size: 17px;
+    line-height: 30px;
+    color: green;
+    font-weight: bold;
+}
+.mcjsrg span{
+	font-size: 15px;
+    line-height: 30px;
+    border-bottom: 1px dashed #eee;
+    display: block;
+}
+.mcjsrg p{
+	line-height: 20px;
+}
+ @media(max-width:600px) {
+   .pub_page_side_main .cnt .pub_page_main .about_content {
+     padding: 10px
+   }}
+
+ .pub_page_side_main .cnt .pub_page_main .about_content img {
+   max-width: 100%
+ }
+@media (max-width: 870px){
+#adminbuy_cn img {
+    width: 100% !important;
+    height: auto !important;
+	border: 0;
+}
+.mcjs ul li .mcjsrg{
+    width: 100%;
+}}
+
+.about_content p a{
+color: #ee551f;
+}

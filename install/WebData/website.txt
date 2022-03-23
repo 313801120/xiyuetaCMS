@@ -1,0 +1,21 @@
+﻿【webtitle】xiyuetaCMS内容管理系统-xiyueta.com
+【webkeywords】xiyuetaCMS,xiyueta,喜悦TA,xiyueta.com
+【webdescription】xiyuetaCMS内容管理系统通用型后台权限管理框架，紧随潮流、开箱即用拥有多种版本选择，随意搭配使用
+【websiteurl】http://www.xiyueta.com/
+【logo】/web/testpic/logo.jpg
+【qrcode】/web/testpic/qrcode.png
+
+
+
+【websitebottom】
+地址：某某市某某区某某路1号国际1层<br>
+邮编：000000<br>
+电话：066-000000<br>
+邮箱：313801120@qq.com
+【/websitebottom】
+
+【copyright】
+版权所有：&copy;2021 xiyueta.com ALL RIGHTS RESERVED xiyuetaCMS
+【/copyright】
+
+

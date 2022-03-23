@@ -1,0 +1,198 @@
+ * {
+   behavior: url(../../../templates/minyiclean/images/ie-css3.htc)
+ }
+
+ img {
+   border: 0
+ }
+
+ .fz_12px {
+   font-size: 12px
+ }
+
+ .fz_14px {
+   font-size: 14px
+ }
+
+ .fz_16px {
+   font-size: 16px
+ }
+
+ .fc_red {
+   color: red
+ }
+
+ .fc_gory {
+   color: #666
+ }
+
+ .fc_white {
+   color: #fff
+ }
+
+ .fc_yellow {
+   color: #f60
+ }
+
+ .flh_150 {
+   line-height: 150%
+ }
+
+ .flh_180 {
+   line-height: 180%
+ }
+
+ .form_input {
+   border: 1px solid #ccc;
+   color: #333;
+   background: url(../../../templates/minyiclean/images/input_bg.gif) #fff repeat-x;
+   height: 20px;
+   line-height: 20px
+ }
+
+ .form_area {
+   border: 1px solid #ccc;
+   color: #333;
+   background: url(../../../templates/minyiclean/images/input_bg.gif) #fff repeat-x;
+   line-height: 180%
+ }
+
+ .form_button {
+   border: 0;
+   background: #505050;
+   color: #fff;
+   height: 22px;
+   line-height: 22px;
+   padding: 0 5px;
+   overflow: hidden;
+   width: 80px
+ }
+
+ .form_button_130 {
+   width: 130px
+ }
+
+ .form_focus {
+   border-color: red
+ }
+
+ .form_gory_button {
+   border: 0;
+   background: url(../../../templates/minyiclean/images/button_grey.gif);
+   width: 110px;
+   height: 25px;
+   line-height: 25px;
+   font-weight: 700;
+   color: #555;
+   text-align: center
+ }
+
+ select.form_focus {
+   background: #ccc
+ }
+
+ .clear {
+   margin: 0 auto;
+   clear: both;
+   height: 0;
+   font-size: 0;
+   overflow: hidden
+ }
+
+ .blank3 {
+   margin: 0 auto;
+   clear: both;
+   height: 3px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .blank6 {
+   margin: 0 auto;
+   clear: both;
+   height: 6px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .blank9 {
+   margin: 0 auto;
+   clear: both;
+   height: 9px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .blank12 {
+   margin: 0 auto;
+   clear: both;
+   height: 12px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .blank15 {
+   margin: 0 auto;
+   clear: both;
+   height: 15px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .blank20 {
+   margin: 0 auto;
+   clear: both;
+   height: 20px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .blank25 {
+   margin: 0 auto;
+   clear: both;
+   height: 25px;
+   font-size: 1px;
+   overflow: hidden
+ }
+
+ .clean:after,
+ .clean:before {
+   display: table;
+   content: ''
+ }
+
+ .clean:after {
+   clear: both
+ }
+
+ .clean {
+   zoom: 1
+ }
+
+ #turn_page {
+   text-align: center;
+   height: 26px;
+   line-height: 26px
+ }
+
+ #turn_page .page_button {
+   background: #fff;
+   border: 1px solid #ccc;
+   margin: 0 3px;
+   padding: 2px 5px
+ }
+
+ #turn_page .page_item {
+   background: #fff;
+   border: 1px solid #ccc;
+   padding: 2px 5px;
+   margin: 0 3px
+ }
+
+ #turn_page .page_item_current {
+   background: #f0f0f0;
+   border: 1px solid #ccc;
+   padding: 2px 5px;
+   margin: 0 3px;
+   color: red
+ }
