@@ -14,9 +14,10 @@ xiyuetaCMS开源网站管理系统 v1.1.0<br>
 admin            后台管理目录 账号密码admin admin<br>
 api              上传程序等目录<br>
 data             数据库目录<br>
-fz               仿站目录<br>
 inc              程序和类目录<br>
-UploadFiles      上传文件存放目录<br>
+install          安装程序目录(可选择Access或SqlServer数据库)<br>
+tpl              模板程序目录<br>
+uploadfiles      上传文件存放目录<br>
 web              网站模板目录<br>
 <br>
 <br>
