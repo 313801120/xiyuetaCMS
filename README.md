@@ -31,4 +31,4 @@ web.config       网站配置文件<br>
 [官网](http://www.xiyueta.com/xiyuetacms/) 
 [演示网站](http://demo.xiyueta.com/) 
 [演示网站后台](http://demo.xiyueta.com/admin/) 
-[更多模板](http://www.xiyueta.com/xiyuetacms/templates/) 
+[更多模板](http://www.xiyueta.com/case) 
