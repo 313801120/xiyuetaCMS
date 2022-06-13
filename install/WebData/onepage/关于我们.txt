@@ -1,0 +1,21 @@
+﻿【title】关于我们
+【smallimage】/uploadfiles/testpic/about.jpg
+【bodycontent】
+xiyuetaCMS开源网站管理系统 v1.1.0，是基于Asp+Access/SQL Server架构的智能系统，集电脑版、手机版、平板版于一体，无缝切换。周期短：
+系统使用非常复合网站习惯，上手快，网站制作轻而易举，仿站神器！功能全：系统功能齐全，可以根据做网站需要添加组合插件，可扩展性强。易优化：系统具有非常完善的复合各搜索引擎的优化体系，做网站添加方便。
+
+admin 后台管理目录 账号密码admin admin
+api 上传程序等目录
+data 数据库目录
+fz 仿站目录
+inc 程序和类目录
+UploadFiles 上传文件存放目录
+web 网站模板目录
+
+
+common.asp 公共程序文件
+default.asp 首页文件
+web.config 网站配置文件
+
+技术支持:QQ313801120，学习交流群：35915100。官网：www.xiyueta.com
+【/bodycontent】

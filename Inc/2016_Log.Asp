@@ -39,4 +39,15 @@ Function writeSystemLog(tableName, msgStr)
 
 End Function 
 
+
+'Js版网站统计202204
+Function jsWebStat()
+    Dim s
+    s = "<script>document.writeln(""<script src=\'/api/webstat.asp?act=webstat&tourl=""" 
+    s = s & "+escape(document.referrer)+""&url=""+escape(window.location.href)+""&w=""+escape(window.screen.width)+""&h=""+escape(window.screen.height)" 
+    s = s & "+""&useragent=""+escape(navigator.userAgent)"                                 '收集cookie 不需要则屏蔽掉
+    s = s & "+"" \'><\/script>"");</"&"script>" 
+    jsWebStat = s 
+End Function 
+
 %>

@@ -69,7 +69,13 @@
                     <li class="layui-nav-item" lay-unselect>
                         <a href="javascript:;">
                             <cite>
-                                <%=userrs("nickname")%></cite>
+                                <%=userrs("nickname")%><%
+dim splxx
+splxx=split(adminLevelList,",")
+if ubound(splxx)>=userrs("level") then
+call rw("("&splxx(userrs("level")) & ")")
+end if
+%></cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a lay-href="set/user/info.asp">基本资料</a></dd>
@@ -102,6 +108,9 @@
                                 <dd data-name="console" class="layui-this">
                                     <a lay-href="home/console.asp">控制台</a>
                                 </dd> 
+                                <!-- <dd>
+                                    <a lay-href="home/console2.asp">控制台2</a>
+                                </dd>  -->
                             </dl>
                         </li>
                         <li data-name="user" class="layui-nav-item">
@@ -120,12 +129,13 @@
                                 <cite>应用</cite>
                             </a>
                             <dl class="layui-nav-child">                                 
-                                        <dd><a lay-href="app/content/list.asp">文章列表</a></dd>
-                                        <dd><a lay-href="app/content/tags.asp">分类管理</a></dd>
-                                        <dd><a lay-href="app/guestBook/list.asp">留言列表</a></dd>
-                                        <dd><a lay-href="app/OnePage/list.asp">单页列表</a></dd>
-                                        <dd><a lay-href="app/friendLink/list.asp">友情列表</a></dd>
-                                
+                                <dd><a lay-href="app/content/list.asp">文章列表</a></dd>
+                                <dd><a lay-href="app/content/tags.asp">分类管理</a></dd>
+                                <dd><a lay-href="app/guestBook/list.asp">留言列表</a></dd>
+                                <dd><a lay-href="app/OnePage/list.asp">单页列表</a></dd>
+                                <dd><a lay-href="app/friendLink/list.asp">友情列表</a></dd>
+                                <!-- <dd><a lay-href="app/sheshi/list.asp">省市县</a></dd> -->
+                            </dl>
                         </li> 
           
                         <li data-name="set" class="layui-nav-item">
@@ -137,7 +147,8 @@
                                 <dd><a lay-href="set/system/website.asp">网站设置</a></dd>
                                 <dd><a lay-href="set/user/info.asp">基本资料</a></dd>
                                 <dd><a lay-href="set/user/password.asp">修改密码</a></dd>
-                                <dd><a lay-href="set/templates/list.asp">模板库</a></dd>
+                                <dd><a lay-href="app/tpl/userlist.asp">模板库</a></dd>
+                                <dd><a lay-href="http://res.xiyueta.com/">素材库</a></dd>
                             </dl>
                         </li>
 
@@ -199,7 +210,7 @@
     }).extend({
         index: 'lib/index' //主入口模块
     }).use('index');
-    </script>
+    </script><%=getServerVersion()%>
 </body>
 
 </html>

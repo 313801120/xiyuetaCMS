@@ -1,0 +1,35 @@
+【parentid】新闻资讯>通知公告
+【title】xiyueta.js库介绍
+【author】xiyueta
+【smallimage】/UploadFiles/testpic/xiyuetafz.jpg
+【createtime】2021/10/12 9:14:19
+【bodycontent】
+[&全部换行&]
+
+xiyueta.js库介绍
+xiyueta.js库是一个快速解析html字符串，遍历网页dom结构的JavaScript库。
+
+const xiyueta = require('xiyueta');
+const $ = xiyueta.load('<h2 class="Title">Hello world</h2>');
+
+$('h2').text(123);
+$('h2.title').addClass('xyt');
+
+$.html();
+//=><h2 class="Title xyt">123</h2>
+
+
+xiyueta.js库特点
+熟悉的语法：xiyueta.js实现了jQuery的一个子集，去掉了jQuery中所有与DOM不一致或者是用来填浏览器的坑的东西，重现了jQuery最美妙的API
+
+快到没朋友：xiyueta.js使用了及其简洁而又标准的DOM模型， 因此对文档的转换，操作，渲染都极其的高效。基本的端到端测试显示它的速度至少是cheerio的3倍
+
+极其灵活：xiyueta.js使用了xiyueta.com官网作者编写的非常兼容的htmlparser，因此它可以解析几乎所有的HTML和XML
+
+多端运行：xiyueta.js库可以在nodejs上使用，也可以在web浏览器上使用，还可以在asp程序里使用。
+
+xiyueta.js库应用
+xiyueta.js库是jquery核心功能的一个快速灵活而又简洁的实现，主要是对html字符串中DOM进行操作，同时也可以用在HTML标签对检测，html修复，html标签高亮显示等。
+
+【/bodycontent】
+-------------------------------

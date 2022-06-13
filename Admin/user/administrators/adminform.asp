@@ -1,6 +1,9 @@
-<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
+<!--#include file="../../../inc/Config.asp"-->
+<!--#Include File = "../../admin_function.asp"-->
+<!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent
+dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping
+dim splxx,i,s
 id=request("id")
 username=request("username")              '用户名'
 nickname=request("nickname")              '昵称'
@@ -13,21 +16,33 @@ tel=request("tel")                    '手机
 bodyContent=request("bodyContent")                    '备注+
 
 
+permission=request("permission")  '权限'
+grouping=request("grouping")  '权限'
+
+
+
+
 isthrough=request("isthrough")            '审核'
 isthrough=IIF(isthrough="on",1,0)   '处理下'
 
+ 
 
 '添加修改
-if request("act")="save" then
+if request("act")="save" then 
   isTrue=true
-  if pwd<>"" then
-    if len(pwd)>=6 then
-      pwd=myMD5(pwd)
-    else
-      msg="密码要大于6位字符"
-      isTrue=false
+  if userrs("level")<>1 then
+   msg="只有超级管理员才可操作"
+   isTrue=false
+  end if
+  if isTrue=true then
+    if pwd<>"" then
+      if len(pwd)>=5 then
+        pwd=myMD5(pwd)
+      else
+        msg="密码要大于等于5位字符"
+        isTrue=false
+      end if
     end if
-
   end if
   if isTrue=true then
     addsql=" where username='"& username &"'"
@@ -36,7 +51,7 @@ if request("act")="save" then
     end if
     rs.open"select * from ["& db_PREFIX &"Admin]"&addsql,conn,1,3
     if not rs.eof then
-      msg="用户名称已经存在"
+      msg="用户名 "& username &" 已经存在"
     else
       if id="" then
         rs.addnew
@@ -52,9 +67,11 @@ if request("act")="save" then
       rs("pic")=pic
       rs("sex")=sex
       rs("level")=level 
+      rs("permission")=permission 
+      rs("grouping")=grouping 
       rs("bodyContent")=bodyContent 
       if pwd<>"" then rs("pwd")=pwd
-      rs.update 
+      rs.update  
       response.Write"<script>parent.location.reload();</script>"
       response.end()
     end if:rs.close 
@@ -70,9 +87,11 @@ elseif id<>"" then
     pic=rs("pic")  
     sex=rs("sex")  
     level=rs("level")  
+    permission=rs("permission")  
     email=rs("email")
     tel=rs("tel")
     bodyContent=rs("bodyContent")
+    grouping=rs("grouping")
   end if
 end if
  
@@ -92,15 +111,19 @@ end if
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save&id=<%=id%>">
   <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
 
-
    <div class="layui-form-item">
       <label class="layui-form-label">角色</label>
       <div class="layui-input-inline">
         <select name="level" lay-verify="">
-          <option value="1" selected>超级管理员</option>
-          <option value="2"<%=IIF(level=2," selected","")%>>普通管理员</option>
-          <option value="3"<%=IIF(level=3," selected","")%>>审核员</option>
-          <option value="4"<%=IIF(level=4," selected","")%>>编辑人员</option>
+<%
+splxx=split(adminLevelList,",")
+for i=0 to ubound(splxx)
+  s=splxx(i)
+  if s<>"" then
+    call rw("<option value="""& i &""" "& IIF(level=i," selected","") &">"& s &"</option>")
+  end if
+next
+%>  
         </select> 
       </div> 
     </div>
@@ -134,6 +157,17 @@ end if
         </select>
       </div>
     </div>
+    <div class="layui-form-item" lay-filter="grouping">
+      <label class="layui-form-label">分组</label>
+      <div class="layui-input-inline">
+        <select name="grouping">
+        <option value="">无</option>
+        <option value="A组"<%=IIF(grouping="A组"," selected","")%>>A组</option>
+        <option value="B组"<%=IIF(grouping="B组"," selected","")%>>B组</option>
+        <option value="C组"<%=IIF(grouping="C组"," selected","")%>>C组</option>
+        </select>
+      </div>
+    </div>
     <div class="layui-form-item">
       <label class="layui-form-label">头像</label>
       <div class="layui-input-inline">
@@ -163,13 +197,29 @@ end if
       </div>
     </div>  
 
+<%if level<>1 then '排除最高权限者%>
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限列表</label>
+                <div class="layui-input-block">
+
+<%
+' call echo("permission",permission)
+splxx=split(adminPermissionLits,",")
+for i=0 to ubound(splxx)
+  s=splxx(i)
+%>
+                  <input type="checkbox" name="permission" title="<%=s%>" value="<%=s%>" <%=IIF(instr(","&permission&",",","&s&",")>0," checked","")%>>
+<%next%> 
+                </div>
+              </div>
+
     <div class="layui-form-item">
       <label class="layui-form-label">审核状态</label>
       <div class="layui-input-inline">
         <input type="checkbox" lay-filter="switch" name="isThrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isThrough=0,""," checked")%>>
       </div>
     </div>  
-
+<%end if%>
  
 
 

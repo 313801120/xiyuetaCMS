@@ -202,7 +202,10 @@ function addField(tableName,fieldName,fieldType)
 	end if
 	if checkField(tableName,fieldName) = false then
 		conn.execute("Alter Table [" & tableName & "] Add [" & fieldName & "] " & fieldType & "") '添加字段
+        addField=true
+        exit function
 	end if 
+    addField=false
 end function
 '获得字段属性
 function getFieldAlt(tableName, fieldName)
@@ -241,7 +244,7 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
         next : rs.close 
 end function
 '获得指定数据名柄里表列表
-function getTableList_Conn(conn)
+function getTableList_Conn(conn) 
     dim s, c, rs 
     set rs = conn.openSchema(20)
         rs.moveFirst 
@@ -274,7 +277,7 @@ function getFieldList_conn(tableName,customConn)
     fn = tempRs.fields.count 
     'if err <> 0 then call eerr("字段2", tempRs.fields.count) 
     c = "," 
-    for n = 1 to fn - 1
+    for n = 0 to fn - 1
         set fld = tempRs.fields.item(n)
             c = c & fld.name & "," 
         set fld = nothing 
@@ -677,6 +680,69 @@ function showAccessStream(conn, tableName, fieldName, id, addSql)
             'Response.ContentType = "img/*"
             response.binaryWrite rs(fieldName).getChunk(7500000) 
         end if : rs.close 
+end function
+'Access数据库转成Mysql生成SQL,再放到php里生成就可以20220425'
+function accessToMySql()
+   dim content,splstr,i,tableName,fieldList,isDXX,splxx,fieldName,c,fieldAlt,cleanTableName,focusId
+   content=getTableList_Conn(conn)
+   splstr=split(content,vbcrlf)
+   ' for each tableName in splstr
+   for i=1 to ubound(splstr)
+      tableName=splstr(i):cleanTableName=tableName
+      if i>29 then exit for'只提取几个
+      if db_PREFIX<>"" then cleanTableName=mid(tableName,len(db_PREFIX)+1)
+      c=c&"""{$db_PREFIX}"& cleanTableName &""" => ""CREATE TABLE `{$db_PREFIX}"& cleanTableName &"` (" & vbcrlf
+      
+      fieldList=getFieldList(tableName)
+      call echo("tableName",tableName)
+      isDXX=IIF(fieldList<>lcase(fieldList),"<b style='color:red'>有大写</b>","")
+      call echo(copystr("&nbsp;",4) & "fieldList" & isDXX,fieldList)
+      splxx=split(fieldList,",")
+      for each fieldName in splxx
+         if fieldName<>"" then
+            fieldAlt=getFieldAlt(tableName,fieldName)
+            call echo(copystr("&nbsp;",8) & "fieldName",fieldName &"  ("& fieldAlt &")")            
+            if fieldAlt="VarChar" then
+               c=c & "`"& fieldName &"` varchar(255) NOT NULL default '', " & vbcrlf
+            elseif fieldAlt="Int" then
+               if instr("|age|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` int(2) NOT NULL default '0',"&vbcrlf
+               elseif instr("|level|score|w|h|passingscore|totalscore|timelimit|fenshu|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` int(3) NOT NULL default '0',"&vbcrlf
+               elseif instr("|lottery|npagesize|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` int(4) NOT NULL default '0',"&vbcrlf
+               elseif instr("|views|sortrank|pv|frequency|maxfrequency|days|logincount|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` int(5) NOT NULL default '0',"&vbcrlf
+               elseif instr("|id|parentid|exid|userid|timoid|money|hanziid|adminid|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` int(6) NOT NULL default '0',"&vbcrlf 
+               elseif instr("|isthrough|isdel|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` tinyint(1) NOT NULL default '1',  "&vbcrlf
+               else
+                  call eerr("提示","Int数字类型没有判断")   
+               end if
+            elseif fieldAlt="Float" then 
+                if instr("|fenshu|","|"&fieldName&"|")>0 then
+                  c=c & "`"& fieldName &"` float(3) NOT NULL default '0',"&vbcrlf
+              else
+                  call eerr("提示","Float浮点类型没有判断")   
+               end if
+            elseif fieldAlt="DateTime" then
+               c=c & "`"& fieldName &"` datetime DEFAULT NULL,"&vbcrlf
+            elseif fieldAlt="Text" then
+               c=c & "`"& fieldName &"` mediumtext,"&vbcrlf
+           elseif fieldAlt="" then
+              c=c&"`"& fieldName &"` int(6) unsigned NOT NULL auto_increment," & vbcrlf
+              focusId=fieldName'ID
+            else
+               call eerr("提示","字符类型没有判断")
+            end if
+         end if
+      next
+      doevents
+      c=c & "PRIMARY KEY  (`"& focusId &"`)" & vbcrlf
+      c=c & "){$char};""," & vbcrlf
+   next
+   call die(vbcrlf & vbcrlf & c)
 end function
 %>      
 

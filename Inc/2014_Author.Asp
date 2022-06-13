@@ -66,5 +66,23 @@ function authorInfo2()
 
     authorInfo2 = c 
 end function 
+'作者信息20220521'
+function authorXiyuetaCOM()
+    dim c 
+    c="'#禁止自动更新当前文件'  #号去掉代表此文件不被程序自动更新替换掉" & vbcrlf & vbcrlf
+    c = c & "                 '''" & vbCrLf 
+    c = c & "'               (0 0)" & vbCrLf 
+    c = c & "'   +-----oOO----(_)------------+" & vbCrLf 
+    c = c & "'   |                           |" & vbCrLf 
+    c = c & "'   |    author:XIYUETA         |" & vbCrLf 
+    c = c & "'   |    QQ:313801120           |" & vbCrLf 
+    c = c & "'   |    www.xiyueta.com        |" & vbCrLf 
+    c = c & "'   |                           |" & vbCrLf 
+    c = c & "'   +------------------oOO------+" & vbCrLf 
+    c = c & "'              |__|__|" & vbCrLf 
+    c = c & "'               || ||" & vbCrLf 
+    c = c & "'              ooO Ooo" & vbCrLf 
+    authorXiyuetaCOM=c
+end function
 %>  
 

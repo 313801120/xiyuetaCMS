@@ -1,0 +1,11 @@
+﻿【parentid】关于我们>公司简介
+【title】你好
+【author】xiyueta
+【bodycontent】
+你好，测试内容
+【/bodycontent】
+-------------------------------
+
+
+为可以重复写入文章
+【#isarticlerepeat#】true     

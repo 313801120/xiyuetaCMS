@@ -166,7 +166,7 @@ layui.use(['form','table'],function(){
                 , { field: 'nickname', title: '昵称',width:80, sort: false }  
                 , { field: 'ip', title: 'IP',width:120, sort: false }
                 , { field: 'addr', title: '地址',minWidth:150, sort: false }
-                ,{field: 'isthrough', title: '是否审核',width:100, align:'center', templet:function(d){
+                ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
                 , { field: 'regtime', title: '加入时间',width:160, sort: true }
                 , { fixed: 'right', title: '操作', width: 210, toolbar: '#barDemo' }

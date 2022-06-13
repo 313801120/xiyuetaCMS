@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,title,isthrough,sortrank,smallimage,httpurl
+dim msg,isTrue,addSql,id,title,isthrough,sortrank,smallimage,httpurl,nofollow,target
 
 id=request("id")
 title=request("title")                    '标题'
@@ -9,6 +9,9 @@ isthrough=request("isthrough")            '审核'
 smallimage=request("smallimage")          '缩略图' 
 httpurl=request("httpurl")                    '文章内容
 isthrough=IIF(isthrough="on",1,0)         '处理下'
+nofollow=request("nofollow")            'nofollow'
+nofollow=IIF(nofollow="on",1,0)         '处理下'
+target=request("target")                    'target
 
 '添加修改
 if request("act")="save" then
@@ -38,6 +41,8 @@ if request("act")="save" then
       rs("isthrough")=isthrough 
       rs("smallimage")=smallimage 
       rs("httpurl")=httpurl 
+      rs("nofollow")=nofollow 
+      rs("target")=target 
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
       response.end()
@@ -53,6 +58,8 @@ elseif id<>"" then
     isthrough=rs("isthrough")  
     smallimage=rs("smallimage")  
     httpurl=rs("httpurl")  
+    nofollow=rs("nofollow")  
+    target=rs("target")  
   end if
 end if
  
@@ -100,6 +107,24 @@ end if
         <input type="text" name="sortrank" lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input" value="<%=sortrank%>">
       </div>
     </div>
+    
+    <div class="layui-form-item">
+      <label class="layui-form-label">设置nofollow</label>
+      <div class="layui-input-inline">
+        <input type="checkbox" lay-filter="switch" name="nofollow" lay-skin="switch" lay-text="设置nofollow|不设置nofollow" <%=IIF(nofollow=0,""," checked")%>>
+      </div>
+    </div>  
+    
+    <div class="layui-form-item">
+      <label class="layui-form-label">设置target</label>
+      <div class="layui-input-inline">
+        <select name="target" id="target">
+            <option value=''>当前页打开</option>
+            <option value='_blank'<%=IIF(target="_blank"," selected","")%>>新页打开(_blank)</option> 
+        </select>
+      </div>
+    </div>  
+ 
     
     <div class="layui-form-item">
       <label class="layui-form-label">审核状态</label>

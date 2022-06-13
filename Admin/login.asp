@@ -101,7 +101,7 @@ end if
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="tel" name="captcha"  placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="">
                     <div class="captcha-img">
-                        <img id="captchaPic" src="/inc/yzm_7.asp" onclick="this.src=this.src+'?'+Math.radom" style="cursor: pointer;">
+                        <img id="captchaPic" src="/inc/yzm_7.asp" onclick="src='/inc/yzm_7.asp?'+Math.random();" style="cursor: pointer;">
                     </div>
                 </div>
                 <div class="layui-form-item">

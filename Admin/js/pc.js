@@ -446,7 +446,8 @@ function pop_up(my_tit, my_url, my_width, my_height) {
     layer.open({
         title: my_tit,
         type: 2,
-        area: [my_width, my_height],
+        // area: [my_width, my_height],
+        area: [my_width + 'px', my_height + 'px'], 
         fixed: false, //不固定
         maxmin: true,
         content: my_url,
@@ -1068,4 +1069,11 @@ function showwin(title,url){
     if(n<nWidth)nWidth=n;
 
     tc2(title,url, nWidth, 450)
+}//显示窗体，宽度不超过800    20220210
+function showwin2(title,url){
+    var nWidth=800;
+    var n=($(window).width());
+    if(n<nWidth)nWidth=n;
+
+    pop_up(title,url, nWidth, 450)
 }

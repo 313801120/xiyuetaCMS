@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutContent,bodyContent,author
+dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename
 
 id=request("id")
 parentid=request("parentid")              '大类'
@@ -9,9 +9,14 @@ sortrank=request("sortrank")              '排序'
 if sortrank="" then sortrank=0
 isthrough=request("isthrough")            '审核'
 smallimage=request("smallimage")          '缩略图' 
-aboutContent=request("aboutContent")                    '简要说明'
-bodyContent=request("bodyContent")                    '文章内容
+bigimage=request("bigimage")          '大图' 
+aboutcontent=request("aboutcontent")                    '简要说明'
+bodycontent=request("bodycontent")                    '文章内容
 author=request("author")                    '作者
+webtitle=request("webtitle")            'webtitle'
+webkeywords=request("webkeywords")            'webkeywords'
+webdescription=request("webdescription")            'webdescription'
+filename=request("filename")            'filename'
 isthrough=IIF(isthrough="on",1,0)         '处理下'
 if parentid="" then 
   parentid=-1
@@ -46,9 +51,14 @@ if request("act")="save" then
       rs("sortrank")=sortrank 
       rs("isthrough")=isthrough 
       rs("smallimage")=smallimage 
-      rs("aboutContent")=aboutContent 
-      rs("bodyContent")=bodyContent 
+      rs("bigimage")=bigimage 
+      rs("aboutcontent")=aboutcontent 
+      rs("bodycontent")=bodycontent 
       rs("author")=author 
+      rs("webtitle")=webtitle 
+      rs("webkeywords")=webkeywords 
+      rs("webdescription")=webdescription 
+      rs("filename")=filename 
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
       response.end()
@@ -64,8 +74,14 @@ elseif id<>"" then
     sortrank=rs("sortrank")   
     isthrough=rs("isthrough")  
     smallimage=rs("smallimage")  
-    aboutContent=rs("aboutContent")  
-    bodyContent=rs("bodyContent")  
+    bigimage=rs("bigimage")  
+    aboutcontent=rs("aboutcontent")  
+    bodycontent=rs("bodycontent")  
+    author=rs("author")  
+    webtitle=rs("webtitle")  
+    webkeywords=rs("webkeywords")  
+    webdescription=rs("webdescription")  
+    filename=rs("filename")  
   end if
 end if
  
@@ -92,7 +108,11 @@ end if
         
 
 <select name="parentid" id="parentid" selected><option value="-1">≡ 作为一级栏目 ≡</option>
-      <%=columnSubInput(-1,id,parentid)%>
+
+      <%
+      '第二个参数为空，因为在栏目分类里需要用到排除当前自身的选择
+      call rw( columnSubInput(-1,"",parentid) )
+      %>
     </select>
 
       </div> 
@@ -114,6 +134,14 @@ end if
     </div>
 
     <div class="layui-form-item">
+      <label class="layui-form-label">大图</label>
+      <div class="layui-input-inline">
+        <input type="text" name="bigimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=bigimage%>">
+      </div>
+      <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin2">上传图片</button> 
+    </div>
+
+    <div class="layui-form-item">
       <label class="layui-form-label">排序</label>
       <div class="layui-input-inline">
         <input type="text" name="sortrank" lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input" value="<%=sortrank%>">
@@ -131,24 +159,51 @@ end if
     <div class="layui-form-item">
       <label class="layui-form-label">简要说明</label>
       <div class="layui-input-block">
-        <textarea name="aboutContent" placeholder="请输入简要说明" class="layui-textarea"><%=aboutContent%></textarea>
+        <textarea name="aboutcontent" placeholder="请输入简要说明" class="layui-textarea"><%=aboutcontent%></textarea>
       </div>
     </div>
 
     <div class="layui-form-item">
       <label class="layui-form-label">文章内容</label>
       <div class="layui-input-block">
-        <textarea name="bodyContent" id="bodyContent"  placeholder="请输入文章内容" class="layui-textarea"><%=bodyContent%></textarea>
+        <textarea name="bodycontent" <%=IIF(request("editor")<>"no"," id='bodycontent'style='display:none;'"," rows='10'")%> placeholder="请输入文章内容" class="layui-textarea"><%=bodycontent%></textarea><%if request("editor")<>"no" then%><a href="?editor=no&id=<%=id%>">不显示编辑器</a><%end if%>
       </div>
     </div>  
 
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">title标题</label>
+                <div class="layui-input-block">
+                    <textarea name="webtitle" class="layui-textarea" placeholder="title标题"><%=webtitle%></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META关键词</label>
+                <div class="layui-input-block">
+                    <textarea name="webkeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><%=webkeywords%></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META描述</label>
+                <div class="layui-input-block">
+                    <textarea name="webdescription" class="layui-textarea"><%=webdescription%></textarea>
+                </div>
+            </div>
+
+
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">自定义文件</label>
+      <div class="layui-input-inline">
+        <input type="text" name="filename"   placeholder="请输入自定义文件" autocomplete="off" class="layui-input" value="<%=filename%>">
+      </div>
+    </div>
 
     <div class="layui-form-item">
       <label class="layui-form-label">审核状态</label>
       <div class="layui-input-inline">
         <input type="checkbox" lay-filter="switch" name="isThrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isThrough=0,""," checked")%>>
       </div>
-    </div>  
+    </div>   
  
  
 
@@ -177,6 +232,13 @@ layui.config({
             $(this.item).prev("div").children("input").val(res.data.src)
         }
     });
+    upload.render({
+        elem: '#layuiadmin-upload-useradmin2',
+        url: '/api/upload/',
+        done: function(res) {
+            $(this.item).prev("div").children("input").val(res.data.src)
+        }
+    });
 
     lay('.date').each(function() {
         laydate.render({
@@ -195,7 +257,7 @@ layui.config({
             ,type: 'post' //默认post 
         }
     });
-    layedit.build('bodyContent');   //建立编辑器
+    layedit.build('bodycontent');   //建立编辑器
 
 })
 

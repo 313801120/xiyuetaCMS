@@ -56,7 +56,7 @@ If Request("act") = "list" Then
                 sHr = "," 
             End If 
 
-	       stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""guestName"":""" & rs("guestName") & """,""title"":""" & rs("title") & """,""tel"":""" & rs("tel") & """,""bodycontent"":""" & rs("bodycontent") & """,""createTime"":""" & rs("createTime") & """}" &sHr & "" 
+	       stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""ip"":""" & rs("ip") & """,""addr"":""" & look_ip(rs("ip")) & """,""guestname"":""" & rs("guestname") & """,""title"":""" & rs("title") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""bodycontent"":""" & rs("bodycontent") & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
     
             rs.MoveNext 
         Wend 
@@ -151,10 +151,13 @@ layui.use('table', function() {
             [
 
                 { field: 'i', title: '序列', width: 70, sort: false }
-                , { field: 'guestName', title: '姓名', width: 100, sort: true }
+                , { field: 'guestname', title: '姓名', width: 100, sort: true }
                 , { field: 'tel', title: '电话', width: 130, sort: true }
+                , { field: 'email', title: '邮箱', width: 160, sort: true }
+                , { field: 'ip', title: 'IP', width: 150, sort: false }
+                , { field: 'addr', title: '地址', width: 200, sort: false }
                 , { field: 'bodycontent', title: '留言内容', minWidth: 200, sort: true }
-                , { field: 'createTime', title: '发布时间', width: 160, sort: true }
+                , { field: 'createtime', title: '发布时间', width: 160, sort: true }
                 , { fixed: 'right', title: '操作', width: 150, toolbar: '#barDemo' }
 
 

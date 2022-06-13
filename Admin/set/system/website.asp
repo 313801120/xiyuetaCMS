@@ -3,19 +3,31 @@
 <!--#Include File = "../../admin_safe.Asp"-->
 <% 
 call openconn() 
-dim msg,id,logo,qrcode
+dim msg,id,logo,qrcode,asporhtml
 id=request("id") 
+asporhtml=request("asporhtml")
 if request("act")="save" then
     rs.open"select * from " & db_PREFIX & "WebSite where id="&id,conn,3,3
     if not rs.eof then
-        rs("webTitle")=request("webTitle")
-        rs("WebSiteUrl")=request("WebSiteUrl")
-        rs("webKeywords")=request("webKeywords")
-        rs("webDescription")=request("webDescription")
-        rs("websitebottom")=request("websitebottom")
+        rs("webtitle")=request("webtitle")
+        rs("Weburl")=request("Weburl")
+        rs("webkeywords")=request("webkeywords")
+        rs("webdescription")=request("webdescription")
+        rs("webfoot")=request("webfoot")
         rs("copyright")=request("copyright")
         rs("logo")=request("logo")
         rs("qrcode")=request("qrcode")
+        rs("phone")=request("phone")
+        rs("tel")=request("tel")
+        rs("fax")=request("fax")
+        rs("email")=request("email")
+        rs("weixin")=request("weixin")
+        rs("qq")=request("qq")
+        rs("address")=request("address")
+        rs("company")=request("company")
+        rs("companyen")=request("companyen") 
+        rs("asporhtml")=IIF(asporhtml="on",1,0)         '处理下动态静态转换'
+        ' call echo("asporhtml",IIF(asporhtml="on",1,0) )
         rs.update        
         call addSystemLog("website","修改系统设置",userRs("username"))  '记录操作日志'
     end if:rs.close
@@ -47,13 +59,13 @@ rs.open"select * from " & db_PREFIX & "WebSite",conn,3,1
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">网站名称</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="webTitle" value="<%=rs("webTitle")%>" class="layui-input">
+                                        <input type="text" name="webtitle" value="<%=rs("webtitle")%>" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">网站域名</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="WebSiteUrl" lay-verify="url" value="<%=rs("WebSiteUrl")%>" class="layui-input">
+                                        <input type="text" name="Weburl" lay-verify="url" value="<%=rs("Weburl")%>" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -73,19 +85,74 @@ rs.open"select * from " & db_PREFIX & "WebSite",conn,3,1
                                 <div class="layui-form-item layui-form-text">
                                     <label class="layui-form-label">META关键词</label>
                                     <div class="layui-input-block">
-                                        <textarea name="webKeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><%=rs("webKeywords")%></textarea>
+                                        <textarea name="webkeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><%=rs("webkeywords")%></textarea>
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-form-text">
                                     <label class="layui-form-label">META描述</label>
                                     <div class="layui-input-block">
-                                        <textarea name="webDescription" class="layui-textarea"><%=rs("webDescription")%></textarea>
+                                        <textarea name="webdescription" class="layui-textarea"><%=rs("webdescription")%></textarea>
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-form-text">
                                     <label class="layui-form-label">网页底部</label>
                                     <div class="layui-input-block">
-                                        <textarea id="websitebottom" name="websitebottom" style="display: none;"><%=rs("websitebottom")%></textarea>
+                                        <textarea <%=IIF(request("editor")<>"no"," id='webfoot' style='display:none;'"," rows='10'")%>  name="webfoot" class="layui-textarea"><%=rs("webfoot")%></textarea> 
+                                        <%if request("editor")<>"no" then%><a href='?editor=no'>不显示编辑器</a><%end if%>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">手机</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="phone" value="<%=rs("phone")%>" autocomplete="off" class="layui-input"><!--lay-verify="phone"-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">电话</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="tel" value="<%=rs("tel")%>" autocomplete="off" class="layui-input"><!--lay-verify="phone"-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">传真</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="fax" value="<%=rs("fax")%>" autocomplete="off" class="layui-input"><!--lay-verify="phone"-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">邮箱</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="email" value="<%=rs("email")%>" autocomplete="off" class="layui-input"><!-- lay-verify="email"-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">微信</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="weixin" value="<%=rs("weixin")%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">QQ</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="qq" value="<%=rs("qq")%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公司地址</label>
+                                    <div class="layui-input-block">
+                                      <input type="text" name="address" value="<%=rs("address")%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公司名称</label>
+                                    <div class="layui-input-block">
+                                      <input type="text" name="company" value="<%=rs("company")%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">公司英文名称</label>
+                                    <div class="layui-input-block">
+                                      <input type="text" name="companyen" value="<%=rs("companyen")%>" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-form-text">
@@ -94,6 +161,14 @@ rs.open"select * from " & db_PREFIX & "WebSite",conn,3,1
                                         <input type="text" name="copyright" lay-verify="" class="layui-input" value="<%=rs("copyright")%>">
                                     </div>
                                 </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">网站动静转换</label>
+      <div class="layui-input-inline">
+        <input type="checkbox" lay-filter="switch" name="asporhtml" lay-skin="switch" lay-text="静态(.html)|动态(.asp)" <%=IIF(rs("asporhtml")=0,""," checked")%>>
+      </div>
+    </div>  
+ 
+
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
                                         <input type="submit" class="layui-btn" value="确认保存" lay-submit="lay-submit" />
@@ -145,7 +220,7 @@ rs.open"select * from " & db_PREFIX & "WebSite",conn,3,1
                 type: 'post' //默认post 
             }
         });
-        layedit.build('websitebottom'); //建立编辑器
+        layedit.build('webfoot'); //建立编辑器
 
 
     });

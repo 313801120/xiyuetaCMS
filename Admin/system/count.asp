@@ -38,7 +38,7 @@ If Request("act") = "list" Then
         page_count = 0 
         i =(page - 1) * num 
         totalrec = rs.RecordCount 
-        While(Not rs.EOF) And(Not page_count = rs.PageSize)
+        While (Not rs.EOF) And(Not page_count = rs.PageSize)
             i = i + 1 
             page_count = page_count + 1 
             If totalrec Mod perpage = 0 Then
@@ -65,7 +65,7 @@ If Request("act") = "list" Then
             Else
                 sHr = "," 
             End If 
-            stemp = stemp & "{""id"":""" & rs("id") & """,""ip"":""" & rs("ip") & """,""useragent"":""" & useragent & """,""pv"":""" & rs("pv") & """,""addr"":""" & rs("addr") & """,""url"":""" & curl & """,""intime"":""" & rs("intime") & """}" &sHr & "" 
+            stemp = stemp & "{""id"":""" & rs("id") & """,""ip"":""" & rs("ip") & """,""useragent"":""" & useragent & """,""pv"":""" & rs("pv") & """,""w"":""" & rs("w") & """,""h"":""" & rs("h") & """,""addr"":""" & rs("addr") & """,""url"":""" & curl & """,""intime"":""" & rs("intime") & """}" &sHr & "" 
 
             rs.MoveNext 
         Wend 
@@ -128,19 +128,19 @@ End If
   </tr>
   </thead>
   <tr>
-    <td>IP</td>
-    <td><%sql="select ip from ["+db_PREFIX+"count] where datediff('d',intime,now())=1 group by ip"
+    <td>IP</td>  
+    <td><%sql="select ip from ["+db_PREFIX+"count] where "& getAccessDatediff("intime") &"=1 group by ip"
 	rs.open sql,conn,1,1
 	response.Write rs.recordcount&"<br>"
 	rs.close
 	%></td>
-    <td><%sql="select ip from ["+db_PREFIX+"count] where datediff('d',intime,now())=0 group by ip"
+    <td><%sql="select ip from ["+db_PREFIX+"count] where "& getAccessDatediff("intime") &"=0 group by ip"
 	rs.open sql,conn,1,1
 	response.Write rs.recordcount&"<br>"
 	
 	rs.close
 	%></td>
-    <td><%sql="select ip from ["+db_PREFIX+"count] where datediff('ww',intime,now())=0 group by ip"
+    <td><%sql="select ip from ["+db_PREFIX+"count] where "& getAccessDatediffWeek("intime") &"=0 group by ip"
 	rs.open sql,conn,1,1
 	response.Write rs.recordcount&"<br>"
 	
@@ -149,7 +149,7 @@ End If
 			 
 			 
 	%></td>
-    <td><%sql="select ip from ["+db_PREFIX+"count] where datediff('m',intime,now())=0 group by ip"
+    <td><%sql="select ip from ["+db_PREFIX+"count] where "& getAccessDatediffMonth("intime") &"=0 group by ip"
 	rs.open sql,conn,1,1
 	response.Write rs.recordcount&"<br>"
 	
@@ -158,7 +158,7 @@ End If
 			 
 			 
 	%></td>
-    <td><%sql="select ip from ["+db_PREFIX+"count] where datediff('yyyy',intime,now())=0 group by ip"
+    <td><%sql="select ip from ["+db_PREFIX+"count] where "& getAccessDatediffYear("intime") &"=0 group by ip"
 	rs.open sql,conn,1,1
 	response.Write rs.recordcount&"<br>"
 	
@@ -179,48 +179,48 @@ End If
   </tr>
   <tr>
     <td>PV</td>
-    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where datediff('d',intime,now())=1 "
+    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where "& getAccessDatediff("intime") &"=1 "
 	rs.open sql,conn,1,1
 	if isnull(rs("tpv"))=true then
 		response.Write("0")
 	else
-		response.Write len(rs("tpv"))
+		response.Write rs("tpv")
 	end if
 	rs.close
 	%></td>
-    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where datediff('d',intime,now())=0 "
+    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where "& getAccessDatediff("intime") &"=0 "
 	rs.open sql,conn,1,1
 	if isnull(rs("tpv"))=true then
 		response.Write("0")
 	else
-		response.Write len(rs("tpv"))
+		response.Write rs("tpv")
 	end if
 	rs.close
 	%></td>
-    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where datediff('ww',intime,now())=0 "
+    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where "& getAccessDatediffWeek("intime") &"=0 "
 	rs.open sql,conn,1,1
 	if isnull(rs("tpv"))=true then
 		response.Write("0")
 	else
-		response.Write len(rs("tpv"))
+		response.Write rs("tpv")
 	end if
 	rs.close
 	%></td>
-    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where datediff('m',intime,now())=0 "
+    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where "& getAccessDatediffMonth("intime") &"=0 "
 	rs.open sql,conn,1,1
 	if isnull(rs("tpv"))=true then
 		response.Write("0")
 	else
-		response.Write len(rs("tpv"))
+		response.Write rs("tpv")
 	end if
 	rs.close
 	%></td>
-    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where datediff('yyyy',intime,now())=0 "
+    <td><%sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where "& getAccessDatediffYear("intime") &"=0 "
 	rs.open sql,conn,1,1
 	if isnull(rs("tpv"))=true then
 		response.Write("0")
 	else
-		response.Write len(rs("tpv"))
+		response.Write rs("tpv")
 	end if
 	rs.close
 	%></td>
@@ -229,7 +229,7 @@ End If
 	if isnull(rs("tpv"))=true then
 		response.Write("0")
 	else
-		response.Write len(rs("tpv"))
+		response.Write rs("tpv")
 	end if
 	rs.close
 	%></td>
@@ -420,7 +420,8 @@ End If
   <%
 	 for i=0 to 9
 	 D=9-i
-	 sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where datediff('d',intime,#"&DateAdd("d", -D, date())&"#)=0 "
+	// call die(getAccessDatediffTime("intime",DateAdd("d", -D, date())))
+	 sql="select sum(pv)as tpv from ["+db_PREFIX+"count] where "& getAccessDatediffTime("intime",DateAdd("d", -D, date())) &"=0 "
 	rs.open sql,conn,1,1
 	if isnull(rs("tpv")) then
 	response.Write "0,"
@@ -452,7 +453,7 @@ End If
 							data:[<%
 	 for i=0 to 9
 	 D=9-i
-	 sql="select ip from ["+db_PREFIX+"count] where datediff('d',intime,#"&DateAdd("d", -D, date())&"#)=0 group by ip"
+	 sql="select ip from ["+db_PREFIX+"count] where "& getAccessDatediffTime("intime",DateAdd("d", -D, date())) &"=0 group by ip"
 	rs.open sql,conn,1,1
 	response.Write rs.recordcount&","
 	
@@ -490,6 +491,8 @@ layui.use('table', function() {
                 , { field: 'ip', title: 'ip', sort: true }
                 , { field: 'addr', title: '地址', sort: true }
                 , { field: 'pv', title: 'pv', sort: true }
+                , { field: 'w', title: '屏幕宽', sort: true }
+                , { field: 'h', title: '屏幕高', sort: true }
                 , { field: 'url', title: '来源', sort: true }
                 , { field: 'useragent', title: 'useragent', sort: false }
                 , { field: 'intime', title: '发布时间', width: 150, sort: true }

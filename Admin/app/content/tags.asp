@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,idList,columnName,splxx
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,idList,columnname,splxx,sortrank,id,isthrough
 
 '网站栏目查询
 If Request("act") = "list" Then 
@@ -12,7 +12,7 @@ If Request("act") = "list" Then
     stemp = "{""data"":[" 
     sql1 = "select * from ["& db_PREFIX &"WebColumn]" 
 
-    if  idList<>"" then
+    if  idList<>"" then 
     	sql1=sql1 & " where id in("& idlist  &")"
     else
     	sql1=sql1 & " where parentId=-1"
@@ -24,7 +24,7 @@ If Request("act") = "list" Then
         sql = sql & " and datediff('d',createTime,#" & Request("date_max") & "#)>=0" 
     End If 
     If Request("key") <> "" Then
-        sql = " and [columnName] like '%" & Request("key") & "%' " 
+        sql = " and [columnname] like '%" & Request("key") & "%' " 
     End If 
     mysql = sql1 & sql' & " order by sortrank asc" 
     rs.Open mysql, conn, 1, 1 
@@ -63,14 +63,22 @@ If Request("act") = "list" Then
             End If 
 
 
-    		rsx.open"select * from ["& db_PREFIX &"WebColumn] where id="&splxx(i-1),conn,1,1
+    		rsx.open"select * from ["& db_PREFIX &"webcolumn] where id="&splxx(i-1),conn,1,1
 	    	if not rsx.eof then
 	            if rsx("parentid")<>-1 then
-	            	columnName=getSubColumSort(rsx("parentid"),"")  & rsx("columnName")
+	            	columnname=getSubColumSort(rsx("parentid"),"")  & rsx("columnname")
 	            else
-	            	columnName=rsx("columnName")
+	            	columnname=rsx("columnname")
 	            end if
-	            stemp = stemp & "{""id"":""" & rsx("id") & """,""flags"":""" & rsx("flags") & """,""name"":""" & columnName & """,""sortrank"":""" & rsx("sortrank") & """}" &sHr & "" 
+                
+
+ 
+                isthrough=""
+                if rsx("isthrough")<>0 then
+                    isthrough=" checked"
+                end if 
+
+	            stemp = stemp & "{""id"":""" & rsx("id") & """,""flags"":""" & rsx("flags") & """,""name"":""" & columnname & """,""isthrough"":""" & isthrough & """,""sortrank"":""" & rsx("sortrank") & """}" &sHr & "" 
         	end if:rsx.close
  
 
@@ -79,17 +87,32 @@ If Request("act") = "list" Then
     End If 
 
     stemp = stemp & "],""count"":""" & rs.RecordCount & """,""code"":""0"",""msg"":""""}" 
+    
 
-    Response.Write stemp 
-    rs.Close 
-    Response.end()
+    rs.close
+    stemp=replace(stemp,"\","\\")
+    call die(stemp)
 
 elseif request("act")="del" then
-  conn.execute"delete from ["& db_PREFIX &"WebColumn] where id="&request("id")
+  conn.execute"delete from ["& db_PREFIX &"webcolumn] where id="&request("id")
   response.write "{""info"": ""删除成功"",""status"": ""y""}"
   Response.end()
 
-
+'在线修改
+elseif request("act")="onlineedit" then 
+  sortrank=handleNumber(request("sortrank"))
+  id=request("id")
+  if sortrank="" or id="" then
+    call die("{""info"": ""修改成功"&id&""",""status"": ""n""}")
+  else
+    conn.execute"update ["& db_PREFIX &"webcolumn] set  sortrank='"&sortrank&"' where id="&id
+    call die("{""info"": ""修改成功"&id&""",""status"": ""y""}")
+   end if 
+'通过或取消'
+elseif request("act")="isthrough" then
+    conn.execute"update ["& db_PREFIX &"webcolumn] set isthrough="&IIF(request("isthrough")="true",1,0) &" where id="&request("id")
+    response.write "{""info"": ""设置成功"",""status"": ""y""}"
+    Response.end()
 End If 
 
 
@@ -131,8 +154,9 @@ End If
  
 
 <script>
-layui.use('table', function() {
-    var table = layui.table;
+layui.use(['form','table'],function(){
+    var form = layui.form
+        table = layui.table; 
 
     //方法级渲染
     table.render({
@@ -144,7 +168,9 @@ layui.use('table', function() {
                 { field: 'id', title: 'ID', width: 70, minWidth: 70, sort: false }
                 , { field: 'name', title: '分类名', sort: false }
                 , { field: 'flags', title: '位置', width: 100, sort: false }
-                , { field: 'sortrank', title: '排序', width: 70, minWidth: 70, sort: false }
+                , { field: 'sortrank', title: '排序', width: 70, minWidth: 70, edit: 'text', sort: false }
+                 ,{field: 'isthrough', title: '是否显示',width:100, align:'center', templet:function(d){
+                    return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
                 , { fixed: 'right', title: '操作', width: 150, toolbar: '#barDemo' }
 
 
@@ -152,8 +178,39 @@ layui.use('table', function() {
         ],
         id: 'testReload',
         page: true,
-        limit: 20
+        limit: 90
     });
+
+
+    //是否置顶
+    form.on('switch', function(data){
+        var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+        setTimeout(function(){
+            var pid=data.elem.value
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                cache: true,
+                dataType: "json",
+                url: "?act=isthrough",
+                data: { "id": pid,"isthrough":data.elem.checked }, 
+                success: function(data) { 
+                    switch (data.status) {
+                        case "y": 
+                            break;
+                        case "n":                       
+                            break;
+                    }
+                }
+            });
+            if(data.elem.checked){
+                layer.msg("显示成功！");
+            }else{
+                layer.msg("取消显示成功！");
+            }
+        },500);
+    })
 
 
     var $ = layui.$,
@@ -207,7 +264,30 @@ layui.use('table', function() {
             showwin('修改栏目', 'tagsform.asp?id=' + pid)        
         }
     });
-
+    //监听单元格编辑
+    table.on('edit(demo)', function(obj){ 
+      var value = obj.value //得到修改后的值
+      ,data = obj.data //得到所在行所有键值
+      ,field = obj.field; //得到字段
+      var thisObj=obj
+      $.ajax({
+                type: "POST",
+                cache: true,
+                dataType: "json",
+                url: "?act=onlineedit&id="+data.id,
+                data: { "sortrank":  value  },
+                success: function(data) {
+                    switch (data.status) {
+                        case "y": 
+                        layer.msg(data.info, {icon: 1});
+                            break;
+                        case "n": 
+                        layer.msg(data.info, {icon: 2}); 
+                            break;
+                    }
+                }
+            }); 
+    });
 
 
 

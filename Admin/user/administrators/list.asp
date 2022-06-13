@@ -1,12 +1,14 @@
-<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
+<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,level 
+dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,splxx 
 
 '会员列表查询
 If Request("act") = "userlist" Then
     num = UCase(Request("limit")) 
     page = UCase(Request("page")) 
     stemp = "{""data"":[" 
+
+    splxx=split(adminLevelList,",")         '管理权限对应名称'
 
     sql = "select * from ["& db_PREFIX &"admin]" 
 
@@ -57,17 +59,8 @@ If Request("act") = "userlist" Then
             Else
                 sHr = "," 
             End If  
-
-            if rs("level")=1 then
-                level="超级管理员"
-            elseif rs("level")=2 then
-                level="普通管理员"
-            elseif rs("level")=3 then
-                level="审核员"
-            elseif rs("level")=4 then
-                level="编辑人员"
-            end if
-            stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""username"":""" & rs("userName") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""level"":""" & level & """,""createTime"":""" & rs("createTime") & """,""isthrough"":""" & IIF(rs("isThrough")=0,"未审核","已审核") & """}" &sHr & "" 
+ 
+            stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""username"":""" & rs("username") & """,""nickname"":""" & rs("nickname") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""level"":""" & splxx(rs("level")) & """,""createTime"":""" & rs("createTime") & """,""grouping"":""" & rs("grouping") & """,""permission"":""" & rs("permission") & """,""isthrough"":""" & IIF(rs("isThrough")=0,"未审核","已审核") & """}" &sHr & "" 
 
             rs.MoveNext 
         Wend 
@@ -81,12 +74,13 @@ If Request("act") = "userlist" Then
 
 elseif request("act")="del" then 
     if userrs("pwd")<>mymd5(request("pwd")) then
-        response.write "{""info"": ""验证密码错误，删除失败"",""status"": ""n""}"
-    else
+        call die("{""info"": ""验证密码错误，删除失败"",""status"": ""n""}")
+    elseif userrs("level")<>1 then
+        call die("{""info"": ""只有超级管理员才可操作，删除失败"",""status"": ""n""}")
+    else 
         conn.execute"delete from ["& db_PREFIX &"admin] where id="&request("id")
-        response.write "{""info"": ""删除成功"",""status"": ""y""}"
+        call die("{""info"": ""删除成功"",""status"": ""y""}")
     end if
-    Response.end()
 
 End If 
 
@@ -151,9 +145,12 @@ layui.use('table', function() {
 
                 { field: 'i', title: '序列', width: 80, sort: true }
                 , { field: 'username', title: '登录名',minWidth:90, sort: false }
+                , { field: 'nickname', title: '昵称',minWidth:90, sort: false }
                 , { field: 'tel', title: '手机',width:120, sort: false } 
                 , { field: 'email', title: '邮箱',width:120, sort: false }
-                , { field: 'level', title: '角色',width:100, sort: false }
+                , { field: 'level', title: '角色',width:100, sort: true }
+                , { field: 'grouping', title: '分组',width:100, sort: true }
+                , { field: 'permission', title: '权限列表',width:100, sort: true }
                 , { field: 'isthrough', title: '审核状态',width:100,sort: false }
                 , { field: 'createTime', title: '加入时间',width:160, sort: true }
                 , { fixed: 'right', title: '操作', width: 150, toolbar: '#barDemo' }
@@ -210,13 +207,13 @@ layui.use('table', function() {
                         dataType: "json",
                         url: "?act=del",
                         data: { "id": pid,"pwd":value }, 
-                        success: function(data) { 
+                        success: function(data) {                  
+                            layer.msg(data.info);
                             switch (data.status) {
                                 case "y":
                                     obj.del();
                                     break;
-                                case "n":                                    
-                                    layer.msg(data.info);
+                                case "n":                   
                                     break;
                             }
                         }

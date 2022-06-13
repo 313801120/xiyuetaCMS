@@ -1,47 +1,50 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
+'#禁止自动更新当前文件'  #号去掉代表此文件不被程序自动更新替换掉
 call openconn()  
-dim msg,isTrue,addSql,id,title,isthrough,bodyContent
+dim msg,isTrue,addSql,id,title,bodycontent,smallimage
 
 id=request("id")
-title=request("title")                    '标题' 
-bodyContent=request("bodyContent")                    '内容' 
-isthrough=request("isthrough")            '审核'  
-isthrough=IIF(isthrough="on",1,0)         '处理下'
+title=request("title")
+bodycontent=request("bodycontent")
+smallimage=request("smallimage")
+
 
 '添加修改
 if request("act")="save" then
-  isTrue=true 
+  isTrue=true
   if isTrue=true then
-    addsql=" where title='"& title &"'"
+    addsql=" WHERE title=''"
     if id<>"" then
-      addsql=addsql & " and id<>"&id
+      addsql=addsql & " AND id<>"&id
     end if
-    rs.open"select * from ["& db_PREFIX &"OnePage]"&addsql,conn,1,3
+    addsql=" WHERE id=-1"
+    rs.open"select * from ["& db_PREFIX &"onepage]"&addsql,conn,1,3
     if not rs.eof then
-      msg="栏目名称已经存在"
+      msg="已经存在"
     else
       if id="" then
         rs.addnew
       else
         rs.close
-        rs.open"select * from ["& db_PREFIX &"OnePage] where id="&id,conn,1,3
+        rs.open"select * from ["& db_PREFIX &"onepage] where id="&id,conn,1,3
       end if 
-      rs("title")=title  
-      rs("bodyContent")=bodyContent  
-      rs("isthrough")=isthrough  
+      rs("title")=title
+      rs("bodycontent")=bodycontent
+      rs("smallimage")=smallimage
+
       rs.update 
-      response.Write"<script>parent.location.reload();</script>"
-      response.end()
+      call die("<script>parent.location.reload();</script>")
     end if:rs.close 
   end if
 '显示
 elseif id<>"" then
-  rs.open"select * from ["& db_PREFIX &"OnePage] where id="&id,conn,1,1
+  rs.open"select * from ["& db_PREFIX &"onepage] where id="&id,conn,1,1
   if not rs.eof then
-    id=rs("id") 
-    title=rs("title")    
-    bodyContent=rs("bodyContent")    
-    isthrough=rs("isthrough")  
+    id=rs("id")
+    title=rs("title")
+    bodycontent=rs("bodycontent")
+    smallimage=rs("smallimage")
+
   end if
 end if
  
@@ -51,7 +54,7 @@ end if
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>添加修改文章</title> 
+<title>添加修改</title> 
  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  /> 
 </head>
 <body>  
@@ -60,29 +63,29 @@ end if
 
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save&id=<%=id%>">
   <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
-        
-    <div class="layui-form-item">
-      <label class="layui-form-label">标题</label>
-      <div class="layui-input-inline">
-        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>">
-      </div>
-    </div>
 
 
-    <div class="layui-form-item">
-      <label class="layui-form-label">内容</label>
-      <div class="layui-input-block">
-        <textarea name="bodyContent" placeholder="请输入简要说明" class="layui-textarea"><%=bodyContent%></textarea>
+   
+       <div class='layui-form-item'>
+      <label class='layui-form-label'>标题</label>
+      <div class='layui-input-inline'>
+        <input type='text' name='title' placeholder='请输入标题' autocomplete='off' class='layui-input' value="<%=title%>">
       </div>
     </div>
-  
-    <div class="layui-form-item">
-      <label class="layui-form-label">审核状态</label>
-      <div class="layui-input-inline">
-        <input type="checkbox" lay-filter="switch" name="isThrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isThrough=0,""," checked")%>>
+    <div class='layui-form-item'>
+      <label class='layui-form-label'>内容</label>
+      <div class='layui-input-block'>
+    <textarea name='bodycontent' <%=IIF(request("editor")<>"no"," id='bodycontent'style='display:none;'"," rows='10'")%> placeholder='请输入简要说明' class='layui-textarea'><%=bodycontent%></textarea><%if request("editor")<>"no" then%><a href="?editor=no&id=<%=id%>">不显示编辑器</a><%end if%>
       </div>
-    </div>  
+    </div>
+    <div class='layui-form-item'>
+      <label class='layui-form-label'>图片</label>
+      <div class='layui-input-inline'>
+        <input type='text' name='smallimage' placeholder='请输入图片' autocomplete='off' class='layui-input' value="<%=smallimage%>">
+      </div>
+<button style='float: left;' type='button' class='layui-btn' id='layuiadmin-upload-useradmin'>上传图片</button>     </div>
  
+
  
 
     <div class="layui-form-item layui-hide">
@@ -111,6 +114,14 @@ layui.config({
         }
     });
 
+    upload.render({
+        elem: '#layuiadmin-upload-useradmin2',
+        url: '/api/upload/',
+        done: function(res) {
+            $(this.item).prev("div").children("input").val(res.data.src)
+        }
+    });
+
     lay('.date').each(function() {
         laydate.render({
             elem: this,
@@ -128,7 +139,7 @@ layui.config({
             ,type: 'post' //默认post 
         }
     });
-    layedit.build('bodyContent');   //建立编辑器
+    layedit.build('bodycontent');   //建立编辑器
 
 })
 

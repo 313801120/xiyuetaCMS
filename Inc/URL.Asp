@@ -1224,7 +1224,7 @@ function handleRemoteJsCssParam(content, urlList, sType)
             fileName = arrData(2) 
             fileType = LCase(arrData(3)) 
             fileStr = LCase(arrData(4)) 
-            if(fileType = "js" or fileType = "css") and inStr(fileStr, "?") > 0 and instr(fileName, ".") > 0 then
+            if (fileType = "js" or fileType = "css") and inStr(fileStr, "?") > 0 and instr(fileName, ".") > 0 then
                 replaceStr = mid(url, 1, inStr(url, "?") - 1) 
                 'call echo(replaceStr,fileStr)
                 '这种替换方法还是不精准，待改进
@@ -1431,7 +1431,7 @@ function handleWithWebSiteList(httpurl, urllist)
             if right(url, 1) <> "/" and instr(url, "?") = 0 then
                 s = mid(url, instrrev(url, "/")) 
                 'call echo("s",s)
-                if(instr(s, ".") = 0 or instr(s, ".com") > 0 or instr(s, ".cn") > 0 or instr(s, ".net") > 0) and instr(s, "@") = 0 then
+                if (instr(s, ".") = 0 or instr(s, ".com") > 0 or instr(s, ".cn") > 0 or instr(s, ".net") > 0) and instr(s, "@") = 0 then
                     url = url & "/" 
                 end if 
             'call echo("url",url)

@@ -1,0 +1,18 @@
+【parentid】新闻资讯>公司新闻
+【title】免费搭建一个网站？如何做网站？
+【author】xiyueta
+【smallimage】/UploadFiles/testpic/xiyuetafz.jpg
+【createtime】2021/11/22 9:14:19
+【bodycontent】
+[&全部换行&]
+xiyuetaCMS系统是一款免费、开源、轻便、安全、专业建站、PC+手机+微信+响应式网站，解决您所有建站问题
+
+想知道如何免费搭建一个网站，下面为您介绍：
+
+第一步：到官网下载免费的程序【下载地址：http://xiyueta.com/case】
+第二步：安装xiyuetaCMS系统程序
+第三步：浏览器输入域名，打开访问
+是不是很简单，这样您就已经搭建好一个免费的网站了！如果您还想获取更多的行业精美模板的，<a href='http://xiyueta.com/case'>点击获取>></a>
+
+【/bodycontent】
+-------------------------------

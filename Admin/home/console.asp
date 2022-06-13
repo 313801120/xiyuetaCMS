@@ -6,20 +6,20 @@ dim totalVisits,dayVisits,sql,chatTotalVisits,chatDayVisits,activeUser,totalUser
 rs.open"select sum(pv)as tpv from ["&db_PREFIX&"count]",conn,1,1
 totalVisits=IIF(isnull(rs("tpv"))=true,0,rs("tpv")):rs.close
 '当前访问量'
-rs.open"select sum(pv)as tpv from ["&db_PREFIX&"count] where datediff('d',intime,now())=0",conn,1,1
-dayVisits=IIF(isnull(rs("tpv"))=true,0,rs("tpv")):rs.close
+rs.open"select sum(pv)as tpv from ["&db_PREFIX&"count] where "& getAccessDatediff("intime")&"=0",conn,1,1
+dayVisits=IIF(isnull(rs("tpv"))=true,0,rs("tpv")):rs.close 
 
 '留言总条数'
 chatTotalVisits=conn.execute("select count(*) from["&db_PREFIX&"GuestBook]")(0)
 '留言当天数'
-chatDayVisits=conn.execute("select count(*) from["&db_PREFIX&"GuestBook] where datediff('d',createTime,now())=0")(0)
+chatDayVisits=conn.execute("select count(*) from["&db_PREFIX&"GuestBook] where "& getAccessDatediff("createtime")&"=0")(0)
 '文章'
-narticlM=conn.execute("select count(*) from["&db_PREFIX&"ArticleDetail] where datediff('m',createTime,now())=0")(0)
+narticlM=conn.execute("select count(*) from["&db_PREFIX&"ArticleDetail] where "& getAccessDatediffMonth("createtime")&"=0")(0)
 naritcleCount=conn.execute("select count(*) from["&db_PREFIX&"ArticleDetail]")(0)
  
 '活跃用户'
-activeUser=conn.execute("select count(*) from["&db_PREFIX&"member] where datediff('yyyy',loginTime,now())=0")(0)
-'总用户'
+activeUser=conn.execute("select count(*) from["&db_PREFIX&"member] where "& getAccessDatediffYear("loginTime")&"=0")(0)
+'总用户' 
 totalUser=conn.execute("select count(*) from["&db_PREFIX&"member]")(0)
 %>
 <!DOCTYPE html>
@@ -146,6 +146,8 @@ totalUser=conn.execute("select count(*) from["&db_PREFIX&"member]")(0)
           </div>
         </div>
       </div>
+
+
       <div class="layui-col-sm4">
         <div class="layui-card">
           <div class="layui-card-header">用户留言</div>
@@ -159,7 +161,7 @@ totalUser=conn.execute("select count(*) from["&db_PREFIX&"member]")(0)
               <li>
                 <h3><%=rs("guestName")%></h3>
                 <p><%=rs("bodycontent")%></p>
-                <span><%=format_Time(rs("createTime"),25)%></span>
+                <span><%=rs("createTime")%></span>
                 <a href="javascript:;" layadmin-event="replyNote" data-id="7" class="layui-btn layui-btn-xs layuiadmin-reply">回复</a>
               </li>
 <%rs.movenext:wend:rs.close%> 

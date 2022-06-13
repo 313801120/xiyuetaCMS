@@ -1,5 +1,6 @@
 ﻿<% 
 '添加于 20160203
+ 
 
 '获取浏览器类型(可以判断:47种浏览器;GoogLe,Grub,MSN,Yahoo!蜘蛛;十种常见IE插件)  Response.Write getBrType("")
 function getBrType(theInfo)
@@ -7,6 +8,8 @@ function getBrType(theInfo)
     s = "Other Unknown" 
     if theInfo = "" then
         theInfo = uCase(request.serverVariables("HTTP_USER_AGENT")) 
+    else
+        theInfo=uCase(theInfo)
     end if 
     if inStr(theInfo, uCase("mozilla")) > 0 then s = "Mozilla" 
     if inStr(theInfo, uCase("icab")) > 0 then s = "iCab" 

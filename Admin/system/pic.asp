@@ -112,6 +112,16 @@
 </head>
 
 <body style="background-color:#f5f5f5">
+	<%
+dim filePath
+if request("act")="del" then
+	filePath="../../UploadFiles/img/" & getFileAttr(request("pic"),"name")
+	if checkFile(filePath) then
+		call echo("删除文件成功",filePath)
+		call deleteFile(filePath)
+	end if
+end if 
+%>
 
 <% 
 dim fpath,objFSO,objfolder,picArr,picbegin,pageSize,page,objfile,picnum,i,m,thispageend,img_html,pageCount,usezt,isuse,page_html

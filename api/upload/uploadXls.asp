@@ -14,7 +14,7 @@ dim request2,formPath,formName,intCount,intTemp
 set request2=new UpLoadClass
 
 	'设置文件允许的附件类型为gif/jpg/rar/zip
-	request2.FileType="gif/jpg/png/jpeg/xls/xlsx"
+	request2.FileType="txt/dat/xls/xlsx"
 
 	'设置服务器文件保存路径
 	request2.SavePath="../../UploadFiles/xls/"

@@ -6,8 +6,8 @@ if request("act")="save" then
     userrs("sex")=request("sex")
     userrs("email")=request("email")
     userrs("tel")=request("tel")
-    userrs("bodycontent")=request("bodycontent")
     userrs("pic")=request("pic")
+    userrs("bodycontent")=request("bodycontent")
     userrs.update        
     call addSystemLog("admin","设置我的资料",userRs("username"))  '记录操作日志'
     
@@ -49,7 +49,7 @@ end if
               <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="username" value="<%=userrs("userName")%>" readonly class="layui-input" style="background-color:#F2F2F2;">
+                  <input type="text" name="username" value="<%=userrs("username")%>" readonly class="layui-input" style="background-color:#F2F2F2;">
                 </div>
                 <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
               </div>

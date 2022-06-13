@@ -1,317 +1,503 @@
 <!--#Include file = "inc/config.asp"-->
+<!--#Include file = "website.asp"-->
 <%
 
-'不同IP显示不同内容'
-' if getIP()<>"127.0.0.1" then
-' 	MDBPath = "/data/data_" & getIP() &".mdb" 
-' 	if checkFile(MDBPath)=false then
-' 		call copyFile("/data/data.mdb",MDBPath)
-' 	end if
-' end if
 
 call openconn()
-dim nav,i,j,webTitle,webKeywords,webDescription,webLogo,webQrcode,id,bodyContent,parentId,copyright,webSiteBottom,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,smallImage,views
-dim addSql,bannerimage
-id=request("id")
+dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,webcompanyen
+dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess
+asporhtml=true   '静态网页为真'0为asp 1为html
+onAutoAddDataToAccess=true  '开启自动添加数组到数据库里(主要是对onepage操作)20220602'
 
-rs.open "select * from " & db_PREFIX & "WebSite" ,conn,1,1
+
+dim sKeyword
+sKeyword=replace(request("k"),"'","")'搜索'
+
+id=replace(request("id"),"'","")
+' if id<>"" then call eerr("id",id)
+'读网站信息'
+rs.open "select * from " & db_PREFIX & "website" ,conn,1,1
 if not rs.eof then
-	webTitle=rs("webTitle")					'网页标签'
-	webKeywords=rs("webKeywords")			'网页关键词'
-	webDescription=rs("webDescription")		'网页描述'
-	webSiteBottom=rs("webSiteBottom")		'网页底部'
-	copyright=rs("copyright")				'网站版权'
-	webLogo=rs("logo")						'网站logo'
-	webQrcode=rs("qrcode")					'网站二维码'
+  webtitle=uTitle & rs("webtitle")       '网页标题'(前面加个地区信息)
+  webkeywords=rs("webkeywords")          '网页关键词'  
+  webdescription=rs("webdescription")    '网页描述'
+  webfoot=rs("webfoot")                  '网页底部'
+  webcopyright=rs("copyright")           '网站版权'
+  weblogo=rs("logo")                     '网站logo' 
+  webqrcode=rs("qrcode")                 '网站二维码'
+  webqq=rs("qq")                         '网站QQ'
+  webphone=rs("phone")                   '网站手机号'
+  webtel=rs("tel")                       '网站电话'
+  webfax=rs("fax")                       '网站传真'
+  webweixin=rs("weixin")                 '网站微信'
+  webemail=rs("email")                   '网站邮箱'
+  webaddress=rs("address")               '公司地址'
+  webcompany=rs("company")               '公司名称'
+  webcompanyen=rs("companyen")           '公司英文名称'
+  asporhtml=IIF(rs("asporhtml")=0,false,true)              '静态网页为真'0为asp 1为html
+  ' call echo("asporhtml",asporhtml)
 end if:rs.close
+
+'获得网站底部，为默认的时候则更新20220327'
+function getWebFoot(defaultContent)
+  if instr(webfoot,"地址：某某市某某区某某路")>0 and onAutoAddDataToAccess=true then  '自动更改数据为真则操作'
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    rs.open "select webfoot from " & db_PREFIX & "WebSite" ,conn,1,3
+    if not rs.eof then
+      rs("webfoot")=defaultContent
+      rs.update:rs.close
+      getWebFoot=defaultContent
+    end if
+  else
+    getWebFoot=webfoot
+  end if  
+end function
+'获得网站二维码，为空时时候则更新20220327'
+function getWebQrcode(defaultContent)
+  if webqrcode="" and onAutoAddDataToAccess=true then  '自动更改数据为真则操作'
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    rs.open "select qrcode from " & db_PREFIX & "website" ,conn,1,3
+    if not rs.eof then
+      rs("qrcode")=defaultContent
+      rs.update:rs.close
+      getWebQrcode=defaultContent
+    end if
+  else
+    getWebQrcode=webqrcode
+  end if  
+end function
 
 
 thisUrlFileName=lcase(request.serverVariables("script_name"))
 if instr(thisUrlFileName,"/")>0 then
-	thisUrlFileName=mid(thisUrlFileName,instrrev(thisUrlFileName,"/")+1)
+  thisUrlFileName=mid(thisUrlFileName,instrrev(thisUrlFileName,"/")+1)
 end if
+
+if request("nav")<>"" then
+  pageUrl=getNavNameToUrl("",request("nav"))  
+  ' call echo(request("nav"),getNavNameToID("","首页"))
+  ' call eerr("pageUrl",pageUrl)
+  if pageUrl<>"" then
+    if sKeyword<>"" then pageUrl=pageUrl & "&k=" & sKeyword
+    response.redirect( pageUrl) '跳转网址
+  end if
+
 '为文章详细内容页'
-if thisUrlFileName="detail.asp" then
-    rs.open "select * from " & db_PREFIX & "ArticleDetail where id=" & id ,conn,1,3
+elseif thisUrlFileName="detail.asp" then
+  pageType="detail"
+  rs.open "select * from " & db_PREFIX & "articledetail where id=" & id ,conn,1,3
     if not rs.eof then
-        rs("views")=rs("views")+1	'浏览次数'
+        rs("views")=rs("views")+1  			   '浏览次数'
         rs.update
-    	parentId=rs("parentId")
-        title=rs("title")
-        bodyContent=rs("bodyContent")
-        createTime=rs("createTime")
-        smallImage=rs("smallImage")
-        author=rs("author")
-        views=rs("views")
-        rsx.open "select * from " & db_PREFIX & "WebColumn where id=" & rs("parentId") ,conn,1,1
+      	parentid=rs("parentid")            '上一级栏目ID'
+        title=uTitle & rs("title")         '标题(前面加个地区信息)'
+        aboutcontent=rs("aboutcontent")    '文章介绍'
+        bodycontent=rs("bodycontent")      '文章内容'
+        createtime=rs("createtime")        '文章创建时间'
+        smallimage=rs("smallimage")        '文章小图'
+        bigimage=rs("bigimage")            '文章大图'
+        author=rs("author")                '文章作者'
+        views=rs("views")                  '文章浏览量'
+
+        if rs("title")<>"" then webtitle=uTitle & rs("title")                   '网页标题(前面加个地区信息)'
+        if rs("webtitle")<>"" then webtitle=rs("webtitle")                      '网页标题'
+        if rs("webkeywords")<>"" then webkeywords=rs("webkeywords")             '网页关键词'
+        if rs("webdescription")<>"" then webdescription=rs("webdescription")    '网页描述'
+
+        rsx.open "select * from " & db_PREFIX & "Webcolumn where id=" & rs("parentid") ,conn,1,1
         if not rsx.eof then
-        	navId=rsx("id")
-        	nav=getRootNavName(rsx("id"))
-	        columnName=rsx("columnName")
-	        columnEnName=rsx("columnEnName")
-	        columnType=rsx("columnType")
+          navid=rsx("id")                         '栏目ID'
+          nav=getRootNavName(rsx("id"))           '主栏目名称'
+          ennav=getRootNavEnName(rsx("id"))       '主栏目英文名'
+          columnname=rsx("columnname")            '当前栏目名称'
+          columnenname=rsx("columnenname")        '当前栏目英文名'
+          columntype=rsx("columntype")            '当前栏目类型'
+          webfilename=rsx("filename")             '当前网站文件名'
         end if:rsx.close
-    end if:rs.close	
+    end if:rs.close  
 
 elseif id<>"" then
-    rs.open "select * from " & db_PREFIX & "WebColumn where id=" & id ,conn,1,1
+  pageType="column"
+  rs.open "select * from " & db_PREFIX & "webcolumn where id=" & id ,conn,1,1
     if not rs.eof then
-    	parentId=rs("parentId")
-    	navId=rs("id")
-        nav=getRootNavName(rs("id"))
-        columnName=rs("columnName")
-        columnEnName=rs("columnEnName")
-        columnType=rs("columnType")
-        bodyContent=rs("bodyContent")
+      parentid=rs("parentid")                '上一级栏目ID'
+      navid=rs("id")                         '当前栏目ID'
+      nav=getRootNavName(rs("id"))           '主栏目名称'
+      ennav=getRootNavEnName(rs("id"))       '主栏目英文名'
+      columnname=rs("columnname")            '当前栏目名称'
+      columnenname=rs("columnenname")        '当前栏目英文名'
+      columntype=rs("columntype")            '当前栏目类型'
+      webfilename=rs("filename")             '当前网站文件名'
+      aboutcontent=rs("aboutcontent")        '栏目介绍'
+      bodycontent=rs("bodycontent")          '栏目内容'
+        
+      if rs("columnname")<>"" then webtitle=uTitle & rs("columnname")          '网页标题等于栏目名(前面加个地区信息)'
+      if rs("webtitle")<>"" then webtitle=uTitle & rs("webtitle")              '网页标题等于栏目自定标题(前面加个地区信息)'
+      if rs("webkeywords")<>"" then webkeywords=rs("webkeywords")              '网页关键词'
+      if rs("webdescription")<>"" then webdescription=rs("webdescription")     '网页描述'
     end if:rs.close
+
 end if
 '导航ID不为空'
-if navId<>"" then
-	bannerimage=getNavBannerImage(navId)
-	if bannerimage="" then bannerimage="/UploadFiles/testpic/ad.jpg"		'默认banner'
+if navid<>"" then
+  bannerimage=getNavBannerImage(navid)
+  if bannerimage="" then bannerimage="/UploadFiles/testpic/ad.jpg"    '默认banner'
 end if
 '获得导航URL'
-if columnType<>"" then
-	pageUrl=getNavUrl(navId,columnType)
+if columntype<>"" then
+  pageUrl=getNavUrl(navid,columntype)
 end if
 
-'获得导航banner图片'  从后往前拿banner
+'获得导航banner图片'  从小类往大类的banner图片，直到找到就停止
 function getNavBannerImage(id)
-	if id="" then getNavBannerImage="": exit function
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select * from ["& db_PREFIX &"WebColumn] where id="&id,conn,1,1
-	if not rs.eof then
-		if rs("bannerimage")<>"" then
-			getNavBannerImage=rs("bannerimage")
-			exit function
-		elseif rs("parentId")<>-1 then
-			getNavBannerImage=getNavBannerImage(rs("parentId"))
-		end if
-	end if:rs.close
+  if id="" then getNavBannerImage="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&id,conn,1,1
+  if not rs.eof then
+    if rs("bannerimage")<>"" then
+      getNavBannerImage=rs("bannerimage")
+      exit function
+    elseif rs("parentid")<>-1 then
+      getNavBannerImage=getNavBannerImage(rs("parentid"))
+    end if
+  end if:rs.close
 end function
 
-'获得导航URL'
-function getNavUrl(navId,navType)
-	dim url
-	if navId<>"" then
-		dim rs:Set rs = CreateObject("Adodb.RecordSet")
-		rs.open "select * from ["& db_PREFIX &"WebColumn] where id="&navId,conn,1,1
-		if not rs.eof then
-			if rs("httpurl")<>"" then
-				getNavUrl=rs("httpurl")
-				exit function
-			end if
-		end if:rs.close
-	end if
 
-	if navType="首页" then
-		url="./"
-	elseif navType="文本" then
-		url="about.asp?id="&navId
-	elseif navType="新闻" then
-		url="news.asp?id="&navId
-	elseif navType="产品" then
-		url="products.asp?id="&navId
-	end if
-	getNavUrl=url
-end function
 '是否为选择导航foucs'
 function isFocusNav(rs)
-	if rs("columnType")="首页" and nav="" then
-		isFocusNav=true
-	elseif nav=rs("columnName") then	
-		isFocusNav=true
-	end if
+  if rs("columntype")="home" and nav="" then
+    isFocusNav=true
+  elseif nav=rs("columnname") then  
+    isFocusNav=true
+  end if 
 end function
 '网站当前位置'
-function navLocation(navId,c)
-	dim parentId,s:parentId=-1
-	if navId="" then navLocation="": exit function
-	rs.open "select * from " & db_PREFIX & "WebColumn where id=" & navId ,conn,1,1
-	if not rs.eof then
-		parentId=rs("parentId")
-		s=rs("columnName")
-		if c<>"" then s="<a href='"& getNavUrl(rs("id"),rs("columnType")) &"'>"& s &"</a>"
-		c=s & " > " & c
-	end if:rs.close
-	if parentId<>-1 then
-		call navLocation(parentId,c)
-	else
-		c="<a href='./'>首页</a> > "+c
-	end if
-	navLocation=c
+function navLocation(navid,c)
+  dim parentid,s:parentid=-1
+  if navid="" then navLocation="": exit function
+  rs.open "select * from " & db_PREFIX & "webcolumn where id=" & navid ,conn,1,1
+  if not rs.eof then
+    parentid=rs("parentid")
+    s=uTitle&rs("columnName")
+    if c<>"" then s="<a href='"& getNavUrl(rs("id"),rs("columnType")) &"'>"& s &"</a>"'前面/去掉了'
+    c=s & " > " & c
+  end if:rs.close
+  if parentid<>-1 then
+    call navLocation(parentid,c)
+  else
+    c="<a href='./'>首页</a> > "+c       '前面加个点0220525
+  end if
+  navLocation=c
 end function
-'获得导航字符转URL'   getNavNameToUrl("","产品中心>2020产品")
-function getNavNameToUrl(parentId,c)
-	dim sql,columnName,id,columnType,url
-	if parentId="" then parentId=-1
-	columnName=c
-	if instr(c,">")>0 then
-		columnName=mid(c,1,instr(c,">")-1)
-		c=mid(c,instr(c,">")+1)
-	else
-		columnName=c
-		c=""
-	end if
+'获得导航URL'
+function getNavUrl(navid,navtype)
+  dim url,id
+  id=navid
+  if navid<>"" then
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&navid,conn,1,1
+    if not rs.eof then
+      id=navid
+      if rs("filename")<>"" then           '文件名不为空则URL为文件名
+        getNavUrl=rs("filename")
+        exit function
+      elseif rs("httpurl")<>"" then        '网址不为空则URL为网址'
+        getNavUrl=rs("httpurl")
+        exit function
+      end if
+      navtype=rs("columntype")             '类目类型更新20220410'
+    end if:rs.close
+  end if
 
-		sql="select * from " & db_PREFIX & "WebColumn where parentId="& parentId &" and columnName='"& columnName &"'"
+  if navtype="home" then
+    url="./"
+  elseif navtype="text" then               '这个是自定义，系统已经设置好了
+    if asporhtml=true then
+      url="about_" & id &  ".html"
+    else
+      url="about.asp?id="&id
+    end if
+  elseif asporhtml=true then
+    url=navtype & "_" & id &  ".html"
 
-		' call echo("sql",sql):doevents
-		rs.open sql ,conn,1,1
-		if not rs.eof then
-			parentId=rs("id")
-			id=rs("id")
-			columnType=rs("columnType")
-		end if:rs.close
-		' call echo(c,"有"):doevents
-		if c<>"" then
-			url=getNavNameToUrl(parentId,c)
-		else
-			url=getNavUrl(id,columnType) 
-		end if
-		getNavNameToUrl=url
+
+  else
+    url=navtype & ".asp?id="&id
+  end if
+  getNavUrl=url
+end function
+'获得导航URL不处理httpurl和filename字段'
+function getNavGoToUrl(navid,navtype)
+  dim url
+  if navid<>"" then
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&navid,conn,1,1
+    if not rs.eof then      
+      navtype=rs("columntype") '类目类型更新20220410'
+    end if:rs.close
+  end if
+
+  if navtype="home" then
+    url="./"
+  elseif navtype="text" then
+    url="about.asp?id="&navid
+  else
+    url=navtype & ".asp?id="&navid
+  end if
+  getNavGoToUrl=url
+end function
+'获得文章链接 重写于20220524
+function getArticleUrl(id) 
+  dim dirName,parentid
+  if id="" then getArticleUrl="": exit function
+
+
+  '动态网页处理'
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  rs.open "select * from ["& db_PREFIX &"articledetail] where id="&id,conn,1,1
+  if not rs.eof then
+    if rs("filename")<>"" then           '文件名不为空则URL为文件名
+        getArticleUrl=rs("filename")
+        exit function
+    end if
+    parentid=id
+  end if:rs.close
+
+  '为动态网站时，直接显示㚃'
+  if asporhtml=false then
+    getArticleUrl="detail.asp?id="&id
+    exit function
+  end if
+
+  '栏目目录 文件名称不为空'
+  if parentid<>"" then
+    rs.open "select * from ["& db_PREFIX &"webcolumn] where filename<>'' and id="&parentid,conn,1,1
+    if not rs.eof then      
+      dirName=rs("filename") & "/"'目录名'
+    end if:rs.close
+  end if 
+  getArticleUrl=dirName & "detail_"& id &".html"
+end function
+ 
+
+'获得导航字符转URL'   getNavNameToUrl("","产品中心>2020产品")  
+function getNavNameToUrl(parentid,c)
+  getNavNameToUrl=getNavUrl(getNavNameToID(parentid,c),"")
 end function
 '获得导航字符转ID'     如   getNavNameToID("","产品中心>2020产品")
-function getNavNameToID(parentId,c)
-	dim sql,columnName,id,columnType,newID
-	if parentId="" then parentId=-1
-	columnName=c
-	if instr(c,">")>0 then
-		columnName=mid(c,1,instr(c,">")-1)
-		c=mid(c,instr(c,">")+1)
-	else
-		columnName=c
-		c=""
-	end if
-		sql="select * from " & db_PREFIX & "WebColumn where parentId="& parentId &" and columnName='"& columnName &"'"
-		' call echo("sql",sql):doevents
-		rs.open sql ,conn,1,1
-		if not rs.eof then
-			parentId=rs("id")
-			id=rs("id")
-			columnType=rs("columnType")
-		end if:rs.close
-		' call echo(c,"有"):doevents
-		if c<>"" then
-			newID=getNavNameToID(parentId,c)
-		else
-			newID=id
-		end if
-		getNavNameToID=newID
+function getNavNameToID(parentid,c)
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim sql,columnname,id,newid,addsql
+  ' if parentid="" then parentid=-1     '这个不要'
+  columnname=c
+  if instr(c,">")>0 then
+    columnname=mid(c,1,instr(c,">")-1)
+    c=mid(c,instr(c,">")+1)
+  else
+    columnname=c
+    c=""
+  end if
+  if parentid<>"" then addsql=" and parentid="& parentid &""
+  sql="select * from " & db_PREFIX & "webcolumn where  columnname='"& columnname &"'"&addsql
+  ' call echo("sql",sql):doevents
+  rs.open sql ,conn,1,1
+  if not rs.eof then 
+    id=rs("id") 
+  end if:rs.close
+  ' call echo(c,"有"):doevents
+  if c<>"" and id<>"" then
+    newid=getNavNameToID(id,c)
+  else
+    newid=id
+  end if
+  getNavNameToID=newid
 end function
 
 '获得全部栏目ID列表 20210321  如1,4,5,6,2,6,8,9
 function getColumAllID(parentid)
-	if parentid="" then getColumAllID="": exit function
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	dim c,s
-	rs.open "select * from ["& db_PREFIX &"WebColumn] where parentId="&parentid,conn,1,1
-	while not rs.EOF 
-		if c<>"" then c=c & ","
-		c=c & rs("id")
-		s=getColumAllID(rs("id"))
-		if s<>"" then
-			c=c & "," & s
-		end if
-	rs.movenext:wend:rs.close
-	getColumAllID=c
+  if parentid="" then getColumAllID="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where parentid="&parentid,conn,1,1
+  while not rs.EOF 
+    if c<>"" then c=c & ","
+    c=c & rs("id")
+    s=getColumAllID(rs("id"))
+    if s<>"" then
+      c=c & "," & s
+    end if
+  rs.movenext:wend:rs.close
+  getColumAllID=c
 end function
 '根据栏目名称获得全部子类id'   20210531
 function getNameToAllId(name)
-	dim id
-	id=getNavNameToID("",name)
-	if id<>"" then
-		idList=getColumAllID(id)
-		if idList<>"" then
-			getNameToAllId=id & "," & idList
-		else
-			getNameToAllId=id
-		end if
-	end if
+  dim id,s
+  s=name
+  id=getNavNameToID("",s)
+  if id<>"" then
+    idList=getColumAllID(id)
+    if idList<>"" then
+      getNameToAllId=id & "," & idList
+    else
+      getNameToAllId=id
+    end if
+  else
+    getNameToAllId="-2"'-2为找不到内容'
+  end if
 end function
 
 '获得主导航名称
 function getRootNavName(id)
-	if id="" then getRootNavName="": exit function
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	dim c,s
-	rs.open "select * from ["& db_PREFIX &"WebColumn] where id="&id,conn,1,1
-	while not rs.EOF
-		if rs("parentId")=-1 then
-			getRootNavName=rs("columnName")
-			exit function
-		else
-			getRootNavName=getRootNavName(rs("parentId"))
-		end if
-	rs.movenext:wend:rs.close
+  if id="" then getRootNavName="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&id,conn,1,1
+  while not rs.EOF
+    if rs("parentid")=-1 then
+      getRootNavName=rs("columnname")
+      exit function
+    else
+      getRootNavName=getRootNavName(rs("parentid"))
+    end if
+  rs.movenext:wend:rs.close
+end function
+
+'获得主栏目的说明内容20220531'
+function getnavabout(id)
+  if id="" then getnavabout="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&id,conn,1,1
+  while not rs.EOF
+    if rs("parentid")=-1 then
+      getnavabout=rs("aboutcontent")
+      exit function
+    else
+      getnavabout=getnavabout(rs("parentid"))
+    end if
+  rs.movenext:wend:rs.close
+end function
+
+'获得主导航英文名称
+function getRootNavEnName(id)
+  if id="" then getRootNavEnName="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&id,conn,1,1
+  while not rs.EOF
+    if rs("parentid")=-1 then
+      getRootNavEnName=rs("columnenname")
+      exit function
+    else
+      getRootNavEnName=getRootNavEnName(rs("parentid"))
+    end if
+  rs.movenext:wend:rs.close
 end function
 '获得主导航ID 20210529
 function getRootNavId(id)
-	if id="" then getRootNavId="": exit function
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	dim c,s
-	rs.open "select * from ["& db_PREFIX &"WebColumn] where id="&id,conn,1,1
-	while not rs.EOF
-		if rs("parentId")=-1 then
-			getRootNavId=rs("id")
-			exit function
-		else
-			getRootNavId=getRootNavId(rs("parentId"))
-		end if
-	rs.movenext:wend:rs.close
+  if id="" then getRootNavId="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"WebColumn] where id="&id,conn,1,1
+  while not rs.EOF
+    if rs("parentid")=-1 then
+      getRootNavId=rs("id")
+      exit function
+    else
+      getRootNavId=getRootNavId(rs("parentid"))
+    end if
+  rs.movenext:wend:rs.close
 end function
-'获得栏目主体内容20210531'
+'获得栏目内容20210531'
 function getColumBody(name,cutNumb)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select * from ["& db_PREFIX &"WebColumn] where columnName='"& name &"'",conn,1,1
-	if not rs.eof then
-		getColumBody=cutStr(rs("bodyContent"),cutNumb,"...")
-	end if:rs.close
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  rs.open "select * from ["& db_PREFIX &"WebColumn] where columnName='"& name &"'",conn,1,1
+  if not rs.eof then
+    getColumBody=cutStr(rs("bodycontent"),cutNumb,"...")
+  end if:rs.close
 end function
 
 '获得栏目ID'
 function getColumnId(name)
-	dim id
-	id=-1
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select id from ["& db_PREFIX &"WebColumn] where columnName='"& name &"'",conn,1,1
-	if not rs.eof then
-		id=rs("id")
-	end if:rs.close
-	getColumnId=id
+  dim id
+  id=-1
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  rs.open "select id from ["& db_PREFIX &"WebColumn] where columnName='"& name &"'",conn,1,1
+  if not rs.eof then
+    id=rs("id")
+  end if:rs.close
+  getColumnId=id
 end function
 
-'保存留言'
-function saveGuestBook()
-	dim guestName,title,content,tel
-	guestName=replace(request("guestName"),"<","&lt;")
-	title=replace(request("title"),"<","&lt;")
-	tel=replace(request("tel"),"<","&lt;")
-	content=replace(request("content"),"<","&lt;")
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select * from ["& db_PREFIX &"GuestBook]",conn,1,3
-	rs.addnew
-	rs("guestName")=guestName
-	rs("title")=title
-	rs("bodycontent")=content
-	rs("tel")=tel
-	rs.update:rs.close
-	saveGuestBook="留言成功！" & guestName 
+'获得单页内容，     cutStr("abcd",60,"...")
+function getOnePageBody(title,content)  
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c:c=content
+  rs.open"select * from ["& db_PREFIX &"onepage] where title='"& title &"'",conn,1,3
+  if not rs.eof then
+    c=rs("bodycontent")
+  else
+    if content<>"" and onAutoAddDataToAccess=true then  '自动更改数据为真则操作'
+      rs.addnew
+      rs("title")=title
+      rs("bodycontent")=content
+      rs.update
+      ' call echo("onAutoAddDataToAccess",onAutoAddDataToAccess)
+    end if
+  end if:rs.close
+  getOnePageBody=c
+end function
+'获得单页里图片20220521
+function getOnePageImage(title)  
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c 
+  rs.open"select * from ["& db_PREFIX &"onepage] where title='"& title &"'",conn,1,2
+  if not rs.eof then
+    c=rs("smallimage")   
+  end if:rs.close
+  getOnePageImage=c
+end function
+'获得上一页，下一页网址20220525'
+function getUpDownPageUrl(url,page)
+  if asporhtml=true then
+    if instr(url,".html")>0 then
+       getUpDownPageUrl=left(url,len(url)-5) & "_" & page & ".html" 
+    else
+       getUpDownPageUrl=page & ".html"
+    end if
+  else
+    getUpDownPageUrl=url & IIF(instr(url,"?")=false,"?","&")  & "page="&page &IIF(sKeyword<>"","&k="&sKeyword,"")
+  end if
 end function
 
-'获得单页内容，可截取字符值'
-function getOnePageBody(title,cutNumb)	
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open"select * from ["& db_PREFIX &"onePage] where title='"& title &"'",conn,1,1
-	if not rs.eof then
-		getOnePageBody=rs("bodyContent")
-		if cutNumb<>"" then
-			getOnePageBody=cutStr(getOnePageBody,cutNumb,"...")
-		end if
-	end if:rs.close
+'显示在线编辑 调用方法 call displayOnLineEdit(true)  网址后面加参数：?onlineedit=1'
+function displayOnLineEdit(isShow)
+  if isShow=true then
+    if request("onlineedit")<>"" then
+      call rw("<script src='http://xiyueta.com/js/online/'></script>")
+    end if
+  end if
 end function
-
-
-dim tel
-tel=getOnePageBody("联系电话","")
+'获得样式'
+function getStyle(httpurl)
+  dim c,nLen
+  c=gethttpurl(httpurl,"utf-8")
+  nLen=instr(c,"<body>")
+  if nLen>0 then
+    c=mid(c,nLen+6)
+  end if
+  nLen=instrRev(c,"</body>")
+  if nLen>0 then
+    c=mid(c,1,nLen-1)
+  end if
+  call rw(c)
+end function
+ 
+'地址不为区则替换网页标题，关键词，描述里,前面加上地区信息'
+if uTitle<>"" then
+  webTitle=uTitle & replace(replace(webTitle,",", ","&uTitle),"，", "，"&uTitle)                
+  webkeywords=uTitle & replace(replace(webkeywords,",",  "," & uTitle),"，", "，" &uTitle)
+  webdescription=uTitle & replace(replace(webdescription,",",  "," & uTitle),"，", "，" &uTitle)
+end if
 %>

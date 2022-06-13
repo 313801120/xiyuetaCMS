@@ -6,7 +6,7 @@ layui.define(["form", "upload"], function(t) {
         n = layui.form,
         s = layui.upload;
     i("body");
-    n.verify({ nickname: function(t, i) { return new RegExp("^[a-zA-Z0-9_一-龥\\s·]+$").test(t) ? /(^\_)|(\__)|(\_+$)/.test(t) ? "用户名首尾不能出现下划线'_'" : /^\d+\d+\d$/.test(t) ? "用户名不能全为数字" : void 0 : "用户名不能有特殊字符" }, pass: [/^[\S]{6,12}$/, "密码必须6到12位，且不能出现空格"], repass: function(t) { if (t !== i("#LAY_password").val()) return "两次密码输入不一致" } }), n.on("submit(set_website)", function(t) { return e.msg(JSON.stringify(t.field)), !1 }), n.on("submit(set_system_email)", function(t) { return e.msg(JSON.stringify(t.field)), !1 }), n.on("submit(setmyinfo)", function(t) { return e.msg(JSON.stringify(t.field)), !1 });
+    n.verify({ nickname: function(t, i) { return new RegExp("^[a-zA-Z0-9_一-龥\\s·]+$").test(t) ? /(^\_)|(\__)|(\_+$)/.test(t) ? "用户名首尾不能出现下划线'_'" : /^\d+\d+\d$/.test(t) ? "用户名不能全为数字" : void 0 : "用户名不能有特殊字符" }, pass: [/^[\S]{5,12}$/, "密码必须5到12位，且不能出现空格"], repass: function(t) { if (t !== i("#LAY_password").val()) return "两次密码输入不一致" } }), n.on("submit(set_website)", function(t) { return e.msg(JSON.stringify(t.field)), !1 }), n.on("submit(set_system_email)", function(t) { return e.msg(JSON.stringify(t.field)), !1 }), n.on("submit(setmyinfo)", function(t) { return e.msg(JSON.stringify(t.field)), !1 });
     var r = i("#LAY_avatarSrc");
 
 

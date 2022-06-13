@@ -172,9 +172,9 @@ sub loadRun()
     WEB_CACHEFile = replace(replace(WEB_CACHEFile, "[adminDir]", adminDir), "[EDITORTYPE]", EDITORTYPE) 
 
     '登录判断
-    if getSession("adminusername") = "" then
+    if getSession("adminusername") = "" And session("adminid")="" then
         if request("act") <> "" and request("act") <> "displayAdminLogin" and request("act") <> "login" then
-            call RR(WEB_ADMINURL & "?act=displayAdminLogin") 
+            call RR(WEB_ADMINURL & "?act=displayAdminLogin&a=1") 
         end if 
     end if 
 
@@ -229,7 +229,12 @@ sub loadRun()
 
 
     elseif request("act") = "setAccess" then
-        call resetAccessData()                                                          '恢复数据
+        call resetAccessData()    
+
+    elseif request("act") = "importArticle" then
+        call importArticle()                                                          '导入文章20220422
+    elseif request("act") = "importSheShi" then
+        call importSheShi()                                                          '导入省市县20220424
 
     elseif request("act") = "login" then
         call login()                                                                    '登录

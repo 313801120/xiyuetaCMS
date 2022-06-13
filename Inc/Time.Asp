@@ -104,6 +104,9 @@ function format_Time(timeStr, nType)
         case 20:
             'yyyy/mm/dd hh:mm:ss
             c = y & "/" & m & "/" & d & " " & h & ":" & mi & ":" & s 
+        case 30:
+            'yyyy-mm
+            c = y & "-" & m
 		case 88: 
             c = d
         case 89: 

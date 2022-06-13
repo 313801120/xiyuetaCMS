@@ -1525,11 +1525,11 @@ end function
 '**************************************************
 function getFileExt(byval fName)
     dim temp : temp = split(fName, ".")
-	if ubound(temp)>0 then getFileExt = temp(uBound(temp)) 
-end function 
+	if ubound(temp)>0 then getFileExt = temp(uBound(temp))
+end function
 '获得处理后的文件名称
 function getStrFileName(byVal filePath)
-    getStrFileName = handleFilePathArray(filePath)(2) 
+    getStrFileName = handleFilePathArray(filePath)(2)
 end function 
 '获得文件名称20160105
 function getFileName(byVal filePath)

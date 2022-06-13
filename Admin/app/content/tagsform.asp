@@ -3,20 +3,26 @@
 <!--#Include File = "../../admin_safe.Asp"-->
 <% 
 call openconn()  
-dim msg,isTrue,addSql,id,parentid,columnName,columnEnName,isthrough,sortrank,columnType,bodyContent,splxx,s,sel,flags,httpUrl,bannerImage
+dim msg,isTrue,addSql,id,parentid,columnName,columnEnName,isthrough,sortrank,columnType,bodycontent,splstr,splxx,s,sel,flags,httpUrl,bannerImage,filename,webtitle,webkeywords,webdescription,smallimage,aboutcontent
 
 id=request("id")
 parentid=request("parentid")              '大类'
 columnName=request("columnName")          '栏目名称'
 columnEnName=request("columnEnName")          '栏目英文名称'
 columnType=request("columnType")          '栏目类型' 
+filename=request("filename")              'html文件名' 
 sortrank=request("sortrank")              '排序' 
 if sortrank="" then sortrank=0
-bodyContent=request("bodyContent")              '内容' 
+bodycontent=request("bodycontent")              '内容' 
+aboutcontent=request("aboutcontent")              'aboutcontent' 
 isthrough=request("isthrough")            '审核'
 flags=request("flags")            '旗'
 httpUrl=request("httpUrl")            '网址'
+smallimage=request("smallimage")            'smallimage'
 bannerImage=request("bannerImage")            'banner'
+webtitle=request("webtitle")            'webtitle'
+webkeywords=request("webkeywords")            'webkeywords'
+webdescription=request("webdescription")            'webdescription'
 isthrough=IIF(isthrough="on",1,0)         '处理下'
 if parentid="" then 
   parentid=-1
@@ -51,12 +57,18 @@ if request("act")="save" then
       rs("columnName")=columnName 
       rs("columnEnName")=columnEnName 
       rs("columnType")=columnType 
+      rs("filename")=filename 
       rs("sortrank")=sortrank 
-      rs("bodyContent")=bodyContent 
+      rs("aboutcontent")=aboutcontent 
+      rs("bodycontent")=bodycontent 
       rs("isthrough")=isthrough 
       rs("flags")=flags 
       rs("httpUrl")=httpUrl 
+      rs("smallimage")=smallimage 
       rs("bannerImage")=bannerImage 
+      rs("webtitle")=webtitle 
+      rs("webkeywords")=webkeywords 
+      rs("webdescription")=webdescription 
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
       response.end()
@@ -71,12 +83,18 @@ elseif id<>"" then
     columnName=rs("columnName")   
     columnEnName=rs("columnEnName")   
     columnType=rs("columnType")   
+    filename=rs("filename")   
     sortrank=rs("sortrank")   
-    bodyContent=rs("bodyContent")   
+    aboutcontent=rs("aboutcontent")   
+    bodycontent=rs("bodycontent")   
     isthrough=rs("isthrough")  
     flags=rs("flags")  
     httpUrl=rs("httpUrl")  
+    smallimage=rs("smallimage")  
     bannerImage=rs("bannerImage")  
+    webtitle=rs("webtitle")  
+    webkeywords=rs("webkeywords")  
+    webdescription=rs("webdescription")  
   end if
 end if
  
@@ -109,12 +127,13 @@ end if
                 <div class="layui-input-inline">
                     <select name="columnType" id="columnType" selected="">
                         <%
-      splxx=split(WEBCOLUMNTYPE,"|")
-      for each s in splxx
-        if s<>"" then
+      splstr=split(WEBCOLUMNTYPE,",")
+      for each s in splstr
+        if instr(s,"|")>0 then
+           splxx=split(s,"|")
           sel=""
-          if s=columnType then sel=" selected"
-          call rw("<option value='"& s & "'" & sel &">"& s &"</option>")      
+          if splxx(1)=columnType then sel=" selected"
+          call rw("<option value='"& splxx(1) & "'" & sel &">"& splxx(0) &"</option>")      
         end if
       next
       %>
@@ -132,17 +151,26 @@ end if
                 <div class="layui-input-inline">
                     <input type="text" name="columnEnName" placeholder="请输入栏目英文名称" autocomplete="off" class="layui-input" value="<%=columnEnName%>">
                 </div>
-            </div>
+            </div> 
             <div class="layui-form-item">
                 <label class="layui-form-label">排序</label>
                 <div class="layui-input-inline">
                     <input type="text" name="sortrank" lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input" value="<%=sortrank%>">
                 </div>
             </div>
+                <div class="layui-form-item">
+      <label class="layui-form-label">简要说明</label>
+      <div class="layui-input-block">
+        <textarea name="aboutcontent" placeholder="请输入简要说明" class="layui-textarea"><%=aboutcontent%></textarea>
+      </div>
+    </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">内容</label>
                 <div class="layui-input-block">
-                    <textarea name="bodyContent" id="bodyContent" placeholder="请输入文章内容" class="layui-textarea"><%=bodyContent%></textarea>
+                    <textarea <%=IIF(request("editor")<>"no"," id='bodycontent' style='display:none;'"," rows='10'")%>  name="bodycontent" class="layui-textarea"><%=bodycontent%></textarea> 
+                    <%if request("editor")<>"no" then%><a href="?id=<%=id%>&editor=no">不显示编辑器</a><%end if%>
+
+
                 </div>
             </div>
             <div class="layui-form-item">
@@ -164,14 +192,48 @@ end if
                     <input type="text" name="httpUrl" placeholder="请输入跳转网址" autocomplete="off" class="layui-input" value="<%=httpUrl%>">
                 </div>
             </div> 
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="filename" placeholder="请输入文件名称" autocomplete="off" class="layui-input" value="<%=filename%>">
+                </div>
+            </div>
 
             <div class="layui-form-item">
-              <label class="layui-form-label">缩略图</label>
+              <label class="layui-form-label">banner图</label>
               <div class="layui-input-inline">
                 <input type="text" name="bannerImage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=bannerImage%>">
               </div>
               <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin">上传图片</button> 
             </div>
+
+            <div class="layui-form-item">
+              <label class="layui-form-label">小图</label>
+              <div class="layui-input-inline">
+                <input type="text" name="smallimage" placeholder="请上传小片" autocomplete="off" class="layui-input" value="<%=smallimage%>">
+              </div>
+              <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin2">上传图片</button> 
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">title标题</label>
+                <div class="layui-input-block">
+                    <textarea name="webtitle" class="layui-textarea" placeholder="title标题"><%=webtitle%></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META关键词</label>
+                <div class="layui-input-block">
+                    <textarea name="webkeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><%=webkeywords%></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META描述</label>
+                <div class="layui-input-block">
+                    <textarea name="webdescription" class="layui-textarea"><%=webdescription%></textarea>
+                </div>
+            </div>
+
 
             <div class="layui-form-item">
                 <label class="layui-form-label">审核状态</label>
@@ -203,6 +265,13 @@ end if
                 $(this.item).prev("div").children("input").val(res.data.src)
             }
         });
+        upload.render({
+            elem: '#layuiadmin-upload-useradmin2',
+            url: '/api/upload/',
+            done: function(res) {
+                $(this.item).prev("div").children("input").val(res.data.src)
+            }
+        });
 
         lay('.date').each(function() {
             laydate.render({
@@ -222,7 +291,7 @@ end if
                 type: 'post' //默认post 
             }
         });
-        layedit.build('bodyContent'); //建立编辑器
+        layedit.build('bodycontent'); //建立编辑器
 
 
 

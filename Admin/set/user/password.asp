@@ -48,7 +48,7 @@ end if
                 <div class="layui-input-inline">
                   <input type="password" name="password" lay-verify="pass" lay-verType="tips" autocomplete="off" id="LAY_password" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                <div class="layui-form-mid layui-word-aux">5到16个字符</div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">密码确认 <font color="red">*</font></label>

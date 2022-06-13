@@ -3,12 +3,67 @@
 '【#top#】true为true则为停止全部
 
 
+ 
+'获得栏目id 20220510  大类>小类
+function getXiyuetaClassId(columnName)
+    dim splstr,s,parentid,sql
+    if instr(columnName,">")>0 then
+        splstr=split(columnName,">")
+        for each s in splstr
+            sql="Select * from " & db_PREFIX & "xiyuetaclass where columnName='" & s & "'"
+            if parentid<>"" then sql = sql & " AND parentid="&parentid
+            rsx.open sql, conn, 1, 1 
+            if not rsx.EOF then
+                parentid = rsx("id")        
+                ' call echo("parentid1",parentid)
+            end if : rsx.close 
+        next
+        ' call echo("parentid",parentid)
+        if parentid="" then parentid=-1
+        getXiyuetaClassId=parentid
+        exit function
+    end if
+
+    getXiyuetaClassId = "-1" 
+    rsx.open "Select * from " & db_PREFIX & "xiyuetaclass where columnName='" & columnName & "'", conn, 1, 1 
+    if not rsx.EOF then
+        getXiyuetaClassId = rsx("id")        
+    end if : rsx.close 
+end function
+
 '获得栏目id
 function getColumnId(columnName)
+    dim splstr,s,parentid,sql
+    if instr(columnName,">")>0 then
+        splstr=split(columnName,">")
+        for each s in splstr
+            sql="Select * from " & db_PREFIX & "webcolumn where columnName='" & s & "'"
+            if parentid<>"" then sql = sql & " AND parentid="&parentid
+            rsx.open sql, conn, 1, 1 
+            if not rsx.EOF then
+                parentid = rsx("id")        
+                ' call echo("parentid1",parentid)
+            end if : rsx.close 
+        next
+        ' call echo("parentid",parentid)
+        if parentid="" then parentid=-1
+        getColumnId=parentid
+        exit function
+    end if
+
     getColumnId = "-1" 
     rsx.open "Select * from " & db_PREFIX & "webcolumn where columnName='" & columnName & "'", conn, 1, 1 
     if not rsx.EOF then
-        getColumnId = rsx("id") 
+        getColumnId = rsx("id")        
+    end if : rsx.close 
+end function
+
+'获得省市栏目id
+function getSheShiId(columnName)
+    getSheShiId = "-1" 
+    rsx.open "Select * from " & db_PREFIX & "sheshi where columnName='" & columnName & "'", conn, 1, 1 
+    if not rsx.EOF then
+        getSheShiId = rsx("id") 
     end if : rsx.close 
 end function
 
@@ -41,7 +96,7 @@ function recoveryDatabase()
         tableName = newGetStrCut(s, "table") 
         if tableName <> "" then
             conn.execute("delete from " & db_PREFIX & tableName) 
-            call echo(tableName, nImportTXTData(s, tableName, "添加")) 
+            call echo(tableName, nImportTXTData(backupFilePath,s, tableName, "添加")) 
         end if 
     next 
     call echo("恢复数据库完成", "") 
@@ -146,22 +201,58 @@ sub resetAccessData()
     else
         webdataDir = "/Data/WebData/" 
     end if 
-
     '修改网站配置
-    call nImportTXTData(readFile(webdataDir & "/website.txt","utf-8"), "website", "修改") 
-    call batchImportDirTXTData(webdataDir, db_PREFIX & "WebColumn" & vbCrLf & getTableList()) '加webcolumn是因为webcolumn必需新导入数据，因为后台文章类型要从里获得20160711
+    call nImportTXTData(webdataDir,readFile(webdataDir & "/website.txt","utf-8"), "website", "修改") 
+    call batchImportDirTXTData(webdataDir, db_PREFIX & "WebColumn" & vbcrlf & db_PREFIX & "xiyuetaclass" & vbCrLf & getTableList()) '加webcolumn是因为webcolumn必需新导入数据，因为后台文章类型要从里获得20160711
 
+    ' call eerr(getTableList(),webdataDir)
     call echo("提示", "恢复数据完成") 
     call rw("<hr><a href='"& WEB_VIEWURL &"' target='_blank'>进入首页</a> | <a href=""?"" target='_blank'>进入后台</a>") 
 
-
-
     call writeSystemLog("", "恢复默认数据" & db_PREFIX)                             '系统日志
-end sub 
+end sub
+'导入文章20220422 /install/addData.asp?act=importArticle&webdataDir=/cai/article_营销策略
+function importArticle()
+    dim webdataDir,splxx,filePath,content,fileName,tableName,s
+    webdataDir = request("webdataDir")
+    tableName="articleDetail"
+
+    content = getDirAllFileList(webdataDir, "txt") 
+    splxx = split(content, vbCrLf) 
+    for each filePath in splxx
+        fileName = getFileName(filePath) 
+        if filePath <> "" and inStr("_#", left(fileName, 1)) = false then
+            s=nImportTXTData(webdataDir,readFile(filePath,"utf-8"), tableName, "添加")             
+            call echo(tableName, filePath & " ==>> " & s) 
+            doevents 
+        end if 
+    next 
+end function
+'导入省市县20220424 /install/addData.asp?act=importSheShi&webdataDir=/txt/
+function importSheShi()
+    dim webdataDir,splxx,filePath,content,fileName,tableName,s
+    webdataDir = request("webdataDir")
+    tableName="sheshi"
+
+    conn.execute("delete from xy_sheshi")
+call echo("importSheShi",tableName)
+
+    content = getDirAllFileList(webdataDir, "txt") 
+    splxx = split(content, vbCrLf) 
+    for each filePath in splxx
+        fileName = getFileName(filePath) 
+        if filePath <> "" and inStr("_#", left(fileName, 1)) = false then
+            s=nImportTXTData(webdataDir,readFile(filePath,"utf-8"), tableName, "添加")             
+            call echo(tableName, filePath & " ==>> " & s) 
+            doevents 
+        end if 
+    next 
+end function
 
 '批量导入相应表信息
 function batchImportDirTXTData(webdataDir, tableNameList)
     dim folderPath, tableName, splStr, content, splxx, filePath, fileName, handleTableNameList 
+    ' call echo("tableNameList",tableNameList)
     splStr = split(tableNameList, vbCrLf) 
     for each tableName in splStr
         if tableName <> "" then
@@ -183,7 +274,7 @@ function batchImportDirTXTData(webdataDir, tableNameList)
                         fileName = getFileName(filePath) 
                         if filePath <> "" and inStr("_#", left(fileName, 1)) = false then
                             call echo(tableName, filePath) 
-                            call nImportTXTData(readFile(filePath,"utf-8"), tableName, "添加") 
+                            call nImportTXTData(folderPath,readFile(filePath,"utf-8"), tableName, "添加") 
                             doevents 
                         end if 
                     next 
@@ -194,10 +285,10 @@ function batchImportDirTXTData(webdataDir, tableNameList)
 end function 
 
 '导入数数
-function nImportTXTData(content, tableName, sType)
-    dim fieldConfigList, splList, listStr, splStr, splxx, s, sql, nOK 
+function nImportTXTData(folderPath,content, tableName, sType)
+    dim fieldConfigList, splList, listStr, splStr, splxx, s, sql, nOK,isAdd
     dim fieldName, fieldType, fieldValue, addFieldList, addValueList, updateValueList 
-    dim fieldStr,isJump,isStop
+    dim fieldStr,isJump,isStop,addSql,isArticleRepeat
     tableName = trim(lcase(tableName))                                              '表
     '这样做是为了从GitHub下载时它把vbcrlf转成 chr(10)  20160409
     if instr(content, vbCrLf) = false then
@@ -215,19 +306,32 @@ function nImportTXTData(content, tableName, sType)
 
         isJump = lcase(trim(newGetStrCut(listStr, "#jump#"))) 
         isStop = lcase(trim(newGetStrCut(listStr, "#stop#")))
+        isarticlerepeat = lcase(trim(newGetStrCut(listStr, "#isarticlerepeat#")))
  
+
+
 		'停止导入
 		if isStop = "1" or isStop = "true" then
     		nImportTXTData = nOK 
 			exit function
 		end if
+ 
+        if lcase(isarticlerepeat)="true" or isarticlerepeat="1" then
+            isarticlerepeat=true
+        else
+            isArticleRepeat=false'文章重复默认为假20220428
+        end if 
+
+
 		'判断不是跳转当前
         if isJump <> "1" and isJump <> "true" then
+            addSql=""
             for each fieldStr in splStr
                 if fieldStr <> "" then
                     splxx = split(fieldStr & "| ", "|")			'必需加上| 在jsp里必需这样，不知道为什么？ 不过没关系，不影响下面执行结束 
                     fieldName = splxx(0) 
-                    fieldType = splxx(1) 
+                    fieldType = splxx(1)
+
                     if instr(listStr, "【" & fieldName & "】") > 0 then
                         listStr = listStr & vbCrLf                                                      '加个换行是为了让最后一个参数能添加进去 20160629
                         if addFieldList <> "" then
@@ -247,16 +351,39 @@ function nImportTXTData(content, tableName, sType)
 								fieldValue="1"
 							elseif lcase(fieldValue)="false" then
 								fieldValue="0"
-							end if		
+							end if	
 						 
                         end if 
                         'call echo(tableName,fieldName)
+                        
+
                         '文章大类
-                        if (tableName = "articledetail" or tableName = "webcolumn") and fieldName = "parentid" then
+                        if (tableName = "articledetail" or tableName = "webcolumn" or tableName = "webcolumnparam") and fieldName = "parentid" then
                             'call echo(tableName,fieldName)
                             'call echo("fieldValue",fieldValue)
                             fieldValue = getColumnId(fieldValue) 
+							
+							
+                        '省市大类202204008
+                        elseif (tableName = "sheshi") and fieldName = "parentid" then
+                            'call echo(tableName,fieldName)
                             'call echo("fieldValue",fieldValue)
+                            fieldValue = getSheShiId(fieldValue) 
+
+                        '分类20220517
+                        elseif (tableName = "xiyuetaclass") and fieldName = "parentid" then
+                            'call echo(tableName,fieldName)
+                            'call echo("fieldValue",fieldValue)
+                            fieldValue = getXiyuetaClassId(fieldValue) 
+                            'call echo("fieldValue",fieldValue)
+
+
+                        '分类20220517
+                        elseif (tableName = "tpl" Or tableName = "tplpage") and fieldName = "ntype" then
+                            fieldValue=getXiyuetaClassId(fieldValue)
+                            ' call echo("xiyuetaclass",fieldValue & "," & getXiyuetaClassId(fieldValue))
+							
+							
 						'BBS大类20171003
 						elseif (tableName = "bbsdetail" or tableName = "bbscolumn") and fieldName = "parentid" then	 
                             fieldValue = handleGetColumnID("bbscolumn", fieldValue)  
@@ -278,6 +405,18 @@ function nImportTXTData(content, tableName, sType)
                         elseif fieldValue = "" then
                             fieldValue = "0" 
                         end if
+
+                        if (tableName = "articledetail") and isArticleRepeat=false then   '文章做处理'
+                            ' call echo("isArticleRepeat",isArticleRepeat)
+                            if fieldName="parentid" then
+                                addSql=addSql & IIF(addSql=""," WHERE "," AND ")
+                                addSql=addSql & " parentid="& fieldValue &""
+                            elseif fieldName="title" then
+                                addSql=addSql & IIF(addSql=""," WHERE "," AND ")
+                                addSql=addSql & " title="& fieldValue &""
+                            end if
+                        end if
+
 'call echo(fieldName,fieldType & "("& replace(left(fieldValue,22),"<","&lt;") &")" ) :doevents
                         addValueList = addValueList & fieldValue                                        '添加值
                         updateValueList = updateValueList & fieldName & "=" & fieldValue                '修改值
@@ -286,18 +425,32 @@ function nImportTXTData(content, tableName, sType)
             next 
             '字段列表不为空
             if addFieldList <> "" then
-                if sType = "修改" then
-                    sql = "update " & db_PREFIX & "" & tableName & " set " & updateValueList 
-                else
-                    sql = "insert into " & db_PREFIX & "" & tableName & " (" & addFieldList & ") values(" & addValueList & ")" 
-                end if 
-                '检测SQL
-                if checksql(sql) = false then
-                    call eerr("出错提示1", "<hr>sql=" & sql & "<br>") 
-                end if 
-                nOK = nOK + 1 
+                isAdd=true
+                if addsql<>"" and sType = "添加" then
+                    call openconn()
+                    sql="select * from " & db_PREFIX & "" & tableName & addsql
+                    ' call echo("sql",sql):doevents
+                    rs.open sql,conn,1,1
+                    ' call echo("addsql count" & sql,rs.recordcount)
+                    if not rs.eof then isAdd=false
+                    rs.close
+                end if
+                '为真则可操作'
+                if isAdd=true then
+                    if sType = "修改" then
+                        sql = "update " & db_PREFIX & "" & tableName & " set " & updateValueList 
+                    else
+                        sql = "insert into " & db_PREFIX & "" & tableName & " (" & addFieldList & ") values(" & addValueList & ")"
+                    end if
+                    '检测SQL
+                    if checksql(sql) = false then
+                        call eerr("出错提示1", "<hr>sql=" & sql & "<br>") 
+                    end if
+
+                    nOK = nOK + 1 
+                end if
             else
-                nOK = nBatchImportColumnList(content,splStr, listStr, nOK, tableName) 
+                nOK = nBatchImportColumnList(folderPath,content,splStr, listStr, nOK, tableName) 
 
             end if 
         end if 
@@ -306,9 +459,9 @@ function nImportTXTData(content, tableName, sType)
     nImportTXTData = nOK 
 end function 
 '批量导入栏目列表 20160716
-function nBatchImportColumnList(content,splField, byval listStr, nOK, tableName)
+function nBatchImportColumnList(folderPath,content,splField, byval listStr, nOK, tableName)
     dim splStr, splxx, isColumn, columnName, s, c, nLen, id, parentIdArray(99), columntypeArray(99), flagsArray(99), nIndex, fieldStr, fieldName, valueStr, nCount, bodycontent
-    dim fileName, templatepath, rowC 
+    dim fileName, templatepath, rowC,addColumnNameData
     isColumn = false 
     nCount = 0 
     listStr = replace(listStr, vbTab, "    ") 
@@ -371,11 +524,14 @@ function nBatchImportColumnList(content,splField, byval listStr, nOK, tableName)
                     rowC = rowC & "【parentid】-1" & vbCrLf 
                 end if 
                 rowC = rowC & "【sortrank】" & nCount & vbCrLf
-				s=getStrCut(content,"【"& columnName &"】","【/"& columnName &"】",2)
+                ' call echo("folderPath",folderPath  & " - " & columnName)
+                '追加数组，以.dat方式存放20220413'
+                addColumnNameData=readFile(folderPath & "/" & columnName & ".dat","utf-8")
+                'if addColumnNameData<>"" then call eerr("addColumnNameData",addColumnNameData)
+				s=getStrCut(content & addColumnNameData,"【"& columnName &"】","【/"& columnName &"】",2)
                 rowC = rowC & "【bodycontent】" & s & "【/bodycontent】" & vbCrLf
-				if s <>""then
-					'call echo("s",s)
-				
+				if s <>"" then
+					'call echo("s",s)				
 				end if
 				 
                 nCount = nCount + 1 
@@ -387,7 +543,7 @@ function nBatchImportColumnList(content,splField, byval listStr, nOK, tableName)
     'call die(createfile("1.txt",c))
     '继续导入
     if c <> "" then
-        call nImportTXTData(c, tableName, "添加") 
+        call nImportTXTData(folderPath,c, tableName, "添加") 
     end if 
     nBatchImportColumnList = nCount 
 end function

@@ -5,7 +5,11 @@
 'b=6003
 'c=(a+b)/100
 'response.Write(a/c)
- 
+
+'身份证年月时隐藏为*代替 20220605'
+function idcardYMDHide(s)
+  idcardYMDHide=mid(s,1,10) & "****" & mid(s,15)
+end function
 
 '判断是否为字符转义 
 function isStrTransferred(content)
@@ -425,6 +429,24 @@ function handleNumberType(byVal content)
         end if 
     next 
     handleNumberType = c 
+end function 
+
+'获得数字  -12.11
+function getStrToNumber(byVal content)
+    dim i, s, c 
+    c = "" 
+    content = trim(content) 
+    for i = 1 to len(content)
+        s = mid(content, i, 1) 
+        if i = 1 and inStr("-", left(content, 1)) > 0 then
+            c = c & s 
+        elseIf i > 1 and s = "." then
+            c = c & s 
+        elseIf inStr("0123456789", s) > 0 then
+            c = c & s 
+        end if 
+    next 
+    getStrToNumber = c 
 end function 
 
 '获得数字 只单独获得数字 并且第一个字数不能为零0     20150322

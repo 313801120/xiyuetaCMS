@@ -1,0 +1,24 @@
+﻿【#jump#】true为true则为跳过当前
+【#top#】true为true则为停止全部
+-------------------------------
+【#sub#】
+
+网页类型【|】sortrank='3' isthrough='1'
+	首页【|】sortrank='10' isthrough='1'
+	文本页【|】sortrank='20' isthrough='1'
+	新闻页【|】sortrank='30' isthrough='1'
+	产品页【|】sortrank='30' isthrough='1'
+	详细页【|】sortrank='30' isthrough='1'
+
+模板类型【|】sortrank='5' isthrough='1'
+	经典【|】sortrank='10' isthrough='1'
+	红色【|】sortrank='20' isthrough='1'
+	黄色【|】sortrank='30' isthrough='1'
+	蓝色【|】sortrank='40' isthrough='1'
+	绿色【|】sortrank='50' isthrough='1'
+	自定义【|】sortrank='200' isthrough='1'
+
+
+
+-------------------------------
+

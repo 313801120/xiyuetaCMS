@@ -2,25 +2,26 @@
 【#top#】true为true则为停止全部
 -------------------------------
 【#sub#】
-网站首页【|】columntype='首页' parentid='-1' flags='top' sortrank='1' isthrough='1' columnenname='home'
-关于我们【|】columntype='文本' parentid='-1' flags='top' sortrank='2' isthrough='1' bannerimage='/web/testpic/ad-aboutus.jpg' columnenname='about Us'  
-	公司简介【|】columntype='文本' sortrank='1' isthrough='1' columnenname='company'
-	公司风采【|】columntype='文本' sortrank='2' isthrough='1' columnenname='company style'
-	公司荣誉【|】columntype='文本' sortrank='3' isthrough='1' columnenname='company honor '
-	公司致辞【|】columntype='文本' sortrank='4' isthrough='1' columnenname='company speech'
-新闻资讯【|】columntype='新闻' parentid='-1' flags='top' sortrank='3' isthrough='1' bannerimage='/web/testpic/ad-news.jpg' columnenname='News'
-	公司新闻【|】columntype='新闻' sortrank='1' isthrough='1' columnenname='company news'
-	行业新闻【|】columntype='新闻' sortrank='2' isthrough='1' columnenname='industry news'
-	通知公告【|】columntype='新闻' sortrank='3' isthrough='1' columnenname='announcement'
+网站首页【|】columntype='home' parentid='-1' flags='top' sortrank='1' isthrough='1' columnenname='home' columnico='낀'
+关于我们【|】columntype='text' parentid='-1' flags='top' sortrank='2' isthrough='1' bannerimage='/UploadFiles/testpic/ad-aboutus.jpg' columnenname='about Us' columnico='ꁡ'
+	公司简介【|】columntype='text' sortrank='1' isthrough='1' columnenname='company'
+	公司风采【|】columntype='text' sortrank='2' isthrough='1' columnenname='company style'
+	公司荣誉【|】columntype='text' sortrank='3' isthrough='1' columnenname='company honor '
+	公司致辞【|】columntype='text' sortrank='4' isthrough='1' columnenname='company speech'
+新闻资讯【|】columntype='news' parentid='-1' flags='top' sortrank='3' isthrough='1' bannerimage='/UploadFiles/testpic/ad-news.jpg' columnenname='News'  columnico='ꂓ'
+	公司新闻【|】columntype='news' sortrank='1' isthrough='1' columnenname='company news'
+	行业新闻【|】columntype='news' sortrank='2' isthrough='1' columnenname='industry news'
+	通知公告【|】columntype='news' sortrank='3' isthrough='1' columnenname='announcement'
 
 
-产品中心【|】columntype='产品' parentid='-1' flags='top' sortrank='4' isthrough='1' bannerimage='/web/testpic/ad-products.jpg' columnenname='product Center'
-	2020产品【|】columntype='产品' sortrank='1' isthrough='1' columnenname='product 2020'
-	2021产品【|】columntype='产品' sortrank='2' isthrough='1' columnenname='product 2021'
-联系我们【|】columntype='文本' parentid='-1' flags='top' sortrank='5' isthrough='1' columnenname='contact us' bannerimage='/web/testpic/ad-contactus.jpg'
-banner【|】columntype='产品' parentid='-1' flags='' sortrank='998' isthrough='0'
-常见问题【|】columntype='新闻' parentid='-1' flags='' sortrank='999' isthrough='0'
-优势【|】columntype='新闻' parentid='-1' flags='' sortrank='1000' isthrough='0'
+产品中心【|】columntype='product' parentid='-1' flags='top' sortrank='4' isthrough='1' bannerimage='/UploadFiles/testpic/ad-products.jpg' columnenname='product Center'  columnico='ꁔ'
+	2020产品【|】columntype='product' sortrank='1' isthrough='1' columnenname='product 2020'
+	2021产品【|】columntype='product' sortrank='2' isthrough='1' columnenname='product 2021'
+联系我们【|】columntype='text' parentid='-1' flags='top' sortrank='5' isthrough='1' columnenname='contact us' bannerimage='/UploadFiles/testpic/ad-contactus.jpg'  columnico='ꂅ'
+banner【|】columntype='product' parentid='-1' flags='' sortrank='998' isthrough='0'
+常见问题【|】columntype='news' parentid='-1' flags='' sortrank='999' isthrough='0'
+优势【|】columntype='news' parentid='-1' flags='' sortrank='1000' isthrough='0'
+
 -------------------------------
 
 
@@ -38,15 +39,13 @@ QQ：313801120<br>
 【/联系我们】
 
 【关于我们】
-xiyuetaCMS开源网站管理系统
-周期短
-系统使用非常复合网站习惯，上手快，网站制作轻而易举，仿站神器！
-
-功能全
-系统功能齐全，可以根据做网站需要添加组合插件，可扩展性强
-
-易优化
-系统具有非常完善的复合各搜索引擎的优化体系，做网站添加方便
+作者个人介绍<br>
+1、2006年进入互联网，专注网站开发10年<br>
+2、精通ASP/HTML5/CSS3/JS/Jquery/Canvas/Flash/PHP/VB/等<br>
+3、掌握DotNet/Android/JSP/nodeJS/python/BootStrop/PS/PR/FTP/linux等<br>
+4、擅长把复杂的事情简单化，独立开发一套PAAJCMS内容管理系统<br>
+5、发布【xiyuetaCMS】/【在线ASP转PHP】/【在线格式化ASP】【在线仿站】等开源项目<br>
+6、曾在上海、南京等城市从事网站开发工作多年
 【/关于我们】
 
 【公司简介】

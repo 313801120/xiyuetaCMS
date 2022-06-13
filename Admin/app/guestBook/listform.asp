@@ -1,9 +1,15 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,title,isthrough
+dim msg,isTrue,addSql,id,title,guestname,tel,email,address,isthrough,bodycontent,reply
 
 id=request("id")
 title=request("title")                    '标题' 
+guestname=request("guestname")                    '姓名' 
+tel=request("tel")                    '电话' 
+email=request("email")                    '电话' 
+address=request("address")                    '地址' 
+bodycontent=request("bodycontent")        '留言内容' 
+reply=request("reply")                    '回复内容' 
 isthrough=request("isthrough")            '审核'  
 isthrough=IIF(isthrough="on",1,0)         '处理下'
 
@@ -26,6 +32,12 @@ if request("act")="save" then
         rs.open"select * from ["& db_PREFIX &"guestBook] where id="&id,conn,1,3
       end if 
       rs("title")=title  
+      rs("guestname")=guestname  
+      rs("tel")=tel  
+      rs("email")=email  
+      rs("address")=address  
+      rs("bodycontent")=bodycontent  
+      rs("reply")=reply  
       rs("isthrough")=isthrough  
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
@@ -38,6 +50,12 @@ elseif id<>"" then
   if not rs.eof then
     id=rs("id") 
     title=rs("title")    
+    guestname=rs("guestname")    
+    tel=rs("tel")    
+    email=rs("email")    
+    address=rs("address")    
+    bodycontent=rs("bodycontent")    
+    reply=rs("reply")    
     isthrough=rs("isthrough")  
   end if
 end if
@@ -48,7 +66,7 @@ end if
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>添加修改文章</title> 
+<title>添加修改留言</title> 
  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  /> 
 </head>
 <body>  
@@ -63,7 +81,47 @@ end if
       <div class="layui-input-inline">
         <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>">
       </div>
+    </div> 
+    <div class="layui-form-item">
+      <label class="layui-form-label">姓名</label>
+      <div class="layui-input-inline">
+        <input type="text" name="guestname" placeholder="请输入姓名" autocomplete="off" class="layui-input" value="<%=guestname%>">
+      </div>
     </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">电话</label>
+      <div class="layui-input-inline">
+        <input type="text" name="tel" placeholder="请输入电话" autocomplete="off" class="layui-input" value="<%=tel%>">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">邮箱</label>
+      <div class="layui-input-inline">
+        <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input" value="<%=email%>">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">地址</label>
+      <div class="layui-input-inline">
+        <input type="text" name="address" placeholder="请输入地址" autocomplete="off" class="layui-input" value="<%=address%>">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">留言内容</label>
+      <div class="layui-input-block">
+        <textarea name="bodycontent" id="bodycontent" placeholder="请输入留言内容" class="layui-textarea"><%=bodycontent%></textarea>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">回复内容</label>
+      <div class="layui-input-block">
+        <textarea name="reply" id="reply" placeholder="请输入回复内容" class="layui-textarea"><%=reply%></textarea>
+      </div>
+    </div>  
+
+
   
     <div class="layui-form-item">
       <label class="layui-form-label">审核状态</label>
@@ -117,7 +175,8 @@ layui.config({
             ,type: 'post' //默认post 
         }
     });
-    layedit.build('bodyContent');   //建立编辑器
+    layedit.build('bodycontent');   //建立编辑器
+    layedit.build('reply');   //建立编辑器
 
 })
 

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>模板列表</title>
+<title>本地上传文件</title>
  
 
 <script type="text/javascript" src="../../js/jquery.js"></script>
@@ -113,12 +113,6 @@
 
 <body style="background-color:#f5f5f5">
 
-
-	<blockquote class="layui-elem-quote">
-		xiyuetaCMS开源网站管理系统
-		<a href='http://www.xiyueta.com/xiyuetacms/templates/' target="_blank" class="layui-btn layui-btn-danger">下载更新模板</a>
-    </blockquote>
-
 <% 
 dim fpath,objFSO,objfolder,picArr,picbegin,pageSize,page,objfile,picnum,i,m,thispageend,img_html,pageCount,usezt,isuse,page_html
 fpath="../../../web/"
@@ -135,10 +129,8 @@ If page="" Then page=1
 picbegin=(page-1)*pageSize
 dim f1
 for each f1 in fc
-	if f1.name<>"images" and f1.name<>"testpic" then
-		if picArr<>"" then picArr=picArr & "|"
-		picArr=picArr&f1.name&"$2021-2-2$22.kb"
-	end if
+	if picArr<>"" then picArr=picArr & "|"
+	picArr=picArr&f1.name&"$2021-2-2$22.kb"
 next
 set objfolder=nothing 
 picArr=Split(picArr,"|")
@@ -167,7 +159,7 @@ img_html = ""
 For i=picbegin To thispageend
 
 if request("act")<>"used" or usezt=0 then
-    img_html = img_html + "<li  class=item><a href='"&fpath&fpath&Split(picArr(i),"$")(0)&"' target=_blank><img src='"&fpath&"images/"&Split(picArr(i),"$")(0)&".jpg' /></a>"
+    img_html = img_html + "<li  class=item><a href='"&fpath&fpath&Split(picArr(i),"$")(0)&"' target=_blank><img src='"&fpath&Split(picArr(i),"$")(0)&"/web.jpg' /></a>"
     ' img_html=img_html & "<span class=""layui-icon layui-icon-delete"" onclick=""del('../UploadFiles/img/"&Split(picArr(i),"$")(0)&"')""></span>"
 	img_html = img_html +"<p>"&Split(picArr(i),"$")(0)&"</p>"
 	' img_html = img_html +"<p >"&Split(picArr(i),"$")(1)&"<span style=float:right;>"&cint(Split(picArr(i),"$")(2)/1024)&"kb</span></p>"
@@ -198,7 +190,6 @@ page_html = page_html + "<span>共计"&pageCount&"页</span>"
 <div class="pic_page">
 <%=page_html%>
 </div>
- 
  
 </body>
 

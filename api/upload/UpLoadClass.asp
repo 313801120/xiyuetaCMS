@@ -355,7 +355,7 @@ Class UpLoadClass
 	Private Function Num2Str(num, base, lens)
 		Dim ret,i
 		ret = ""
-		while(num >= base)
+		while (num >= base)
 			i   = num Mod base
 			ret = i & ret
 			num = (num - i) / base

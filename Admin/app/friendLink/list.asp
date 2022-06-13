@@ -1,13 +1,13 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,columnName,id,title,field
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,columnName,id,title,field,isthrough
 '网站栏目查询
 If Request("act") = "list" Then  
 
     num = Request("limit")
     page = Request("page")
     stemp = "{""data"":[" 
-    sql1 = "select * from ["& db_PREFIX &"FriendLink]" 
+    sql1 = "select * from ["& db_PREFIX &"friendlink]" 
 
     
     If Request("date_min") <> "" Then
@@ -39,7 +39,7 @@ If Request("act") = "list" Then
         page_count = 0 
         i =(page - 1) * num 
         totalrec = rs.RecordCount 
-        While(Not rs.EOF) And(Not page_count = rs.PageSize)
+        While (Not rs.EOF) And(Not page_count = rs.PageSize)
             i = i + 1 
             page_count = page_count + 1 
             If totalrec Mod perpage = 0 Then
@@ -53,14 +53,18 @@ If Request("act") = "list" Then
                 sS = page * num 
             End If 
 
-
             If i = sS Then
                 sHr = "" 
             Else
                 sHr = "," 
             End If 
 
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""httpurl"":""" & rs("httpurl") & """,""title"":""" & rs("title") & """,""createTime"":""" & rs("createTime") & """}" &sHr & "" 
+            isthrough=""
+            if rs("isthrough")<>0 then
+                isthrough=" checked"
+            end if 
+
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""httpurl"":""" & rs("httpurl") & """,""title"":""" & rs("title") & """,""isthrough"":""" & isthrough & """,""createTime"":""" & rs("createTime") & """}" &sHr & "" 
     
  
 
@@ -75,7 +79,7 @@ If Request("act") = "list" Then
     Response.end()
 
 elseif request("act")="del" then
-  conn.execute"delete from ["& db_PREFIX &"FriendLink] where id="&request("id")
+  conn.execute"delete from ["& db_PREFIX &"friendlink] where id="&request("id")
   response.write "{""info"": ""删除成功"",""status"": ""y""}"
   Response.end()
 '在线修改
@@ -84,14 +88,19 @@ elseif request("act")="onlineedit" then
   if field="" then field=title
   title=request("title")
   id=request("id")
-  rs.open"select * from ["& db_PREFIX &"FriendLink] where "& field &"='"& title &"' and id<>" & id,conn,1,1
+  rs.open"select * from ["& db_PREFIX &"friendlink] where "& field &"='"& title &"' and id<>" & id,conn,1,1
   if not rs.eof then
     response.write "{""info"": ""字段存在"",""status"": ""n"",""title"": """&rs("title")&"""}"  
   else
-    conn.execute"update ["& db_PREFIX &"FriendLink] set  "& field &"='"&title&"' where id="&id
+    conn.execute"update ["& db_PREFIX &"friendlink] set  "& field &"='"&title&"' where id="&id
     response.write "{""info"": ""修改成功"&id&""",""status"": ""y""}"
   end if:rs.close
   Response.end()
+'通过或取消'
+elseif request("act")="isthrough" then
+    conn.execute"update ["& db_PREFIX &"friendlink] set isthrough="&IIF(request("isthrough")="true",1,0) &" where id="&request("id")
+    response.write "{""info"": ""设置成功"",""status"": ""y""}"
+    Response.end()
 
 
 
@@ -146,8 +155,9 @@ End If
 <table class="layui-hide" id="table" lay-filter="demo"></table>
  
 <script>
-layui.use('table', function() {
-    var table = layui.table;
+layui.use(['form','table'],function(){
+    var form = layui.form
+        table = layui.table; 
 
     //方法级渲染
     table.render({
@@ -160,6 +170,8 @@ layui.use('table', function() {
                 , { field: 'title', title: '名称', edit: 'text', sort: true }
                 , { field: 'httpurl', title: '网址', edit: 'text', sort: true }
                 , { field: 'createTime', title: '发布时间', width: 110, sort: true }
+                 ,{field: 'isthrough', title: '是否显示',width:100, align:'center', templet:function(d){
+                    return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
                 , { fixed: 'right', title: '操作', width: 150, toolbar: '#barDemo' }
 
 
@@ -170,6 +182,35 @@ layui.use('table', function() {
         limit: 20
     });
 
+    //是否置顶
+    form.on('switch', function(data){
+        var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
+        setTimeout(function(){
+            var pid=data.elem.value
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                cache: true,
+                dataType: "json",
+                url: "?act=isthrough",
+                data: { "id": pid,"isthrough":data.elem.checked }, 
+                success: function(data) { 
+                    switch (data.status) {
+                        case "y": 
+                            break;
+                        case "n":                       
+                            break;
+                    }
+                }
+            });
+            if(data.elem.checked){
+                layer.msg("设置成功！");
+            }else{
+                layer.msg("取消设置成功！");
+            }
+        },500);
+    })
 
     var $ = layui.$,
         active = {
