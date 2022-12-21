@@ -16,6 +16,7 @@
 <!--#Include file = "Conn.Asp"-->  
 <!--#Include file = "Md5.Asp"-->   
 <!--#Include file = "IE.Asp"-->   
+<!--#Include file = "Json.Asp"-->
 <!--#Include file = "2014_Js.Asp"-->  
 <!--#Include file = "2014_Css.Asp"-->  
 <!--#Include file = "2014_GBUTF.Asp"-->    
@@ -24,10 +25,11 @@
 <!--#Include file = "2014_Author.Asp"--> 
 <!--#Include file = "2015_Color.Asp"--> 
 <!--#Include file = "2015_SqlIn.Asp"-->
+<!--#Include file = "2015_Json.Asp"-->
+<!--#Include file = "2015_hexSwitch.asp"-->   
 <!--#Include file = "2016_Log.Asp"-->   
 <!--#Include file = "SystemInfo.Asp"-->   
 <!--#Include file = "ip.Asp"-->   
-<!--#Include file = "2015_Json.Asp"-->
 <!--#Include file = "function.Asp"-->
 <!--#Include file = "PinYin.Asp"-->
 <%  
@@ -46,7 +48,7 @@ dim conn, rs, rsx, rss, rst, rsd, tempRs, tempRs2, rsTemp,rs1,rs2,rs3,bbsRs
 dim pubTimer : pubTimer = now()                                                 'Timer()不要用这个(20150728)
  
 'Note:开发程序原则，能简单，绝对不复杂，能修改html的，绝对不修改asp，能傻瓜式，绝对不要用脑(20160121)
-dim WEBCOLUMNTYPE : WEBCOLUMNTYPE = "首页|home,文本|text,产品|product,新闻|news,视频|video,下载|down,案例|case,留言|message,反馈|feedback,招聘|job,搜索|search" 
+dim WEBCOLUMNTYPE : WEBCOLUMNTYPE = "首页|home,文本|text,产品|product,新闻|news,视频|video,下载|down,案例|case,留言|guestbook,反馈|feedback,招聘|job,搜索|search" 
 dim WEB_VIEWURL : WEB_VIEWURL = "/default.asp"                                   '前台显示
 dim WEB_ADMINURL : WEB_ADMINURL = "/admin/default.asp"                                  '后台显示
 dim EDITORTYPE : EDITORTYPE = "asp"                                             '程序类型，是ASP,或PHP,或jSP,或.NET
@@ -64,6 +66,11 @@ dim db_PREFIX : db_PREFIX = "xy_"                                               
 dim countTi:countTi=200 '默认显示题数
 dim adminDir : adminDir = "/admin/"                                               '后台目录
 dim WEB_CACHEFile : WEB_CACHEFile = "[adminDir]/[EDITORTYPE]cachedata.txt" '缓冲文件
+dim isLoginIPAllow:isLoginIPAllow=false'是否开启登录后台管理IP限制 20220627
+dim version:version="V1.2"
+
+dim pubIsDownIPJson:pubIsDownIPJson=true'是否下载IP查询不到时下载ip138数据20221029
+dim pubWebSite:pubWebSite=""   '全部网站域名地址20221115' https://www.xiyueta.com/
 
 
 '获得数组里的现在时间，因为access与sqlserver里获得时间不一致'
@@ -107,7 +114,17 @@ function getAccessDatediffYear(zdName)
 	end if	
 end function
 
+'排除指定域名 '
+' if webDoMain()="http://demo.xiyueta.com" then
 
 
-
+if instr(webDoMain(),"xiyueta.com")>0 then
+	'不同IP显示不同内容'
+	if getIP()<>"127.0.0.1" then
+		MDBPath = "/data/data_" & getIP() &".mdb" 
+		if checkFile(MDBPath)=false then
+			call copyFile("/data/data.mdb",MDBPath)
+		end if
+	end if
+end if
 %> 

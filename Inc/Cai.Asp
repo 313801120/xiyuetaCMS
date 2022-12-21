@@ -8,7 +8,7 @@
 '0=abbccdd
 '1=[A]abbccdd[/A]
 '3=[A]abbccdd
-'4=abbccdd[/A]
+'4=abbccdd[/A]   
 '截取字符串
 function strCut(byVal content, byVal startStr, byVal endStr, byVal nType)
     dim nS1, s1Str, nS2, nS3, c, tempContent, tempStartStr, tempEndStr ,cutType

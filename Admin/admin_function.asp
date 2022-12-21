@@ -1,5 +1,5 @@
 <% 
-dim adminLevelList:adminLevelList=",网站管理员,管理人员,入库人员,审核人员,出库人员" 'admin管理员的权限列表' 
+dim adminLevelList:adminLevelList=",网站管理员,管理人员,入库人员,审核人员,出库人员,其它人员" 'admin管理员的权限列表' 
 '管理员的权限列表''
 dim adminPermissionLits
 adminPermissionLits="文章管理,文章添加,文章修改,文章审核,文章删除"
@@ -98,25 +98,35 @@ end function
 
 '显示栏目列表成input方式 xiyuetaclass 20220517 如 <option> ├─栏目名称</opton>
 function xiyuetaColumnSubInput(parentid,isShowTab,focusParentid)
+	xiyuetaColumnSubInput=handleXiyuetaColumnSubInput(parentid,isShowTab,focusValue,"id")
+end function
+'处理显示栏目列表成input 判断选中的字段为ID或栏目 20220807'
+function handleXiyuetaColumnSubInput(parentid,isShowTab,focusValue,sType)
   dim rs:Set rs = CreateObject("Adodb.RecordSet")
   dim c,s,sel,addsql,sTab
-  ' if focusid<>"" then addSql=" and id<>"& focusid
+  focusValue=focusValue&""
   rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid="&parentid & addsql &" order by sortrank asc",conn,1,1
   while not rs.EOF  
   	sel=""
-  	if focusParentid<>"" then
-  		if focusParentid=rs("id") then sel=" selected"
+  	if focusValue<>"" then
+  		if sType="txt" then
+  			if focusValue=cstr(rs("columnName")) then sel=" selected"
+  		else
+  			if focusValue=cstr(rs("id")) then sel=" selected"  		
+  		end if
+  		
   	end if
   	'给getxiyuetaColumnSubInputList用的，指定一个大类，让大类的第一级子类前面不要显示等级提示符20220515'
   	sTab=""
   	if isShowTab=true then
   		sTab=getXiyuetaSubColumSort(rs("parentid"),"")   '显示退格符'
   	end if
-    c=c & "<option value="""& rs("id") &""""& sel &">"& sTab & rs("columnName")&"</option>"    
-    c=c & xiyuetaColumnSubInput(rs("id"),true,focusParentid)    '做个判断，是-2，换成-3
+    c=c & "<option value="""& iif(sType="txt",rs("columnName"),rs("id")) &""""& sel &">"& sTab & rs("columnName")&"</option>"    
+    c=c & handleXiyuetaColumnSubInput(rs("id"),true,focusValue,sType)    '做个判断，是-2，换成-3
   rs.movenext:wend:rs.close
-  xiyuetaColumnSubInput=c
+  handleXiyuetaColumnSubInput=c
 end function
+
 
 '获得子栏目树状20210331  如  ├─栏目名称
 function getXiyuetaSubColumSort(parentid,subStr)
@@ -137,17 +147,31 @@ end function
 
 '获得列表20220515'
 function getXiyuetaColumnSubInputList(columnname,fieldName,focusid)
+	getXiyuetaColumnSubInputList=handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,"","id")
+end function
+
+'获得列表20220807 值为栏目名称'
+function getXiyuetaColumnSubInputListTxt(columnname,fieldName,focusid)
+	getXiyuetaColumnSubInputListTxt=handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,"","txt")
+end function
+'获得列表 加默认值
+function handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,defaultOption,sType)
 	dim c
 	if focusid="" then focusid=-2
 	dim rs:Set rs = CreateObject("Adodb.RecordSet")
 	c="<select name="""& fieldName &""">"
+	c=c & defaultOption
 	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid=-1 and columnname='"& columnname &"'",conn,1,1
 	if not rs.eof then
-		c=c & xiyuetaColumnSubInput(rs("id"),false,focusid)
+		' c=c & xiyuetaColumnSubInput(rs("id"),false,focusid,sType)
+		c=c & handleXiyuetaColumnSubInput(rs("id"),false,focusid,sType) 
+
+
+
 	end If:rs.close
 
 	c=c & "</select>"
-  getXiyuetaColumnSubInputList=c
+  handleGetXiyuetaColumnSubInputList=c
 end function
 
 '获得CheckBox列表20220515'
@@ -166,15 +190,24 @@ function getColumnCheckBoxList(columnname,fieldName,sValue)
 		sel=""
 		if instr(sValue," " & rs("columnname") & ",")>0 then sel=" checked"
 			' call echo(sValue,rs("columnname"))
-		c=c & "<input type=""checkbox"" name="""&fieldName&""" value='"& rs("columnName") &"' title="""& rs("columnName") &""""& sel &">"
+		c=c & "<input type=""checkbox""  lay-filter="""&fieldName&""" name="""&fieldName&""" value='"& rs("columnName") &"' title="""& rs("columnName") &""""& sel &">"
 	rs.movenext:wend:rs.close
  
   getColumnCheckBoxList=c
 end function
 
-'获得CheckBox列表20220603'
-function getColumnRadioList(columnname,fieldName,sValue)
-	dim c,parentid,sel
+'获得CheckBox列表 值为栏目ID 20220603'
+function getColumnRadioList(columnname,fieldName,sValue) 
+  getColumnRadioList=handleColumnRadioList(columnname,fieldName,sValue,"id")
+end function
+'获得CheckBox列表 值为栏目名称 20220807'
+function getColumnRadioListTxt(columnname,fieldName,sValue) 
+  getColumnRadioListTxt=handleColumnRadioList(columnname,fieldName,sValue,"txt")
+end function
+'处理单选项20220807
+function handleColumnRadioList(columnname,fieldName,sValue,sType)
+	dim c,parentid,sel,thisValue
+	sValue=sValue&""
 	parentid=-2
 	dim rs:Set rs = CreateObject("Adodb.RecordSet") 
 	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid=-1 and columnname='"& columnname &"'",conn,1
@@ -185,25 +218,27 @@ function getColumnRadioList(columnname,fieldName,sValue)
 	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid="&parentid,conn,1,1
 	while not rs.eof
 		sel=""
-		if cstr(sValue) = cstr(rs("id"))  then sel=" checked"
+		thisValue=cstr(IIF(sType="txt",rs("columnName"),rs("id")) & "")
+
+		if cstr(sValue) = thisValue then sel=" checked"
 			' call echo(sValue,rs("columnname"))
-		c=c & "<input type=""radio"" name="""&fieldName&""" value='"& rs("id") &"' title="""& rs("columnName") &""""& sel &">"
+		c=c & "<input type=""radio"" name="""&fieldName&""" value='"& thisValue &"' title="""& rs("columnName") &""""& sel &">"
 	rs.movenext:wend:rs.close
  
-  getColumnRadioList=c
+  handleColumnRadioList=c
 end function
 '获得栏目ID对应的名称列表20220515'
 function getXiyuetaColumnIdToName(id) 
 	dim rs:Set rs = CreateObject("Adodb.RecordSet")
 	id=id &""
 	if id="" then getXiyuetaColumnIdToName="": exit function
-		' call echo("id",id):doevents
+	' call echo("id",id):doevents
 	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where id="&id,conn,1,1
 	if not rs.eof then
 		getXiyuetaColumnIdToName=rs("columnname")
 	else
-			getXiyuetaColumnIdToName=""
-	end if
+		getXiyuetaColumnIdToName=""
+	end if:rs.close
 end function
 '获得参数栏目搜索到id列表20220604   如1,2,3,4
 function getXiyuetaColumnSearchIdList(keyword)
@@ -217,6 +252,33 @@ function getXiyuetaColumnSearchIdList(keyword)
   getXiyuetaColumnSearchIdList=idlist
 end function
 
+
+'获得栏目id 20220510  大类>小类
+function getXiyuetaClassId(columnName)
+    dim splstr,s,parentid,sql
+    if instr(columnName,">")>0 then
+        splstr=split(columnName,">")
+        for each s in splstr
+            sql="Select * from " & db_PREFIX & "xiyuetaclass where columnName='" & s & "'"
+            if parentid<>"" then sql = sql & " AND parentid="&parentid
+            rsx.open sql, conn, 1, 1 
+            if not rsx.EOF then
+                parentid = rsx("id")        
+                ' call echo("parentid1",parentid)
+            end if : rsx.close 
+        next
+        ' call echo("parentid",parentid)
+        if parentid="" then parentid=-1
+        getXiyuetaClassId=parentid
+        exit function
+    end if
+
+    getXiyuetaClassId = "-1" 
+    rsx.open "Select * from " & db_PREFIX & "xiyuetaclass where columnName='" & columnName & "'", conn, 1, 1 
+    if not rsx.EOF then
+        getXiyuetaClassId = rsx("id")        
+    end if : rsx.close 
+end function
 
 
 
@@ -247,5 +309,17 @@ function getServerVersion()
 	end if:rs.close
 
 	 
+end function
+
+
+
+'处理电话号码20220808'
+function handleTelHide(tel)
+	dim tempTel
+	tempTel=tel
+	if len(tempTel)>4 then
+		tempTel=mid(tempTel,len(tempTel)-4) & "****"
+	end if
+	handleTelHide=tempTel
 end function
 %>

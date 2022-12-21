@@ -571,5 +571,22 @@ Function encAspEvalRun(ByVal content)
 End Function
  
 
-'【删除此行end】
+
+
+
+'解决json处理文本时出错的函数20220720'
+function jsonCL(c)
+    'c=chineseToUnicode(c)'汉字转uni编码，网站也可以显示  如 "  ==  &#x22;           20220722
+    'c=chineseToUnicode2(c)'汉字转uni编码第二种，网站也可以显示  如 "  ==  &#34;           20220722  html字符实体#34或quot  一般用这个
+    if isnul(c) then c=""
+    c=replace(c,"""","&quot;")
+    c=replace(replace(c,chr(10),""),chr(13),"")
+
+    jsonCL=inputCL(c)
+end function
+'解决表里&lt;这种显示为<的问题 20220727'
+function inputCL(c)
+    c=replace(c,"&","&amp;")
+    inputCL=c
+end function
 %> 

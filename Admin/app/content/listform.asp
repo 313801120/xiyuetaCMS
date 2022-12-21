@@ -70,21 +70,21 @@ elseif id<>"" then
   if not rs.eof then
     parentid=rs("parentid") 
     id=rs("id") 
-    title=rs("title")   
-    sortrank=rs("sortrank")   
-    isthrough=rs("isthrough")  
-    smallimage=rs("smallimage")  
-    bigimage=rs("bigimage")  
-    aboutcontent=rs("aboutcontent")  
-    bodycontent=rs("bodycontent")  
-    author=rs("author")  
-    webtitle=rs("webtitle")  
-    webkeywords=rs("webkeywords")  
-    webdescription=rs("webdescription")  
-    filename=rs("filename")  
+    title=inputCL(rs("title") )  
+    sortrank=inputCL(rs("sortrank") )  
+    isthrough=inputCL(rs("isthrough"))  
+    smallimage=inputCL(rs("smallimage"))  
+    bigimage=inputCL(rs("bigimage"))  
+    aboutcontent=inputCL(rs("aboutcontent"))  
+    bodycontent=inputCL(rs("bodycontent"))  
+    author=inputCL(rs("author"))  
+    webtitle=inputCL(rs("webtitle"))  
+    webkeywords=inputCL(rs("webkeywords"))  
+    webdescription=inputCL(rs("webdescription"))  
+    filename=inputCL(rs("filename"))  
   end if
 end if
- 
+  
 
 %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -123,7 +123,7 @@ end if
       <div class="layui-input-inline">
         <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>">
       </div>
-    </div>   
+    </div>    
 
     <div class="layui-form-item">
       <label class="layui-form-label">缩略图</label>
@@ -166,7 +166,7 @@ end if
     <div class="layui-form-item">
       <label class="layui-form-label">文章内容</label>
       <div class="layui-input-block">
-        <textarea name="bodycontent" <%=IIF(request("editor")<>"no"," id='bodycontent'style='display:none;'"," rows='10'")%> placeholder="请输入文章内容" class="layui-textarea"><%=bodycontent%></textarea><%if request("editor")<>"no" then%><a href="?editor=no&id=<%=id%>">不显示编辑器</a><%end if%>
+        <textarea name="bodycontent" <%=IIF(request("editor")<>"no"," id='bodycontent'style='display:none;'"," rows='20'")%> placeholder="请输入文章内容" class="layui-textarea"><%=bodycontent%></textarea><%if request("editor")<>"no" then%><a href="?editor=no&id=<%=id%>">不显示编辑器</a><%end if%>
       </div>
     </div>  
 

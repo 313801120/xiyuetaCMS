@@ -3,6 +3,7 @@
 【webdescription】xiyuetaCMS内容管理系统通用型后台权限管理框架，紧随潮流、开箱即用拥有多种版本选择，随意搭配使用
 【weburl】http://www.xiyueta.com/
 【logo】/UploadFiles/testpic/logo.jpg
+【biglogo】/UploadFiles/testpic/logo.png
 【qrcode】/UploadFiles/testpic/qrcode.png
 【phone】18123456789
 【tel】021-6666666
@@ -13,6 +14,7 @@
 【address】某某市某某区某某公路666弄66号
 【company】上海市某某有限公司
 【companyen】SHANGHUI XIYUETA CO., LTD
+【asporhtml】1
  
 
 

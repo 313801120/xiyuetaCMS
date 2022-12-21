@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,columnName,id,title,field
+dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,columnName,id,title,field,bodycontent
 '网站栏目查询
 If Request("act") = "list" Then  
 
@@ -20,7 +20,7 @@ If Request("act") = "list" Then
       sql =  sql & IIF(instr(sql," where ")=false," where "," and ") & "[title] like '%" & Request("key") & "%' " 
     End If 
     ' call die(sql)
-    
+    sql=sql & " order by id desc"
     rs.Open sql, conn, 1, 1 
 
     If Not rs.EOF Then
@@ -55,8 +55,9 @@ If Request("act") = "list" Then
             Else
                 sHr = "," 
             End If 
-
-	       stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""ip"":""" & rs("ip") & """,""addr"":""" & look_ip(rs("ip")) & """,""guestname"":""" & rs("guestname") & """,""title"":""" & rs("title") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""bodycontent"":""" & rs("bodycontent") & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
+            bodycontent= rs("bodycontent") & ""
+            bodycontent=replace(replace(replace(replace(bodycontent,"""","\"""),vbcrlf,"\n"),chr(10),"\n"),chr(13),"n")
+	       stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""ip"":""" & rs("ip") & """,""addr"":""" & look_ip(rs("ip")) & """,""guestname"":""" & rs("guestname") & """,""title"":""" & rs("title") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""bodycontent"":""" & bodycontent & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
     
             rs.MoveNext 
         Wend 

@@ -10,7 +10,7 @@ Dim ROOT_PATH : ROOT_PATH = handlePath("./")
 '=========
 
 
-'加载网址配置
+'加载网址配置 
 function loadWebConfig()
     Call openconn() 
 	'【PHP】if(@$dbname=='kanfang'){return "";}

@@ -441,6 +441,36 @@ function tc2(my_tit, my_url, my_width, my_height) {
 
 }
 
+function tc3(my_tit, my_url, my_width, my_height) {
+
+    layer.open({
+        title: my_tit,
+        type: 2,
+        area: [my_width + 'px', my_height + 'px'], 
+        btn: ['打电话', '取消'],
+        fixed: false, //不固定
+        maxmin: true,
+        content: my_url,
+
+        yes: function(index, layero){
+                var iframeWindow = window['layui-layer-iframe'+ index]
+                ,submitID = 'LAY-user-front-submit'
+                ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                //监听提交
+                iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                  
+                });  
+                
+                submit.trigger('click');
+              }
+
+
+
+    });
+
+}
+
 function pop_up(my_tit, my_url, my_width, my_height) {
 
     layer.open({
@@ -1076,4 +1106,9 @@ function showwin2(title,url){
     if(n<nWidth)nWidth=n;
 
     pop_up(title,url, nWidth, 450)
+    // tc3(title,url, nWidth, 450)
 }
+
+
+
+

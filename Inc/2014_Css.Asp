@@ -54,6 +54,11 @@ end function
 '去掉字符串开头的连续的回车和空格 改进于20171207
 function phpLTrim(byval str)
     dim nLen,n,i,s
+    if isnul(str) then 
+        phpLTrim=""
+        exit function
+    end if
+
     nLen = len(str)
     n=0
     for i=1 to nLen

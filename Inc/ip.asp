@@ -186,7 +186,7 @@ end class
 
  
  public function look_ip(byval ip)
- 		if ip="" then		'追加20210331
+ 		if ip="" or isNull(ip) then		'追加20210331
 			look_ip=""
 			exit function
 		end if

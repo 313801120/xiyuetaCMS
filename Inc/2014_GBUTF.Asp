@@ -268,7 +268,7 @@ function chineseToUnicode(str)
     chineseToUnicode = c 
 end function 
 
-'解汉字乱码
+'解汉字乱码   html字符实体#34或quot
 function unicodeToChinese(content)
     dim splStr, s, c 
     splStr = split(content, ";") 
@@ -280,7 +280,7 @@ function unicodeToChinese(content)
     next 
     unicodeToChinese = c 
 end function 
-'汉字乱码如：（中国，&#20013;&#22269;）  HTML字符实体转换 20190501
+'汉字乱码如：（中国，&#20013;&#22269;）  HTML字符实体转换 20190501  html字符实体#34或quot
 function chineseToUnicode2(str)
     dim i, s, c 
     for i = 1 to len(str)
@@ -290,7 +290,7 @@ function chineseToUnicode2(str)
     next 
     chineseToUnicode2 = c 
 end function  
-'解汉字乱码   HTML字符实体转换 20190501
+'解汉字乱码   HTML字符实体转换 20190501  html字符实体#34或quot
 function unicodeToChinese2(content)
     dim splStr, s, c 
     splStr = split(content, ";") 

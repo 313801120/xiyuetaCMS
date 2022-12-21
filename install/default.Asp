@@ -1,5 +1,5 @@
 <!--#Include file = "../inc/Config.Asp"-->
-<%
+<% 
 if request("act")="login" then
     if trim(request("pass"))="xiyueta.com" then
         session("installLoginPass")="mima"
@@ -426,7 +426,8 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[weixin] VarChar Default """","                                      '微信
         sql = sql & "[qq] VarChar Default """","                                          'QQ
         sql = sql & "[copyright] VarChar Default """","                                   '版权
-        sql = sql & "[logo] VarChar Default """","                                    	  'Logo
+        sql = sql & "[logo] VarChar Default """","                                    	  'Logo(小)
+        sql = sql & "[biglogo] VarChar Default """","                                        'Logo(大)
         sql = sql & "[qrcode] VarChar Default """","                                      '二维码
         sql = sql & "[address] VarChar Default """","                                     '地址
         sql = sql & "[company] VarChar Default """","                                     '公司名称
@@ -438,6 +439,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[webkeywords] VarChar Default """","                                 '网站关键词
         sql = sql & "[webdescription] Text Default """","                                 '网站描述
         
+        sql = sql & "[tplname] VarChar Default """","                                     '当前使用模板名称
         sql = sql & "[domain] VarChar Default """","                                      '域名
         sql = sql & "[username] VarChar Default """","                                    '账号
         sql = sql & "[version] VarChar Default """","                                     '版本号 
@@ -572,7 +574,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[webdescription] Text Default """","                                 '网站描述
         
         sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
-        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
         sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
         sql = sql & "[ip] VarChar Default """","                                          'IP地址 
         sql = sql & "[aboutcontent] Text Default """","                                   '简单介绍
@@ -620,7 +622,9 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[tel] VarChar Default """","                                         '电话
         sql = sql & "[isthrough] Int Default 1,"                                          '通过审核
         sql = sql & "[flags] VarChar Default """","                                       '电话
-        sql = sql & "[grouping] VarChar Default """","                                         '分组
+        sql = sql & "[grouping]  Int Default -1,"                                         '分组
+        sql = sql & "[isiplimit] Int Default 1,"                                          '是否开启IP限制
+        sql = sql & "[iplimitlist] VarChar Default """","                                 'IP限制列表
 
         sql = sql & "[createtime] DateTime Default Now(),"                               '创建时间
         sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间
@@ -826,14 +830,13 @@ sub webData(db_PREFIX, loginname, loginpwd)
         conn.execute("insert into " & db_PREFIX & "admin (username,pwd,nickname,[level],flags) values('" & loginname & "','" & myMD5(loginpwd) & "','小孙',1,'|*|')") 
         '多个测试'
 
-'网站管理员,管理人员,入库人员,审核人员,出库人员'
- 
 
 
         dim fieldNameList, fieldValueList 
         fieldNameList = "webtitle,webkeywords,webdescription,WebUrl,Webfoot,username,version" 
         fieldValueList = "'网站标题','网站关键词','网站描述','http://www.xiyueta.com','版权所有 小云所有 电话：021-66666666 传真：021-8888888<br>联系QQ：313801120 邮箱：313801120@qq.com','test','v1.0'" 
         conn.execute("insert into " & db_PREFIX & "website (" & fieldNameList & ") values(" & fieldValueList & ")") 
+ 
 
         session("adminid")=0 '自动登录后台20220525
     end if 
@@ -996,7 +999,7 @@ sub displayImportTableLayout()
 end sub 
 '显示导入数据
 sub displayImportData()
-    call setsession("adminusername", "PAAJCMS") 
+    call setsession("adminusername", "xiyuetaCMS") 
     call setsession("adminflags", "|*|") 
     showLayout = "step4" 
 end sub 

@@ -369,7 +369,7 @@ Class UpLoadClass
 		for i = 1 to Len(str)
 			ret = ret * base + Cint(Mid(str, i, 1))
 		next
-		Str2Num = ret
+		Str2Num = ret 
 	End Function
 
 End Class

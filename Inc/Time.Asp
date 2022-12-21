@@ -234,7 +234,7 @@ function calculationTimer(startTime,endTime)
     dim n 
     'n = formatNumber((timer() - pubTimer) * 1000, 2, - 1) / 1000 
     'calculationTimer = toNumber(n, 3)   
-	calculationTimer=dateDiff("s", startTime,endTime)
+	calculationTimer=dateDiff("s", startTime,endTime) 
 end function  
 
 '获得时间

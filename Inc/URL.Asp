@@ -115,7 +115,7 @@ function getUrlDir(byval url)
 end function 
  
 '获取客户端IP地址第二种 
-function getIP2()
+function getIP2() 
     on error resume next 
     dim x, y, addr 
     x = request.serverVariables("HTTP_X_FORWARDED_FOR") 
@@ -272,22 +272,33 @@ end function
 function getPort()
     dim port 
     port = CStr(request.serverVariables("SERVER_PORT")) 
-    if port <> "80" and port <> "8080" and port<>"" then
+    if port <> "80" and port <> "8080" and port <> "443" and port<>"" then
         port = ":" & port 
     else
         port = "" 
     end if 
     getPort = port 
-end function 
+end function
+
+function getHttpOrHttps()
+    if CStr(request.serverVariables("SERVER_PORT"))  ="443" then
+        getHttpOrHttps = "https://" 
+    else
+        getHttpOrHttps = "http://" 
+    end if 
+end function
 
 '获得域名
 function webDoMain()
-    webDoMain = "http://" & request.serverVariables("SERVER_NAME") & getPort() 
+   webDoMain=getHttpOrHttps() &  request.serverVariables("SERVER_NAME") & getPort()  
 end function 
 
 '获得当前域名
 function host()
-    host = "http://" & request.serverVariables("HTTP_HOST") & "/" 
+    host = getHttpOrHttps() & request.serverVariables("HTTP_HOST") & "/" 
+
+
+
 end function 
 
 '获得当前域名 (辅助)
@@ -318,7 +329,7 @@ function getThisUrl()
     url = url & request.serverVariables("script_name") 
     if request.serverVariables("QUERY_STRING") <> "" then url = url & "?" & request.serverVariables("QUERY_STRING") 
     'vbdel end
-    getThisUrl = "http://" & url 
+    getThisUrl = getHttpOrHttps() &   url 
 end function 
 '获得当前无文件名称网址
 function getThisUrlNoFileName()
@@ -359,7 +370,7 @@ function getWebSiteName(byval url)
 	end if
 	getWebSiteName=url
 end function
-'获得域名完整域名如  www.sharembweb.com 
+'获得域名完整域名如  www.xiyueta.com 
 function getWebSiteCleanName(byVal httpurl)
 	dim url,nLen
 	url=getWebSite(httpurl)
@@ -409,7 +420,7 @@ function getWebSite(byVal httpurl)
         getWebSite = httpurl : exit function 
     else
         splStr = split(httpurl, ".") 
-        if(inStr(httpurl, "www.") > 0 and uBound(splStr) >= 2) or uBound(splStr) >= 1 then
+        if (inStr(httpurl, "www.") > 0 and uBound(splStr) >= 2) or uBound(splStr) >= 1 then
             if inStr(httpurl, "/") > 0 then
                 s = mid(httpurl, 1, inStr(httpurl, "/") - 1) 
                 if s = getDianNumb(s) then

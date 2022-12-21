@@ -15,7 +15,7 @@
 【sortrank】4
 -------------------------------
 【title】github
-【httpurl】https://gitee.com/313801120/xiyueta
+【httpurl】https://github.com/313801120/xiyueta
 【sortrank】5
 -------------------------------
 【title】gitee

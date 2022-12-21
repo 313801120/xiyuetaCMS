@@ -1,12 +1,12 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,splxx 
+dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,splxx,idlist
 
 '会员列表查询
 If Request("act") = "userlist" Then
     num = UCase(Request("limit")) 
     page = UCase(Request("page")) 
-    stemp = "{""data"":[" 
+    stemp = "{""data"":["  
 
     splxx=split(adminLevelList,",")         '管理权限对应名称'
 
@@ -20,7 +20,14 @@ If Request("act") = "userlist" Then
     End If 
     If Request("key") <> "" Then
       sql =  sql & IIF(instr(sql," where ")=false," where "," and ") & "[username] like '%" & Request("key") & "%' " 
+      '分级搜索'
+     idlist=getXiyuetaColumnSearchIdList(request("key"))
+     if idlist<>"" then sql=sql &" or grouping in("& idlist & ")  "
+
     End If 
+ 
+ 
+
     sql=sql & " order by id desc" 
     ' call die(sql)
     
@@ -60,7 +67,7 @@ If Request("act") = "userlist" Then
                 sHr = "," 
             End If  
  
-            stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""username"":""" & rs("username") & """,""nickname"":""" & rs("nickname") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""level"":""" & splxx(rs("level")) & """,""createTime"":""" & rs("createTime") & """,""grouping"":""" & rs("grouping") & """,""permission"":""" & rs("permission") & """,""isthrough"":""" & IIF(rs("isThrough")=0,"未审核","已审核") & """}" &sHr & "" 
+            stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""username"":""" & rs("username") & """,""nickname"":""" & rs("nickname") & """,""tel"":""" & rs("tel") & """,""email"":""" & rs("email") & """,""level"":""" & splxx(rs("level")) & """,""createTime"":""" & rs("createTime") & """,""grouping"":""" & getXiyuetaColumnIdToName(rs("grouping")) & """,""permission"":""" & rs("permission") & """,""isthrough"":""" & IIF(rs("isThrough")=0,"未审核","已审核") & """}" &sHr & "" 
 
             rs.MoveNext 
         Wend 
@@ -111,7 +118,7 @@ End If
   
   <div class="layui-inline">
  
-    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的账号">
+    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询内容">
     </div>
       
   <button class="layui-btn" data-type="reload">搜索</button>

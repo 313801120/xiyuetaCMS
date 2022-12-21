@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%=webtitle%>
-    </title>
+    <title><%=webtitle%></title>
     <meta name="keywords" content="<%=webkeywords%>" />
     <meta name="description" content="<%=webdescription%>" />
+    <meta name="author" content="xiyueta.com" />
     <link rel='stylesheet' href='/web/css/iconfont.css'><!-- Animate.css动画演示 -->
+    <link rel='stylesheet' href='/web/css/font-awesome.min.css'><!--提供可缩放矢量图标 -->
     <link rel='stylesheet' href='/web/css/animate.min.css'><!-- Animate.css动画演示 -->
     <link rel='stylesheet' href='/web/css/bootstrap.css'><!-- bootstrap -->
     <link rel='stylesheet' href='/web/css/swiper.min.css'><!-- 滑动特效插件 -->
@@ -24,6 +24,11 @@
     <script src='/web/js/wow.min.js'></script><!-- wow动画效果 -->
     <script src='/web/js/jquery.lazyload.min.js'></script><!-- jQuery懒加载插件 -->
     <script src='/web/js/clipboard.min.js'></script><!-- 复制内容 -->
+    <script>document.writeln("<script src=\'/api/webstat.asp?act=webstat&tourl="+escape(document.referrer)+"&url="+escape(window.location.href)+"&w="+escape(window.screen.width)+"&h="+escape(window.screen.height)+"&useragent="+escape(navigator.userAgent)+" \'><\/script>");</script> 
 </head>
 
 <body>
+
+
+
+

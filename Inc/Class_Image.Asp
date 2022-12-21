@@ -71,6 +71,51 @@ class GPS
         ret(3) = "width=""" & ret(1) & """ height=""" & ret(2) & """" 
         getImageSize = ret 
     end function 
+
+
+
+    '获得图片类型
+    function getImageType(filespec)
+        dim bFlag, p1 
+        if checkFile(filespec) = false or getFSize(filespec)=0 then
+            getImageType="文件不存在"
+         exit function                               '图片文件不存 则退出
+        end if
+
+        aso.loadFromFile(filespec) 
+        'On Error Resume Next
+        dim ret(3) 
+        'call echo("filespec",filespec)
+        bFlag = aso.read(3) 
+        Call Echo("bFlag1",Hex(binVal(bFlag)))
+        select case hex(binVal(bFlag))
+            case "4E5089" 
+                getImageType="png"
+                exit function
+            case "464947"
+                getImageType="gif"
+                exit function
+            case "FFD8FF"                
+                getImageType="jpg"
+                exit function
+            case "88B1F"                
+                getImageType="zip"
+                exit function
+            case else
+                if left(bin2Str(bFlag), 2) = "BM" then
+                    getImageType="bmp"
+                    exit function
+                elseif left(bin2Str(bFlag), 2) = "PK" then
+                    getImageType="zip"
+                    exit function
+                else
+                    getImageType="("& left(bin2Str(bFlag), 2) &")("& Hex(binVal(bFlag)) &")"
+                    exit function
+                end if
+        end select
+        getImageType="33"
+        exit function
+    end function 
 end class  
 
 %>   

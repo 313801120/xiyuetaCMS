@@ -2,7 +2,7 @@
 <!--#Include File = "../../admin_function.asp"-->
 <!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping
+dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping,isiplimit
 dim splxx,i,s
 id=request("id")
 username=request("username")              '用户名'
@@ -16,7 +16,7 @@ tel=request("tel")                    '手机
 bodyContent=request("bodyContent")                    '备注+
 
 
-permission=request("permission")  '权限'
+permission=replace(request("permission")," ","")  '权限'空格去掉
 grouping=request("grouping")  '权限'
 
 
@@ -25,7 +25,10 @@ grouping=request("grouping")  '权限'
 isthrough=request("isthrough")            '审核'
 isthrough=IIF(isthrough="on",1,0)   '处理下'
 
- 
+isiplimit=request("isiplimit")            'IP限制'
+isiplimit=IIF(isiplimit="on",1,0)   '处理下'
+
+
 
 '添加修改
 if request("act")="save" then 
@@ -61,15 +64,19 @@ if request("act")="save" then
       end if 
       rs("username")=username 
       rs("nickname")=nickname 
-      rs("isthrough")=isthrough
+      ' if rs("level")=1 then isthrough=1'最高权限 自动审核
+      if level<>1 then '排除最高权限者20220616
+        rs("isthrough")=isthrough
+      end if
       rs("email")=email
       rs("tel")=tel
       rs("pic")=pic
       rs("sex")=sex
       rs("level")=level 
-      rs("permission")=permission 
+      rs("permission")=permission
       rs("grouping")=grouping 
       rs("bodyContent")=bodyContent 
+      rs("isiplimit")=isiplimit 'IP限制'
       if pwd<>"" then rs("pwd")=pwd
       rs.update  
       response.Write"<script>parent.location.reload();</script>"
@@ -83,15 +90,17 @@ elseif id<>"" then
     username=rs("username")
     nickname=rs("nickname")
     id=rs("id") 
+
     isthrough=rs("isthrough")  
     pic=rs("pic")  
     sex=rs("sex")  
     level=rs("level")  
-    permission=rs("permission")  
+    permission=replace(rs("permission")," ","")'去掉空格'
     email=rs("email")
     tel=rs("tel")
     bodyContent=rs("bodyContent")
     grouping=rs("grouping")
+    isiplimit=rs("isiplimit")
   end if
 end if
  
@@ -159,13 +168,8 @@ next
     </div>
     <div class="layui-form-item" lay-filter="grouping">
       <label class="layui-form-label">分组</label>
-      <div class="layui-input-inline">
-        <select name="grouping">
-        <option value="">无</option>
-        <option value="A组"<%=IIF(grouping="A组"," selected","")%>>A组</option>
-        <option value="B组"<%=IIF(grouping="B组"," selected","")%>>B组</option>
-        <option value="C组"<%=IIF(grouping="C组"," selected","")%>>C组</option>
-        </select>
+      <div class="layui-input-inline"> 
+        <%=getXiyuetaColumnSubInputList("后台用户分组","grouping",1)%>
       </div>
     </div>
     <div class="layui-form-item">
@@ -220,6 +224,13 @@ for i=0 to ubound(splxx)
       </div>
     </div>  
 <%end if%>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">登录IP限制</label>
+      <div class="layui-input-inline">
+        <input type="checkbox" lay-filter="switch" name="isiplimit" lay-skin="switch" lay-text="开启|关闭" <%=IIF(isiplimit=0,""," checked")%>>
+      </div>
+    </div>  
  
 
 

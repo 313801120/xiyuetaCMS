@@ -31,7 +31,7 @@ If Request("act") = "list" Then
       sql=IIF(sql=""," where ",sql & " and ")
       sql =sql & "[title] like '%" & Request("key") & "%' " 
     End If 
-    mysql = sql1 & sql & " order by sortrank" 
+    mysql = sql1 & sql & " order by id desc"  'sortrank'
     'call die(mysql)
     rs.Open mysql, conn, 1, 1 
 
@@ -73,7 +73,7 @@ If Request("act") = "list" Then
                 isthrough=" checked"
             end if 
 
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""parentid"":""" & getSubTree(rs("parentid")) & """,""isthrough"":""" & isthrough & """,""title"":""" & rs("title") & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""parentid"":""" & getSubTree(rs("parentid")) & """,""isthrough"":""" & isthrough & """,""title"":""" & jsonCL(rs("title")) & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
     
  
 
@@ -120,7 +120,7 @@ End If
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>部件列表</title>
+<title>文章列表</title>
 <script type="text/javascript" src="../../js/jquery.js"></script>
  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
@@ -159,6 +159,8 @@ End If
   <button class="layui-btn" data-type="reload">搜索</button>
   <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
           <button class="layui-btn" data-type="batchdel">删除</button>
+  <a href="backupData.asp?act=article" class="layui-btn">导出</a>
+  <button class="layui-btn" id="importXls">导入</button>
 
 </div>
  
@@ -170,9 +172,27 @@ End If
 <table class="layui-hide" id="demo" lay-filter="demo"></table>
  
 <script>
-layui.use(['form','table'],function(){
+layui.use(['form','table','upload'],function(){
     var form = layui.form
         table = layui.table; 
+
+    var upload = layui.upload
+    upload.render({
+        elem: '#importXls',
+        url: '/api/upload/uploadXls.asp',
+        exts: 'txt|dat', //只允许上传txt文件
+        done: function(res) {
+            alert("res.data.src="+res.data.src)
+              $.get('/install/addData.asp?act=importArticle', {
+                    articlePath:res.data.src
+                }, function (strData) {
+                    // var data= $.parseJSON( strData );
+                    // layer.msg(data.msg + " 共 "+ data.count +" 条");
+                    layer.msg(strData);
+
+                })
+        }
+    });
 
     //方法级渲染
     table.render({
@@ -181,7 +201,7 @@ layui.use(['form','table'],function(){
         cols: [
             [
                 {type: 'checkbox', fixed: 'left'},
-                { field: 'id', title: 'ID', width: 70, sort: false }
+                { field: 'id', title: 'ID', width: 70, sort: true }
                 , { field: 'parentid', title: '类目', width: 150, sort: true }
                 , { field: 'title', title: '名称', edit: 'text', sort: true }
                 , { field: 'createtime', title: '发布时间', width: 160, sort: true }

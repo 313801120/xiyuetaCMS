@@ -11,7 +11,7 @@ function saveRemoteFile(byVal remoteFileurl, byVal localFileName)
             call .open("Get", remoteFileurl, false, "", "")                                       'Flase同步,True异步
             .send
             if err then
-                saveRemoteFile = 9999 : exit function                         '[网址错误]
+                saveRemoteFile = 9999 : exit function                         '[网址错误] 
             end if
             getRemoteData =.responseBody
             saveRemoteFile =.status
@@ -128,8 +128,9 @@ function saveRemoteFile_WinHttp(httpurl,localFileName, refererUrl)
 			if err then
 				saveRemoteFile_WinHttp=9999
 			end if
+
 			if err then
-				call eerr(err.description,  httpurl & "==>>" & localFileName) 
+				' call eerr(err.description,  httpurl & "==>>" & localFileName)  '不停止20221202'
 			end if 
         end with  
 	if err then

@@ -24,7 +24,7 @@ webinfo=escape(webinfo)'转码'
 function getServerUrl()
     dim c,url
     if getip()="127.0.0.1" then '为本地则测试本地'
-        c="{resurl:'http://res.xyt.com/'}"
+        c="{resurl:'http://res/'}"
     else
         c=gethttpurl("http://xiyueta.com/api/cms/?act=resurl&info="&webinfo,"utf-8")
     end if
@@ -47,6 +47,12 @@ sub useTplAction(tplid,action)
     call createFolder("../../../tpl")      '创建TPL文件夹'
     url=serverUrl & "/api/tpl/action/?tplid="&tplid&"&info="&webinfo
     c=gethttpurl(url,"utf-8")
+    if instr(c,"[$]")>0 then
+        splxx=split(c,"[$]")
+        if ubound(splxx)>=2 then
+            call die(c)
+        end if
+    end if
     call echo(url,c)
     splstr=split(c,"[,]")
     for each s in splstr
@@ -88,10 +94,17 @@ function downServerRes(res)
 end function
 '循环动作'
 function forActionList(tplid,action,pagename,saction)
-    dim splstr,splxx,s,c,filePath,html,did,row,parame,ascdesc,str
+    dim splstr,splxx,s,c,filePath,html,did,row,parame,ascdesc,str,str1,str2,str3,str4,str5,testViewDir
+
+    if action="view" then  '为查看是不要生成网站了'
+        testViewDir=tplid & "/tpl/"
+        call createDirFolder("../../../tpl/" & tplid) 
+        call createDirFolder("../../../tpl/" & tplid & "/tpl") 
+    end if
     splstr=split(saction,vbcrlf)
     for each s in splstr
         s=trim(s)
+        did="":row="":ascdesc="":str="":str1="":str2=""  '初始化为空内容'
         if s <>"" then
             did="":row=""
             call echo("s",s)
@@ -104,10 +117,20 @@ function forActionList(tplid,action,pagename,saction)
                 row=strCut(parame,"row:",",",0)
                 ascdesc=strCut(parame,"asc:",",",0)
                 str=strCut(parame,"str:",",",0)
+                str1=strCut(parame,"str1:",",",0)
+                str2=strCut(parame,"str2:",",",0)
+                str3=strCut(parame,"str3:",",",0)
+                str4=strCut(parame,"str4:",",",0)
+                str5=strCut(parame,"str5:",",",0)
                 call echo("did",did)
                 call echo("row",row)
                 call echo("asc",ascdesc)
                 call echo("str",str)
+                call echo("str1",str1)
+                call echo("str2",str2)
+                call echo("str3",str3)
+                call echo("str4",str4)
+                call echo("str5",str5)
             end if
             call echo("s2",s)
             s=replace(s,vbtab," ")
@@ -115,33 +138,53 @@ function forActionList(tplid,action,pagename,saction)
             s=replace(s,"  "," ")
             s=replace(s,"  "," ")
             splxx=split(s&"   "," ")
-            c=c & getTplModle(splxx(0),splxx(1),splxx(2),did,row,ascdesc,str) & vbcrlf
+            c=c & getTplModle(testViewDir,splxx(0),splxx(1),splxx(2),did,row,ascdesc,str,str1,str2,str3,str4,str5) & vbcrlf
         end if
     next
-    filePath="../../../" & pagename
-    if checkfile(filePath)=false then    '不存在调用默认模块'    
-        html=readfile("../../../tpl.asp","utf-8")
-    else
-        html=readfile(filePath,"utf-8")
-    end if
-    splxx=split(html,"<body>")
-    c=splxx(0) & "<body>" & vbcrlf & c & vbcrlf & "</body>" & vbcrlf &"</html>"
 
     if action<>"view" then  '为查看是不要生成网站了'
+
+        filePath="../../../" & pagename
+        if checkfile(filePath)=false then    '不存在调用默认模块'    
+            html=readfile("../../../tpl.asp","utf-8")
+        else
+            html=readfile(filePath,"utf-8")
+        end if
+        splxx=split(html,"<body>")
+        c=splxx(0) & "<body>" & vbcrlf & c & vbcrlf & "</body>" & vbcrlf &"</html>"
+
         call writetofile(filePath,c,"utf-8")
-    end if
+        call echo("生成网页",filePath)
 
-    '生成预览网页' 
-    call createDirFolder("../../../tpl/" & tplid) 
-    filePath="../../../tpl/" & tplid & "/" & pagename
-    c=replace(c,"<!--#Include file = ""tpl/","<!--#Include file = ""../")
-    c=replace(c,"<body>","<body>" & vbcrlf & "<"&"% onAutoAddDataToAccess=false %"&">")     '预览目录里不可以自动生成单页面的记录20220602
-    call writetofile(filePath,c,"utf-8")
+    else
+        '生成预览网页' 
+        filePath="../../../tpl/" & tplid & "/" & pagename
 
-    call echo("生成网页",filePath)
+        if checkfile(filePath)=false then    '不存在调用默认模块'    
+            html=readfile("../../../tpl.asp","utf-8")
+        else
+            html=readfile(filePath,"utf-8")
+        end if
+        splxx=split(html,"<body>")
+        c=splxx(0) & "<body>" & vbcrlf & c & vbcrlf & "</body>" & vbcrlf &"</html>"
+        c=replace(c,"<body>","<body>" & vbcrlf & "<"&"% onAutoAddDataToAccess=false %"&">" & showThisWebAuthorInfo2022())    
+        call writetofile(filePath,c,"utf-8")
+        call echo("生成预览网页",filePath)
+
+    end if 
+
+end function
+
+function showThisWebAuthorInfo2022()
+    dim content,splstr,s,c
+    content=authorInfo2()
+    c="console.log("""& replace(content,vbcrlf,"\n")  &""")"
+
+    c="<script>"& c &"</script>"
+    showThisWebAuthorInfo2022="<!--"& vbcrlf & content &"-->" & vbcrlf & c
 end function
 '获得模块'
-function getTplModle(sType,id,style,did,row,ascdesc,str)
+function getTplModle(testViewDir,sType,id,style,did,row,ascdesc,str,str1,str2,str3,str4,str5)
     dim fileName
     style=style & ""
     id=id&""
@@ -160,13 +203,18 @@ function getTplModle(sType,id,style,did,row,ascdesc,str)
     if row<>"" then url=url  & "&row="&row
     if ascdesc<>"" then url=url & "&asc="&ascdesc 
     if str<>"" then url=url & "&str="&escape(str)
+    if str1<>"" then url=url & "&str1="&escape(str1)
+    if str2<>"" then url=url & "&str2="&escape(str2)
+    if str3<>"" then url=url & "&str3="&escape(str3)
+    if str4<>"" then url=url & "&str4="&escape(str4)
+    if str5<>"" then url=url & "&str5="&escape(str5)
 
 
   
 
     call echo("样式url",url)
     c=gethttpurl(url,"utf-8")
-    call writetofile("../../../tpl/" & fileName,c,"utf-8")
+    call writetofile("../../../tpl/" & testViewDir & fileName,c,"utf-8")
     call echo("获得模板块",fileName)
     getTplModle="<!--#Include file = ""tpl/"& fileName &"""-->"
 end function
@@ -176,7 +224,7 @@ end function
 If Request("act") = "list" Then
     dim updateusername,sListStr,splVersion
     ' call eerr("url",serverUrl & "/api/tpl/list/?info="&webinfo)
-    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&key="&escape(request("key")),"utf-8")
+    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&key="&escape(request("key"))&"&page="&request("page"),"utf-8")
 
     '服务器地址错误时，重复获得地址，并更新资源地址'
     if instr(sListStr,"count"":")=false then
@@ -278,9 +326,11 @@ layui.use(['form','table'],function(){
             [
                 // {type: 'checkbox', fixed: 'left'},
                { field: 'id', title: 'ID', width:70,sort: false }
-               ,{ field: 'tplid', title: '模板ID', sort: false } 
-               ,{ field: 'ntype', title: '类型', sort: false }
+               ,{ field: 'ahref', title: '模板ID', width:120, sort: false } 
+               // ,{ field: 'pic', title: '预览', sort: false } 
+               ,{ field: 'ntype', title: '类型', width:90, sort: false }
                ,{ field: 'title', title: '标题', sort: false }
+               ,{ field: 'sortrank', title: '排序', width:90, sort: false }
                 , { fixed: 'right', title: '操作', width: 240, toolbar: '#barDemo' }
 
 
@@ -419,7 +469,15 @@ layui.use(['form','table'],function(){
                     url: "?act=use",
                     data: { "tplid": obj.data["tplid"] },
                     success: function(data) {  
-                        layer.msg('处理应该模板完成。');
+                        var splxx=data.split("[$]");
+                        if(splxx.length==3){
+                            layer.open({
+                              title: '提示'
+                              ,content: splxx[1]
+                            });  
+                        }else{
+                            layer.msg('处理应该模板完成。');
+                        }
                     }
                 });
                 layer.close(index);
@@ -438,14 +496,22 @@ layui.use(['form','table'],function(){
                     url: "?act=view",
                     data: { "tplid": obj.data["tplid"] },
                     success: function(data) { 
+                        var splxx=data.split("[$]");
+                        if(splxx.length==3){
+                            layer.open({
+                              title: '提示'
+                              ,content: splxx[1]
+                            });  
+                        }else{
                         // layer.msg('查找模板成功' +tplid);
-                        window.open('/tpl/'+tplid,"xiyueta.com")
-                        layer.msg('处理预览模板完成。');
+                            window.open('/tpl/'+tplid,"xiyueta.com"+tplid)
+                            layer.msg('处理预览模板完成。');
+                        }
                     }
                 });
                 layer.close(index);
             });
-        }else if (obj.event === 'gotoview') {
+        }else if (obj.event === 'gotoview') {//预览
             window.open('http://www.xiyueta.com/tpl/'+tplid,"xiyueta.com")
 
         } else if (obj.event === 'edit') {

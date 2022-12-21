@@ -11,8 +11,8 @@ function saveWebStat()	'保存网站统计'
 	h=request("h")
 	useragent=unescape(request("useragent"))  'getBrType()' 
 
-    rs.open "select * from " & db_PREFIX & "count where ip='"& getIP() &"' and url='"& url&"' and datediff('d',intime,now())=0" ,conn,1,3
-    if rs.eof then
+    rs.open "select * from " & db_PREFIX & "count where ip='"& getIP() &"' and url='"& url&"' and "& getAccessDatediff("intime") &"=0" ,conn,1,3
+    if rs.eof then 
         rs.addnew
         rs("ip")=getip()
         rs("url")=url

@@ -28,13 +28,35 @@
  
 
 联系我们【|】columntype='text' parentid='-1' flags='top|foot' sortrank='5' isthrough='1' columnenname='contact us' bannerimage='/UploadFiles/testpic/ad-contactus.jpg'  columnico='ꂅ'
+	在线留言【|】columntype='guestbook' sortrank='5' isthrough='1'
+	在线反馈【|】columntype='guestbook' sortrank='10' isthrough='1' 
+
 banner【|】columntype='product' parentid='-1' flags='' sortrank='998' isthrough='0'
-常见问题【|】columntype='news' parentid='-1' flags='' sortrank='999' isthrough='0'
-优势【|】columntype='news' parentid='-1' flags='' sortrank='1000' isthrough='0'
+常见问题【|】columntype='news' parentid='-1' flags='' sortrank='999' isthrough='0' 
+
+
+在线留言【|】columntype='guestbook' parentid='-1' flags='' sortrank='10' isthrough='1' bannerimage='/UploadFiles/testpic/ad-guestbook2.jpg' columnenname='guestbook'
+
+搜索【|】columntype='search' parentid='-1' flags='' sortrank='100' isthrough='1' bannerimage='/UploadFiles/testpic/ad-products.jpg' columnenname='search'
+
+网站案例【|】columntype='case' parentid='-1' sortrank='200' isthrough='1'  columnenname='web case'
+	蓝色【|】columntype='text' sortrank='10' isthrough='1' httpurl='/case/?k=蓝色'
+	红色【|】columntype='text' sortrank='20' isthrough='1' httpurl='/case/?k=红色' 
+	黄色【|】columntype='text' sortrank='30' isthrough='1' httpurl='/case/?k=黄色' 
+	紫色【|】columntype='text' sortrank='40' isthrough='1' httpurl='/case/?k=紫色' 
+	黑色【|】columntype='text' sortrank='50' isthrough='1' httpurl='/case/?k=黑色' 
+	绿色【|】columntype='text' sortrank='60' isthrough='1' httpurl='/case/?k=绿色' 
+	粉色【|】columntype='text' sortrank='70' isthrough='1' httpurl='/case/?k=粉色' 
+	浅绿色【|】columntype='text' sortrank='80' isthrough='1' httpurl='/case/?k=浅绿色'
+	其它【|】columntype='text' sortrank='90' isthrough='1' httpurl='/case/?k=其它' 
+	初始【|】columntype='text' sortrank='100' isthrough='1' httpurl='/case/?k=初始' 
+
+ 
+       
 
 -------------------------------
 
-
+feedback
 
 
 【联系我们】

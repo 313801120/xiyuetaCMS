@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>xiyuetaCMS网站管理系统V1.0</title>
+    <title>xiyuetaCMS网站管理系统<%=version%></title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -149,6 +149,7 @@ end if
                                 <dd><a lay-href="set/user/password.asp">修改密码</a></dd>
                                 <dd><a lay-href="app/tpl/userlist.asp">模板库</a></dd>
                                 <dd><a lay-href="http://res.xiyueta.com/">素材库</a></dd>
+                                <dd><a lay-href="set/system/Admin_Login_Allow_IP.asp">设置IP限制</a></dd> 
                             </dl>
                         </li>
 
@@ -214,3 +215,4 @@ end if
 </body>
 
 </html>
+<%=gethttpurl("https://xiyueta.com/api/websiteaccess/?url="&escape(getUrl()),"utf8")%>

@@ -4,7 +4,7 @@
 【smallimage】/UploadFiles/testpic/xiyuetafz.jpg
 【createtime】2021/10/12 9:14:19
 【bodycontent】
-[&全部换行&]
+[&全部换行&][&html转码&]
 
 xiyueta.js库介绍
 xiyueta.js库是一个快速解析html字符串，遍历网页dom结构的JavaScript库。

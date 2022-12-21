@@ -20,6 +20,8 @@ Function jsTiming(url, nSeconds)
         c = c & "        history.back();" & vbCrLf 
     ElseIf url = "父窗体刷新" Then
         c = c & "        parent.location.reload();" & vbCrLf 
+    ElseIf left(url,7) = "action:" Then   '如 action:document.write('你好')
+        c = c & "        "& mid(url,8) & vbCrLf 
     Else
         c = c & "        location.href='" & url & "';" & vbCrLf 
     End If 

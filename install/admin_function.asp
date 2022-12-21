@@ -49,7 +49,7 @@ End Function
  
 '获得处理后表列表 20160313
 Function getHandleTableList()
-    Dim s, lableStr 
+    Dim s, lableStr
     lableStr = "表列表[" & Request("mdbpath") & "]" 
     If WEB_CACHEContent = "" Then
         WEB_CACHEContent = readFile(WEB_CACHEFile, "") 

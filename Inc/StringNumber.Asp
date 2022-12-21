@@ -856,5 +856,14 @@ function unicodeto(str) 'unicode转中文
 	unicodeto=c
 end function
 
+'改进 asp 中 formatnumber函数，让.00 这种，前面加个0  20220718'
+function myFormatnumber(n,nWei)
+    dim nNew
+    nNew=formatnumber(n,nWei)
+    if left(cstr(nNew),1)="." then
+        nNew="0" & nNew
+    end if
+    myFormatnumber=nNew
+end function
 %>   
 

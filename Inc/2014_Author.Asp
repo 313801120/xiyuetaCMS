@@ -51,18 +51,19 @@ end function
 
 function authorInfo2()
     dim c 
-    c = "                '''" & vbCrLf 
-    c = c & "               (0 0)" & vbCrLf 
-    c = c & "   +-----oOO----(_)------------+" & vbCrLf 
-    c = c & "   |                           |" & vbCrLf 
-    c = c & "   |    让我们一起来体验       |" & vbCrLf 
-    c = c & "   |    QQ:313801120           |" & vbCrLf 
-    c = c & "   |    xiyueta.com         |" & vbCrLf 
-    c = c & "   |                           |" & vbCrLf 
-    c = c & "   +------------------oOO------+" & vbCrLf 
-    c = c & "              |__|__|" & vbCrLf 
-    c = c & "               || ||" & vbCrLf 
-    c = c & "              ooO Ooo" & vbCrLf 
+    c = c & "                      '''" & vbCrLf 
+    c = c & "                     (0 0)" & vbCrLf 
+    c = c & "   +--------oOO-------(_)---------------------+" & vbCrLf 
+    c = c & "   |                                          |" & vbCrLf 
+    c = c & "   |    Powered By xiyueta - www.xiyueta.com  |" & vbCrLf 
+    c = c & "   |    QQ:313801120                          |" & vbCrLf 
+    c = c & "   |    Creation:"& format_Time(now(),2) &"                   |" & vbCrLf 
+    c = c & "   |    xiyuetaCMS "& version &"                       |" & vbCrLf 
+    c = c & "   |                                          |" & vbCrLf 
+    c = c & "   +----------------------------oOO-----------+" & vbCrLf 
+    c = c & "                     |__|__|" & vbCrLf 
+    c = c & "                      || ||" & vbCrLf 
+    c = c & "                     ooO Ooo" & vbCrLf 
 
     authorInfo2 = c 
 end function 

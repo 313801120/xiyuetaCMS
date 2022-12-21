@@ -78,7 +78,7 @@ If Request("act") = "list" Then
                     isthrough=" checked"
                 end if 
 
-	            stemp = stemp & "{""id"":""" & rsx("id") & """,""flags"":""" & rsx("flags") & """,""name"":""" & columnname & """,""isthrough"":""" & isthrough & """,""sortrank"":""" & rsx("sortrank") & """}" &sHr & "" 
+	            stemp = stemp & "{""id"":""" & rsx("id") & """,""flags"":""" & rsx("flags") & """,""name"":""" & columnname & """,""columntype"":""" & getColumEnToCn(rsx("columntype")) & """,""isthrough"":""" & isthrough & """,""sortrank"":""" & rsx("sortrank") & """}" &sHr & "" 
         	end if:rsx.close
  
 
@@ -115,7 +115,20 @@ elseif request("act")="isthrough" then
     Response.end()
 End If 
 
-
+'获得栏目英文名转中文名'
+function getColumEnToCn(en)
+    dim splstr,s,splxx
+    splstr=split(WEBCOLUMNTYPE,",")
+        for each s in splstr
+            if instr(s,"|")>0 then
+                splxx=split(s,"|")
+                if splxx(1)=en then
+                    getColumEnToCn=splxx(0)
+                    exit function
+                end if    
+        end if
+    next
+end function
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -164,9 +177,10 @@ layui.use(['form','table'],function(){
         url: '?act=list',
         cols: [
             [
-
+ 
                 { field: 'id', title: 'ID', width: 70, minWidth: 70, sort: false }
                 , { field: 'name', title: '分类名', sort: false }
+                , { field: 'columntype', title: '分类', width: 100, sort: false }
                 , { field: 'flags', title: '位置', width: 100, sort: false }
                 , { field: 'sortrank', title: '排序', width: 70, minWidth: 70, edit: 'text', sort: false }
                  ,{field: 'isthrough', title: '是否显示',width:100, align:'center', templet:function(d){

@@ -24,3 +24,10 @@
 
 为可以重复写入文章
 【#isarticlerepeat#】true     
+
+
+[&html转码&]
+[&html转码end&]
+[&全部换行&]
+[&全部换行end&]
+

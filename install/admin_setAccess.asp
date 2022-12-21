@@ -212,10 +212,16 @@ sub resetAccessData()
     call writeSystemLog("", "恢复默认数据" & db_PREFIX)                             '系统日志
 end sub
 '导入文章20220422 /install/addData.asp?act=importArticle&webdataDir=/cai/article_营销策略
+'/install/addData.asp?act=importArticle&articlePath=/1.txt
 function importArticle()
     dim webdataDir,splxx,filePath,content,fileName,tableName,s
     webdataDir = request("webdataDir")
     tableName="articleDetail"
+
+    if request("articlePath")<>"" then
+        s=nImportTXTData(webdataDir,readFile(request("articlePath"),"utf-8"), tableName, "添加")             
+        call eerr(tableName, filePath & " ==>> " & s) 
+    end if
 
     content = getDirAllFileList(webdataDir, "txt") 
     splxx = split(content, vbCrLf) 
@@ -271,12 +277,16 @@ function batchImportDirTXTData(webdataDir, tableNameList)
                     content = getDirAllFileList(folderPath, "txt") 
                     splxx = split(content, vbCrLf) 
                     for each filePath in splxx
-                        fileName = getFileName(filePath) 
-                        if filePath <> "" and inStr("_#", left(fileName, 1)) = false then
-                            call echo(tableName, filePath) 
-                            call nImportTXTData(folderPath,readFile(filePath,"utf-8"), tableName, "添加") 
-                            doevents 
-                        end if 
+                        '排除  d:/#temp'文件夹前面#号的20220712
+                        if instr(filePath,"/#")=false and instr(filePath,"\#")=false then
+                            ' call echo("dir filePath",filePath)
+                            fileName = getFileName(filePath) 
+                            if filePath <> "" and inStr("_#", left(fileName, 1)) = false then
+                                call echo(tableName, filePath) 
+                                call nImportTXTData(folderPath,readFile(filePath,"utf-8"), tableName, "添加") 
+                                doevents 
+                            end if 
+                        end if
                     next 
                 end if 
             end if 
@@ -371,7 +381,7 @@ function nImportTXTData(folderPath,content, tableName, sType)
                             fieldValue = getSheShiId(fieldValue) 
 
                         '分类20220517
-                        elseif (tableName = "xiyuetaclass") and fieldName = "parentid" then
+                        elseif (tableName = "xiyuetaclass" or tableName = "announcement") and fieldName = "parentid" then
                             'call echo(tableName,fieldName)
                             'call echo("fieldValue",fieldValue)
                             fieldValue = getXiyuetaClassId(fieldValue) 
@@ -440,7 +450,7 @@ function nImportTXTData(folderPath,content, tableName, sType)
                     if sType = "修改" then
                         sql = "update " & db_PREFIX & "" & tableName & " set " & updateValueList 
                     else
-                        sql = "insert into " & db_PREFIX & "" & tableName & " (" & addFieldList & ") values(" & addValueList & ")"
+                        sql = "insert into " & db_PREFIX & "" & tableName & " (" & handleFieldListToAccess(addFieldList) & ") values(" & addValueList & ")"
                     end if
                     '检测SQL
                     if checksql(sql) = false then
@@ -457,7 +467,17 @@ function nImportTXTData(folderPath,content, tableName, sType)
 
     next 
     nImportTXTData = nOK 
-end function 
+end function
+'处理字段列表可以插入到数据库中20220627'  完美解决数据库里的字段不可直接使用的问题
+function handleFieldListToAccess(fieldList)
+    dim temlFieldList
+    temlFieldList=fieldList
+    if fieldList<>"" then
+        fieldList="[" & replace(fieldList,",","],[") & "]"
+    end if
+    ' call echo(temlFieldList,fieldList)
+    handleFieldListToAccess=fieldList
+end function
 '批量导入栏目列表 20160716
 function nBatchImportColumnList(folderPath,content,splField, byval listStr, nOK, tableName)
     dim splStr, splxx, isColumn, columnName, s, c, nLen, id, parentIdArray(99), columntypeArray(99), flagsArray(99), nIndex, fieldStr, fieldName, valueStr, nCount, bodycontent

@@ -1,15 +1,20 @@
 <!--#Include file = "inc/config.asp"-->
 <!--#Include file = "website.asp"-->
 <%
+' +-----oOO-------------------+"
+' |    author:XIYUETA         |"
+' |    QQ:313801120           |"
+' |    www.xiyueta.com        |"
+' +------------------oOO------+"
 
 
 call openconn()
-dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,webcompanyen
+dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webbiglogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,webcompanyen,weburl,websql
 dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess
 asporhtml=true   '静态网页为真'0为asp 1为html
 onAutoAddDataToAccess=true  '开启自动添加数组到数据库里(主要是对onepage操作)20220602'
 
-
+ 
 dim sKeyword
 sKeyword=replace(request("k"),"'","")'搜索'
 
@@ -24,6 +29,7 @@ if not rs.eof then
   webfoot=rs("webfoot")                  '网页底部'
   webcopyright=rs("copyright")           '网站版权'
   weblogo=rs("logo")                     '网站logo' 
+  webbiglogo=rs("biglogo")               '网站biglogo' 
   webqrcode=rs("qrcode")                 '网站二维码'
   webqq=rs("qq")                         '网站QQ'
   webphone=rs("phone")                   '网站手机号'
@@ -34,8 +40,9 @@ if not rs.eof then
   webaddress=rs("address")               '公司地址'
   webcompany=rs("company")               '公司名称'
   webcompanyen=rs("companyen")           '公司英文名称'
+  weburl=rs("weburl")                    '网站域名'
   asporhtml=IIF(rs("asporhtml")=0,false,true)              '静态网页为真'0为asp 1为html
-  ' call echo("asporhtml",asporhtml)
+  ' call echo(rs("asporhtml"),asporhtml)
 end if:rs.close
 
 '获得网站底部，为默认的时候则更新20220327'
@@ -78,14 +85,28 @@ if request("nav")<>"" then
   ' call echo(request("nav"),getNavNameToID("","首页"))
   ' call eerr("pageUrl",pageUrl)
   if pageUrl<>"" then
-    if sKeyword<>"" then pageUrl=pageUrl & "&k=" & sKeyword
+    if sKeyword<>"" then
+      if asporhtml=true then
+        asporhtml=false
+        pageUrl=getNavNameToUrl("",request("nav"))
+      end if
+      pageUrl=pageUrl & "&k=" & sKeyword
+    end if
+      ' call eerr("pageUrl",pageUrl)
     response.redirect( pageUrl) '跳转网址
   end if
 
 '为文章详细内容页'
 elseif thisUrlFileName="detail.asp" then
-  pageType="detail"
-  rs.open "select * from " & db_PREFIX & "articledetail where id=" & id ,conn,1,3
+    pageType="detail"
+    webFileName=phptrim(replace(request("filename"),"'",""))
+    if webFileName<>"" then
+      websql="select * from " & db_PREFIX & "articledetail where filename='"& webFileName &"'"
+    else
+      websql="select * from " & db_PREFIX & "articledetail where id=" & id
+    end if
+    'call eerr("websql",websql)
+    rs.open websql,conn,1,3
     if not rs.eof then
         rs("views")=rs("views")+1  			   '浏览次数'
         rs.update
@@ -98,6 +119,8 @@ elseif thisUrlFileName="detail.asp" then
         bigimage=rs("bigimage")            '文章大图'
         author=rs("author")                '文章作者'
         views=rs("views")                  '文章浏览量'
+        id=rs("id")                        '文章ID，如果以文件名来查的的，需要加上id 2020715'
+
 
         if rs("title")<>"" then webtitle=uTitle & rs("title")                   '网页标题(前面加个地区信息)'
         if rs("webtitle")<>"" then webtitle=rs("webtitle")                      '网页标题'
@@ -180,7 +203,8 @@ function navLocation(navid,c)
   if not rs.eof then
     parentid=rs("parentid")
     s=uTitle&rs("columnName")
-    if c<>"" then s="<a href='"& getNavUrl(rs("id"),rs("columnType")) &"'>"& s &"</a>"'前面/去掉了'
+    'pageType="detail" 为文章详细页，则全部导航都可点击20220715'
+    if c<>"" or pageType="detail" then s="<a href='"& getNavUrl(rs("id"),rs("columnType")) &"'>"& s &"</a>"'前面/去掉了'
     c=s & " > " & c
   end if:rs.close
   if parentid<>-1 then
@@ -200,10 +224,10 @@ function getNavUrl(navid,navtype)
     if not rs.eof then
       id=navid
       if rs("filename")<>"" then           '文件名不为空则URL为文件名
-        getNavUrl=rs("filename")
+        getNavUrl=urlWanZhen(rs("filename"))
         exit function
       elseif rs("httpurl")<>"" then        '网址不为空则URL为网址'
-        getNavUrl=rs("httpurl")
+        getNavUrl=urlWanZhen(rs("httpurl"))
         exit function
       end if
       navtype=rs("columntype")             '类目类型更新20220410'
@@ -225,7 +249,7 @@ function getNavUrl(navid,navtype)
   else
     url=navtype & ".asp?id="&id
   end if
-  getNavUrl=url
+  getNavUrl=urlWanZhen(url)
 end function
 '获得导航URL不处理httpurl和filename字段'
 function getNavGoToUrl(navid,navtype)
@@ -247,6 +271,28 @@ function getNavGoToUrl(navid,navtype)
   end if
   getNavGoToUrl=url
 end function
+'让网页链接与当前网址进行处理获得目录，然后替换成指定域名20221116'
+function urlWanZhen(url)
+  dim thisUrl,nLen 
+  if pubWebSite<>"" then
+    thisUrl=getUrl()    '当前URL'
+    nLen=instr(thisUrl,"://")
+    if nLen>0 then
+      thisUrl=mid(thisUrl,nLen+3)
+
+      nLen=instr(thisUrl,"/")
+      if nLen>0 then
+        thisUrl=mid(thisUrl,nLen+1)
+      end if
+      thisUrl=pubWebSite & thisUrl
+      url=fullHttpUrl(thisUrl,url)
+      ' call eerr(thisUrl,url)
+      url=replace(url,"/Default.asp?","/?")'替换这种'
+    end if
+  end if
+  urlWanZhen=url 
+end function
+
 '获得文章链接 重写于20220524
 function getArticleUrl(id) 
   dim dirName,parentid
@@ -257,8 +303,8 @@ function getArticleUrl(id)
   dim rs:Set rs = CreateObject("Adodb.RecordSet")
   rs.open "select * from ["& db_PREFIX &"articledetail] where id="&id,conn,1,1
   if not rs.eof then
-    if rs("filename")<>"" then           '文件名不为空则URL为文件名
-        getArticleUrl=rs("filename")
+    if rs("filename")<>"" then           '文件名不为空则URL为文件名       
+        getArticleUrl=urlWanZhen(rs("filename") )
         exit function
     end if
     parentid=id
@@ -266,7 +312,7 @@ function getArticleUrl(id)
 
   '为动态网站时，直接显示㚃'
   if asporhtml=false then
-    getArticleUrl="detail.asp?id="&id
+    getArticleUrl=urlWanZhen("detail.asp?id="&id)
     exit function
   end if
 
@@ -277,7 +323,7 @@ function getArticleUrl(id)
       dirName=rs("filename") & "/"'目录名'
     end if:rs.close
   end if 
-  getArticleUrl=dirName & "detail_"& id &".html"
+  getArticleUrl=urlWanZhen(dirName & "detail_"& id &".html")
 end function
  
 
@@ -460,7 +506,7 @@ function getOnePageImage(title)
 end function
 '获得上一页，下一页网址20220525'
 function getUpDownPageUrl(url,page)
-  if asporhtml=true then
+  if asporhtml=true and request("k")="" then'静态页，并且搜索值为空20220703
     if instr(url,".html")>0 then
        getUpDownPageUrl=left(url,len(url)-5) & "_" & page & ".html" 
     else
@@ -469,6 +515,7 @@ function getUpDownPageUrl(url,page)
   else
     getUpDownPageUrl=url & IIF(instr(url,"?")=false,"?","&")  & "page="&page &IIF(sKeyword<>"","&k="&sKeyword,"")
   end if
+  getUpDownPageUrl=urlWanZhen(getUpDownPageUrl)  '处理当前网址完整并替换指定域名20221116'
 end function
 
 '显示在线编辑 调用方法 call displayOnLineEdit(true)  网址后面加参数：?onlineedit=1'

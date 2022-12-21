@@ -10,7 +10,7 @@ sub connInsertInto(sql)
 end sub
 '更新
 sub connUpdate(sql)
-	'call echo("sql",sql)
+	'call echo("sql",sql) 
 	conn.Execute(sql)
 end sub
 
@@ -193,7 +193,7 @@ function editField(tableName, fieldName, toFieldName)
             end if 
             if err.number <> 0 then msgBox(tableName & vbCrLf & fieldName & vbCrLf & toFieldName & "类型" & fieldType) 
         end if 
-    end if 
+    end if  
 end function
 '追加字段
 function addField(tableName,fieldName,fieldType)
@@ -207,6 +207,25 @@ function addField(tableName,fieldName,fieldType)
 	end if 
     addField=false
 end function
+'删除字段 20220906
+function delField(tableName,fieldName)
+    if checkField(tableName,fieldName) = true then
+        conn.execute("Alter Table [" & tableName & "] Drop [" & fieldName & "]") '删除字段
+        delField=true
+        exit function
+    end if 
+    delField=false
+end function
+'修改字段类型和默认值 20220906
+'如  call editFieldTypeDefault("table","field"," DateTime NULL")
+function editFieldTypeDefault(tableName,fieldName,configValue)
+    if checkField(tableName,fieldName) = true then
+        conn.execute("Alter Table [" & tableName & "] Alter COLUMN [" & fieldName & "] " & configValue) '删除字段
+        editFieldTypeDefault=true
+        exit function
+    end if 
+    editFieldTypeDefault=false
+end function
 '获得字段属性
 function getFieldAlt(tableName, fieldName)
 	getFieldAlt=getFieldAlt_conn(tableName, fieldName,conn)
@@ -217,10 +236,11 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
     set rs = createObject("Adodb.RecordSet")
         rs.open "Select * From [" & tableName & "]", customConn, 1, 1 
         fn = rs.fields.count 
-        for n = 1 to fn - 1
+        for n = 0 to fn - 1
             set fld = rs.fields.item(n)
                 if lcase(fieldName) = lcase(fld.name) then
-                    'MsgBox (FieldName & vbCrLf & Rs.Fields(N).Type)
+                    ' MsgBox (FieldName & vbCrLf & Rs.Fields(N).Type)
+                    ' MsgBox (FieldName & vbCrLf & Rs.Fields(N).Type)
                     select case rs.fields(n).type
                         case "202"
                             getFieldAlt_conn = "VarChar" 
@@ -682,67 +702,397 @@ function showAccessStream(conn, tableName, fieldName, id, addSql)
         end if : rs.close 
 end function
 'Access数据库转成Mysql生成SQL,再放到php里生成就可以20220425'
-function accessToMySql()
+function accessToMySql(findTableList)
    dim content,splstr,i,tableName,fieldList,isDXX,splxx,fieldName,c,fieldAlt,cleanTableName,focusId
    content=getTableList_Conn(conn)
    splstr=split(content,vbcrlf)
-   ' for each tableName in splstr
-   for i=1 to ubound(splstr)
+   call echo("content",content)
+   for i=0 to ubound(splstr)
       tableName=splstr(i):cleanTableName=tableName
-      if i>29 then exit for'只提取几个
+      if i>129 then exit for'只提取几个
       if db_PREFIX<>"" then cleanTableName=mid(tableName,len(db_PREFIX)+1)
-      c=c&"""{$db_PREFIX}"& cleanTableName &""" => ""CREATE TABLE `{$db_PREFIX}"& cleanTableName &"` (" & vbcrlf
       
-      fieldList=getFieldList(tableName)
-      call echo("tableName",tableName)
-      isDXX=IIF(fieldList<>lcase(fieldList),"<b style='color:red'>有大写</b>","")
-      call echo(copystr("&nbsp;",4) & "fieldList" & isDXX,fieldList)
-      splxx=split(fieldList,",")
-      for each fieldName in splxx
-         if fieldName<>"" then
-            fieldAlt=getFieldAlt(tableName,fieldName)
-            call echo(copystr("&nbsp;",8) & "fieldName",fieldName &"  ("& fieldAlt &")")            
-            if fieldAlt="VarChar" then
-               c=c & "`"& fieldName &"` varchar(255) NOT NULL default '', " & vbcrlf
-            elseif fieldAlt="Int" then
-               if instr("|age|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` int(2) NOT NULL default '0',"&vbcrlf
-               elseif instr("|level|score|w|h|passingscore|totalscore|timelimit|fenshu|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` int(3) NOT NULL default '0',"&vbcrlf
-               elseif instr("|lottery|npagesize|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` int(4) NOT NULL default '0',"&vbcrlf
-               elseif instr("|views|sortrank|pv|frequency|maxfrequency|days|logincount|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` int(5) NOT NULL default '0',"&vbcrlf
-               elseif instr("|id|parentid|exid|userid|timoid|money|hanziid|adminid|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` int(6) NOT NULL default '0',"&vbcrlf 
-               elseif instr("|isthrough|isdel|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` tinyint(1) NOT NULL default '1',  "&vbcrlf
-               else
-                  call eerr("提示","Int数字类型没有判断")   
-               end if
-            elseif fieldAlt="Float" then 
-                if instr("|fenshu|","|"&fieldName&"|")>0 then
-                  c=c & "`"& fieldName &"` float(3) NOT NULL default '0',"&vbcrlf
-              else
-                  call eerr("提示","Float浮点类型没有判断")   
-               end if
-            elseif fieldAlt="DateTime" then
-               c=c & "`"& fieldName &"` datetime DEFAULT NULL,"&vbcrlf
-            elseif fieldAlt="Text" then
-               c=c & "`"& fieldName &"` mediumtext,"&vbcrlf
-           elseif fieldAlt="" then
-              c=c&"`"& fieldName &"` int(6) unsigned NOT NULL auto_increment," & vbcrlf
-              focusId=fieldName'ID
-            else
-               call eerr("提示","字符类型没有判断")
-            end if
-         end if
-      next
-      doevents
-      c=c & "PRIMARY KEY  (`"& focusId &"`)" & vbcrlf
-      c=c & "){$char};""," & vbcrlf
+      call echo(findTableList,cleanTableName)
+
+      if instr("|"& findTableList &"|","|"& cleanTableName &"|") or findTableList="*" then
+          c=c&"""{$db_PREFIX}"& cleanTableName &""" => ""CREATE TABLE `{$db_PREFIX}"& cleanTableName &"` (" & vbcrlf
+          
+          fieldList=getFieldList(tableName)
+          call echo("tableName",tableName)
+          isDXX=IIF(fieldList<>lcase(fieldList),"<b style='color:red'>有大写</b>","")
+          call echo(copystr("&nbsp;",4) & "fieldList" & isDXX,fieldList)
+          splxx=split(fieldList,",")
+          for each fieldName in splxx
+             if fieldName<>"" then
+                fieldAlt=getFieldAlt(tableName,fieldName)
+                call echo(copystr("&nbsp;",8) & "fieldName",fieldName &"  ("& fieldAlt &")")            
+                if fieldAlt="VarChar" then
+                   c=c & "`"& fieldName &"` varchar(255) NOT NULL default '', " & vbcrlf
+                elseif fieldAlt="Int" then
+                   if instr("|age|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` int(2) NOT NULL default '0',"&vbcrlf
+                   elseif instr("|level|score|w|h|passingscore|totalscore|timelimit|fenshu|grouping|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` int(3) NOT NULL default '0',"&vbcrlf
+                   elseif instr("|lottery|npagesize|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` int(4) NOT NULL default '0',"&vbcrlf
+                   elseif instr("|views|sortrank|pv|frequency|maxfrequency|days|logincount|errcount|difficulty|education|socialsecurity|registrationtype|continuingeducation|performance|payment|personalpayment|auditadminid|outadminid|securityexam|certificatestatus|companyaddress|contractperiod|selectcontractperiod|servicecharge|companysocialsecurity|jobtitle|certificatereminderday|signingdatereminderday|personnea|personneb|enterprisea|enterpriseb||","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` int(5) NOT NULL default '0',"&vbcrlf
+                   elseif instr("|id|parentid|exid|userid|timoid|money|hanziid|adminid|toadminid|websize|ntype|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` int(6) NOT NULL default '0',"&vbcrlf 
+                   elseif instr("|isthrough|isdel|onregistered|sex|nstate|isiplimit|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` tinyint(1) NOT NULL default '1',  "&vbcrlf
+                   else
+                      call eerr("提示" & fieldName,"Int数字类型没有判断")   
+                   end if
+                elseif fieldAlt="Float" then 
+                    if instr("|fenshu|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` float(3) NOT NULL default '0',"&vbcrlf
+                    elseif instr("|referralfee|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` float(5) NOT NULL default '0',"&vbcrlf
+                  else
+                      call eerr("提示","Float浮点类型没有判断")   
+                   end if
+                elseif fieldAlt="DateTime" then
+                   c=c & "`"& fieldName &"` datetime DEFAULT NULL,"&vbcrlf
+                elseif fieldAlt="Text" then
+                   c=c & "`"& fieldName &"` mediumtext,"&vbcrlf
+               elseif fieldAlt="" then
+                  c=c&"`"& fieldName &"` int(6) unsigned NOT NULL auto_increment," & vbcrlf
+                  focusId=fieldName'ID
+                else
+                   call eerr("提示","字符类型没有判断")
+                end if
+             end if
+          next
+          doevents
+          c=c & "PRIMARY KEY  (`"& focusId &"`)" & vbcrlf
+          c=c & "){$char};""," & vbcrlf
+    end if
    next
-   call die(vbcrlf & vbcrlf & c)
+   accessToMySql=c
+end function
+
+
+'Access数据库转成SQLServer生成SQL,再放到php里生成就可以20220425'
+function accessToSQLServer(clear_db_PREFIX,findTableList)
+   dim content,splstr,i,tableName,fieldList,isDXX,splxx,fieldName,c,fieldAlt,cleanTableName,focusId
+   dim fieldDefaultVal,j,sqlTableName
+   content=getTableList_Conn(conn)
+   splstr=split(content,vbcrlf)
+   call echo("content",content)
+   for i=0 to ubound(splstr)
+      tableName=splstr(i):cleanTableName=tableName
+      if i>129 then exit for'只提取几个
+      if db_PREFIX<>"" then cleanTableName=mid(tableName,len(db_PREFIX)+1)
+      
+      call echo(findTableList,cleanTableName)
+
+
+
+        sqlTableName=cleanTableName
+        if clear_db_PREFIX<>"" then
+            sqlTableName=mid(cleanTableName,len(clear_db_PREFIX)+1)
+        end if
+
+      if instr("|"& findTableList &"|","|"& cleanTableName &"|") or findTableList="*" then
+          c=c & "    tableName = db_PREFIX & """& sqlTableName &""" " & vbcrlf
+          c=c & "    if checkCreateTable(tableName) = false then" & vbcrlf
+          
+          fieldList=getFieldList(tableName)
+          call echo("tableName",tableName)
+          isDXX=IIF(fieldList<>lcase(fieldList),"<b style='color:red'>有大写</b>","")
+          call echo(copystr("&nbsp;",4) & "fieldList" & isDXX,fieldList)
+          splxx=split(fieldList,",")
+          j=0
+
+' c=c & "        sql = ""Create Table "" & tableName & "" (mytestid Int Identity(0,1) Primary Key,"" " & vbcrlf 
+c=c & "        sql = ""Create Table "" & tableName & "" ("" " & vbcrlf 
+          for each fieldName in splxx
+             j=j+1
+             if fieldName<>"" then
+                fieldAlt=getFieldAlt(tableName,fieldName)
+                fieldDefaultVal=getFieldDefaultVal(tableName,fieldName)
+                if fieldDefaultVal<>"" then
+                    if fieldAlt="VarChar" or fieldAlt="Text" then
+                        fieldDefaultVal=replace(fieldDefaultVal,"""","")
+                        fieldDefaultVal=""""""& fieldDefaultVal &""""""
+                    end if
+                end if
+                if fieldDefaultVal<>"" then
+                    fieldDefaultVal = " Default "& fieldDefaultVal
+                end if
+
+                call echo("fieldDefaultVal",fieldDefaultVal)
+                call echo(copystr("&nbsp;",8) & "fieldName",fieldName &"  ("& fieldAlt &")")    
+
+                if fieldAlt="Int"  and j<3 and 1=1 then
+' c=c & "        sql = sql & ""["&fieldName &"] Int  Primary Key,"" " & vbcrlf
+c=c & "        sql = sql & ""["&fieldName &"] Int Identity(1,1) Primary Key,"" " & vbcrlf
+
+                else
+c=c&"        sql = sql & ""["&fieldName&"] "& fieldAlt & fieldDefaultVal &""& IIF(j<>ubound(splxx),",",")") &"""  '" & getFieldNote(tableName,fieldName) & vbcrlf
+                end if
+             end if
+
+          next
+          doevents
+c=c & "        if MDBPath = """" then sql = handleSqlServer(sql) '把Access数据库类型转成SqlServer数据库类型" & vbcrlf
+c=c & "        conn.execute(sql)" & vbcrlf
+c=c & "    end if" & vbcrlf
+ 
+    end if
+   next
+   accessToSQLServer=c
+end function
+
+'获得字段默认值20221025'
+function getFieldDefaultVal(tableName,findFieldName)
+    dim objColumnRS,fieldName
+    findFieldName=lcase(findFieldName)  '小写'
+    Set objColumnRS = Conn.OpenSchema(4,Array(Empty, Empty, tableName))
+    do while not objColumnRS.EOF
+    ' objColumnRS("Column_Default") '返回该字段默认值
+    ' objColumnRS("Column_Name") '返回字段名
+        fieldName=lcase(objColumnRS("Column_Name"))
+        if fieldName=findFieldName then
+            getFieldDefaultVal=objColumnRS("Column_Default")
+            if getFieldDefaultVal="""""" then getFieldDefaultVal=""
+             
+
+    Set objColumnRS = Nothing
+    Set objColumnRS = Nothing
+            exit function
+        end if 
+    objColumnRS.MoveNext
+    Loop
+    Set objColumnRS = Nothing
+    Set objColumnRS = Nothing
+    getFieldDefaultVal=""
+end function 
+
+'获得字段的注释20221025'  用法：  call rw( getFieldNote("admin","username") )
+function getFieldNote(tableName,fieldName)
+    dim sql,cnnState,i
+    dim rs 
+
+    Dim MyTableName
+    Dim MyFieldName
+    Dim MyDB
+    set mydb=server.createobject("adox.catalog")
+    Dim MyTable
+    set mytable=server.createobject("adox.table")
+    Dim MyField
+    set myfield =server.createobject("adox.column")
+    Dim pro
+
+    tableName=lcase(tableName)
+    ' On Error resume next
+    MyDB.ActiveConnection =conn
+    For Each MyTable In MyDB.Tables
+        if lcase(MyTable.name)=tableName then
+            For Each MyField In MyTable.Columns 
+                if lcase(MyField.name)=fieldName then
+                    For Each pro In MyField.Properties
+                        if pro.name="Description" then
+                            getFieldNote=pro.Value
+                            exit function
+                        end if
+                    Next
+                end if
+            Next
+        end if
+    Next 
+    getFieldNote=""
+end function
+
+'获得表里数据转成sql 20221025'   nRow每个表要显示的条数
+function getTableListToSql(clear_db_PREFIX,tableName,nRow)
+    dim list,c,splField,fieldName,i,j,s,nCount,fieldAlt,sqlTableName
+    list=getFieldList(tableName)
+    splField=split(list,",")
+    rs.open"select * from " & tableName,conn,1,1 
+    for j=1 to nRow'rs.RecordCount
+        if rs.eof then exit for   '在最后退出'
+
+
+        sqlTableName=tableName
+        if clear_db_PREFIX<>"" then
+            sqlTableName=mid(tableName,len(clear_db_PREFIX)+1)
+        end if
+
+        c=c & "    rs.open""select * from ""& db_PREFIX &"""& sqlTableName &""",conn,1,3" & vbcrlf
+        c=c & "    rs.addnew"&vbcrlf
+        for i=1 to ubound(splField)-1
+            fieldName=splField(i)
+            fieldAlt=getFieldAlt(tableName,fieldName)
+            
+            s=rs(fieldName)
+            if isNull(s) then s=""
+            s=replace(replace(s,"""",""""""),vbcrlf,"""&vbcrlf&""")
+            '为时间类型 并且为空'
+            if s="" and fieldAlt="DateTime" then
+                s="NULL"
+            elseif s<>"" then
+                s="""" & s & """"
+            end if
+            if s<>"" then
+                ' call echo(i,fieldName & "=" & rs(fieldName))
+                c=c & "        rs("""& fieldName &""")=" & s & vbcrlf
+            end if
+            
+        next
+        c=c & "    rs.update:rs.close" & vbcrlf & vbcrlf
+    rs.movenext:next:rs.close
+
+
+    getTableListToSql=c
+end function
+
+
+'获得表里数据转成sql 20221031'   nRow每个表要显示的条数
+function getTableListToSqlLanguage(clear_db_PREFIX,tableName,nRow,parentTableName)
+    dim list,c,splField,fieldName,i,j,s,nCount,fieldAlt,sqlTableName
+    dim addFieldList,addFieldValueList
+    list=getFieldList(tableName)
+    splField=split(list,",")
+    rs.open"select * from " & tableName,conn,1,1 
+
+    '先关闭后开启'
+    if parentTableName<>"" then
+        c=c & "set identity_insert "& parentTableName &" off"&vbcrlf 
+    end if
+
+    c=c & "set identity_insert "& tableName &" on"&vbcrlf
+    for j=1 to nRow'rs.RecordCount
+        if rs.eof then exit for   '在最后退出' 
+
+        sqlTableName=tableName
+        if clear_db_PREFIX<>"" then
+            sqlTableName=mid(tableName,len(clear_db_PREFIX)+1)
+        end if
+
+        addFieldList="":addFieldValueList=""
+        for i=1 to ubound(splField)-1
+            fieldName=splField(i)
+            fieldAlt=getFieldAlt(tableName,fieldName)
+            
+            if addFieldList<>"" then addFieldList=addFieldList & ", "
+            addFieldList=addFieldList & "[" & fieldName & "]"
+            s=rs(fieldName)
+            if isNull(s) then s="NULL"
+            s=replace(s,"'","''")  '处理字符内容'
+            if addFieldValueList<>"" then addFieldValueList=addFieldValueList&","
+            addFieldValueList=addFieldValueList & "N'"& s &"'"
+        next
+        c=c & "INSERT INTO ["& tableName &"] ("& addFieldList &") VALUES("& addFieldValueList &")" & vbcrlf & vbcrlf
+    rs.movenext:next:rs.close
+
+
+    getTableListToSqlLanguage=c
+end function
+
+
+
+'获得表里数据保存到本地 20221026'   nRow每个表要显示的条数
+function handleTableListToFile(clear_db_PREFIX,tableName,nRow)
+    dim list,c,splField,fieldName,i,j,s,nCount,fieldAlt,dirPath,filePath
+    list=getFieldList(tableName)
+    splField=split(list,",")
+
+    dirPath="install\webdata\" & tableName
+    if clear_db_PREFIX<>"" then
+        dirPath="install\webdata\" & mid(tableName,len(clear_db_PREFIX)+1)
+    end if
+
+    
+    call createFolder(dirPath)      '创建目录'
+
+    rs.open"select * from " & tableName,conn,1,1 
+    for j=1 to nRow'rs.RecordCount
+        if rs.eof then exit for   '在最后退出' 
+        filePath=dirPath & "/" & j & ".txt"        
+        if checkFile(filePath)=false then
+            c=""
+            for i=1 to ubound(splField)-1
+                fieldName=splField(i)
+                fieldAlt=getFieldAlt(tableName,fieldName)
+                
+                s=rs(fieldName)
+                if isNull(s) then s=""
+                 
+                ' call echo(i,fieldName & "=" & rs(fieldName))
+                c=c & "【"& fieldName &"】"& s &"【/"& fieldName &"】" & vbcrlf
+                
+            next
+            call writeToFile(filePath,c,"utf-8")
+            call echo("保存文件",filePath)
+            doevents
+        end if
+        
+    rs.movenext:next:rs.close
+
+
+    handleTableListToFile=j
+end function
+
+
+
+'获得表里数据转成sql 20221031'   nRow每个表要显示的条数
+function getTableListToSqlAspRun(clear_db_PREFIX,tableName,nRow,parentTableName)
+    dim list,c,splField,fieldName,i,j,s,nCount,fieldAlt,sqlTableName
+    dim addFieldList,addFieldValueList,clear_TableName,clear_parentTableName
+    list=getFieldList(tableName)
+    splField=split(list,",")
+    rs.open"select * from " & tableName,conn,1,1 
+
+    clear_TableName=tableName
+    clear_parentTableName=parentTableName
+    if clear_db_PREFIX<>"" then
+        clear_TableName=mid(clear_TableName,len(clear_db_PREFIX)+1)
+        clear_parentTableName=mid(clear_parentTableName,len(clear_db_PREFIX)+1)
+    end if
+
+    '先关闭后开启'
+    if parentTableName<>"" then
+        c=c & "conn.execute(""set identity_insert ""& db_PREFIX &"""& clear_parentTableName &" off"")"&vbcrlf 
+    end if
+    c=c & "conn.execute(""set identity_insert ""& db_PREFIX &"""& clear_TableName &" on"")"&vbcrlf
+    for j=1 to nRow'rs.RecordCount
+        if rs.eof then exit for   '在最后退出' 
+
+        sqlTableName=tableName
+        if clear_db_PREFIX<>"" then
+            sqlTableName=mid(tableName,len(clear_db_PREFIX)+1)
+        end if
+
+        addFieldList="":addFieldValueList=""
+        for i=1 to ubound(splField)-1
+            fieldName=splField(i)
+            fieldAlt=getFieldAlt(tableName,fieldName)
+            
+            if addFieldList<>"" then addFieldList=addFieldList & ", "
+            addFieldList=addFieldList & "[" & fieldName & "]"
+            s=rs(fieldName)
+            if isNull(s) then 
+                s="NULL"
+                if addFieldValueList<>"" then addFieldValueList=addFieldValueList&","
+                addFieldValueList=addFieldValueList & s
+            else
+                s=replace(s,"'","''")  '处理字符内容'
+                s=replace(s,"""", """""")  '双引号 
+                s=replace(s,"%"&">", "%""&"">")  '
+                s=replace(s,"<"&"%", "<""&""%")  '
+                s=replace(s,vbcrlf," ""& vbcrlf &"" ")  '换行'   
+                if addFieldValueList<>"" then addFieldValueList=addFieldValueList&","
+                addFieldValueList=addFieldValueList & "N'"& s &"'"
+            end if
+        next
+        c=c & "conn.execute("" INSERT INTO ""& db_PREFIX &"""&sqlTableName&"("& addFieldList &") VALUES("& addFieldValueList &")"")" & vbcrlf & vbcrlf
+    rs.movenext:next:rs.close
+
+
+
+    getTableListToSqlAspRun=c
 end function
 %>      
 
