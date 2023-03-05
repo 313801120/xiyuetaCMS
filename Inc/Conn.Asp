@@ -37,8 +37,15 @@ Public Sub openConn()
 	next
 	
 	
+	
+	if databaseType = "mysql"  then
+	'链接mysql数据库
+		connStr="dsn=conn;Driver={mysql driver};server=127.0.0.1;uid=root;pwd=#Sa123456;database=phpwebdata"
+        Set conn = CreateObject("Adodb.Connection")
+		conn.Open connStr 
+
 	'链接sqlserver数据库
-	if databaseType = "sqlserver" then
+	elseif databaseType = "sqlserver" then
         connStr = " Password = " & sqlServerPassword & "; user id =" & sqlServerUsername & "; Initial Catalog =" & sqlServerDatabaseName & "; data source =" & sqlServerHostIP & ",1433;Provider = sqloledb;" 
 		if checkSqlServer(connStr)=false then
 			call eerr("SqlServer数据库链接出错", autoCreateDataUrl)

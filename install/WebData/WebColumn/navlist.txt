@@ -3,18 +3,18 @@
 -------------------------------
 【#sub#】
 网站首页【|】columntype='home' parentid='-1' flags='top|foot' sortrank='1' isthrough='1' columnenname='home' columnico='낀'
-关于我们【|】columntype='text' parentid='-1' flags='top|foot' sortrank='2' isthrough='1' bannerimage='/UploadFiles/testpic/ad-aboutus.jpg' columnenname='about Us' columnico='ꁡ'
+关于我们【|】columntype='text' parentid='-1' flags='top|foot' sortrank='2' isthrough='1' aboutcontent='介绍关于网站' bannerimage='/UploadFiles/testpic/ad-aboutus.jpg' columnenname='about Us' columnico='ꁡ'
 	公司简介【|】columntype='text' sortrank='1' isthrough='1' columnenname='company'
 	公司风采【|】columntype='text' sortrank='2' isthrough='1' columnenname='company style'
 	公司荣誉【|】columntype='text' sortrank='3' isthrough='1' columnenname='company honor '
 	公司致辞【|】columntype='text' sortrank='4' isthrough='1' columnenname='company speech'
-新闻资讯【|】columntype='news' parentid='-1' flags='top|foot' sortrank='3' isthrough='1' bannerimage='/UploadFiles/testpic/ad-news.jpg' columnenname='News'  columnico='ꂓ'
+新闻资讯【|】columntype='news' parentid='-1' flags='top|foot' sortrank='3' isthrough='1' bannerimage='/UploadFiles/testpic/ad-news.jpg' columnenname='News'  columnico='ꂓ' aboutcontent='介绍新闻资讯相关内容' 
 	公司新闻【|】columntype='news' sortrank='1' isthrough='1' columnenname='company news'
 	行业新闻【|】columntype='news' sortrank='2' isthrough='1' columnenname='industry news'
 	通知公告【|】columntype='news' sortrank='3' isthrough='1' columnenname='announcement'
 
 
-产品中心【|】columntype='product' parentid='-1' flags='top|foot' sortrank='4' isthrough='1' bannerimage='/UploadFiles/testpic/ad-products.jpg' columnenname='product Center'  columnico='ꁔ'
+产品中心【|】columntype='product' parentid='-1' flags='top|foot' sortrank='4' isthrough='1' bannerimage='/UploadFiles/testpic/ad-products.jpg' columnenname='product Center'  columnico='ꁔ' aboutcontent='介绍产品中心相关内容' 
 
 	响应式模板【|】columntype='product' sortrank='5' isthrough='1'
 	企业模板【|】columntype='product' sortrank='10' isthrough='1'
@@ -27,7 +27,7 @@
 	简历模板【|】columntype='product' sortrank='80' isthrough='1'
  
 
-联系我们【|】columntype='text' parentid='-1' flags='top|foot' sortrank='5' isthrough='1' columnenname='contact us' bannerimage='/UploadFiles/testpic/ad-contactus.jpg'  columnico='ꂅ'
+联系我们【|】columntype='text' parentid='-1' flags='top|foot' sortrank='5' isthrough='1' columnenname='contact us' bannerimage='/UploadFiles/testpic/ad-contactus.jpg'  columnico='ꂅ' aboutcontent='介绍联系我们相关内容' 
 	在线留言【|】columntype='guestbook' sortrank='5' isthrough='1'
 	在线反馈【|】columntype='guestbook' sortrank='10' isthrough='1' 
 
@@ -59,15 +59,33 @@ banner【|】columntype='product' parentid='-1' flags='' sortrank='998' isthroug
 feedback
 
 
-【联系我们】
-作者：小云<br>
-英文名：xyt<br>
-QQ：313801120<br>
-微信：MQ313801120<br>
-邮箱：313801120@qq.com  qq313801120@gmail.com<br>
-交流群：35915100<br>
-作者主页：http://sharembweb.com/<br>
-喜悦TA http://xiyueta.com/
+【联系我们】  
+      <div>        
+        2006年进入互联网，专注网站开发10年，精通ASP/HTML/CSS/JS/Jquery/PHP/VB/VB.NET等,擅长把复杂的事情简单化。<br>
+      </div>
+      
+      
+      <ul>
+        <li>作者：xiyueta</li>
+        <li>QQ：<a href="tencent://message/?uin=313801120&amp;Site=作者云祥孙&amp;Menu=yes" class="ablue" rel="nofollow" title="在线与313801120交流">313801120</a></li>
+        <li>邮箱：313801120@qq.com </li>
+        <li>QQ交流群：<a href="http://shang.qq.com/wpa/qunwpa?idkey=253822bd485c454811141c731156d2ecd4dba04ecf647ce81dc97d16a563137b" rel="nofollow" target="_blank">35915100</a></li>
+        <li>作者主页：<a href="https://www.xiyueta.com/">https://www.xiyueta.com</a></li>
+
+        <li>github主页：<a href="https://313801120.github.io/xiyueta/" rel="nofollow">https://313801120.github.io/xiyueta</a>
+           &nbsp; &nbsp; <a href="https://xiyueta.js.org/" rel="nofollow">https://xiyueta.js.org/</a>
+       </li>
+        
+        <li>github：<a href="https://github.com/313801120/" target="_blank" rel="nofollow">https://github.com/313801120/</a></li>
+        <li>gitee：<a href="https://gitee.com/313801120/xiyueta" target="_blank" rel="nofollow">https://gitee.com/313801120/xiyueta</a></li>
+        <li>npm：<a href="https://www.npmjs.com/~xiyueta" target="_blank" rel="nofollow">https://www.npmjs.com/~xiyueta</a></li>
+        <li>Stackoverflow：<a href="http://stackoverflow.com/users/6438976/sharembweb" target="_blank" rel="nofollow">http://stackoverflow.com/users/6438976/sharembweb</a></li>
+        <li>csdn：<a href="https://blog.csdn.net/mydd3" target="_blank" rel="nofollow">https://blog.csdn.net/mydd3</a></li>
+
+      </ul>
+      
+
+
 【/联系我们】
 
 【关于我们】

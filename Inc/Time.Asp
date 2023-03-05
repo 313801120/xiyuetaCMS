@@ -8,12 +8,15 @@ function getFormatYMD(timeStr, sType)
 end function
 '获得时间处理后多久前，天，时  20171010
 function getHandleHowLongAgoTime(timeStr)
-	dim nDay,nHour,nMinute,s
-	nDay=dateDiff("d", timeStr, now())  
+	dim nYear,nDay,nHour,nMinute,s
+	nYear=dateDiff("y", timeStr, now())  
+    nDay=dateDiff("d", timeStr, now())  
 	nHour=dateDiff("h", timeStr, now())  
 	nMinute=dateDiff("n", timeStr, now())
-	if nDay>0 then
-		s=nDay & "天前"
+	if nYear>0 then
+		s=nYear & "年前"
+    elseif nDay>0 then
+        s=nDay & "天前"
 	elseif nHour>0 then
 		s=nHour & "小时前"
 	else
@@ -110,7 +113,7 @@ function format_Time(timeStr, nType)
 		case 88: 
             c = d
         case 89: 
-            c = m		
+            c = m		 
 		case 120:
 			select case m
 				case "01":c="Janurary"
@@ -174,12 +177,18 @@ end function
 function printTimeValue(byval nV) 
     dim nVTemp, c, n 
 	nVTemp=nV
+    if nV >= 86400*366 then
+        n = nV mod 86400*366 
+        nV = fix(nV / 60 / 60 / 24 /366)        '这里面是除24，不是60，因为一天有24个小时，小云你这个傻X  20150119
+        c = c & nV & "年" 
+        nV = n 
+    end if
     if nV >= 86400 then
         n = nV mod 86400 
         nV = fix(nV / 60 / 60 / 24)        '这里面是除24，不是60，因为一天有24个小时，小云你这个傻X  20150119
         c = c & nV & "天" 
         nV = n 
-    end if 
+    end if  
     if nV >= 3600 then
         n = nV mod 3600 
         nV = fix(nV / 60 / 60) 

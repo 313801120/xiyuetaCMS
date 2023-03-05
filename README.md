@@ -8,7 +8,7 @@
 ---
 
 xiyuetaCMS开源网站管理系统 v1.1.0<br>
-基于Asp+Access/SQL Server架构的智能系统，集电脑版、手机版、平板版于一体，无缝切换
+基于Asp+Access/SQL Server架构的智能系统，集电脑版、手机版、平板版于一体，无缝切换。如果需要开启html仿静态，web.config文件前面的#号去掉。然后进入后台 >> 设置 >> 网站设置 >> 网站动静转换 设置开启
 
 <br>
 admin            后台管理目录 账号密码admin admin<br>

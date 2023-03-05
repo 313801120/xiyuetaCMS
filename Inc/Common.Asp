@@ -249,5 +249,24 @@ function exec(byVal tStr)
     on error goto 0 
 end function 
 
+
+'处理内容里QQ表情20230226'
+function handleBodyQQFace(c)
+  dim i
+  for i=1 to 75
+    c=replace(c,"[em_"& i  &"]","<img src='/images/qqface/"& i & ".png' style='vertical-align:middle;margin-left:5px;margin-right:5px' title='"& getQQFaceDescribe(i) &"'>")
+  next
+  handleBodyQQFace=c
+end function
+function getQQFaceDescribe(i)
+    dim splxx
+    splxx=split("微笑，撇嘴，色，发呆，得意，流泪，害羞，闭嘴，睡，大哭，尴尬，发怒，调皮，呲牙，惊讶，难过，酷，冷汗，抓狂，吐，偷笑，可爱，白眼，傲慢，饥饿，困，惊恐，流汗，憨笑，悠闲，奋斗，咒骂，疑问，嘘，晕，折磨，衰，骷髅，敲打，再见，擦汗，抠鼻，鼓掌，臭大了，坏笑，左哼哼，右哼哼，哈欠，鄙视，委屈，快哭了，阴险，右亲亲，左亲亲，吓，可伶，眨眼睛，笑哭，doge，泪奔，无奈，托腮，卖萌，斜眼笑，喷血，惊喜，骚扰，小纠结，我最美，加油必胜，口罩护体，搬砖中","，")
+    
+    if ubound(splxx)>=i-1 then
+        getQQFaceDescribe=splxx(i-1)
+    else
+        getQQFaceDescribe="无"
+    end if
+end function
 %>   
 

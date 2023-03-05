@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,expiredatetime,sex,department,idcard,email,dateOfBirth,tel,address
+dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,expiredatetime,sex,department,idcard,email,dateOfBirth,tel,address,regtime,regip,loginip,logintime,lastloginip,lastlogintime
 dim money,lottery
 id=request("id")
 username=request("username")              '用户名'
@@ -90,6 +90,12 @@ elseif id<>"" then
     address=rs("address")
     money=rs("money")
     lottery=rs("lottery")
+    regtime=rs("regtime")
+    regip=rs("regip")
+    logintime=rs("logintime")
+    loginip=rs("loginip")
+    lastlogintime=rs("lastlogintime")
+    lastloginip=rs("lastloginip")
   end if
 end if
  
@@ -213,6 +219,76 @@ end if
         <input type="text" name="lottery" lay-verify="number" placeholder="请输入抽奖次数" autocomplete="off" class="layui-input" value="<%=lottery%>">
       </div>
     </div>
+
+
+
+             <div class="layui-row   layui-form-item">
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>注册时间：</label>
+      <div class='layui-input-inline' style="line-height: 36px;">
+        <%=regtime%>
+      </div><!--company-->
+    </div>
+
+                </div>
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>注册IP：</label>
+      <div class='layui-input-inline' style="line-height: 36px;">
+          <%=regip%>
+
+      </div><!--selectdenomination-->
+    </div>
+
+                </div>
+             </div>
+
+
+             <div class="layui-row   layui-form-item">
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>登录时间：</label>
+      <div class='layui-input-inline' style="line-height: 36px;">
+        <%=logintime%>
+      </div><!--company-->
+    </div>
+
+                </div>
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>登录IP：</label>
+      <div class='layui-input-inline' style="line-height: 36px;">
+          <%=loginip%>
+
+      </div><!--selectdenomination-->
+    </div> 
+                </div>
+             </div>
+
+
+
+             <div class="layui-row   layui-form-item">
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>上次登录时间：</label>
+      <div class='layui-input-inline' style="line-height: 36px;">
+        <%=lastlogintime%>
+      </div><!--company-->
+    </div>
+
+                </div>
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>上次登录IP：</label>
+      <div class='layui-input-inline' style="line-height: 36px;">
+          <%=lastloginip%>
+
+      </div><!--selectdenomination-->
+    </div> 
+                </div>
+             </div>
+
 
 
     <div class="layui-form-item layui-hide">

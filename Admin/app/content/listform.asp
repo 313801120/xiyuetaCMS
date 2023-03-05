@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename
+dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename,tags
 
 id=request("id")
 parentid=request("parentid")              '大类'
@@ -17,6 +17,9 @@ webtitle=request("webtitle")            'webtitle'
 webkeywords=request("webkeywords")            'webkeywords'
 webdescription=request("webdescription")            'webdescription'
 filename=request("filename")            'filename'
+tags=request("tags")            '标签'
+tags=replace(replace(replace(phptrim(tags),chr(10),","),chr(13),","),vbtab,",")
+if tags<>"" then tags=","& tags &","  '为搜索做准备'  调用了一个js标签框架
 isthrough=IIF(isthrough="on",1,0)         '处理下'
 if parentid="" then 
   parentid=-1
@@ -59,6 +62,7 @@ if request("act")="save" then
       rs("webkeywords")=webkeywords 
       rs("webdescription")=webdescription 
       rs("filename")=filename 
+      rs("tags")=tags
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
       response.end()
@@ -82,6 +86,7 @@ elseif id<>"" then
     webkeywords=inputCL(rs("webkeywords"))  
     webdescription=inputCL(rs("webdescription"))  
     filename=inputCL(rs("filename"))  
+    tags=inputCL(rs("tags"))  
   end if
 end if
   
@@ -120,7 +125,7 @@ end if
         
     <div class="layui-form-item">
       <label class="layui-form-label">标题</label>
-      <div class="layui-input-inline">
+      <div class="layui-input-block">
         <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>">
       </div>
     </div>    
@@ -196,7 +201,22 @@ end if
       <div class="layui-input-inline">
         <input type="text" name="filename"   placeholder="请输入自定义文件" autocomplete="off" class="layui-input" value="<%=filename%>">
       </div>
-    </div>
+    </div>    
+
+<!--     <div class="layui-form-item">
+      <label class="layui-form-label">标签</label>
+      <div class="layui-input-block">
+        <input type="text" autocomplete="off" class="form-control" data-role="tagsinput" id="tags" value="<%=tags%>" name="tags"  > 
+      </div>
+    </div>  -->
+
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">标签</label>
+      <div class="layui-input-block">
+        <input type="text" name="tags" data-role="tagsinput"  autocomplete="off" class="layui-input" id="tags" value="<%=tags%>">
+      </div>
+    </div>  
 
     <div class="layui-form-item">
       <label class="layui-form-label">审核状态</label>
@@ -264,6 +284,30 @@ layui.config({
 
 </script>
     
+<!-- <link rel="stylesheet" href="../../set/system/bootstrap.min.css" media="all">  -->
+<style>
+.label {
+    display: inline;
+    padding: 0.2em 0.6em 0.3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+}
+.label-info {
+    background-color: #5bc0de;
+}
+</style>
+<script src="../../js/jquery.js"></script>
+<link rel='stylesheet' href='../../set/system/tagsinput.css'>
+<style type="text/css">
+  .bootstrap-tagsinput{width:97%;}
+</style>
+<script type='text/javascript' src='../../set/system/tagsinput.min.js'></script>
 
 </body>
 </html>

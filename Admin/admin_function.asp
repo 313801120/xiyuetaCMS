@@ -80,7 +80,13 @@ function columnSubInput(parentid,focusid,focusParentid)
 end function
 
 function getAdminIdToName(id)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")   
+  id = id & ""
+  if id="" then 
+  	getAdminIdToName="(ID为空)"
+  	exit function
+  end if
+  ' call echo("id",id)
   rs.open "select * from ["& db_PREFIX &"admin] where id="&id,conn,1,1
   if not rs.eof then
   	dim splxx
@@ -90,11 +96,7 @@ function getAdminIdToName(id)
   end if:rs.close 
 end function
 
-
-
-
-
-
+ 
 
 '显示栏目列表成input方式 xiyuetaclass 20220517 如 <option> ├─栏目名称</opton>
 function xiyuetaColumnSubInput(parentid,isShowTab,focusParentid)
@@ -165,9 +167,7 @@ function handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,default
 	if not rs.eof then
 		' c=c & xiyuetaColumnSubInput(rs("id"),false,focusid,sType)
 		c=c & handleXiyuetaColumnSubInput(rs("id"),false,focusid,sType) 
-
-
-
+ 
 	end If:rs.close
 
 	c=c & "</select>"
@@ -300,17 +300,14 @@ function getServerVersion()
 	if not rs.eof then
 		n=dateDiff("d", rs("versiontime"), now()) 
 		if n<>0 then
-			getServerVersion=getHttpUrl("http://xiyueta.com/server/?url="&getUrl(),"")
+			getServerVersion=getHttpUrl("http://xiyueta.com/server/?url="&escape(getthisurl()) &"&v="&version,"")
 			rs("versiontime")=now()
 			rs.update
 		else
 			getServerVersion="<!--" & n & "-->"
 		end if
-	end if:rs.close
-
-	 
-end function
-
+	end if:rs.close 
+end function 
 
 
 '处理电话号码20220808'

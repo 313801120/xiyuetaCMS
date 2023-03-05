@@ -13,7 +13,7 @@
 function strCut(byVal content, byVal startStr, byVal endStr, byVal nType)
     dim nS1, s1Str, nS2, nS3, c, tempContent, tempStartStr, tempEndStr ,cutType
     tempStartStr = startStr 
-    tempEndStr = endStr 
+    tempEndStr = endStr  
     tempContent = content 
     cutType = "|" & nType & "|" 
     '不区分大小写

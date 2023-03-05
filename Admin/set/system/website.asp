@@ -45,11 +45,28 @@ rs.open"select * from " & db_PREFIX & "WebSite",conn,3,1
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="bootstrap.min.css" media="all">
+    <!-- <link rel="stylesheet" href="bootstrap.min.css" media="all"> -->
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
 <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 <script src="../../js/jquery.js"></script>
-<script src="bootstrap.min.js"></script>
+<!-- <script src="bootstrap.min.js"></script> -->
+    <style>
+.label {
+    display: inline;
+    padding: 0.2em 0.6em 0.3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+}
+.label-info {
+    background-color: #5bc0de;
+}
+    </style>
 
 <script>
 
@@ -303,7 +320,10 @@ function closeimg(){
 
     </script>
 <link rel='stylesheet' href='tagsinput.css'>
+<style type="text/css">
+  .bootstrap-tagsinput{width:97%;}
+</style>
 <script type='text/javascript' src='tagsinput.min.js'></script>
 </body>
 
-</html>
+</html> 

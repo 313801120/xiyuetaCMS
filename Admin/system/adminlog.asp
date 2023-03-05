@@ -11,12 +11,19 @@ If Request("act") = "list" Then
  
     If Request("date_min") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
-      sql = sql & " datediff('d',createTime,#" & Request("date_min") & "#)<=0" 
+      sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then      
       sql=IIF(sql=""," where ",sql & " and ")
-      sql = sql & " datediff('d',createTime,#" & Request("date_max") & "#)>=0" 
+      sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If  
+	
+	If Request("key") <> "" Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql =sql & " ([adminname] like '%" & Request("key") & "%' ) " 
+      '搜索追加部分'
+    End If
+	
     mysql = sql1 & sql & " order by id desc"  
     rs.Open mysql, conn, 1, 1 
 
@@ -96,7 +103,9 @@ End If
         <input type="text" name="date_max" placeholder="结束日期" autocomplete="off" class="layui-input date">
       </div>
     </div>
-   
+   <div class="layui-inline"> 
+        <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称">
+    </div>
       
   <button class="layui-btn" data-type="reload">搜索</button> 
 </div>

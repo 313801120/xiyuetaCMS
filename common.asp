@@ -10,10 +10,10 @@
 
 call openconn()
 dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webbiglogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,webcompanyen,weburl,websql
-dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess
+dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags
 asporhtml=true   '静态网页为真'0为asp 1为html
 onAutoAddDataToAccess=true  '开启自动添加数组到数据库里(主要是对onepage操作)20220602'
-
+ 
  
 dim sKeyword
 sKeyword=replace(request("k"),"'","")'搜索'
@@ -42,7 +42,7 @@ if not rs.eof then
   webcompanyen=rs("companyen")           '公司英文名称'
   weburl=rs("weburl")                    '网站域名'
   asporhtml=IIF(rs("asporhtml")=0,false,true)              '静态网页为真'0为asp 1为html
-  ' call echo(rs("asporhtml"),asporhtml)
+  ' call echo(rs("asporhtml"),asporhtml) 
 end if:rs.close
 
 '获得网站底部，为默认的时候则更新20220327'
@@ -119,6 +119,8 @@ elseif thisUrlFileName="detail.asp" then
         bigimage=rs("bigimage")            '文章大图'
         author=rs("author")                '文章作者'
         views=rs("views")                  '文章浏览量'
+        fabulous=rs("fabulous")            '文章赞量'
+        tags=rs("tags")                    '标签'
         id=rs("id")                        '文章ID，如果以文件名来查的的，需要加上id 2020715'
 
 
@@ -136,6 +138,34 @@ elseif thisUrlFileName="detail.asp" then
           columnenname=rsx("columnenname")        '当前栏目英文名'
           columntype=rsx("columntype")            '当前栏目类型'
           webfilename=rsx("filename")             '当前网站文件名'
+        end if:rsx.close
+
+        '记录文章浏览信息 view 为浏览 20230218'
+        rsx.open "select * from " & db_PREFIX & "articlecount where  "& getAccessDatediff("updatetime")&"=0 and type='view' and  articleid=" & rs("id") ,conn,1,3
+        if rsx.eof then
+          rsx.addnew
+          rsx("articleid")=rs("id")
+          rsx("type")="view"
+          rsx("count")=1
+          rsx("createtime")=date()  
+          rsx("ip")=getip()
+          rsx.update
+
+
+          rs("views")=1          '浏览次数'
+          rs.update
+          views=rs("views")                  '文章浏览量'
+        else
+          rsx("updatetime")=now()
+          rsx("count")=rsx("count")+1
+          rsx.update
+
+          rss.open "select * from " & db_PREFIX & "articlecount where type='view' and  articleid=" & rs("id") ,conn,1,1
+          rs("views")=rss.recordcount          '浏览次数'
+          rss.close
+          rs.update
+          views=rs("views")                  '文章浏览量'
+          ' call echo("show",rs("views"))
         end if:rsx.close
     end if:rs.close  
 

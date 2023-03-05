@@ -12,9 +12,10 @@ function sumbitliuya()    '留言'
     yzm=request("yzm")
     if yzm="" then
         call eerr("留言失败","请输入验证码！<a href='javascript:history.back();'>返回上一页</a>" & jsTiming("back",6))
-    elseif yzm<>session("yzm") then
+    elseif yzm<>session("yzm") or session("yzm")="" then
         call eerr("留言失败","验证码不正确！<a href='javascript:history.back();'>返回上一页</a>" & jsTiming("back",6))
     end if
+    session("yzm")="" '清空验证码sesion'
 
     rs.open "select * from " & db_PREFIX & "guestbook" ,conn,1,3    
         rs.addnew

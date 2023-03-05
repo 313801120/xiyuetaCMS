@@ -523,6 +523,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         conn.execute(sql) 
     end if 
 
+
     '网站栏目参数表-------------------------------
     tableName = db_PREFIX & "webcolumnparam" 
     if checkCreateTable(tableName) = false then
@@ -565,6 +566,9 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[filename] VarChar Default """","                                    '文件名称
         sql = sql & "[sortrank] Int Default 0,"                                           '排序编号
         sql = sql & "[views] Int Default 0,"                                              '点击次数
+        sql = sql & "[fabulous] Int Default 0,"                                           '赞
+        sql = sql & "[good] Int Default 0,"                                               '好
+        sql = sql & "[bad] Int Default 0,"                                                '坏 
         sql = sql & "[smallimage] VarChar Default """","                                  '小图片地址
         sql = sql & "[bigimage] VarChar Default """","                                    '大图片地址
         sql = sql & "[author] VarChar Default """","                                      '作者
@@ -572,6 +576,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[webtitle] VarChar Default """","                                    '网站自定标题
         sql = sql & "[webkeywords] VarChar Default """","                                 '网站关键词
         sql = sql & "[webdescription] Text Default """","                                 '网站描述
+        sql = sql & "[tags] VarChar Default """","                                        '标签
         
         sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
         sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
@@ -583,6 +588,103 @@ sub webData(db_PREFIX, loginname, loginpwd)
         conn.execute(sql) 
     end if
 
+
+    '文章标签(20230223)-------------------------------
+    tableName = db_PREFIX & "tags" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table " & tableName & " (id Int Identity(0,1) Primary Key," 
+        sql = sql & "[title] VarChar Default """","                                       '标签名称 
+        sql = sql & "[sortrank] Int Default 0,"                                           '排序编号
+        sql = sql & "[count] Int Default 1,"                                              '统计数
+        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址 
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)   '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
+
+    '文章统计(2030218)-------------------------------
+    tableName = db_PREFIX & "articlecount" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
+        sql = sql & "[articleid] Int Default -1,"                                         '文章ID
+        sql = sql & "[memberid] Int Default -1,"                                          '会员ID
+        sql = sql & "[type] VarChar Default """","  '类型，如 浏览view 赞fabulous 好good 坏bad
+        sql = sql & "[count] Int Default 1,"                                              '统计数
+        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址  
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
+
+    '文章留言(20230219)-------------------------------
+    tableName = db_PREFIX & "articlemessage" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table " & tableName & " (id Int Identity(0,1) Primary Key," 
+        sql = sql & "[memberid] Int Default -1,"                                          '会员ID
+        sql = sql & "[memberpic] VarChar Default """","                                   '会员头像图片
+        sql = sql & "[articleid] Int Default -1,"                                         '文章ID
+        sql = sql & "[parentid] Int Default -1,"                                          '回复者ID
+        sql = sql & "[title] VarChar Default """","                                       '标题
+        sql = sql & "[guestname] VarChar Default """","                                   '姓名
+        sql = sql & "[tel] VarChar Default """","                                         '电话
+        sql = sql & "[fax] VarChar Default """","                                         '传真
+        sql = sql & "[email] VarChar Default """","                                       '邮箱 
+        sql = sql & "[qq] VarChar Default """","                                          'QQ
+        sql = sql & "[msn] VarChar Default """","                                         'MSN号码
+        sql = sql & "[company] VarChar Default """","                                     '公司
+        sql = sql & "[address] VarChar Default """","                                     '地址
+        sql = sql & "[postcode] VarChar Default """","                                    '邮编
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址 
+
+        sql = sql & "[sustain] Int Default 0,"                                           '支持
+        sql = sql & "[oppose] Int Default 0,"                                            '反对
+        
+
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间
+        sql = sql & "[isthrough] Int Default 0,"                                          '是否通过
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if  
+
+    '文章留言统计(2030223)-------------------------------
+    tableName = db_PREFIX & "articlemessagecount" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
+        sql = sql & "[articleid] Int Default -1,"                                         '文章ID
+        sql = sql & "[memberid] Int Default -1,"                                          '会员ID
+        sql = sql & "[articlemessageid] Int Default -1,"                                    '文章里留言ID
+        sql = sql & "[type] VarChar Default """","  '类型，如 支持sustain  反对oppose
+        sql = sql & "[count] Int Default 1,"                                              '统计数
+        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址  
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
+    '文章搜索统计(2030304)-------------------------------
+    tableName = db_PREFIX & "articlesearch" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
+        sql = sql & "[title] VarChar Default """","                                       '标题
+        sql = sql & "[count] Int Default 1,"                                              '统计数
+        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址  
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
     '单页表-------------------------------
     tableName = db_PREFIX & "onepage" 
     if checkCreateTable(tableName) = false then
@@ -605,7 +707,25 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[bodycontent] Text Default """")"                                    '备注
         if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
         conn.execute(sql) 
-    end if     
+    end if   
+
+    '聊天表(引用之前20230227)-------------------------------
+    tableName = db_PREFIX & "chat" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table " & tableName & " (id Int Identity(0,1) Primary Key," 
+        sql = sql & "[userid] Int Default -1,"                                          '会员ID 
+        sql = sql & "[touserid] Int Default -1,"                                            '会员ID 
+        ' sql = sql & "[adminid] Int Default -1,"                                            '客服ID 
+        
+        sql = sql & "[createtime] DateTime Default Now(),"                               '创建时间
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间
+        sql = sql & "[ip] VarChar Default """","                                          'IP
+        sql = sql & "[isdel] Int Default 0,"                                              '是否删除
+        sql = sql & "[isthrough] Int Default 0,"                                          '是否通过
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)    '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if 
 
     '管理员表-------------------------------
     tableName = db_PREFIX & "admin" 
@@ -701,6 +821,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
     tableName = db_PREFIX & "guestbook" 
     if checkCreateTable(tableName) = false then
         sql = "Create Table " & tableName & " (id Int Identity(0,1) Primary Key," 
+        sql = sql & "[memberid] Int Default -1,"                                          '会员ID
         sql = sql & "[columnid] VarChar Default """","                                    '栏目ID
         sql = sql & "[parentid] Int Default -1,"                                          '父栏目ID
         sql = sql & "[title] VarChar Default """","                                       '标题
@@ -759,7 +880,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
         conn.execute(sql) 
     end if 
-    '会员表-------------------------------
+    '会员表------------------------------- 
     tableName = db_PREFIX & "member" 
     if checkCreateTable(tableName) = false then
         sql = "Create Table " & tableName & " (id Int Identity(0,1) Primary Key," 
@@ -788,6 +909,8 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[lottery] Int Default 0,"                                            '抽奖次数
         sql = sql & "[money] Int Default 0,"                                              '金币 
 
+        sql = sql & "[chatendtime] DateTime Default Now(),"         '聊天的最后时间 引用20230227
+
         
         sql = sql & "[ip] VarChar Default """","                                          'IP
         sql = sql & "[regip] VarChar Default """","                                       '注册IP
@@ -798,6 +921,10 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[loginip] VarChar Default """","                                     '登录IP
         sql = sql & "[logintime] DateTime Default Now(),"                                 '登录时间        
         sql = sql & "[logincount] Int Default 0,"                                         '登录次数
+
+        sql = sql & "[onlinetime] DateTime Default Now(),"                                 '在线时间时间
+        sql = sql & "[onlineip] VarChar Default """","                                     '在线IP
+
 		
         sql = sql & "[isthrough] Int Default 0,"                                          '是否通过
         sql = sql & "[bodycontent] Text Default """")"                                    '备注
@@ -817,6 +944,33 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "tourl VarChar Default """","                                       '来访网址
         sql = sql & "w Int Default 0,"                                                 '屏幕宽
         sql = sql & "h Int Default 0)"                                                 '屏幕高
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
+    'iis日志(20230228)------------------------------- 
+    tableName = db_PREFIX & "iislog" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
+        sql = sql & "[browsetime] DateTime Default Now(),"                              '浏览时间 
+        sql = sql & "[serverip] VarChar Default """","                                  '服务器IP
+        sql = sql & "[method] VarChar Default """","                                    '方法
+        sql = sql & "[url] VarChar Default """","                                       'url
+        sql = sql & "[urlparameter] Text Default """","                                 'url参数
+        sql = sql & "[port] Int Default -1,"                                            '端口号
+        sql = sql & "[username] VarChar Default """","                                  '用户名
+        sql = sql & "[userip] VarChar Default """","                                    '用户IP
+        sql = sql & "[incomingroad] Text Default """","                                 '来路
+        sql = sql & "[statuscode] Int Default -1,"                                      '状态码
+        sql = sql & "[bottomstatuscode] Int Default -1,"                                '底层状态码
+        sql = sql & "[win32statuscode] Int Default -1,"                                 'win32状态码
+        sql = sql & "[handletime] Int Default 0,"                                       '处理时间毫秒
+
+        sql = sql & "[useragent] VarChar Default """","                                 '用户代理  没有
+        sql = sql & "[filename] VarChar Default """","                                  '文件名
+        sql = sql & "[filetype] VarChar Default """","                                  '文件类型
+
+        sql = sql & "[createtime] DateTime Default Now(),"                              '创建时间
+        sql = sql & "[isthrough] Int Default 0)"                                        '是否通过
         if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
         conn.execute(sql) 
     end if

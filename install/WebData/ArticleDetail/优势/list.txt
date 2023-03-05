@@ -1,25 +1,29 @@
 ﻿【parentid】优势
 【title】品牌优势
-【smallimage】/UploadFiles/testpic/1.jpg
+【smallimage】/UploadFiles/testpic/pinpaiyoushi.png
 【sortrank】1
+【tags】优势,品牌优势,品牌,xiyueta,xiyuetacms
 【bodycontent】xiyuetaCMS拥有忠实的客户群<br>坚持以热情和友好的态度对待客户<br>致电求助，10分钟安排，1小时全城到达，区域全覆盖<br>坚持为用户提供好的服务，解决客户困难
 -------------------------------
 【parentid】优势
 【title】技术优势
 【author】xiyueta
-【smallimage】/UploadFiles/testpic/2.jpg
+【smallimage】/UploadFiles/testpic/jishuyoushi.png
 【sortrank】2
+【tags】技术优势,asp技术,php技术,优势
 【bodycontent】2 xiyuetaCMS拥有忠实的客户群<br>坚持以热情和友好的态度对待客户<br>致电求助，10分钟安排，1小时全城到达，区域全覆盖<br>坚持为用户提供好的服务，解决客户困难
 -------------------------------
 【parentid】优势
 【title】管理优势
-【smallimage】/UploadFiles/testpic/3.jpg
+【smallimage】/UploadFiles/testpic/guanliyoushi.png
 【sortrank】3
+【tags】管理优势,管理,优势
 【bodycontent】3 xiyuetaCMS拥有忠实的客户群<br>坚持以热情和友好的态度对待客户<br>致电求助，10分钟安排，1小时全城到达，区域全覆盖<br>坚持为用户提供好的服务，解决客户困难
 -------------------------------
 【parentid】优势
 【title】服务优势
-【smallimage】/UploadFiles/testpic/4.jpg
+【smallimage】/UploadFiles/testpic/fuwuyoushi.png
 【sortrank】4
+【tags】服务优势,优势
 【bodycontent】1 xiyuetaCMS拥有忠实的客户群<br>坚持以热情和友好的态度对待客户<br>致电求助，10分钟安排，1小时全城到达，区域全覆盖<br>坚持为用户提供好的服务，解决客户困难
 -------------------------------

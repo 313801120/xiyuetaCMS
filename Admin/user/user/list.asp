@@ -60,14 +60,14 @@ If Request("act") = "userlist" Then
             Else
                 sHr = "," 
             End If 
-
+ 
             isthrough=""
             if rs("isthrough")<>0 then
                 isthrough=" checked"
             end if
-   
+    
 
-            stemp = stemp & "{""i"":""" &i& """,""id"":""" & rs("id") & """,""username"":""" & rs("userName") & """,""nickname"":""" & rs("nickname") & """,""isthrough"":""" & isthrough & """,""regtime"":""" & rs("regTime") & """,""ip"":""" & rs("ip") & """,""addr"":""" & look_ip(rs("ip")) & """}" &sHr & "" 
+            stemp = stemp & "{""i"":""" &i& """,""id"":""" & rs("id") & """,""logincount"":""" & rs("logincount") & """,""username"":""" & rs("userName") & """,""onlinetime"":""" & rs("onlinetime") & """,""onlineip"":""" & rs("onlineip") & """,""money"":""" & rs("money") & """,""nickname"":""" & rs("nickname") & """,""isthrough"":""" & isthrough & """,""regtime"":""" & rs("regtime") & """,""logintime"":""" & rs("logintime") & """,""regip"":""" & rs("regip") & """,""loginip"":""" & rs("loginip") & """,""regaddr"":""" & look_ip(rs("regip")) & """,""loginaddr"":""" & look_ip(rs("loginip")) & """}" &sHr & "" 
 
             rs.MoveNext 
         Wend 
@@ -162,13 +162,25 @@ layui.use(['form','table'],function(){
         cols: [
             [
                 { field: 'i', title: '序列', width:80, sort: true }
-                , { field: 'username', title: '用户名',width:80, sort: false }
-                , { field: 'nickname', title: '昵称',width:80, sort: false }  
-                , { field: 'ip', title: 'IP',width:120, sort: false }
-                , { field: 'addr', title: '地址',minWidth:150, sort: false }
+                , { field: 'username', title: '用户名',minWidth:100, sort: false }
+                , { field: 'nickname', title: '昵称',width:90, sort: false }  
+
+                // , { field: 'regip', title: '注册IP',width:140, sort: false }
+                // , { field: 'regaddr', title: '注册地址',minWidth:120, sort: false }
+                // , { field: 'regtime', title: '注册时间',minWidth:120, sort: false }
+
+                // , { field: 'loginip', title: '登录IP',width:140, sort: false }
+                // , { field: 'loginaddr', title: '登录地址',minWidth:120, sort: false }
+                // , { field: 'logintime', title: '登录时间',minWidth:120, sort: false }
+
+                , { field: 'logincount', title: '登录次数',width:100, sort: false }
+                , { field: 'money', title: '金币',width:80, sort: false }
+
+                , { field: 'onlinetime', title: '最后在线时间',sort: false }
+                , { field: 'onlineip', title: '最后在线IP',sort: false }
+
                 ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
-                    return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
-                , { field: 'regtime', title: '加入时间',width:160, sort: true }
+                    return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}} 
                 , { fixed: 'right', title: '操作', width: 210, toolbar: '#barDemo' }
 
             ]

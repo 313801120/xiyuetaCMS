@@ -35,7 +35,7 @@
    |                                          |
    |    Powered By xiyueta - www.xiyueta.com  |
    |    QQ:313801120                          |
-   |    Creation:2022-12-21                   |
+   |    Creation:2023-03-05                   |
    |    xiyuetaCMS V1.2                       |
    |                                          |
    +----------------------------oOO-----------+
@@ -43,7 +43,7 @@
                       || ||
                      ooO Ooo
 -->
-<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2022-12-21                   |\n   |    xiyuetaCMS V1.2                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
+<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2023-03-05                   |\n   |    xiyuetaCMS V1.2                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
 <!--#Include file = "tpl/topnav_005_Default.asp"-->
 <!--#Include file = "tpl/banner_001.asp"-->
 <!--#Include file = "tpl/search_003_Default.asp"-->

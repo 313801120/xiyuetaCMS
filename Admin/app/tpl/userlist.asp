@@ -100,7 +100,7 @@ function forActionList(tplid,action,pagename,saction)
         testViewDir=tplid & "/tpl/"
         call createDirFolder("../../../tpl/" & tplid) 
         call createDirFolder("../../../tpl/" & tplid & "/tpl") 
-    end if
+    end if 
     splstr=split(saction,vbcrlf)
     for each s in splstr
         s=trim(s)

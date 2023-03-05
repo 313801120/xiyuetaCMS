@@ -184,7 +184,7 @@ for each folderName in splstr
     end if
 %>
                         <div class="layui-col-md2 layui-col-sm4" style="padding:10px;">
-                            <div class="cmdlist-container" style="border:1px solid #000;background:#fff;<%=IIF(folderName=tplname,"background:red;","")%>">
+                            <div class="cmdlist-container" style="border:1px solid #000;background:#fff;<%=IIF(folderName=tplname,"background:#fbe9e9;","")%>">
                                 <img src="<%=img%>">
                                 <div class="cmdlist-text">
                                     <p class="info">编号：
@@ -362,8 +362,9 @@ for each folderName in splstr
     }).use(['index', 'sample', 'yun', 'laypage', 'layer'],function(){
 
 
-        $(".yinyongmb").click(function() {
+        $(".yinyongmb").click(function() {  
             var tpl=$(this).attr("title");
+            var thisObj=this;
             layer.confirm('确定要使用模板（'+tpl+'）吗？', { icon: 3, title: '提示信息' }, function(index) {
                 $.ajax({
                     type: "POST",
@@ -374,8 +375,10 @@ for each folderName in splstr
                     success: function(data) {
                         switch (data.status) {
                             case "y": 
-                              layer.msg(data.info);
-                                break;
+                              layer.msg(data.info); 
+                              $("div[class='cmdlist-container']").css("background","#fff");
+                              $(thisObj).parent().parent().parent().css("background","#fbe9e9");
+                              break;
                         }
                     }
                 });

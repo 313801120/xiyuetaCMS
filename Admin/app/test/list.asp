@@ -12,11 +12,11 @@ If Request("act") = "list" Then
     
     If Request("date_min") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
-      sql = sql & "datediff('d',createtime,#" & Request("date_min") & "#)<=0" 
+      sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
-      sql = sql & "datediff('d',createtime,#" & Request("date_max") & "#)>=0" 
+      sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If    
 
     If Request("key") <> "" Then

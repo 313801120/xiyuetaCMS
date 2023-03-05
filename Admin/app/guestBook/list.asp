@@ -100,7 +100,7 @@ End If
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>部件列表</title>
+<title>留言管理</title>
 <script type="text/javascript" src="../../js/jquery.js"></script>
  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>

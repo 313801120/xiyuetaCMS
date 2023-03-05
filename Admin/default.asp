@@ -129,12 +129,25 @@ end if
                                 <cite>应用</cite>
                             </a>
                             <dl class="layui-nav-child">                                 
-                                <dd><a lay-href="app/content/list.asp">文章列表</a></dd>
+                                <dd><a lay-href="app/content/list.asp">文章管理</a></dd>
                                 <dd><a lay-href="app/content/tags.asp">分类管理</a></dd>
-                                <dd><a lay-href="app/guestBook/list.asp">留言列表</a></dd>
-                                <dd><a lay-href="app/OnePage/list.asp">单页列表</a></dd>
-                                <dd><a lay-href="app/friendLink/list.asp">友情列表</a></dd>
+                                <dd><a lay-href="app/guestBook/list.asp">留言管理</a></dd>
+                                <dd><a lay-href="app/OnePage/list.asp">单页管理</a></dd>
+                                <dd><a lay-href="app/friendLink/list.asp">友情管理</a></dd>
+                                <dd><a lay-href="app/articlecount/list.asp">文章统计</a></dd>
                                 <!-- <dd><a lay-href="app/sheshi/list.asp">省市县</a></dd> -->
+                                <dd><a lay-href="app/articlemessage/list.asp">文章留言</a></dd>
+                                <dd><a lay-href="app/tags/list.asp">文章标签</a></dd>
+                                <dd><a lay-href="app/articlesearch/list.asp">文章搜索</a></dd>
+                            </dl>
+                        </li> 
+                        <li data-name="chat" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="聊天管理" lay-direction="2">
+                                <i class="layui-icon layui-icon-dollar"></i>
+                                <cite>聊天管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">                                 
+                                <dd><a lay-href="app/chat/list.asp">聊天列表</a></dd> 
                             </dl>
                         </li> 
           
@@ -150,6 +163,8 @@ end if
                                 <dd><a lay-href="app/tpl/userlist.asp">模板库</a></dd>
                                 <dd><a lay-href="http://res.xiyueta.com/">素材库</a></dd>
                                 <dd><a lay-href="set/system/Admin_Login_Allow_IP.asp">设置IP限制</a></dd> 
+                                <dd><a lay-href="app/iislog/list.asp">IIS日志</a></dd> 
+                                <dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap.xml</a></dd> 
                             </dl>
                         </li>
 
@@ -215,4 +230,3 @@ end if
 </body>
 
 </html>
-<%=gethttpurl("https://xiyueta.com/api/websiteaccess/?url="&escape(getUrl()),"utf8")%>

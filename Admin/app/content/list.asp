@@ -16,11 +16,11 @@ If Request("act") = "list" Then
     
     If Request("date_min") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
-      sql = sql & "datediff('d',createtime,#" & Request("date_min") & "#)<=0" 
+      sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0"  
     End If 
     If Request("date_max") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
-      sql = sql & "datediff('d',createtime,#" & Request("date_max") & "#)>=0" 
+      sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If 
     If parentid <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
@@ -205,7 +205,7 @@ layui.use(['form','table','upload'],function(){
                 , { field: 'parentid', title: '类目', width: 150, sort: true }
                 , { field: 'title', title: '名称', edit: 'text', sort: true }
                 , { field: 'createtime', title: '发布时间', width: 160, sort: true }
-                 ,{field: 'isthrough', title: '是否显示',width:100, align:'center', templet:function(d){
+                 ,{field: 'isthrough', title: '是否置顶',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
                 , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
 

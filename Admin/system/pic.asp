@@ -113,7 +113,7 @@
 
 <body style="background-color:#f5f5f5">
 	<%
-dim filePath
+dim filePath,fhuizhui,sImg
 if request("act")="del" then
 	filePath="../../UploadFiles/img/" & getFileAttr(request("pic"),"name")
 	if checkFile(filePath) then
@@ -178,14 +178,27 @@ For i=picbegin To thispageend
 'isuse="<span class='layui-badge layui-bg-green'>使用中</span>"
 'usezt=1
 'end if
-'rs.close
+'rs.close 
 if request("act")<>"used" or usezt=0 then
-    img_html = img_html + "<li  class=item><a href='"&fpath&Split(picArr(i),"$")(0)&"' target=_blank><img src='"&fpath&Split(picArr(i),"$")(0)&"' /></a><span class=""layui-icon layui-icon-delete"" onclick=""del('../UploadFiles/img/"&Split(picArr(i),"$")(0)&"')""></span>"
+
+	fhuizhui=lcase(getFileAttr(Split(picArr(i),"$")(0),4))
+	if instr("|jpg|jpeg|gif|bmp|png|","|"& fhuizhui &"|")>0 then
+		fhuizhui="jpg.svg"
+	elseif instr("|rar|zip|","|"& fhuizhui &"|")>0 then
+		fhuizhui="zip.svg"
+	elseif instr("|xls|xlsx|","|"& fhuizhui &"|")>0 then
+		fhuizhui="xls.svg"
+	else
+		fhuizhui="file.svg"
+	end if
+	sImg="<img src='images/"& fhuizhui &"' width='50' height='50'>"
+
+    img_html = img_html + "<li  class=item><a href='"&fpath&Split(picArr(i),"$")(0)&"' target=_blank>"& sImg &"</a><span class=""layui-icon layui-icon-delete"" onclick=""del('../UploadFiles/img/"&Split(picArr(i),"$")(0)&"')""></span>"
 	img_html = img_html +"<p>"&Split(picArr(i),"$")(0)&"</p>"
 	img_html = img_html +"<p >"&Split(picArr(i),"$")(1)&"<span style=float:right;>"&cint(Split(picArr(i),"$")(2)/1024)&"kb</span></p>"
 	img_html = img_html +"<p >"&isuse&"</p></li>"
 	end if
-Next
+Next 
 page_html = "<span>当前：第"&page&"页</span>  "
 For i=1 To pageCount
 if cstr(i)=request("page") then

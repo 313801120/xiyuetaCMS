@@ -246,6 +246,8 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
                             getFieldAlt_conn = "VarChar" 
                         case "203"
                             getFieldAlt_conn = "Text" 
+                        case "201"  '在sqlserver里有201'
+                            getFieldAlt_conn = "Text" 
                         case "7"
                             getFieldAlt_conn = "DateTime" 
                         case "3"
@@ -255,7 +257,7 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
                         case "5"
                             getFieldAlt_conn = "Float" 
                         case else
-                            msgBox(rs.fields(n).type & vbCrLf & fieldName & "没有类型") 
+                            msgBox(rs.fields(n).type & vbCrLf & fieldName & "没有类型 表为" & tableName) 
                             getFieldAlt_conn = "没类型" & rs.fields(n).type 
                     end select
                     exit for 
@@ -290,6 +292,7 @@ end function
 function getFieldList_conn(tableName,customConn)
     dim fn, c, fld, n,tempRs
 	Set tempRs = CreateObject("Adodb.RecordSet")
+    ' call echo("tableName",tableName):doevents
     'on error resume next 
     '字段
     tempRs.open "Select * From [" & tableName & "]", customConn, 1, 1 
@@ -389,7 +392,7 @@ function getDifferentTableFieldList(connObj, table)
     next : rs.close 
     getDifferentTableFieldList = c 
 end function 
-'Call Echo("压缩数据库", CompactDB("D:\个人制作\html1\Admin\Data\Data.mdb", False))
+'Call Echo("压缩数据库", compactDB("D:\个人制作\html1\Admin\Data\Data.mdb", False))
 '=====================压缩参数========================= boolIs97 这个好像没有什么用
 '压缩数据库
 function compactDB(dBPath, boolIs97)
@@ -1033,7 +1036,7 @@ function handleTableListToFile(clear_db_PREFIX,tableName,nRow)
 
 
     handleTableListToFile=j
-end function
+end function 
 
 
 
@@ -1093,6 +1096,30 @@ function getTableListToSqlAspRun(clear_db_PREFIX,tableName,nRow,parentTableName)
 
 
     getTableListToSqlAspRun=c
+end function
+
+
+' call die(accessDataToSqlServerData())  调用方法
+'access数据转换成sqlServer数组，可运行添加的文件'20230113  showRow 为每个表提取多少条数组
+function accessDataToSqlServerData(showRow)
+    dim cTableList,splTable,parentTableName,tableName,c,content,filePath,tempContent
+    if showRow="" then showRow=3
+    call openconn()
+    cTableList=getTableList()
+    call echo("cTableList",cTableList)
+    splTable=split(cTableList,vbcrlf)
+    for each tableName in splTable
+        call echo("tableName",tableName)
+        c=c & getTableListToSqlAspRun(db_PREFIX,tableName,showRow,parentTableName)
+        parentTableName=tableName
+        doevents
+    next
+    ' c=getTableListToSqlAspRun("xy_","xy_admin",3,"")
+    ' call rw(c)
+    tempContent=readfile("/install/sql.tpl","utf-8")
+    content=replace(tempContent,"'内容'",c)
+    call writetofile("/install/sql.asp",content,"utf-8")
+    accessDataToSqlServerData=c
 end function
 %>      
 
