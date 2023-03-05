@@ -979,7 +979,7 @@ function replace_em(str){
         getContext(blob).then(res => { //图片数据能直接被img识别
             // document.getElementById("previewImage").src = res; 
             jQuery.ajax({
-                url: 'upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
+                url: '/api/upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
                 type: 'POST',
                 dataType: "json",
                 data: {
