@@ -92,7 +92,7 @@ end if
 
 </style>
 
-<iframe name="chat" src="chat.asp?type=<%=sType%>&touserid=<%=touserid%>" scrolling="no" class="bfEgQL"></iframe>
+<iframe name="chat" id="chat" src="chat.asp?type=<%=sType%>&touserid=<%=touserid%>" scrolling="no" class="bfEgQL"></iframe>
 
 <script src="js/jquery-1.8.1.min.js"></script>
 <script>
@@ -111,6 +111,12 @@ end if
     //     $("iframe").attr("style","height:"+(nHeight-120)+"px")
     // }
 
+
+    //获得粘贴板内容
+    document.addEventListener('paste', function (event) {
+        var frames=document.getElementById("chat");//frameid即右栏iframe的id名
+        frames.contentWindow.uploadclipboardDataImage(event);
+    })
 </script>
 
 </html>

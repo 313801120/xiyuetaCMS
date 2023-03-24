@@ -189,7 +189,7 @@ End If
   <button class="layui-btn" data-type="reload">搜索</button>
   <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
           <button class="layui-btn" data-type="batchdel">删除</button> 
-  <button class="layui-btn" onclick="updateaction()">更新数据</button>
+  <button class="layui-btn" onclick="updateaction()">更新数据</button> 
 
 </div>
  
@@ -233,9 +233,9 @@ layui.use(['form','table','upload'],function(){
         url: '/api/upload/uploadXls.asp',
         exts: 'txt|dat', //只允许上传txt文件
         done: function(res) {
-            alert("res.data.src="+res.data.src)
+            alert("res.data[0].src="+res.data[0].src)
               $.get('/install/addData.asp?act=importArticle', {
-                    articlePath:res.data.src
+                    articlePath:res.data[0].src
                 }, function (strData) {
                     // var data= $.parseJSON( strData );
                     // layer.msg(data.msg + " 共 "+ data.count +" 条");

@@ -577,7 +577,10 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[webkeywords] VarChar Default """","                                 '网站关键词
         sql = sql & "[webdescription] Text Default """","                                 '网站描述
         sql = sql & "[tags] VarChar Default """","                                        '标签
+        sql = sql & "[price] float Default 0,"                                            '价格(积分)
+        sql = sql & "[nbuy] Int Default 0,"                                               '是否购买，默认为0
         
+
         sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
         sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
         sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
@@ -587,7 +590,6 @@ sub webData(db_PREFIX, loginname, loginpwd)
         if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
         conn.execute(sql) 
     end if
-
 
     '文章标签(20230223)-------------------------------
     tableName = db_PREFIX & "tags" 
@@ -654,7 +656,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         conn.execute(sql) 
     end if  
 
-    '文章留言统计(2030223)-------------------------------
+    '文章留言统计，收集支持与反对(2030223)-------------------------------
     tableName = db_PREFIX & "articlemessagecount" 
     if checkCreateTable(tableName) = false then
         sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
@@ -662,20 +664,6 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[memberid] Int Default -1,"                                          '会员ID
         sql = sql & "[articlemessageid] Int Default -1,"                                    '文章里留言ID
         sql = sql & "[type] VarChar Default """","  '类型，如 支持sustain  反对oppose
-        sql = sql & "[count] Int Default 1,"                                              '统计数
-        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
-        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
-        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
-        sql = sql & "[ip] VarChar Default """","                                          'IP地址  
-        sql = sql & "[bodycontent] Text Default """")"                                    '备注
-        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
-        conn.execute(sql) 
-    end if
-    '文章搜索统计(2030304)-------------------------------
-    tableName = db_PREFIX & "articlesearch" 
-    if checkCreateTable(tableName) = false then
-        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
-        sql = sql & "[title] VarChar Default """","                                       '标题
         sql = sql & "[count] Int Default 1,"                                              '统计数
         sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
         sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
@@ -746,7 +734,11 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[isiplimit] Int Default 1,"                                          '是否开启IP限制
         sql = sql & "[iplimitlist] VarChar Default """","                                 'IP限制列表
 
-        sql = sql & "[createtime] DateTime Default Now(),"                               '创建时间
+        sql = sql & "[loginstatus] Int Default 0,"                                '登录状态，1为登录，0为退出
+        sql = sql & "[lastlogintime] DateTime Default Now(),"                                '最后登录时间
+        
+
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间
         sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间
         sql = sql & "[regip] VarChar Default """","                                       '注册IP
         sql = sql & "[upip] VarChar Default """","                                        '修改IP
@@ -761,8 +753,8 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[msgstr] Text Default """","                                         '信息内容
         sql = sql & "[item] VarChar Default """","                                        '类目
         sql = sql & "[tablename] VarChar Default """","                                   '表名 也可以说module模块
-        sql = sql & "[url] Text Default """","                                            '动作
-        sql = sql & "[adminid] Int Default -1,"                                            '管理员id
+        sql = sql & "[url] Text Default """","                                            '网址
+        sql = sql & "[adminid] Int Default -1,"                                           '管理员id
         sql = sql & "[adminname] VarChar Default 0,"                                      '管理员名称
         sql = sql & "[ip] VarChar Default """","                                          'IP地址
 
@@ -802,8 +794,8 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[education] VarChar Default """","                                   '教育
         sql = sql & "[workarea] VarChar Default """","                                    '工作区
         sql = sql & "[monthly] VarChar Default """","                                     '月薪待遇
-        sql = sql & "[starttime] VarChar Default """","                               '发布日期
-        sql = sql & "[endtime] VarChar Default """","                                 '截止日期
+        sql = sql & "[starttime] VarChar Default """","                                   '发布日期
+        sql = sql & "[endtime] VarChar Default """","                                     '截止日期
         sql = sql & "[webtitle] VarChar Default """","                                    '网站自定标题
         sql = sql & "[webkeywords] VarChar Default """","                                 '网站关键词
         sql = sql & "[webdescription] Text Default """","                                 '网站描述
@@ -866,7 +858,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[postcode] VarChar Default """","                                    '邮编
         sql = sql & "[ip] VarChar Default """","                                          'IP地址
 
-        sql = sql & "[createtime] DateTime Default Now(),"                               '创建时间
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间
         sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间
         sql = sql & "[isthrough] Int Default 0,"                                          '是否通过
 
@@ -909,7 +901,14 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[lottery] Int Default 0,"                                            '抽奖次数
         sql = sql & "[money] Int Default 0,"                                              '金币 
 
-        sql = sql & "[chatendtime] DateTime Default Now(),"         '聊天的最后时间 引用20230227
+        sql = sql & "[buyshoplist] Text Default """","                       '购买商品列表，来自qqshow 
+        sql = sql & "[qqshowsettxt] Text Default """","                      'qqshow头像设置文本，来自qqshow 
+        sql = sql & "[qqshowbitmap] Text Default """","                      'qqshow头像bitmap信息，来自qqshow 
+        sql = sql & "[boyorgirl] Int Default 0,"                             '男女，来自qqshow 
+        
+
+        sql = sql & "[chatendtime] DateTime Default Now(),"                  '聊天的最后时间 引用20230227
+        sql = sql & "[loginstatus] Int Default 0,"                                '登录状态，1为登录，0为退出 
 
         
         sql = sql & "[ip] VarChar Default """","                                          'IP

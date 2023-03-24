@@ -14,13 +14,16 @@ If Request("act") = "userlist" Then
 
 
     If Request("date_min") <> "" Then
-      sql = sql & IIF(instr(sql," where ")=false," where "," and ") & "datediff('d',regTime,#" & Request("date_min") & "#)<=0" 
+      sql=IIF(sql=""," where ",sql & " and ") 
+      sql = sql & getAccessDatediffTime("regtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then
-      sql = sql & IIF(instr(sql," where ")=false," where "," and ") & "datediff('d',regTime,#" & Request("date_max") & "#)>=0" 
+      sql=IIF(sql=""," where ",sql & " and ") 
+      sql = sql & getAccessDatediffTime("regtime",Request("date_max")) & ">=0" 
     End If 
-    If Request("key") <> "" Then
-      sql =  sql & IIF(instr(sql," where ")=false," where "," and ") & "[username] like '%" & Request("key") & "%' " 
+     If Request("key") <> "" Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql =sql & IIF(instr(sql," where ")=false," where "," and ") & "[username] like '%" & Request("key") & "%' " 
     End If 
     sql=sql & " order by id desc" 
     ' call die(sql)
@@ -144,7 +147,7 @@ End If
  <script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
   <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> 
-  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="jizhang"><i class="layui-icon layui-icon-edit"></i>记账</a> 
+  <!-- <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="jizhang"><i class="layui-icon layui-icon-edit"></i>记账</a>  -->
 </script>
 
 <table class="layui-hide" id="table" lay-filter="demo"></table>
@@ -181,7 +184,7 @@ layui.use(['form','table'],function(){
 
                 ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}} 
-                , { fixed: 'right', title: '操作', width: 210, toolbar: '#barDemo' }
+                , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
 
             ]
         ],

@@ -14,7 +14,7 @@ dim request2,formPath,formName,intCount,intTemp
 set request2=new UpLoadClass
 
 	'设置文件允许的附件类型为gif/jpg/rar/zip
-	request2.FileType="gif/jpg/png/jpeg/rar/zip"
+	request2.FileType="bmp/gif/jpg/png/jpeg/rar/zip/mp4"
 
 	'设置服务器文件保存路径
 	request2.SavePath="../../UploadFiles/img/"
@@ -48,7 +48,8 @@ set request2=new UpLoadClass
 				
 				file_msg=Error2Info(request2.form(formName&"_Err"))
 				
-		
+				
+				if file_url<>"" then file_url=file_url&","
 				'显示目标文件路径与文件名
 				file_url=file_url&"{""src"":""/UploadFiles/img/"&formPath&request2.form(formName)&""",""title"":"""& request2.form(formName) &"""}"
 		
@@ -65,7 +66,7 @@ set request2=new UpLoadClass
 		
 	
 			
-	str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": "&file_url&"}"
+	str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": ["&file_url&"]}"
 			
 	
 

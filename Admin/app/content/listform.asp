@@ -147,7 +147,7 @@ end if
     </div>
 
     <div class="layui-form-item">
-      <label class="layui-form-label">排序</label>
+      <label class="layui-form-label">排序</label> 
       <div class="layui-input-inline">
         <input type="text" name="sortrank" lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input" value="<%=sortrank%>">
       </div>
@@ -249,14 +249,14 @@ layui.config({
         elem: '#layuiadmin-upload-useradmin',
         url: '/api/upload/',
         done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data.src)
+            $(this.item).prev("div").children("input").val(res.data[0].src)
         }
     });
     upload.render({
         elem: '#layuiadmin-upload-useradmin2',
         url: '/api/upload/',
         done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data.src)
+            $(this.item).prev("div").children("input").val(res.data[0].src)
         }
     });
 

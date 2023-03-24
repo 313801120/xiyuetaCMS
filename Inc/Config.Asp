@@ -32,6 +32,7 @@
 <!--#Include file = "ip.Asp"-->   
 <!--#Include file = "function.Asp"-->
 <!--#Include file = "PinYin.Asp"-->
+<!--#Include file = "member.asp"-->
 <%  
 server.scriptTimeout = 9999                                                     '超时
 session.timeout = 1440                                                          '最大值为24小时，也就是说你最大可以session.timeout=1440，1441都是不可以
@@ -67,7 +68,8 @@ dim countTi:countTi=200 '默认显示题数
 dim adminDir : adminDir = "/admin/"                                               '后台目录
 dim WEB_CACHEFile : WEB_CACHEFile = "[adminDir]/[EDITORTYPE]cachedata.txt" '缓冲文件
 dim isLoginIPAllow:isLoginIPAllow=false'是否开启登录后台管理IP限制 20220627
-dim version:version="V1.2"
+dim isUniquelogin:isUniquelogin=true  '开启后台唯一登录 20230316
+dim version:version="V1.3"       '(20230311升级到1.3)'
 
 dim pubIsDownIPJson:pubIsDownIPJson=true'是否下载IP查询不到时下载ip138数据20221029
 dim pubWebSite:pubWebSite=""   '全部网站域名地址20221115' https://www.xiyueta.com/
@@ -76,41 +78,41 @@ dim pubWebSite:pubWebSite=""   '全部网站域名地址20221115' https://www.xi
 '获得数组里的现在时间，因为access与sqlserver里获得时间不一致'
 function getAccessDatediff(zdName)
 	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediff="datediff('d',"& zdName &",now())"
+		getAccessDatediff=" datediff('d',"& zdName &",now())"
 	else
-		getAccessDatediff="datediff(day,"& zdName &",GETDATE())"
+		getAccessDatediff=" datediff(day,"& zdName &",GETDATE())"
 	end if	
 end function
 '获得数组里的现在时间，
 function getAccessDatediffTime(zdName,sTime)
 	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffTime="datediff('d',"& zdName &",#" & sTime &"#)"
+		getAccessDatediffTime=" datediff('d',"& zdName &",#" & sTime &"#)"
 	else
-		getAccessDatediffTime="datediff(day,"& zdName &","& sTime &")"
+		getAccessDatediffTime=" datediff(day,"& zdName &",'"& sTime &"')"   '要加上'号，要不然会报错
 	end if	
 end function
 '周'
 function getAccessDatediffWeek(zdName)
 	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffWeek="datediff('ww',"& zdName &",now())"
+		getAccessDatediffWeek=" datediff('ww',"& zdName &",now())"
 	else
-		getAccessDatediffWeek="datediff(week,"& zdName &",GETDATE())"
+		getAccessDatediffWeek=" datediff(week,"& zdName &",GETDATE())"
 	end if	
 end function
 '月'
 function getAccessDatediffMonth(zdName)
 	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffMonth="datediff('m',"& zdName &",now())"
+		getAccessDatediffMonth=" datediff('m',"& zdName &",now())"
 	else
-		getAccessDatediffMonth="datediff(month,"& zdName &",GETDATE())"
+		getAccessDatediffMonth=" datediff(month,"& zdName &",GETDATE())"
 	end if	
 end function
 '年'
 function getAccessDatediffYear(zdName)
 	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffYear="datediff('yyyy',"& zdName &",now())"
+		getAccessDatediffYear=" datediff('yyyy',"& zdName &",now())"
 	else
-		getAccessDatediffYear="datediff(year,"& zdName &",GETDATE())"
+		getAccessDatediffYear=" datediff(year,"& zdName &",GETDATE())"
 	end if	
 end function
 
@@ -118,13 +120,13 @@ end function
 ' if webDoMain()="http://demo.xiyueta.com" then
 
 
-' if instr(webDoMain(),"xiyueta.com")>0 then
-' 	'不同IP显示不同内容'
-' 	if getIP()<>"127.0.0.1" then
-' 		MDBPath = "/data/data_" & getIP() &".mdb" 
-' 		if checkFile(MDBPath)=false then
-' 			call copyFile("/data/data.mdb",MDBPath)
-' 		end if
-' 	end if
-' end if
+if instr(webDoMain(),"xiyueta.com")>0 then
+	'不同IP显示不同内容'
+	if getIP()<>"127.0.0.1" then
+		MDBPath = "/data/data_" & getIP() &".mdb" 
+		if checkFile(MDBPath)=false then
+			call copyFile("/data/data.mdb",MDBPath)
+		end if
+	end if
+end if
 %> 

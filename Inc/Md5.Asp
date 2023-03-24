@@ -169,8 +169,10 @@ Private Function WordToHex(lValue)
         WordToHex = WordToHex & Right("0" & Hex(lByte), 2)
     Next
 End Function
-
-Public Function MD5(sMessage,stype)
+function md5(sMessage)
+    md5=handleMD5(sMessage,9)
+end function
+Public Function handleMD5(sMessage,stype)
     m_lOnBits(0) = CLng(1)
     m_lOnBits(1) = CLng(3)
     m_lOnBits(2) = CLng(7)
@@ -355,28 +357,28 @@ Public Function MD5(sMessage,stype)
 	sMD516=Lcase( WordToHex(b) & WordToHex(c))
 	sMD532=Lcase( WordToHex(a) & WordToHex(b) & WordToHex(c) & WordToHex(d))
 	if stype=1 then
-		MD5 = LCase(WordToHex(a))
+		handleMD5 = LCase(WordToHex(a))
 	elseif stype=2 then
-		MD5=LCase(WordToHex(b))
+		handleMD5=LCase(WordToHex(b))
 	elseif stype=3 then
-		MD5 = Lcase( WordToHex(c))
+		handleMD5 = Lcase( WordToHex(c))
 	elseif stype=4 then
-		MD5 = Lcase( WordToHex(d)) 
+		handleMD5 = Lcase( WordToHex(d)) 
 		
 	elseif stype=16 then
-		MD5=sMD516
+		handleMD5=sMD516
 	elseif stype=9 or stype=32 then
-		MD5 =sMD532 
+		handleMD5 =sMD532 
 		
 	elseif stype=5 then
-		MD5=array(sMD516,sMD532)
+		handleMD5=array(sMD516,sMD532)
 	else
-		MD5 = Lcase(WordToHex(d))
+		handleMD5 = Lcase(WordToHex(d))
 	end if  
 End Function 
 '自己加密账号密码用(20151119)
-function myMD5(byval content) 
-    myMD5 = MD5(MD5(content,9),9)
+function myMD5(byval content)
+    myMD5 = handleMD5(handleMD5(content,9),9)
 end function
 
 

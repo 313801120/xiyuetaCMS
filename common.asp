@@ -92,7 +92,10 @@ if request("nav")<>"" then
       end if
       pageUrl=pageUrl & "&k=" & sKeyword
     end if
+
+    
       ' call eerr("pageUrl",pageUrl)
+
     response.redirect( pageUrl) '跳转网址
   end if
 
@@ -569,6 +572,25 @@ function getStyle(httpurl)
     c=mid(c,1,nLen-1)
   end if
   call rw(c)
+end function
+'获得主栏目名称20170404
+function getRootColumnCnName(byval id) 
+  dim i,parentid
+  for i =1 to 9
+    rs1.open"select * from " & db_PREFIX & "WebColumn where id="& id &"",conn,1,1
+    if not rs1.eof then
+      parentid=cstr(rs1("parentid"))
+      if parentid<>"-1" then
+        id=rs1("parentid")
+      else
+        getRootColumnCnName=rs1("columnname") 
+        rs1.close
+        exit for    
+      end if
+    else
+      exit for
+    end if:rs1.close
+  next
 end function
  
 '地址不为区则替换网页标题，关键词，描述里,前面加上地区信息'

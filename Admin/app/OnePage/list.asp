@@ -166,10 +166,10 @@ layui.use(['form','table','upload'],function(){
         url: '/api/upload/uploadXls.asp',
         exts: 'xlsx|xls|txt', //只允许上传excel文件
         done: function(res) {
-            // alert("res.data.src="+res.data.src)
+            // alert("res.data[0].src="+res.data[0].src)
               $.get('import.asp', {
                     act:'import',
-                    xls:res.data.src
+                    xls:res.data[0].src
                 }, function (strData) {
                     layer.msg(strData);
                     table.reload('testReload');

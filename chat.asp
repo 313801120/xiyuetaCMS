@@ -607,13 +607,13 @@ layui.config({
         elem: '#layuiadmin-upload-image',
         url: '/api/upload/',
         done: function(res) {
-            // $("#_MEIQIA_INPUT").val("<img src='"+ res.data.src +"'>") 
-            // alert(res.data.src)
+            // $("#_MEIQIA_INPUT").val("<img src='"+ res.data[0].src +"'>") 
+            // alert(res.data[0].src)
             jQuery.ajax({
                 url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
                 type: 'POST',
                 data: {
-                    'content': "<a href='"+res.data.src+"' target='_blank'><img src='"+ res.data.src +"' class='upimg'></a>"
+                    'content': "<a href='"+res.data[0].src+"' target='_blank'><img src='"+ res.data[0].src +"' class='upimg'></a>"
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest)
@@ -636,13 +636,13 @@ layui.config({
         url: '/api/upload/uploadvideo.asp',
         exts: 'mp4', //只允许上传mp4文件
         done: function(res) {
-            // $("#_MEIQIA_INPUT").val("<img src='"+ res.data.src +"'>") 
-            // alert(res.data.src)
+            // $("#_MEIQIA_INPUT").val("<img src='"+ res.data[0].src +"'>") 
+            // alert(res.data[0].src)
             jQuery.ajax({
                 url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
                 type: 'POST',
                 data: {
-                    'content': "<video controls=''  name='media' class='upimg'><source src='"+res.data.src+"' type='video/mp4'></video>"
+                    'content': "<video controls=''  name='media' class='upimg'><source src='"+res.data[0].src+"' type='video/mp4'></video>"
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest)
@@ -940,7 +940,14 @@ function replace_em(str){
 <script>
 //获得粘贴板内容
     document.addEventListener('paste', function (event) {  
-        console.log("粘贴内容")
+        uploadclipboardDataImage(event);
+    })
+
+    // let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
+
+    //上传粘贴板里的图片
+    function uploadclipboardDataImage(event){
+        console.log("粘贴内容22")
         if (!event || !event.clipboardData) return;
         let pText = event.clipboardData.getData('text/plain');
         if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
@@ -960,7 +967,9 @@ function replace_em(str){
         } else {
             alert("粘了个寂寞");
         }
-    })
+    }
+
+
  
     function showCVText(text) {
         document.getElementById("previewCVText").value = text;
@@ -1045,5 +1054,120 @@ function replace_em(str){
             reader.readAsDataURL(blob);
         });
     }
+ 
+</script>
+
+
+
+
+<script>
+    //拖拽上传图片
+    var dp = document.body;
+    dp.addEventListener('dragover', function(e) {
+        e.stopPropagation();
+        //阻止浏览器默认打开文件的操作
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+    });
+    
+    //单图上传
+    // dp.addEventListener("drop", function(e) {
+    //     e.stopPropagation();
+    //     //阻止浏览器默认打开文件的操作
+    //     e.preventDefault();
+    //     var files = e.dataTransfer.files;
+    //     var file = files[0];
+    //     var formData = new FormData();
+    //     formData.append("file", file);
+    //     $.ajax({
+    //         type: 'post',
+    //         url: '/api/upload/',
+    //         data: formData,
+    //         contentType: false, //必须  禁止jQuery设置Content-Type请求头
+    //         processData: false, //必须  禁止jQuery处理发送的数据
+    //         dataType: "json",
+    //         success: function(res){
+    //             if(res.success == 1){
+    //             }
+    //         },
+    //     });
+    // });
+
+    //多图上传
+    dp.addEventListener("drop", function(e) {
+        e.stopPropagation();
+        //阻止浏览器默认打开文件的操作
+        e.preventDefault();
+        var files = e.dataTransfer.files;
+        var formData = new FormData();
+        for(var i =0; i<files.length; i++){
+            // console.log(i,files[i],files[i].name)
+            var fileName=files[i].name;
+            //获取最后一个.的位置
+            var index= fileName.lastIndexOf(".");
+            //获取后缀
+            var ext = fileName.substring(index+1);  
+            if(isAssetTypeAnImage(ext) || isAssetTypeAnVideo(ext)){
+                formData.append("file"+i, files[i]); 
+            }
+        } 
+        $.ajax({
+            type: 'post',
+            url: '/api/upload/',
+            data: formData,
+            contentType: false, //必须  禁止jQuery设置Content-Type请求头
+            processData: false, //必须  禁止jQuery处理发送的数据
+            dataType: "json",
+            success: function(res){
+                console.log("res.data",res.data,res.data.length);
+                for(var i=0;i<res.data.length;i++){
+                    var img=res.data[i].src;
+                    console.log(i,img);
+
+                    //获取最后一个.的位置
+                    var index= img.lastIndexOf(".");
+                    //获取后缀
+                    var ext = img.substring(index+1);  
+                    if(isAssetTypeAnVideo(ext)){
+                        var datacontent="<video controls=''  name='media' class='upimg'><source src='"+img+"' type='video/mp4'></video>"
+                    }else{
+                        var datacontent="<a href='"+img+"' target='_blank'><img src='"+ img +"' class='upimg'></a>"
+                    }
+
+
+                    jQuery.ajax({
+                        url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
+                        type: 'POST',
+                        data: {
+                            'content': datacontent
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest)
+                            console.log(textStatus)
+                            console.log(errorThrown)
+                        },
+                        success: function(result) {                
+                            // alert($("#sendhtml").html())
+                             // location.reload()
+                             // alert(result)
+                             getxx();//更新
+                        }
+                    });
+                    
+
+
+                }
+            },
+        });
+    });
+    //判断文件后缀是否为图片类型
+    function isAssetTypeAnImage(ext) {
+     return ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp',  'svg'].indexOf(ext.toLowerCase()) !== -1;
+    }
+    //判断文件后缀是否为视频类型
+    function isAssetTypeAnVideo(ext) {
+     return ['mp4'].indexOf(ext.toLowerCase()) !== -1;
+    }
+
  
 </script>

@@ -11,13 +11,16 @@ If Request("act") = "list" Then
 
     
     If Request("date_min") <> "" Then
-      sql = sql & IIF(instr(sql," where ")=false," where "," and ") & "datediff('d',createTime,#" & Request("date_min") & "#)<=0" 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then
-      sql = sql & IIF(instr(sql," where ")=false," where "," and ") & "datediff('d',createTime,#" & Request("date_max") & "#)>=0" 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If 
-    If Request("key") <> "" Then
-      sql =  sql & IIF(instr(sql," where ")=false," where "," and ") & "[title] like '%" & Request("key") & "%' " 
+     If Request("key") <> "" Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql =sql & IIF(instr(sql," where ")=false," where "," and ") & "[title] like '%" & Request("key") & "%' " 
     End If 
     ' call die(sql)
     sql=sql & " order by id desc"

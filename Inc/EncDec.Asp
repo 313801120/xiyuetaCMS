@@ -586,6 +586,7 @@ function jsonCL(c)
 end function
 '解决表里&lt;这种显示为<的问题 20220727'
 function inputCL(c)
+	if isnul(c) then c=""
     c=replace(c,"&","&amp;")
     inputCL=c
 end function

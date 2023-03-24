@@ -413,7 +413,7 @@ function tc(my_tit, my_url, my_width, my_height) {
 
 function tc2(my_tit, my_url, my_width, my_height) {
 
-    layer.open({
+    return layer.open({
         title: my_tit,
         type: 2,
         area: [my_width + 'px', my_height + 'px'], 
@@ -433,10 +433,7 @@ function tc2(my_tit, my_url, my_width, my_height) {
                 });  
                 
                 submit.trigger('click');
-              }
-
-
-
+              } 
     });
 
 }
@@ -1097,8 +1094,9 @@ function showwin(title,url){
     var nWidth=800;
     var n=($(window).width());
     if(n<nWidth)nWidth=n;
-
-    tc2(title,url, nWidth, 450)
+    var index=tc2(title,url, nWidth, 450);
+    // alert("index="+index);
+    return index;
 }
 //显示窗体，宽度不超过800    20220210  不显示底部的确认和取消按钮
 function showwin2(title,url){

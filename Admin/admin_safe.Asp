@@ -10,16 +10,38 @@ if session("adminid")<>"" then
 		response.Redirect("/admin/login.asp?1")
 	end if
 
-'cookies判断'
+'cookies判断'  
 elseif getCookie("adminuser")<>"" and getCookie("adminpass")<>"" then  
-	userRs.open "select * from " & db_PREFIX & "Admin Where userName='"& getCookie("adminuser") &"' and pwd='"& getCookie("adminpass") &"'" ,conn,1,3 
+	userRs.open "select * from " & db_PREFIX & "Admin Where userName='"& getCookie("adminuser") &"'" ,conn,1,3 
 	if userRs.eof then 
 		response.Redirect("/admin/login.asp?2")
-	else
+	else 
+        '密码不正确'
+        if getCookie("adminpass")<>mymd5(userrs("pwd")&userrs("updatetime")) then
+            ' call echo("cookie adminpass",getCookie("adminpass"))
+            ' call echo("cookie updatetime",getCookie("updatetime"))
+            ' call echo(" userrs updatetime",userrs("updatetime"))
+            ' call echo(" pwd",userrs("pwd"))
+            ' call eerr(getCookie("adminpass"),mymd5(userrs("pwd") & cstr(userrs("updatetime"))))
+
+            response.Redirect("/admin/login.asp?2-2")
+            response.end()
+        end if
+
 		session("adminid")=userRs("id")'追加，好判断'
 	end if
 else
 	response.Redirect("/admin/login.asp?0")
+end if
+
+'开启后台唯一登录20230316'
+if isUniquelogin then
+    if userrs("upip")<>getip() and userrs("upip")<>"*" then
+        session("adminid")=""
+        call removeCookie("adminuser")
+        call removeCookie("adminpass")
+        call eerr("提示","账号被IP("& userrs("upip") &")登录，你已退出。<a href='login.asp'>点击重新登录</a>")
+    end if
 end if
 
 '检测权限 返回true或false   20220604'

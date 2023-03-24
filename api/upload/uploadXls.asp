@@ -49,6 +49,7 @@ set request2=new UpLoadClass
 				file_msg=Error2Info(request2.form(formName&"_Err"))
 				
 		
+				if file_url<>"" then file_url=file_url&","
 				'显示目标文件路径与文件名
 				file_url=file_url&"{""src"":""/UploadFiles/xls/"&formPath&request2.form(formName)&""",""title"":"""& request2.form(formName) &"""}"
 		
@@ -65,7 +66,7 @@ set request2=new UpLoadClass
 		
 	
 			
-	str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": "&file_url&"}"
+	str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": ["&file_url&"]}"
 			
 	
 

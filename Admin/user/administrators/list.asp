@@ -13,13 +13,16 @@ If Request("act") = "userlist" Then
     sql = "select * from ["& db_PREFIX &"admin]" 
 
     If Request("date_min") <> "" Then
-      sql = sql & IIF(instr(sql," where ")=false," where "," and ") & "datediff('d',createTime,#" & Request("date_min") & "#)<=0" 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then
-      sql = sql & IIF(instr(sql," where ")=false," where "," and ") & "datediff('d',createTime,#" & Request("date_max") & "#)>=0" 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If 
-    If Request("key") <> "" Then
-      sql =  sql & IIF(instr(sql," where ")=false," where "," and ") & "[username] like '%" & Request("key") & "%' " 
+     If Request("key") <> "" Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql =sql & IIF(instr(sql," where ")=false," where "," and ") & "[username] like '%" & Request("key") & "%' " 
       '分级搜索'
      idlist=getXiyuetaColumnSearchIdList(request("key"))
      if idlist<>"" then sql=sql &" or grouping in("& idlist & ")  "

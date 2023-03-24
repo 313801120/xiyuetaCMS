@@ -250,6 +250,8 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
                             getFieldAlt_conn = "Text" 
                         case "7"
                             getFieldAlt_conn = "DateTime" 
+                        case "135"  'sqlserver里135也是时间类型'
+                            getFieldAlt_conn = "DateTime" 
                         case "3"
                             getFieldAlt_conn = "Int" 
                         case "11"
@@ -265,7 +267,7 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
             set fld = nothing 
         next : rs.close 
 end function
-'获得指定数据名柄里表列表
+'获得指定数据库 里表列表
 function getTableList_Conn(conn) 
     dim s, c, rs 
     set rs = conn.openSchema(20)
@@ -288,7 +290,7 @@ end function
 function getFieldList(tableName)
     getFieldList = getFieldList_conn(tableName,conn)
 end function 
-'获得自定义句枸表字段列表20171208
+'获得自定义表字段列表20171208
 function getFieldList_conn(tableName,customConn)
     dim fn, c, fld, n,tempRs
 	Set tempRs = CreateObject("Adodb.RecordSet")
@@ -631,7 +633,7 @@ function getFieldValue(tableName, fieldName, addSql)
             getFieldValue = rs(fieldName) 
         end if : rs.close 
 end function
-'获得某字段内容 20150129  例：getFieldValue("WebSite","WebTitle","")     '获得网站标题
+'获得某字段全部循环内容 20150129  例：getFieldValue("WebSite","WebTitle","")     '获得网站标题
 function getFieldValueList(sql, fieldName)
     dim rs,s,c
     call OpenConn() 
@@ -647,7 +649,7 @@ function getFieldValueList(sql, fieldName)
 end function
 
 
-'获得指定字段内容　指定Conn对象
+'获得指定数据库句柄字段内容　指定Conn对象
 function getConnFieldValue(objConn, tableName, fieldName, addSql)
     on error resume next 
     dim rs 
@@ -777,10 +779,13 @@ end function
 
 
 'Access数据库转成SQLServer生成SQL,再放到php里生成就可以20220425'
+'例子：   accessToSQLServer("","admin")
 function accessToSQLServer(clear_db_PREFIX,findTableList)
    dim content,splstr,i,tableName,fieldList,isDXX,splxx,fieldName,c,fieldAlt,cleanTableName,focusId
    dim fieldDefaultVal,j,sqlTableName
    content=getTableList_Conn(conn)
+   content=lcase(content)   '表全部转小写 20230311'
+   findTableList=lcase(findTableList)   '查找表列表转小写'
    splstr=split(content,vbcrlf)
    call echo("content",content)
    for i=0 to ubound(splstr)

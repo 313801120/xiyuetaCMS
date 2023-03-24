@@ -93,6 +93,10 @@ If Request("act") = "list" Then
                 nLen=instrrev(spider,"+")
                 if nLen>0 then
                     spider=mid(spider,nLen+1)
+
+                    if spider="spider" and instr(rs("incomingroad"),"sogou.com")>0 then
+                        spider="sogou"
+                    end if
                 end if
             else
                 if instr(rs("incomingroad"),"AhrefsBot")>0 then
@@ -158,34 +162,13 @@ elseif request("act")="isthrough" then
     response.write "{""info"": ""设置成功"",""status"": ""y""}"
     Response.end()
 
-'更新文章标签'
-elseif request("act")="updateTags" then 
+'清空数据'
+elseif request("act")="cleardata" then 
     dim splstr,s
-    conn.execute"update ["& db_PREFIX &"iislog] set isthrough=0"  '统计数为0'
+    conn.execute"delete from ["& db_PREFIX &"iislog]"   
+ 
 
-    rs.open"select * from ["& db_PREFIX &"articleDetail] where tags<>''" ,conn,1,1
-    for i=1 to 500
-        if rs.eof then exit for
-        tags=phptrim(rs("tags"))
-        call echo("tags",tags)
-        splstr=split(tags,",")
-        for each s in splstr
-            if s<>"" then
-                rsx.open"select * from ["& db_PREFIX &"iislog] where title='"& s &"'" ,conn,1,3
-                if rsx.eof then
-                    rsx.addnew
-                    rsx("count")=1
-                    rsx("title")=s
-                    rsx("isthrough")=1
-                else
-                    rsx("count")=rsx("count")+1
-                end if
-                rsx.update:rsx.close
-            end if
-        next
-    rs.movenext:next 
-
-    call die("操作完成" & rs.RecordCount)
+    call die("清空数据完成")
     Response.end()
 End If 
 
@@ -253,8 +236,10 @@ End If
     <div class="layui-inline"> 
         <select name="searchField">
         <option value="incomingroad">选择搜索字段</option> 
+        <option value="url">URL</option>  
         <option value="incomingroad">来路</option> 
         <option value="statuscode">状态码</option>  
+        <option value="userip">用户IP</option>  
         </select> 
     </div>
 
@@ -272,6 +257,7 @@ End If
   <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
           <button class="layui-btn" data-type="batchdel">删除</button> 
   <button class="layui-btn" id="importXls">导入</button> 
+  <button class="layui-btn" onclick="cleardata()">清空数据</button>
 
 </div>
  
@@ -283,6 +269,27 @@ End If
 <table class="layui-hide" id="demo" lay-filter="demo"></table>
  
 <script> 
+function cleardata(){
+     layer.confirm('确定要清空数据吗？', function(index) {   
+        layer.close(index);
+        var winObj=layer.open({
+          title: '清空数据'
+          ,content: '正在清空数据，请等待！'
+        }); 
+
+        $.ajax({
+            type: "POST",
+            cache: true,
+            // dataType: "json",
+            url: "?act=cleardata", 
+            success: function(data) {
+                table.reload('testReload');
+                layer.msg('清空数据完成！');
+            }
+        });
+
+    });
+}
 layui.use(['form','table','upload'],function(){
     var form = layui.form
         table = layui.table; 
@@ -293,9 +300,9 @@ layui.use(['form','table','upload'],function(){
         url: '/api/upload/uploadIISLog.asp',
         exts: 'log', //只允许上传log文件
         done: function(res) {
-            // alert("res.data.src="+res.data.src)
+            // alert("res.data[0].src="+res.data[0].src)
               $.get('handleIISLog.asp?act=send', {
-                    logPath:res.data.src
+                    logPath:res.data[0].src
                 }, function (strData) {
                     table.reload('testReload');
                     layer.msg(strData);

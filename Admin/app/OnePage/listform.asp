@@ -110,7 +110,7 @@ layui.config({
         elem: '#layuiadmin-upload-useradmin',
         url: '/api/upload/',
         done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data.src)
+            $(this.item).prev("div").children("input").val(res.data[0].src)
         }
     });
 
@@ -118,7 +118,7 @@ layui.config({
         elem: '#layuiadmin-upload-useradmin2',
         url: '/api/upload/',
         done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data.src)
+            $(this.item).prev("div").children("input").val(res.data[0].src)
         }
     });
 

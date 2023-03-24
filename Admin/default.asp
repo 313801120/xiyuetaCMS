@@ -1,6 +1,20 @@
 <!--#include file="../inc/Config.asp"-->
 <!--#Include File = "admin_function.asp"-->
 <!--#Include File = "admin_safe.Asp"-->
+<%
+'退出登录'
+if request("act")="outLogin" then 
+    session("adminid")=""
+    call removeCookie("adminuser")
+    call removeCookie("adminpass")   
+    call removeCookie("pwd")   '暂留'
+    call removeCookie("updatetime")  '暂留' 
+
+    userRs("loginstatus")=0   '登录状态为0，未登录'
+    userRs.update
+    response.redirect("login.asp?out")
+end if
+%>
 <!DOCTYPE html>
 <html>
 
@@ -81,7 +95,7 @@ end if
                             <dd><a lay-href="set/user/info.asp">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.asp">修改密码</a></dd>
                             <hr>
-                            <dd style="text-align: center;"><a href="login.asp?act=outLogin">退出</a></dd>
+                            <dd style="text-align: center;"><a href="?act=outLogin">退出</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-hide-xs" lay-unselect>

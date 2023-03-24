@@ -292,7 +292,7 @@ function getHtmlToJsInput(byVal c)
     getHtmlToJsInput=c
 end function
 '获得服务器上版本'
-function getServerVersion()
+function getServerVersion() 
 	doevents
 	dim n
 	call openconn()
@@ -319,4 +319,46 @@ function handleTelHide(tel)
 	end if
 	handleTelHide=tempTel
 end function
+'显示大类里指定位置的时间 20220905'
+function getTimeList(didList,timelist,focus)
+	dim splstr,splTime,splxx,did,s,c,nLen
+	didList=didList & ""
+	timelist="," & timelist & "|"
+	splstr=split(didList,", ")
+	for each did in splstr
+		if did<>"" then
+			nLen=instr(timelist,","& did &"|")
+			if nLen>0 then
+				s=mid(timelist,nLen+len(","& did &"|"))
+				splxx=split(s,"|")
+				c=c & did & "("&splxx(focus) &")"
+			end if
+		end if
+	next
+	getTimeList=c
+end function
+
+
+'获得字段的中文标题20230315'
+function getFieldAlt(byval fieldName,byval fieldAlt)
+  dim configNameList,splstr,splxx,s 
+  fieldName=phptrim(lcase(fieldName))
+  fieldAlt=phptrim(fieldAlt)
+  if fieldAlt<>"" then  
+    getFieldAlt=fieldAlt
+    exit function
+  end if
+  configNameList="userid|用户ID,title|标题,ip|IP地址,createtime|创建时间,updatetime|修改时间,isthrough|审核,bodycontent|备注,id|ID,ntype|证书类型,education|学历,address|常住地,tel|联系电话,socialsecurity|社保,profession|专业,onregistered|非注册类证书,safetyclass|安全类,guestname|姓名,idcard|身份证号,sex|性别,registrationtype|注册类型,issuetime|资格证签发时间,expirydate|证书有效截止时间,continuingeducation|注册专业近三年内继续教育情况,receiptprice|收证价格,referralfee|介绍费(元),contractperiod|收证价格,certificatepurpose|证书用途,inputselect|录入,adminid|添加者,performance|业绩,nstate|审核状态,appendix|附件,servicecharge|业务办理费,redheaderfile|是否带红头文件,payment|公司付款,personalpayment|个人付款,signingdate|合同截止日期,companyname|企业名称,companycontact|企业联络人,companytel|企业联络人电话,companyaddress|企业注册地,securityexam|安全类考试,certificatestatus|证书状态,viewidlist|已查看用户,classname|分类名称,certificatereminderday|资格证到期提醒天数,signingdatereminderday|签合同到期提醒天数,bcertificatedate|安全B证截止时间,bcertificatereminderday|安全B证截止时间到期提醒天数,companysocialsecurity|公司是否交社保,auditadminid|审核者,outadminid|出库者,reviewtime|评审时间,jobtitle|职称,timelist|多个时间组合,invoicetype|发票类型,denomination|开票面额,invoicecount|开票张数,ispayment|是否付款,issigncontract|是否签合同,isbilling|是否开票,company|公司名称,companyadminid|公司信息添加者,selectdenomination|开票面额,cumulativeamount|初始累计金额,billingcompany|开票企业,invoiceamount|开票金额,newcompanyid|新公司ID,companycontractperiod|公司签约年限,companyselectcontractperiod|签约年限选择,certificatepricexval|出证价格X值,certificateprice|出证价格,stype|类型,nvalue|设置值,username|用户账号,weburl|网址,tickettime|ticket时间,age|年龄,name|名称,"
+  splstr=split(configNameList,",")
+  for each s in splstr
+    if instr(s,"|")>0 then
+      splxx=split(s,"|")
+      if splxx(0)=fieldName then
+        getFieldAlt=phptrim(splxx(1))
+        exit function
+      end if
+    end if
+  next
+end function
+
 %>

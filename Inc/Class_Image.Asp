@@ -11,6 +11,11 @@
 'Call Rw(HandleShowImg("UploadFiles/Soso.gif",100,60,"高"))
 'Call Rw(HandleShowImg("UploadFiles/Soso.gif",100,60,"宽"))
 '获得图片类型    getFileContentType("/aa.jpg")
+
+'类使用方法20230321
+'dim objGPS
+'Set objGPS = new GPS
+'call die(objGPS.getImageWidth(handlePath("1.bmp"))
  
 'psd不行，等加
 class GPS
@@ -24,6 +29,16 @@ class GPS
     sub class_Terminate()
         set aso = nothing 
     end sub 
+
+    '获得图片宽 20230321'
+    function getImageWidth(filespec)
+       getImageWidth=getImageSize(filespec)(1)
+    end function
+    '获得图片高 20230311'
+    function getImageHeight(filespec)
+       getImageHeight=getImageSize(filespec)(2)
+    end function
+
 
     '///以下是调用代码/// 获得图片文件大小
     function getImageSize(filespec)
@@ -87,7 +102,7 @@ class GPS
         dim ret(3) 
         'call echo("filespec",filespec)
         bFlag = aso.read(3) 
-        Call Echo("bFlag1",Hex(binVal(bFlag)))
+        ' Call Echo("bFlag1",Hex(binVal(bFlag)))
         select case hex(binVal(bFlag))
             case "4E5089" 
                 getImageType="png"
