@@ -56,7 +56,7 @@ rs.open"select * from " & db_PREFIX & "WebSite",conn,3,1
     padding: 0.2em 0.6em 0.3em;
     font-size: 75%;
     font-weight: 700;
-    line-height: 1;
+    line-height: 1; 
     color: #fff;
     text-align: center;
     white-space: nowrap;
@@ -308,7 +308,7 @@ function closeimg(){
         layedit.set({
             //暴露layupload参数设置接口 --详细查看layupload参数说明
             uploadImage: {
-                url: '/api/upload/' //上传接口url
+                url: '/api/upload/?act=one' //上传接口url
                     ,
                 type: 'post' //默认post 
             }

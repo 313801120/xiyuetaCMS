@@ -580,6 +580,7 @@ function jsonCL(c)
     'c=chineseToUnicode2(c)'汉字转uni编码第二种，网站也可以显示  如 "  ==  &#34;           20220722  html字符实体#34或quot  一般用这个
     if isnul(c) then c=""
     c=replace(c,"""","&quot;")
+    c=replace(c,"\","\\") 
     c=replace(replace(c,chr(10),""),chr(13),"")
 
     jsonCL=inputCL(c)

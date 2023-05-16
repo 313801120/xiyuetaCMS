@@ -124,9 +124,9 @@ If Request("act") = "list" Then
                 end if
                 
             end if
+ 
 
-
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""browsetime"":""" &rs("browsetime") & """,""url"":""" &rs("url") & """,""method"":""" &rs("method") & """,""urlparameter"":""" &rs("urlparameter") & """,""port"":""" &rs("port") & """,""username"":""" &rs("username") & """,""userip"":""" &rs("userip") & """,""useripaddr"":""" &look_ip(rs("userip")) & """,""incomingroad"":""" &rs("incomingroad") & """,""statuscode"":""" &rs("statuscode") & """,""bottomstatuscode"":""" &rs("bottomstatuscode") & """,""win32statuscode"":""" &rs("win32statuscode") & """,""handletime"":""" &rs("handletime") & """,""filename"":""" &rs("filename") & """,""filetype"":""" &rs("filetype") & """,""spider"":""" & spider & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""browsetime"":""" &rs("browsetime") & """,""url"":""" & jsonCL(rs("url")) & """,""method"":""" & jsonCL(rs("method")) & """,""urlparameter"":""" &jsonCL(rs("urlparameter")) & """,""port"":""" &rs("port") & """,""username"":""" & jsonCL(rs("username")) & """,""userip"":""" &rs("userip") & """,""useripaddr"":""" &ipToAddr2022(rs("userip"),"all") & """,""incomingroad"":""" & jsonCL(rs("incomingroad")) & """,""statuscode"":""" &rs("statuscode") & """,""bottomstatuscode"":""" &rs("bottomstatuscode") & """,""win32statuscode"":""" &rs("win32statuscode") & """,""handletime"":""" &rs("handletime") & """,""filename"":""" & jsonCL(rs("filename")) & """,""filetype"":""" &rs("filetype") & """,""spider"":""" & spider & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
     
  
 
@@ -180,9 +180,13 @@ End If
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>IIS日志管理</title>
-<script type="text/javascript" src="../../js/jquery.js"></script>
- <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
+<script type="text/javascript" src="../../js/jquery.js"></script><link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
+<style>
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
+    top: 4px;
+}
+</style>
 </head>
 <body style="padding:10px 6px 30px 6px;background: #FFF">  
   
@@ -257,7 +261,7 @@ End If
   <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
           <button class="layui-btn" data-type="batchdel">删除</button> 
   <button class="layui-btn" id="importXls">导入</button> 
-  <button class="layui-btn" onclick="cleardata()">清空数据</button>
+  <button class="layui-btn" onclick="cleardata()">清空数据</button> 
 
 </div>
  
@@ -329,7 +333,7 @@ layui.use(['form','table','upload'],function(){
                 , { field: 'port', title: '端口', width:80, sort: true }
                 , { field: 'username', title: '用户名', width:100, sort: true }
                 , { field: 'userip', title: '用户IP', width:140, sort: true }
-                , { field: 'useripaddr', title: '用户IP地址', width:140, sort: true }
+                , { field: 'useripaddr', title: '用户IP地址', width:240, sort: true }
                 , { field: 'incomingroad', title: '来路', width:120, sort: true }
                 , { field: 'statuscode', title: '状态码', width:90, sort: true }
                 , { field: 'bottomstatuscode', title: '底层状态码', width:130, sort: true }

@@ -122,9 +122,13 @@ End If
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>部件列表</title>
-<script type="text/javascript" src="../../js/jquery.js"></script>
- <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
+<script type="text/javascript" src="../../js/jquery.js"></script><link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
+<style>
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
+    top: 4px;
+}
+</style>
 </head>
 <body style="padding:10px 6px 30px 6px;background: #FFF">  
   

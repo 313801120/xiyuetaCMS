@@ -32,6 +32,7 @@
 <!--#Include file = "ip.Asp"-->   
 <!--#Include file = "function.Asp"-->
 <!--#Include file = "PinYin.Asp"-->
+<!--#Include file = "Class_image.asp"-->
 <!--#Include file = "member.asp"-->
 <%  
 server.scriptTimeout = 9999                                                     '超时
@@ -50,8 +51,9 @@ dim pubTimer : pubTimer = now()                                                 
  
 'Note:开发程序原则，能简单，绝对不复杂，能修改html的，绝对不修改asp，能傻瓜式，绝对不要用脑(20160121)
 dim WEBCOLUMNTYPE : WEBCOLUMNTYPE = "首页|home,文本|text,产品|product,新闻|news,视频|video,下载|down,案例|case,留言|guestbook,反馈|feedback,招聘|job,搜索|search" 
+dim adminDir : adminDir = "/admin/"                                               '后台目录
 dim WEB_VIEWURL : WEB_VIEWURL = "/default.asp"                                   '前台显示
-dim WEB_ADMINURL : WEB_ADMINURL = "/admin/default.asp"                                  '后台显示
+dim WEB_ADMINURL : WEB_ADMINURL = adminDir & "default.asp"                                  '后台显示
 dim EDITORTYPE : EDITORTYPE = "asp"                                             '程序类型，是ASP,或PHP,或jSP,或.NET
 dim webDir : webDir = "" 
 MDBPath = "/data\data.mdb" 
@@ -65,9 +67,8 @@ dim sqlServerDatabaseName : sqlServerDatabaseName = "webdata"                   
 dim db_PREFIX : db_PREFIX = "xy_"                                               '表前缀
 
 dim countTi:countTi=200 '默认显示题数
-dim adminDir : adminDir = "/admin/"                                               '后台目录
 dim WEB_CACHEFile : WEB_CACHEFile = "[adminDir]/[EDITORTYPE]cachedata.txt" '缓冲文件
-dim isLoginIPAllow:isLoginIPAllow=false'是否开启登录后台管理IP限制 20220627
+dim isLoginIPAllow:isLoginIPAllow=true  '是否开启登录后台管理IP限制 20220627
 dim isUniquelogin:isUniquelogin=true  '开启后台唯一登录 20230316
 dim version:version="V1.3"       '(20230311升级到1.3)'
 
@@ -120,13 +121,13 @@ end function
 ' if webDoMain()="http://demo.xiyueta.com" then
 
 
-if instr(webDoMain(),"xiyueta.com")>0 then
-	'不同IP显示不同内容'
-	if getIP()<>"127.0.0.1" then
-		MDBPath = "/data/data_" & getIP() &".mdb" 
-		if checkFile(MDBPath)=false then
-			call copyFile("/data/data.mdb",MDBPath)
-		end if
-	end if
-end if
+' if instr(webDoMain(),"xiyueta.com")>0 then
+' 	'不同IP显示不同内容'
+' 	if getIP()<>"127.0.0.1" then
+' 		MDBPath = "/data/data_" & getIP() &".mdb" 
+' 		if checkFile(MDBPath)=false then
+' 			call copyFile("/data/data.mdb",MDBPath)
+' 		end if
+' 	end if
+' end if
 %> 

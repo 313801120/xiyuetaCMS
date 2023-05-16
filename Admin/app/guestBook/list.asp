@@ -72,8 +72,9 @@ If Request("act") = "list" Then
     rs.Close 
     Response.end()
 
+'删除多个ID'
 elseif request("act")="del" then
-  conn.execute"delete from ["& db_PREFIX &"GuestBook] where id="&request("id")
+  conn.execute"delete from ["& db_PREFIX &"GuestBook] where id in("&request("id")&")"
   response.write "{""info"": ""删除成功"",""status"": ""y""}"
   Response.end()
 '在线修改
@@ -104,9 +105,13 @@ End If
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>留言管理</title>
-<script type="text/javascript" src="../../js/jquery.js"></script>
- <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
+<script type="text/javascript" src="../../js/jquery.js"></script><link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
+<style>
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
+    top: 4px;
+}
+</style>
 </head>
 <body style="padding:10px 6px 30px 6px;background: #FFF">  
   
@@ -134,6 +139,7 @@ End If
       
   <button class="layui-btn" data-type="reload">搜索</button>
   <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
+          <button class="layui-btn" data-type="batchdel">删除</button>
 </div>
  
 
@@ -154,6 +160,7 @@ layui.use('table', function() {
         cols: [
             [
 
+                {type: 'checkbox', fixed: 'left'},
                 { field: 'i', title: '序列', width: 70, sort: false }
                 , { field: 'guestname', title: '姓名', width: 100, sort: true }
                 , { field: 'tel', title: '电话', width: 130, sort: true }
@@ -189,6 +196,38 @@ layui.use('table', function() {
                         ,key: $('input[name=key]').val()
                         ,parentid: $('select[name=parentid]').val()
                     }
+
+                });
+            },batchdel: function(){
+                //testReload为table渲染时改变的 id: 'testReload'
+                var checkStatus = table.checkStatus('testReload')
+                ,checkData = checkStatus.data; //得到选中的数据
+                
+                if(checkData.length === 0){
+                   return layer.msg('请选择数据');
+                }
+                var idlist='';
+                for(var i=0;i<checkData.length;i++){
+                    if(idlist!='')idlist+=',';
+                    idlist+=checkData[i].id;
+                }              
+                layer.confirm('确定删除吗？', function(index) {
+                 
+                     $.ajax({
+                        type: "POST",
+                        cache: true,
+                        dataType: "json",
+                        url: "?act=del",
+                        data: { "id": idlist },
+                        success: function(data) {
+                            switch (data.status) {
+                                case "y":
+                                    table.reload('testReload');
+                                    layer.msg('已删除');
+                                    break;
+                            }
+                        }
+                    });
 
                 });
             }

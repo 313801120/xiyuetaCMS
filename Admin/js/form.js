@@ -74,3 +74,29 @@ function getStrArray(sList, didFocus,nFocus) {
 // console.log(sList)
 // sList=updateStrArray(sList, "建安B", 1, "11111"); 
 // console.log(sList)
+
+
+//处理证书的大类时间20220825
+function handleZhenShuDidTime(didlist,timelist){
+  var c='';
+  var array=didlist.split(", ")
+  array.forEach(function(did,i) {
+    var time1=getStrArray(timelist, did, 1);
+    var time2=getStrArray(timelist, did, 2); 
+    if(c!="")c+="<hr>"; 
+    c+='证书：'+did + "<br>资格证签发时间："+time1+"<br>证书有效截止时间："+time2
+  });
+  document.write(c)
+} 
+//处理安全类的大类时间20220825
+function handleAnquanDidTime(didlist,timelist){
+  var c='';
+  var array=didlist.split(", ")
+  array.forEach(function(did,i) {
+    var time1=getStrArray(timelist, did, 3); 
+    if(c!="")c+="<hr>"; 
+    c+='安全类：'+did + "<br>安全B证截止时间："+time1 
+  });
+  document.write(c)
+}
+

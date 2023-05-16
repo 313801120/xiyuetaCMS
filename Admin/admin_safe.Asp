@@ -1,5 +1,4 @@
-﻿<%
- 
+﻿<% 
 '全局定义 管理账号验证 
 dim userRs:Set userRs = CreateObject("Adodb.RecordSet")
 call openconn()  
@@ -7,14 +6,14 @@ call openconn()
 if session("adminid")<>"" then 
 	userRs.open "select * from " & db_PREFIX & "admin Where id=" & session("adminid") ,conn,1,3
 	if userRs.eof then 
-		response.Redirect("/admin/login.asp?1")
+		response.Redirect(adminDir &"login.asp?1")
 	end if
 
 'cookies判断'  
 elseif getCookie("adminuser")<>"" and getCookie("adminpass")<>"" then  
 	userRs.open "select * from " & db_PREFIX & "Admin Where userName='"& getCookie("adminuser") &"'" ,conn,1,3 
 	if userRs.eof then 
-		response.Redirect("/admin/login.asp?2")
+		response.Redirect(adminDir &"login.asp?2")
 	else 
         '密码不正确'
         if getCookie("adminpass")<>mymd5(userrs("pwd")&userrs("updatetime")) then
@@ -24,14 +23,14 @@ elseif getCookie("adminuser")<>"" and getCookie("adminpass")<>"" then
             ' call echo(" pwd",userrs("pwd"))
             ' call eerr(getCookie("adminpass"),mymd5(userrs("pwd") & cstr(userrs("updatetime"))))
 
-            response.Redirect("/admin/login.asp?2-2")
+            response.Redirect(adminDir &"login.asp?2-2")
             response.end()
         end if
 
 		session("adminid")=userRs("id")'追加，好判断'
 	end if
 else
-	response.Redirect("/admin/login.asp?0")
+	response.Redirect(adminDir &"login.asp?0")
 end if
 
 '开启后台唯一登录20230316'
@@ -40,7 +39,7 @@ if isUniquelogin then
         session("adminid")=""
         call removeCookie("adminuser")
         call removeCookie("adminpass")
-        call eerr("提示","账号被IP("& userrs("upip") &")登录，你已退出。<a href='login.asp'>点击重新登录</a>")
+        call eerr("提示","账号被IP("& userrs("upip") &")登录，你已退出。<a href='"& adminDir &"login.asp?3'>点击重新登录</a>")
     end if
 end if
 

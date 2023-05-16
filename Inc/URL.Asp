@@ -599,7 +599,7 @@ function hanldeStyleBackgroundUrl(byval url, styleStart, styleEnd)
     url = phpTrim(url)                                                              '清除两边空格
     lCaseUrl = lcase(url) 
     url = replace(url, "\", "/")                                                    '把网址\转/符号
-    if(instr(url, "background") > 0 or instr(url, "background-image") > 0) and instr(url, "(") > 0 and instr(url, ")") > 0 then
+    if (instr(url, "background") > 0 or instr(url, "background-image") > 0) and instr(url, "(") > 0 and instr(url, ")") > 0 then
         styleStart = mid(url, 1, instr(url, "(")) 
         styleEnd = mid(url, instr(url, ")")) 
         url = mid(url, len(styleStart) + 1) 
@@ -1020,7 +1020,7 @@ function getUrlAddToParam(byVal url, byVal addToUrl, sType)
             urlFileName = mid(addToUrl, 1, inStr(addToUrl, "?") - 1) 
         'Call Echo(AddToUrl,UrlFileName)
         end if 
-    elseIf(LCase(sType) <> "delete" or LCase(sType) <> "del") then
+    elseIf (LCase(sType) <> "delete" or LCase(sType) <> "del") then
         content = urlParam & "&" & addToUrl 
     end if 
 

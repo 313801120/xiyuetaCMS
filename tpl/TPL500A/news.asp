@@ -35,15 +35,15 @@
    |                                          |
    |    Powered By xiyueta - www.xiyueta.com  |
    |    QQ:313801120                          |
-   |    Creation:2023-03-05                   |
-   |    xiyuetaCMS V1.2                       |
+   |    Creation:2023-05-16                   |
+   |    xiyuetaCMS V1.3                       |
    |                                          |
    +----------------------------oOO-----------+
                      |__|__|
                       || ||
                      ooO Ooo
 -->
-<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2023-03-05                   |\n   |    xiyuetaCMS V1.2                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
+<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2023-05-16                   |\n   |    xiyuetaCMS V1.3                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
 <!--#Include file = "tpl/topnav_005_Default.asp"-->
 <!--#Include file = "tpl/banner_002.asp"-->
 <!--#Include file = "tpl/search_003_Default.asp"-->

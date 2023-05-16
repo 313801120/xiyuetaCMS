@@ -1,4 +1,14 @@
 ﻿<%
+function myFormatNumber(n)
+    myFormatNumber=numberBeforeAddZero(formatnumber(price,2))
+end function
+'数字前面加零 20230427'
+function numberBeforeAddZero(n) 
+    if left(cstr(n),1)="." then
+        n=0 & n
+    end if  
+    numberBeforeAddZero=n
+end function
 '求两数比分比方法
 'dim a,b,c
 'a=1002
@@ -6,7 +16,7 @@
 'c=(a+b)/100
 'response.Write(a/c)
 
-'身份证年月时隐藏为*代替 20220605'
+'身份证年月时隐藏为*代替 20220605' 
 function idcardYMDHide(s)
   idcardYMDHide=mid(s,1,10) & "****" & mid(s,15)
 end function
@@ -285,6 +295,17 @@ function getRnd(byVal nCount)
         c = c & charS 
     next 
     getRnd = c 
+end function 
+'call echo("getRndTel",getRndTel(11))
+'//生成随机手机号20230421,如 138 & getRndTel(8)
+function getRndTel(byVal nCount)
+    randomize 
+    dim charS, i, c 
+    for i = 1 to nCount
+        charS = chrW((57 - 48) * rnd + 48)                                                  '0~9
+        c = c & charS 
+    next 
+    getRndTel = c 
 end function 
 
 '获得随机数，仿js(20150826)
@@ -698,7 +719,7 @@ function getRandomPhoneNumber(nCount)
     j = 1 
     do while j < nCount
         randomize 
-        do while len(rndnum) < 9                                                        '产生随机数的个数
+        do while len(rndnum) < 9                                                        '产生随机数的个数 
             n = cint((57 - 48) * rnd + 48)
             rndnum = rndnum & chr(n)
         loop 
@@ -865,5 +886,31 @@ function myFormatnumber(n,nWei)
     end if
     myFormatnumber=nNew
 end function
+
+
+
+
+'获得汉字文本部分20230509'
+function getHanZiTxt(txt)
+    dim s,i,c
+    for i=1 to len(txt)
+        s=mid(txt,i,1)
+        ' call echo(i, s)
+        if isChinese(s) then
+            c=c & s
+        end if
+    next
+    getHanZiTxt=c
+end function
+'判断是否为汉字20230509'
+Function isChinese(str)
+  Dim regEx, result
+  Set regEx = New RegExp
+  regEx.Pattern = "^[\u4e00-\u9fa5]+$"
+  regEx.IgnoreCase = True
+  result = regEx.Test(str)
+  Set regEx = Nothing
+  isChinese = result
+End Function
 %>   
 

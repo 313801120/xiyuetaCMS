@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,expiredatetime,sex,department,idcard,email,dateOfBirth,tel,address,regtime,regip,loginip,logintime,lastloginip,lastlogintime
+dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,expiredatetime,sex,department,idcard,email,dateOfBirth,tel,address,regtime,regip,loginip,logintime,lastloginip,lastlogintime,province,city
 dim money,lottery
 id=request("id")
 username=request("username")              '用户名'
@@ -17,6 +17,8 @@ tel=request("tel")                    '手机
 address=request("address")                    '联系地址
 money=request("money")                    '金币
 lottery=request("lottery")                    '抽奖次数
+province=request("province")                    'province
+city=request("city")                    'city
 
 isthrough=request("isthrough")            '审核'
 isthrough=IIF(isthrough="on",1,0)   '是否审核处理下'
@@ -65,6 +67,8 @@ if request("act")="save" then
       rs("address")=address
       rs("money")=money
       rs("lottery")=lottery
+      rs("province")=province
+      rs("city")=city
       if pwd<>"" then rs("pwd")=pwd
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
@@ -96,6 +100,10 @@ elseif id<>"" then
     loginip=rs("loginip")
     lastlogintime=rs("lastlogintime")
     lastloginip=rs("lastloginip")
+
+    province=rs("province")
+    city=rs("city")
+     
   end if
 end if
  
@@ -213,14 +221,27 @@ end if
         <input type="text" name="money" lay-verify="number" placeholder="请输入金币" autocomplete="off" class="layui-input" value="<%=money%>">
       </div>
     </div>
+
     <div class="layui-form-item">
       <label class="layui-form-label">抽奖次数</label>
       <div class="layui-input-inline">
         <input type="text" name="lottery" lay-verify="number" placeholder="请输入抽奖次数" autocomplete="off" class="layui-input" value="<%=lottery%>">
       </div>
+    </div>   -
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">省</label>
+      <div class="layui-input-inline">
+        <input type="text" name="province"   placeholder="请输入省" autocomplete="off" class="layui-input" value="<%=province%>">
+      </div>
     </div>
 
-
+    <div class="layui-form-item">
+      <label class="layui-form-label">市</label>
+      <div class="layui-input-inline">
+        <input type="text" name="city"   placeholder="请输入市" autocomplete="off" class="layui-input" value="<%=city%>">
+      </div>
+    </div> 
 
              <div class="layui-row   layui-form-item">
                 <div class="layui-col-xs6">

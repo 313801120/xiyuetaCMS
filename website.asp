@@ -1,21 +1,21 @@
 <%
 dim uDomain,uTitle,dataPrefix,myDomain,splDiQu,cDiQu,nI,diqu
 '以域名来区分  如  beijin.xiyueta.com'
-' myDomain="xiyueta.com"
-' uDomain=request.serverVariables("SERVER_NAME")
-' if instr(uDomain,"myxyt.com")>0 then uDomain="myxyt.com"	'这是本地'
-' dataPrefix=replace(uDomain,myDomain,"")
-' 'call echo("dataPrefix",dataPrefix):doevents
-' if dataPrefix<>"" then uTitle=getSheShiToCn(mid(dataPrefix,1,len(dataPrefix)-1))
+myDomain="xiyuetatest.top"
+uDomain=request.serverVariables("SERVER_NAME")
+if instr(uDomain,"myxyt.com")>0 then uDomain="myxyt.com"	'这是本地'
+dataPrefix=replace(uDomain,myDomain,"")
+'call echo("dataPrefix",dataPrefix):doevents
+if dataPrefix<>"" then uTitle=getSheShiToCn(mid(dataPrefix,1,len(dataPrefix)-1))
 	
-' 'call echo("uTitle",uTitle):doevents
-' if uTitle="" then
-' 	if dataPrefix="xiyueta.com" or dataPrefix="myxyt.com" or dataPrefix="" or dataPrefix="web0427." or dataPrefix="localhost" or dataPrefix="www." then
-' 		dataPrefix=""
-' 	else
-' 		call die(uDomain & "网站正在制作中。。。" & dataPrefix)
-' 	end if
-' end if
+'call echo("uTitle",uTitle):doevents
+if uTitle="" then
+	if dataPrefix="xiyueta.com" or dataPrefix="myxyt.com" or dataPrefix="" or dataPrefix="web0427." or dataPrefix="localhost" or dataPrefix="a5" then
+		dataPrefix=""
+	else
+		call die(uDomain & "网站正在制作中。。。" & dataPrefix)
+	end if
+end if
 
 diqu=request("diqu")
 if diqu<>"" then

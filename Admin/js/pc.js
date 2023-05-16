@@ -470,7 +470,7 @@ function tc3(my_tit, my_url, my_width, my_height) {
 
 function pop_up(my_tit, my_url, my_width, my_height) {
 
-    layer.open({
+    return layer.open({
         title: my_tit,
         type: 2,
         // area: [my_width, my_height],
@@ -1104,7 +1104,7 @@ function showwin2(title,url){
     var n=($(window).width());
     if(n<nWidth)nWidth=n;
 
-    pop_up(title,url, nWidth, 450)
+    return pop_up(title,url, nWidth, 450)
     // tc3(title,url, nWidth, 450)
 }
 

@@ -319,6 +319,46 @@ function handleTelHide(tel)
 	end if
 	handleTelHide=tempTel
 end function
+
+
+'资格证到期提醒天数 20220901'
+function handleExpirydate(profession,timelist)
+	dim splstr,splTime,splxx,did,s,c,nLen
+	profession=profession & ""
+	timelist="," & timelist & "|"
+	splstr=split(profession,", ")
+	for each did in splstr
+		if did<>"" then
+			nLen=instr(timelist,","& did &"|")
+			if nLen>0 then
+				s=mid(timelist,nLen+len(","& did &"|"))
+				splxx=split(s,"|")
+				c=c & did & "("&splxx(0)&"-"& splxx(1) &")"
+			end if
+		end if
+	next
+	handleExpirydate=c
+end function
+
+'安全B证截止时间 20220901'
+function handleBcertificatedate(safetyclass,timelist)
+	dim splstr,splTime,splxx,did,s,c,nLen
+	safetyclass=safetyclass & ""
+	timelist="," & timelist & "|"
+	splstr=split(safetyclass,", ")
+	for each did in splstr
+		if did<>"" then
+			nLen=instr(timelist,","& did &"|")
+			if nLen>0 then
+				s=mid(timelist,nLen+len(","& did &"|"))
+				splxx=split(s,"|")
+				c=c & did & "("&splxx(2) &")"
+			end if
+		end if
+	next
+	handleBcertificatedate=c
+end function
+
 '显示大类里指定位置的时间 20220905'
 function getTimeList(didList,timelist,focus)
 	dim splstr,splTime,splxx,did,s,c,nLen
@@ -339,8 +379,9 @@ function getTimeList(didList,timelist,focus)
 end function
 
 
-'获得字段的中文标题20230315'
-function getFieldAlt(byval fieldName,byval fieldAlt)
+
+'获得字段的中文标题20230315' 修改20230412
+function getFieldCnName(byval fieldName,byval fieldAlt)
   dim configNameList,splstr,splxx,s 
   fieldName=phptrim(lcase(fieldName))
   fieldAlt=phptrim(fieldAlt)
@@ -361,4 +402,236 @@ function getFieldAlt(byval fieldName,byval fieldAlt)
   next
 end function
 
+ 
+
+
+'获得题目子栏目树状 20230407  如  ├─栏目名称
+function getTiMoSubColumSort(parentid,subStr)
+	dim rs:Set rs = CreateObject("Adodb.RecordSet")
+	rs.open "select * from ["& db_PREFIX &"timoclass] where id="&parentid,conn,1,1
+	if not rs.eof then
+		if subStr<>"" then
+			subStr="&nbsp;&nbsp;" & subStr
+		else
+			subStr=subStr & "&nbsp;&nbsp;├─" 
+		end if
+		if rs("parentid")<>-1 then
+			call getTiMoSubColumSort(rs("parentid"),subStr)
+		end if
+	end if:rs.close
+	getTiMoSubColumSort=subStr
+end function
+'显示题目栏目列表成input方式 20210331 如 <option> ├─栏目名称</opton>
+function tiMoColumnSubInput(parentid,focusid,focusParentid)
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s,sel,addsql
+  if focusid<>"" then addSql=" and id<>"& focusid
+  rs.open "select * from ["& db_PREFIX &"timoclass] where parentid="&parentid & addsql &" order by sortrank asc",conn,1,1
+  while not rs.EOF  
+  	sel=""
+  	if focusParentid<>"" then
+  		if focusParentid=rs("id") then sel=" selected"
+  	end if
+
+    c=c & "<option value="""& rs("id") &""""& sel &">"& getTiMoSubColumSort(rs("parentid"),"")  & rs("columnName")&"</option>"    
+    c=c & tiMoColumnSubInput(rs("id"),IIF(focusid=-2,-3,focusid),focusParentid)  
+  rs.movenext:wend:rs.close
+  tiMoColumnSubInput=c
+end function
+'获得题目目录树20230407
+function getTiMoSubTree(parentid)
+    dim c,s
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    rs.open"select * from ["& db_PREFIX &"timoclass] where id="&parentid,conn,1,1
+    if not rs.eof then
+	    c=rs("columnname")
+	    if rs("parentid")<>-1 then
+	        s=getTiMoSubTree(rs("parentid"))
+	        if s<>"" then c=s&">>" & c
+	    end if
+	end if:rs.close
+
+    getTiMoSubTree=c
+end function
+
+
+
+
+
+'获得在线修改select值'   getOnLineSelectValue("stype-你好_0-不好_1-其它_2",1)
+function getOnLineSelectValue(sType,sFocus)
+	dim splA,i,s2,splB
+	splA=split(sType,"-")
+	sFocus=sFocus &"" '转字符类型'
+	for i=1 to ubound(splA)
+		if splA(i)<>"" then
+    		s2=splA(i) & "_" & splA(i)
+    		splB=split(s2,"_") 
+    		if splB(1)=sFocus then
+    			getOnLineSelectValue=splB(0)
+    			exit function
+    		end if
+    	end if
+	next
+end function
+'显示在线修改select值'   如   showOnLineSelectHtml("stype-你好_0-不好_1-其它_2",1)
+function showOnLineSelectHtml(sType,sFocus)
+	dim splA,i,s2,splB,c,sel
+	splA=split(sType,"-")
+	sFocus=sFocus &"" '转字符类型'
+
+    c="<select name="""& splA(0) &""" id="""& splA(0) &""">" 
+	for i=1 to ubound(splA)
+		if splA(i)<>"" then
+    		s2=splA(i) & "_" & splA(i)
+    		splB=split(s2,"_") 
+    		sel=""
+    		if splB(1)=sFocus then
+    			sel=" selected"
+    		end if
+    		c=c & "<option value="""& splB(1) &""""& sel &">"& splB(0) &"</option>" & vbcrlf
+    	end if
+	next
+    c=c & "</select>"
+	showOnLineSelectHtml=c
+end function 
+
+
+'显示表里列表显示指定字段值20230424'   如   TS_showTableSelect("showTableSelect-xiyueta-title",xiyuetaid)
+function TS_showTableSelect(fieldName,sType,sFocus)
+	dim splA,i,s2,splB,c,sel,sql
+	splA=split(sType,"-")
+	sFocus=sFocus &"" '转字符类型'
+
+    c="<select name="""& fieldName &""" id="""& fieldName &""">" 
+
+  	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
+  	sql="select * from ["& db_PREFIX & splA(1) &"]"
+  	rs.open sql,conn,1,1
+	for i=1 to 30
+		if rs.eof then exit for
+		sel=""
+		if cstr(rs("id"))=sFocus then
+			sel=" selected"
+		end if
+		c=c & "<option value="""& rs("id") &""""& sel &">"& rs(splA(2)) &"</option>" & vbcrlf
+	rs.movenext:next:rs.close
+    c=c & "</select>"
+	TS_showTableSelect=c
+end function 
+'获得会员信息 如 user1(张三)'   20230423    如 getUserInfo(2)
+function getUserInfo(userid)
+  userid=userid&""
+  if userid="" then 
+  	getUserInfo=""
+  	exit function
+  end if
+  ' call echo(userid,typename(userid)):doevents
+  dim rs:Set rs = CreateObject("Adodb.RecordSet") 
+  rs.open "select * from ["& db_PREFIX &"member] where id="&userid,conn,1,1
+  if not rs.eof then
+  	getUserInfo=rs("username") & "("& rs("nickname") &")"
+  end if:rs.close
+end function
+'获得会员里图片20230425' 如 TS_getTableMemberPicImg("getuserpicimg-userid-80",rs("userid")) 
+function TS_getTableMemberPicImg(sType,userid) 
+  dim splxx,nHeight
+  nHeight=80
+  userid=userid&""
+  if userid="" then 
+  	TS_getTableMemberPicImg=""
+  	exit function
+  end if  
+  splxx=split(sType,"-")
+  if ubound(splxx)>=2 then
+  		nHeight=splxx(2)
+  end if
+  dim rs:Set rs = CreateObject("Adodb.RecordSet") 
+  rs.open "select * from ["& db_PREFIX &"member] where id="&userid,conn,1,1
+  if not rs.eof then
+  	TS_getTableMemberPicImg="<img src='"& rs("pic") &"' height='"& nHeight &"'>"
+  end if:rs.close
+end function
+ 
+'特殊处理 20230424'  如 TS_getTableCount("getTableCount-xiyuetaarticle-xiyuetaid-isthrough1",rs("userid"))
+function TS_getTableCount(sType,id)
+	dim splA,splxx,addSql,sFieldType,sFindField
+	id=id&""
+	splA=split(sType,"-") 
+	if ubound(splA)>=2 then
+
+		if id<>"" then 
+			sFieldType=getFieldAlt(db_PREFIX & splA(1),splA(2))   '这种不是特殊好，暂时用着'
+			' call echo("sFieldType",sFieldType):doevents
+			if sFieldType="VarChar" or sFieldType="Text" then 
+					addSql=" where "&splA(2) & "='"& id & "'"
+			else
+				addSql=" where "&splA(2) & "="&id
+			end if
+		end if
+		if ubound(splA)>=3 then
+			if splA(3)="isthrough1" then
+				if addSql="" then 
+					addSql=" where "
+				else
+					addSql=addSql & " and "
+				end if
+				addSql=addSql & " isthrough=1"
+			end if
+		end if
+	  	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
+	  	' call echo(id,"select count(*) from " & db_PREFIX & splA(1) & addSql)
+      	TS_getTableCount="共有" & conn.execute("select count(*) from " & db_PREFIX & splA(1) & addSql)(0) &"条"
+	end if
+end function
+
+'获得表里对应id里的字段值 20230424'  如 TS_getTableFieldValue("getTableFieldValue-xiyueta-title",rs("id")) 
+function TS_getTableFieldValue(sType,id)
+	dim splA,sql
+	id=id&""
+	splA=split(sType,"-") 
+	if ubound(splA)>=2 then 
+	  	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
+	  	sql="select * from ["& db_PREFIX & splA(1) &"] where id="&id
+		rs.open sql,conn,1,1
+		' call echo("sql",sql)
+		if not rs.eof then
+			TS_getTableFieldValue=rs(splA(2))  
+		end if:rs.close
+	end if
+end function
+
+
+'TS_handleAllAction("handleAllAction-showrenshu",rs)
+'处理全部动作20230425'
+function TS_handleAllAction(sType,rs)
+	dim splA,sAction
+	  	dim rsx:Set rsx = CreateObject("Adodb.RecordSet")   
+	splA=split(sType,"-") 
+	sAction=splA(1)
+	if sAction="showrenshu" then  '显示大人小孩子数'
+		TS_handleAllAction=rs("adultnum") & "大" & rs("chindnum") & "小"
+	elseif sAction="changpenweizhi" then  '帐篷位置'
+		TS_handleAllAction=rs("order_seatrow") &"行" & rs("order_seatcol")&"列"
+	elseif sAction="tuguanguser" then
+	  	rsx.open"select * from ["& db_PREFIX &"member] where id="&rs("userid"),conn,1,1
+	  	if not rsx.eof then
+			TS_handleAllAction=rsx("wxopenid")
+		end if:rsx.close
+	elseif sAction="gethuodengtitle" then '获得活动标题'  
+	  	rsx.open"select * from ["& db_PREFIX &"studyclass] where id="&rs("studyclassid"),conn,1,1
+	  	if not rsx.eof then
+			TS_handleAllAction=rsx("title")   
+		end if:rsx.close
+	end if
+end function
+
+'获得文章标题名20230516'
+function TS_getArticleTitle(sType,articleid)
+  	dim rsx:Set rsx = CreateObject("Adodb.RecordSet")   
+  	rsx.open"select * from ["& db_PREFIX &"articledetail] where id="&articleid,conn,1,1
+  	if not rsx.eof then
+		TS_getArticleTitle=rsx("title")   
+	end if:rsx.close
+end function
 %>

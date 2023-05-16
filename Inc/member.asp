@@ -10,12 +10,16 @@ function visitorLogin(money)
 	    '不存在则追加'
 	    if rs.eof then
 	        rs.addnew
-	        rs("username")="youke" & md5(getip() & now())
+	        rs("username")="youke" & handleMD5(getip() & getrnd(11) & now(),16) 
 	        rs("nickname")="游客"
 	        rs("pic")="/images/userpic/" & phpRnd(1,68) & ".gif"
+	        rs("tel")="138" & getRndTel(8) '追加于20230421'
 	        rs("ip")=getIP()
 	        rs("pwd")=defaultPass
 	        rs("money")=money
+	        if session("promotionUserId")<>"" then   '添加推广者id 20230421'
+	        	rs("userid")=session("promotionUserId")
+	        end if
 	        rs.update
 	    end if:rs.close
 

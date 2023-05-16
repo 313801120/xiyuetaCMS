@@ -599,4 +599,19 @@ if uTitle<>"" then
   webkeywords=uTitle & replace(replace(webkeywords,",",  "," & uTitle),"，", "，" &uTitle)
   webdescription=uTitle & replace(replace(webdescription,",",  "," & uTitle),"，", "，" &uTitle)
 end if
+
+
+'获得xiyueta分类ID对应的名称列表20230420'
+function getXiyuetaColumnIdToName(id) 
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  id=id &""
+  if id="" then getXiyuetaColumnIdToName="": exit function
+  ' call echo("id",id):doevents
+  rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where id="&id,conn,1,1
+  if not rs.eof then
+    getXiyuetaColumnIdToName=rs("columnname")
+  else
+    getXiyuetaColumnIdToName=""
+  end if:rs.close
+end function
 %>

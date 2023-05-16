@@ -73,7 +73,7 @@ If Request("act") = "list" Then
                 isthrough=" checked" 
             end if 
 
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""parentid"":""" & getSubTree(rs("parentid")) & """,""isthrough"":""" & isthrough & """,""title"":""" & jsonCL(rs("title")) & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""parentid"":""" & getSubTree(rs("parentid")) & """,""isthrough"":""" & isthrough & """,""title"":""" & jsonCL(rs("title")) & """,""tsfield001"":""" & TS_getTableCount("getTableCount-articlepic-articleid",rs("id")) & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
     
  
 
@@ -87,6 +87,7 @@ If Request("act") = "list" Then
     rs.Close 
     Response.end()
 
+'删除多个ID'
 elseif request("act")="del" then
   conn.execute"delete from ["& db_PREFIX &"articleDetail] where id in("&request("id")&")"
   response.write "{""info"": ""删除成功"",""status"": ""y""}"
@@ -122,8 +123,13 @@ End If
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>文章列表</title>
 <script type="text/javascript" src="../../js/jquery.js"></script>
- <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
+<style>
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
+    top: 4px;
+}
+</style>
 </head>
 <body style="padding:10px 6px 30px 6px;background: #FFF">  
   
@@ -158,7 +164,7 @@ End If
       
   <button class="layui-btn" data-type="reload">搜索</button>
   <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
-          <button class="layui-btn" data-type="batchdel">删除</button>
+          <button class="layui-btn" data-type="batchdel">删除</button> 
   <a href="backupData.asp?act=article" class="layui-btn">导出</a>
   <button class="layui-btn" id="importXls">导入</button> 
 
@@ -203,7 +209,12 @@ layui.use(['form','table','upload'],function(){
                 {type: 'checkbox', fixed: 'left'},
                 { field: 'id', title: 'ID', width: 70, sort: true }
                 , { field: 'parentid', title: '类目', width: 150, sort: true }
-                , { field: 'title', title: '名称', edit: 'text', sort: true }
+                , { field: 'title', title: '名称', edit: 'text', sort: true } 
+
+
+               ,{field: 'tsfield001',width:100, title: '图片总数', templet:function(d){
+                    return '<span style="cursor: pointer;" lay-event="tsfield001" title="点击添加修改">'+d.tsfield001+'</span>'}}
+
                 , { field: 'createtime', title: '发布时间', width: 160, sort: true }
                  ,{field: 'isthrough', title: '是否置顶',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
@@ -335,6 +346,9 @@ layui.use(['form','table','upload'],function(){
             showwin('修改信息', 'listform.asp?id=' + pid)
         } else if (obj.event === 'edit2') {
             showwin('修改信息', 'listform.asp?editor=no&id=' + pid)
+            
+                } else if (obj.event === 'tsfield001') { 
+layer.full(showwin2('列表', '../articlepic/list.asp?articleid=' + pid ))
         }
 
     });

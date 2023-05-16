@@ -308,7 +308,7 @@ function numberToTime(content)
 		if n2<10 then
 			n2="0" & n2
 		end if
-		s=n1 & ":" & n2
+		s=n1 & ":" & n2 
 	end if
 	numberToTime=s
 end function

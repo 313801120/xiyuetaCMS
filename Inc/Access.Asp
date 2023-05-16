@@ -31,7 +31,7 @@ function checkAccessPass(MDBPath, accessPass)
             err.clsoe 
             checkAccessPass = false 
         end if 
-end function
+end function 
 '判断SQl是否正确
 function checkSql(sql)
     on error resume next 
@@ -253,7 +253,7 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
                         case "135"  'sqlserver里135也是时间类型'
                             getFieldAlt_conn = "DateTime" 
                         case "3"
-                            getFieldAlt_conn = "Int" 
+                            getFieldAlt_conn = "Int"  
                         case "11"
                             getFieldAlt_conn = "YesNo" 
                         case "5"
@@ -266,6 +266,12 @@ function getFieldAlt_conn(tableName, fieldName,customConn)
                 end if 
             set fld = nothing 
         next : rs.close 
+end function
+'获得字段默认值20230509'
+function getFieldDefaltValue(tableName,fieldName)  
+    Dim rs 
+    Set rs = conn.OpenSchema(4, Array(Empty, Empty, tableName, fieldName))
+    getFieldDefaltValue = rs("COLUMN_DEFAULT")  
 end function
 '获得指定数据库 里表列表
 function getTableList_Conn(conn) 

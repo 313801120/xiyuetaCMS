@@ -8,7 +8,8 @@ Server.ScriptTimeOut=5000
 'if request.Cookies("user")("login")<>"true" and request.Cookies("admin")("login")<>"true" then
 	'response.Write("{""code"":1,""msg"": ""请登陆再上传图片""}"):response.end()
 'end if
-dim request2,formPath,formName,intCount,intTemp
+dim request2,formPath,formName,intCount,intTemp,act
+act=request("act")
 
 '建立上传对象
 set request2=new UpLoadClass
@@ -65,8 +66,13 @@ set request2=new UpLoadClass
  
 		
 	
-			
-	str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": ["&file_url&"]}"
+			 
+
+	if act="one" then
+		str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": "&file_url&"}"
+	else
+		str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": ["&file_url&"]}"
+	end if
 			
 	
 

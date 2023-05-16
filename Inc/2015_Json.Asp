@@ -3,9 +3,9 @@
 '引用别人20150724  这种引用虽然快，但最好是以后自己来写
 '######################################################################
 'Dim obj : Set obj = New Cls_AB_JSON
-'call rw(obj.toJSON)
+'call rw(obj.toJSON)   '将字典对象转成json字符串'
 
-'call rw(getPostToJson())
+'call rw(getPostToJson()) 
 
 '处理字符串到json 20170827  handleStrToJson("aa=11,bb=22,c=33") {"aa":"11","bb":"22","c":"33"}
 function handleStrToJson(byval content)
@@ -34,7 +34,7 @@ end function
 '转json
 function  json_encode(o)
 	Dim obj : Set obj = New Cls_AB_JSON
-	 json_encode=obj.toJSON(o)
+	 json_encode=obj.toJSON(o) 
 end function
 Class Cls_AB_JSON
 	Public Collection, Count, QuotedVars, Kind, StrEncode

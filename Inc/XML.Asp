@@ -137,7 +137,74 @@ function saveRemoteFile_WinHttp(httpurl,localFileName, refererUrl)
 		saveRemoteFile_WinHttp=9999
 	end if
 end function
+'获得网址内容，WinHttp版 20230516'
+function getHttpurl_WinHttp(httpurl,sCharSet,refererUrl)
+    ' on error resume next 
+    if sCharSet="" then 
+        sCharSet="gb2312"
+    end if
+    dim cookiesStr, postStr, sSetChar
+    dim winHttp,ads,getRemoteData
+    ' call handlePath(localFileName) 
+    set winHttp = createObject("WinHttp.WinHttpRequest.5.1")
+        with winHttp
+            '来路网址为空 则为当前网址域名
+            if refererUrl = "" then
+                refererUrl = getwebsite(httpurl)  
+            end if 
+            '设置cookies字符串不能为空
+            if cookiesStr = "" then
+                cookiesStr = "ASPSESSIONIDAQACTAQB=HKFHJOPDOMAIKGMPGBJJDKLJ;" 
+            end if 
+            '字符编号
+            sSetChar = trim(sSetChar) 
+            if sSetChar = "" or sSetChar = "1" or sSetChar = "gb2312" then
+                sSetChar = "gb2312" 
+            else
+                sSetChar = "utf-8" 
+            end if 
 
+            '设置参数
+            .setTimeOuts 60000, 60000, 60000, 3000                                          '设置操作超时时间
+            '.SetTimeouts resolveTimeout, connectTimeout, sendTimeout, receiveTimeout
+            'resolveTimeout = 10000 '解析 DNS 名字的超时时间，10000 毫秒。
+            'connectTimeout = 10000 '建立 Winsock 连接的超时时间，10000 毫秒。
+            'sendTimeout = 120000 '发送数据的超时时间，120000 毫秒。
+            'receiveTimeout = 60000 '接收 response 的超时时间，60000 毫秒。
+            .option(4) = 13056                                                              '忽略错误标志
+            .option(6) = false                                                              '为 True 时，当请求页面重定向跳转时自动跳转，False 不自动跳转，截取服务端返回的302状态。
+            '.Open "GET", "http://www.baidu.com/", False 'GET 或 POST, Url, False 同步方式；True 异步方式
+            .open "GET", httpurl, false 
+            '组成 HTTP 头信息
+            .setRequestHeader "Accept", "*/*"                                               '接受数据类型
+            .setRequestHeader "Accept-Language", "zh-cn,zh"                                 '用户系统语言
+            .setRequestHeader "User-Agent", "Mozilla/6.0"                                   '用户浏览器信息
+            .setRequestHeader "Content-Type", "application/x-www-form-urlencoded"           '编码方式
+            .setRequestHeader "Referer", refererUrl                                         '来路
+            .setRequestHeader "Connection", "Close"                                         'Close  不保持连接，Keep-Alive  保持连接（持久连接）
+            '.SetRequestHeader "Accept-Encoding", "gzip, deflate" '如果发送，会返回 gzip, deflate 压缩过的编码
+            '.SetRequestHeader "Content-Length", Len(Str) '内容长度，Post 方式用的。
+            .setRequestHeader "Cookie", cookiesStr                                          '设置 Cookie   直接把cookies字符串放进去就可以了，  获得方法:IE》F12》网络
+
+            postStr = handlePostCookiesParame(postStr, "post") 
+
+            '发送数据
+            .send(postStr)                                                                  'Post 方式：.Send (参数)
+            .waitForResponse                                                                '等待返回请求，XMLHTTP中也可以使用
+            
+         
+            getRemoteData =.responseBody 
+
+ 
+
+            getHttpurl_WinHttp =bytesToBstr(.responseBody, sCharSet) 
+            
+         
+        end with  
+    if err then
+        getHttpurl_WinHttp=9999
+    end if
+end function
 
 
 

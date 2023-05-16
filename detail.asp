@@ -28,28 +28,13 @@
 </head>
 
 <body>
-<% onAutoAddDataToAccess=false %><!--
-                      '''
-                     (0 0)
-   +--------oOO-------(_)---------------------+
-   |                                          |
-   |    Powered By xiyueta - www.xiyueta.com  |
-   |    QQ:313801120                          |
-   |    Creation:2023-03-05                   |
-   |    xiyuetaCMS V1.2                       |
-   |                                          |
-   +----------------------------oOO-----------+
-                     |__|__|
-                      || ||
-                     ooO Ooo
--->
-<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2023-03-05                   |\n   |    xiyuetaCMS V1.2                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
-<!--#Include file = "tpl/TPL503A/tpl/topnav_005_Default.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/banner_002.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/search_003_Default.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/page-detail_001.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/footer_010_Default.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/qq_003.asp"-->
+<!--#Include file = "tpl/nav_002.asp"-->
+<!--#Include file = "tpl/banner_002.asp"-->
+<!--#Include file = "tpl/search_003_Default.asp"-->
+<!--#Include file = "tpl/page-detail_003.asp"-->
+<!--#Include file = "tpl/links_001_default_fenzhan.asp"-->
+<!--#Include file = "tpl/footer_010_Default.asp"-->
+<!--#Include file = "tpl/qq_003.asp"-->
 
 </body>
 </html>

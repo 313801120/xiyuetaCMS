@@ -673,6 +673,25 @@ sub webData(db_PREFIX, loginname, loginpwd)
         if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
         conn.execute(sql) 
     end if
+
+    '文章图片(20230516)-------------------------------
+    tableName = db_PREFIX & "articlepic" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
+        sql = sql & "[articleid] Int Default -1,"                                         '文章ID
+        sql = sql & "[memberid] Int Default -1,"                                          '会员ID  
+        sql = sql & "[pic] VarChar Default """","                                         '图片
+        sql = sql & "[title] VarChar Default """","                                       '标题
+        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址  
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
+
+
     '单页表-------------------------------
     tableName = db_PREFIX & "onepage" 
     if checkCreateTable(tableName) = false then
@@ -887,15 +906,22 @@ sub webData(db_PREFIX, loginname, loginpwd)
         
         
         sql = sql & "[sex] VarChar Default """","                                         '性别
+        sql = sql & "[fax] VarChar Default """","                                         '传真
+        sql = sql & "[weixin] VarChar Default """","                                      '微信
         sql = sql & "[age] Int Default 18,"                                               '年龄
         sql = sql & "[tel] VarChar Default """","                                         '电话
         sql = sql & "[email] VarChar Default """","                                       '邮箱 
+        sql = sql & "[phone] VarChar Default """","                                       '手机
         sql = sql & "[qq] VarChar Default """","                                          'QQ号
         sql = sql & "[department] VarChar Default """","                                  '所在部门
         sql = sql & "[idcard] VarChar Default """","                                      '身份证
         sql = sql & "[dateofbirth] DateTime,"                                             '出生日期
         sql = sql & "[address] VarChar Default """","                                     '联系地址
         sql = sql & "[hometown] VarChar Default """","                                    '籍贯
+        sql = sql & "[province] VarChar Default """","                                    '省份
+        sql = sql & "[city] VarChar Default """","                                        '城市
+        sql = sql & "[wxopenid] VarChar Default """","                                    '微信openid
+        sql = sql & "[wxopenidtime] DateTime Default Now(),"                              '微信openid获取时间
 
         
         sql = sql & "[lottery] Int Default 0,"                                            '抽奖次数
@@ -930,11 +956,28 @@ sub webData(db_PREFIX, loginname, loginpwd)
         if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
         conn.execute(sql) 
     end if 
+    '日记表-------------------------------
+    tableName = db_PREFIX & "diary"
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table " & tableName & " (Id Int Identity(0,1) Primary Key,"           
+        sql = sql & "[ip] VarChar Default """","                                        'IP 
+        sql = sql & "[createtime] DateTime Default Now(),"                              '创建时间
+        sql = sql & "[updatetime] DateTime Default Now(),"                              '修改时间
+         
+        sql = sql & "[title] VarChar Default """","                                     '标题
+        sql = sql & "[weather] VarChar Default """","                                   '天气
+        sql = sql & "[writedatetime] DateTime Default Now(),"                           '写入时间
+        sql = sql & "[bodycontent] Text Default """")"                                  '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql)
+    end if
+
+
     '访问统计(引用别人202103)-------------------------------
     tableName = db_PREFIX & "count" 
     if checkCreateTable(tableName) = false then
         sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
-        sql = sql & "ip VarChar Default """","                                          'IP 
+        sql = sql & "[ip] VarChar Default """","                                          'IP 
         sql = sql & "useragent VarChar Default """","                                   '浏览器 
         sql = sql & "pv Int Default 0,"                                                 'pv
         sql = sql & "addr VarChar Default """","                                        '地址  
@@ -975,6 +1018,28 @@ sub webData(db_PREFIX, loginname, loginpwd)
     end if
 
 
+    '考勤(20230402)------------------------------- 
+    tableName = db_PREFIX & "workattendance" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"   
+        sql = sql & "[userid] Int Default -1,"                                           '会员ID 
+  
+        sql = sql & "[gotowork] float Default 0,"    '上班
+        sql = sql & "[askforleave] float Default 0,"    '请假
+        sql = sql & "[compensatoryleave] float Default 0,"    '调休
+        sql = sql & "[belate] float Default 0,"    '迟到早退
+        sql = sql & "[salary] float Default 0,"    '工资
+        sql = sql & "[netsalary] float Default 0,"    '实发工资
+        sql = sql & "[worktime] DateTime Default Now(),"    '工作时间，哪一个月
+ 
+        sql = sql & "[isthrough] Int Default 1,"                                         '是否通过
+        sql = sql & "[ip] VarChar Default """","                                         'IP
+        sql = sql & "[createtime] DateTime Default Now(),"                               '创建时间
+        sql = sql & "[updatetime] DateTime Default Now(),"                               '修改时间
+        sql = sql & "[bodycontent] Text Default """")"                                   '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
     isAddData = true 
     if isAddData = true then
         ' call echo("loginname",loginname)
@@ -991,7 +1056,12 @@ sub webData(db_PREFIX, loginname, loginpwd)
         conn.execute("insert into " & db_PREFIX & "website (" & fieldNameList & ") values(" & fieldValueList & ")") 
  
 
-        session("adminid")=0 '自动登录后台20220525
+        session("adminid")=0 '自动登录后台20220525 
+        rs.open "select * from " & db_PREFIX & "admin where id=0" ,conn,1,3
+        if not rs.eof then
+            rs("upip")=getip()
+            rs.update
+        end if:rs.close
     end if 
 
 end sub 

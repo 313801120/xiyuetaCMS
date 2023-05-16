@@ -28,32 +28,16 @@
 </head>
 
 <body>
-<% onAutoAddDataToAccess=false %><!--
-                      '''
-                     (0 0)
-   +--------oOO-------(_)---------------------+
-   |                                          |
-   |    Powered By xiyueta - www.xiyueta.com  |
-   |    QQ:313801120                          |
-   |    Creation:2023-03-05                   |
-   |    xiyuetaCMS V1.2                       |
-   |                                          |
-   +----------------------------oOO-----------+
-                     |__|__|
-                      || ||
-                     ooO Ooo
--->
-<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2023-03-05                   |\n   |    xiyuetaCMS V1.2                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
-<!--#Include file = "tpl/TPL503A/tpl/topnav_005_Default.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/banner_001.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/product_001.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/about_003.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/news_003.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/links_001.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/footer_010_Default.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/qq_003.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/weixin_001_default_kf.asp"-->
-<!--#Include file = "tpl/TPL503A/tpl/other_103.asp"-->
+<!--#Include file = "tpl/nav_002.asp"-->
+<!--#Include file = "tpl/banner_001.asp"-->
+<!--#Include file = "tpl/product_005.asp"-->
+<!--#Include file = "tpl/about_003.asp"-->
+<!--#Include file = "tpl/news_003.asp"-->
+<!--#Include file = "tpl/links_001.asp"-->
+<!--#Include file = "tpl/links_001_default_fenzhan.asp"-->
+<!--#Include file = "tpl/footer_010_Default.asp"-->
+<!--#Include file = "tpl/qq_003.asp"-->
+<!--#Include file = "tpl/weixin_001_default_kf.asp"-->
 
 </body>
 </html>

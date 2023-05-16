@@ -70,7 +70,7 @@ If Request("act") = "userlist" Then
             end if
     
 
-            stemp = stemp & "{""i"":""" &i& """,""id"":""" & rs("id") & """,""logincount"":""" & rs("logincount") & """,""username"":""" & rs("userName") & """,""onlinetime"":""" & rs("onlinetime") & """,""onlineip"":""" & rs("onlineip") & """,""money"":""" & rs("money") & """,""nickname"":""" & rs("nickname") & """,""isthrough"":""" & isthrough & """,""regtime"":""" & rs("regtime") & """,""logintime"":""" & rs("logintime") & """,""regip"":""" & rs("regip") & """,""loginip"":""" & rs("loginip") & """,""regaddr"":""" & look_ip(rs("regip")) & """,""loginaddr"":""" & look_ip(rs("loginip")) & """}" &sHr & "" 
+            stemp = stemp & "{""i"":""" &i& """,""id"":""" & rs("id") & """,""logincount"":""" & rs("logincount") & """,""wxopenid"":""" & rs("wxopenid") & """,""username"":""" & rs("userName") & """,""onlinetime"":""" & rs("onlinetime") & """,""onlineip"":""" & rs("onlineip") & """,""money"":""" & rs("money") & """,""nickname"":""" & rs("nickname") & """,""isthrough"":""" & isthrough & """,""regtime"":""" & rs("regtime") & """,""logintime"":""" & rs("logintime") & """,""regip"":""" & rs("regip") & """,""loginip"":""" & rs("loginip") & """,""regaddr"":""" & look_ip(rs("regip")) & """,""loginaddr"":""" & look_ip(rs("loginip")) & """}" &sHr & "" 
 
             rs.MoveNext 
         Wend 
@@ -114,9 +114,13 @@ End If
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>会员列表</title>
-<script type="text/javascript" src="../../js/jquery.js"></script>
- <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
+<script type="text/javascript" src="../../js/jquery.js"></script><link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
+<style>
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
+    top: 4px;
+}
+</style>
 </head>
 <body style="padding:10px 6px 30px 6px;background: #FFF">  
   
@@ -165,7 +169,7 @@ layui.use(['form','table'],function(){
         cols: [
             [
                 { field: 'i', title: '序列', width:80, sort: true }
-                , { field: 'username', title: '用户名',minWidth:100, sort: false }
+                , { field: 'username', title: '用户名',width:120, sort: false }
                 , { field: 'nickname', title: '昵称',width:90, sort: false }  
 
                 // , { field: 'regip', title: '注册IP',width:140, sort: false }
@@ -173,14 +177,17 @@ layui.use(['form','table'],function(){
                 // , { field: 'regtime', title: '注册时间',minWidth:120, sort: false }
 
                 // , { field: 'loginip', title: '登录IP',width:140, sort: false }
-                // , { field: 'loginaddr', title: '登录地址',minWidth:120, sort: false }
                 // , { field: 'logintime', title: '登录时间',minWidth:120, sort: false }
 
                 , { field: 'logincount', title: '登录次数',width:100, sort: false }
                 , { field: 'money', title: '金币',width:80, sort: false }
 
-                , { field: 'onlinetime', title: '最后在线时间',sort: false }
-                , { field: 'onlineip', title: '最后在线IP',sort: false }
+                , { field: 'onlinetime', title: '最后在线时间',width:150,sort: false }
+                , { field: 'loginip', title: '登录IP',width:140,sort: false }
+                , { field: 'loginaddr', title: '登录地址',  sort: false }
+                
+                // , { field: 'onlineip', title: '最后在线IP',width:140,sort: false }
+                , { field: 'wxopenid', title: '微信openid',width:100, sort: false }  
 
                 ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}} 

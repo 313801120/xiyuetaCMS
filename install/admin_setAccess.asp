@@ -3,6 +3,34 @@
 '【#top#】true为true则为停止全部
 
 
+
+'获得题目栏目id 20230407  大类>小类
+function gettimoclassId(columnName)
+    dim splstr,s,parentid,sql
+    if instr(columnName,">")>0 then
+        splstr=split(columnName,">")
+        for each s in splstr
+            sql="Select * from " & db_PREFIX & "timoclass where columnName='" & s & "'"
+            if parentid<>"" then sql = sql & " AND parentid="&parentid
+            rsx.open sql, conn, 1, 1 
+            if not rsx.EOF then
+                parentid = rsx("id")        
+                ' call echo("parentid1",parentid)
+            end if : rsx.close 
+        next
+        ' call echo("parentid",parentid)
+        if parentid="" then parentid=-1
+        gettimoclassId=parentid
+        exit function
+    end if
+
+    gettimoclassId = "-1" 
+    rsx.open "Select * from " & db_PREFIX & "timoclass where columnName='" & columnName & "'", conn, 1, 1 
+    if not rsx.EOF then
+        gettimoclassId = rsx("id")        
+    end if : rsx.close 
+end function
+
  
 '获得栏目id 20220510  大类>小类
 function getXiyuetaClassId(columnName)
@@ -203,7 +231,7 @@ sub resetAccessData()
     end if 
     '修改网站配置
     call nImportTXTData(webdataDir,readFile(webdataDir & "/website.txt","utf-8"), "website", "修改") 
-    call batchImportDirTXTData(webdataDir, db_PREFIX & "WebColumn" & vbcrlf & db_PREFIX & "xiyuetaclass" & vbCrLf & getTableList()) '加webcolumn是因为webcolumn必需新导入数据，因为后台文章类型要从里获得20160711
+    call batchImportDirTXTData(webdataDir, db_PREFIX & "WebColumn" & vbcrlf & db_PREFIX & "xiyuetaclass"& vbcrlf & db_PREFIX & "timoclass" & vbCrLf & getTableList()) '加webcolumn是因为webcolumn必需新导入数据，因为后台文章类型要从里获得20160711
 
     ' call eerr(getTableList(),webdataDir)
     call echo("提示", "恢复数据完成") 
@@ -386,6 +414,10 @@ function nImportTXTData(folderPath,content, tableName, sType)
                             'call echo("fieldValue",fieldValue)
                             fieldValue = getXiyuetaClassId(fieldValue) 
                             'call echo("fieldValue",fieldValue)
+
+                        '题目分类 20230407
+                        elseif (tableName = "timoclass" or tableName = "timo") and fieldName = "parentid" then 
+                            fieldValue = gettimoclassId(fieldValue)  
 
 
                         '分类20220517
