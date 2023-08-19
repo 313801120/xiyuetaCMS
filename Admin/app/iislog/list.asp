@@ -207,7 +207,7 @@ End If
     <div class="layui-inline"> 
         <select name="filetypeSQL">
         <option value="">选择文件后缀</option> 
-        <option value=" (filetype='' or filetype='asp' or filetype='htm'  or filetype='html') ">网址</option> 
+        <option value=" (filetype='' or filetype='asp' or filetype='htm'  or filetype='html') "  >网址</option> 
         <option value="filetype='asp'">asp</option>   
         <option value="filetype='htm'">htm</option>  
         <option value="filetype='html'">html</option>  
@@ -319,13 +319,14 @@ layui.use(['form','table','upload'],function(){
     table.render({
         elem: '#demo',
         url: '?act=list',
+ 
         cols: [
             [
                 {type: 'checkbox', fixed: 'left'},
                 { field: 'id', title: 'ID', width: 70, sort: true }
                 , { field: 'spider', title: '蜘蛛',width:140, sort: true }
                 , { field: 'filename', title: '文件名',width:100, sort: true }
-                , { field: 'filetype', title: '文件类型',width:120, sort: true }
+                , { field: 'filetype', title: '文件类型',width:105, sort: true }
                 , { field: 'browsetime', title: '日期时间',width:160, sort: true }
                 , { field: 'method', title: '方法', width:80, sort: true }
                 , { field: 'url', title: 'URL',minWidth:80, sort: true }

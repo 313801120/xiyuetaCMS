@@ -64,7 +64,7 @@ If Request("act") = "list" Then
                 isthrough=" checked"
             end if 
 
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""httpurl"":""" & rs("httpurl") & """,""title"":""" & rs("title") & """,""isthrough"":""" & isthrough & """,""createTime"":""" & rs("createTime") & """}" &sHr & "" 
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""httpurl"":""" & rs("httpurl") & """,""sortrank"":""" & rs("sortrank") & """,""title"":""" & rs("title") & """,""isthrough"":""" & isthrough & """,""createTime"":""" & rs("createTime") & """}" &sHr & "" 
     
  
 
@@ -173,9 +173,10 @@ layui.use(['form','table'],function(){
                 { field: 'id', title: 'ID', width: 70, sort: false }
                 , { field: 'title', title: '名称', edit: 'text', sort: true }
                 , { field: 'httpurl', title: '网址', edit: 'text', sort: true }
-                , { field: 'createTime', title: '发布时间', width: 110, sort: true }
+                , { field: 'sortrank', title: '排序',width:90, edit: 'text', sort: true }
                  ,{field: 'isthrough', title: '是否显示',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
+                , { field: 'createTime', title: '发布时间', width: 160, sort: true }
                 , { fixed: 'right', title: '操作', width: 150, toolbar: '#barDemo' }
 
 

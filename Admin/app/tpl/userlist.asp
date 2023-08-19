@@ -244,6 +244,10 @@ elseIf Request("act") = "use" Then
     call useTplAction(request("tplid"),"use")
 elseIf Request("act") = "view" Then  
     call useTplAction(request("tplid"),"view")
+elseIf Request("act") = "myuser" Then  '获得用户信息20230819'
+    sListStr=gethttpurl(serverUrl & "/api/tpl/user/?info="&webinfo,"utf-8")
+
+  call die("{""info"": """& sListStr &""",""status"": ""y""}")
 End If 
 
 
@@ -258,7 +262,14 @@ End If
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
 <style>
 .layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
-    top: 4px;
+    top: 6px;
+}
+td .layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项位置上下居中 20230331*/
+    top: 0px;
+} 
+.layui-table td .layui-table-cell {
+   height: auto;
+   line-height:80px;
 }
 </style>
 </head>
@@ -288,6 +299,7 @@ End If
 
       
   <button class="layui-btn" data-type="reload">搜索</button>
+  <button class="layui-btn"  data-type="myuser" id="myuser"></button>
   <!-- <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button> -->
           <!-- <button class="layui-btn" data-type="batchdel">删除</button> -->
 
@@ -330,22 +342,32 @@ layui.use(['form','table'],function(){
             [
                 // {type: 'checkbox', fixed: 'left'},
                { field: 'id', title: 'ID', width:70,sort: false }
+               ,{ field: 'img', title: '缩览图', width:120, sort: false } 
                ,{ field: 'ahref', title: '模板ID', width:120, sort: false } 
                // ,{ field: 'pic', title: '预览', sort: false } 
                ,{ field: 'ntype', title: '类型', width:90, sort: false }
                ,{ field: 'title', title: '标题', sort: false }
                ,{ field: 'sortrank', title: '排序', width:90, sort: false }
-                , { fixed: 'right', title: '操作', width: 240, toolbar: '#barDemo' }
-
-
+               , { fixed: 'right', title: '操作', width: 240, toolbar: '#barDemo' }
             ]
         ],
         id: 'testReload',
         page: true,
-        limit: 20
+        limit: 20,
+        done: function(res, curr, count) {
+            console.log(res)
+            $("#myuser",).text("积分："+res.money)
+            // alert("加载完成")
+            // 表格加载完成后执行其他动作
+            // res 为接口返回的数据
+            // curr 为当前页码
+            // count 为数据总数
+            
+            // 其他动作...
+          }
     });
 
- 
+
 
     //是否置顶
     form.on('switch', function(data){
@@ -427,6 +449,34 @@ layui.use(['form','table'],function(){
                     });
 
                 });
+            },myuser: function(){  
+                 
+                     $.ajax({
+                        type: "POST",
+                        cache: true,
+                        dataType: "json",
+                        url: "?act=myuser", 
+                        success: function(data) {
+                            switch (data.status) {
+                                case "y": 
+                                    var splxx=data.info.split("[$]");
+                                    if(splxx.length>=3){
+                                        layer.open({
+                                          title: '提示'
+                                          ,content: splxx[1]
+                                        });
+                                        if(splxx.length>=4){
+                                            $("#myuser",).text("积分："+splxx[2])
+                                        }
+                                    }else{
+                                        layer.msg(data.info);
+                                    } 
+                                    break;
+                            }
+                        }
+                    });
+
+                
             }
         };
 

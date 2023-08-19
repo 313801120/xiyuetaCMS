@@ -1,13 +1,15 @@
 ﻿<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 '#禁止自动更新当前文件'  #号去掉代表此文件不被程序自动更新替换掉
 call openconn()  
-dim msg,isTrue,addSql,id,articleid,title,pic,isthrough
+dim msg,isTrue,addSql,id,articleid,title,pic,sortrank,isthrough
 
 id=getStrToNumber(request("id"))
 articleid=getStrToNumber(request("articleid"))
 if articleid="" then articleid=null
 title=request("title")
 pic=request("pic")
+sortrank=getStrToNumber(request("sortrank"))
+if sortrank="" then sortrank=null
 isthrough=request("isthrough")
 if isthrough="" then isthrough=null
 isthrough=IIF(isthrough="on",1,0) 
@@ -35,6 +37,7 @@ if request("act")="save" then
       rs("articleid")=articleid
       rs("title")=title
       rs("pic")=pic
+      rs("sortrank")=sortrank
       rs("isthrough")=isthrough
       rs("ip")=getIP()
 
@@ -50,6 +53,7 @@ elseif id<>"" then
     articleid=rs("articleid")
     title=rs("title")
     pic=rs("pic")
+    sortrank=rs("sortrank")
     isthrough=rs("isthrough")
 
   end if
@@ -104,12 +108,27 @@ i.icon-wenhao {border: 1px #ff5722 solid; color: #ff5722; font-size: 10px; margi
         <input type='text' name='pic' placeholder='请输入图片' autocomplete='off' class='layui-input' value="<%=pic%>"  onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
       </div><!--pic-->
 <button style='float: left;' type='button' class='layui-btn' id='layuiadmin-upload-useradmin'>上传图片</button>     </div>
-    <div class='layui-form-item'>
+
+             <div class="layui-row layui-col-space10 layui-form-item">
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
+      <label class='layui-form-label'>排序</label>
+      <div class='layui-input-inline'>
+        <input type='number' name='sortrank' placeholder='请输入排序' autocomplete='off' class='layui-input' value="<%=sortrank%>"  lay-verify='required'>
+      </div><!--sortrank-->
+    </div>
+
+                </div>
+                <div class="layui-col-xs6">
+                      <div class='layui-form-item'>
       <label class='layui-form-label'>审核</label>
       <div class='layui-input-inline'>
     <input type="checkbox" lay-filter="switch" name="isthrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isthrough=0,""," checked")%>>
       </div><!--isthrough-->
     </div>
+
+                </div>
+             </div>
  
 
  

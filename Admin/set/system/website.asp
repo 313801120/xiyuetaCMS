@@ -300,20 +300,58 @@ function closeimg(){
             done: function(res) {
                 $(this.item).prev("div").children("input").val(res.data[0].src)
             }
-        });
+        }); 
 
-
-        //编码器
-        var layedit = layui.layedit;
-        layedit.set({
-            //暴露layupload参数设置接口 --详细查看layupload参数说明
-            uploadImage: {
-                url: '/api/upload/?act=one' //上传接口url
-                    ,
-                type: 'post' //默认post 
+        upload.render({
+            elem: '#layuiadmin-upload-shareico',
+            url: '/api/upload/',
+            done: function(res) {
+                $(this.item).prev("div").children("input").val(res.data[0].src)
             }
         });
-        layedit.build('webfoot'); //建立编辑器
+
+
+        // //编码器
+        // var layedit = layui.layedit;
+        // layedit.set({
+        //     //暴露layupload参数设置接口 --详细查看layupload参数说明
+        //     uploadImage: {
+        //         url: '/api/upload/?act=one' //上传接口url
+        //             ,
+        //         type: 'post' //默认post 
+        //     }
+        // });
+        // layedit.build('webfoot'); //建立编辑器
+        
+
+    //编码器 复杂版
+    var layedit = layui.layedit;
+    layedit.set({
+        //暴露layupload参数设置接口 --详细查看layupload参数说明
+        uploadImage: { 
+            url: '/api/upload/?act=one'    //上传接口url
+            ,type: 'post' //默认post 
+        }
+        ,uploadVideo: {
+                    url: '/api/upload/uploadVideo.asp?act=one',
+                    accept: 'video',
+                    acceptMime: 'video/*',
+                    exts: 'mp4|flv|avi|rm|rmvb',
+                    size: '20480'
+                }
+
+        , tool: [
+                    'colorpicker', 'code', 'strong', 'italic', 'underline', 'del', 'addhr', '|', 'fontFomatt', 'face'
+                    , '|', 'left', 'center', 'right', '|', 'link', 'unlink','images', 'image_alt', 'video', 'anchors'
+                    , '|','table', 'fullScreen'
+                ]
+    });
+    layedit.build('webfoot');   //建立编辑器
+
+
+
+
+        
 
 
     });

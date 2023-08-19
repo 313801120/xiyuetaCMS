@@ -912,5 +912,28 @@ Function isChinese(str)
   Set regEx = Nothing
   isChinese = result
 End Function
+ 
+'获得字符长度 汉字为两个字符 20230709
+function myLeft(content,nEnd)
+    dim i, t, n,s,c
+    c = "" 
+    t=0
+    ' call echo("len", len(content))
+    for i = 1 to len(content)
+        s=mid(content, i, 1)
+        if isChinese(s)=true then
+            t=t+2
+        else
+            t=t+1
+        end if
+        ' call echo(t,nEnd)
+        ' call echo("i",s)
+        if t>nEnd then
+            exit for
+        end if
+        c=c & s 
+    next 
+    myLeft = c
+end function 
 %>   
 

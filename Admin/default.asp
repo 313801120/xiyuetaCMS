@@ -174,17 +174,24 @@ end if
                                 <dd><a lay-href="set/system/website.asp">网站设置</a></dd>
                                 <dd><a lay-href="set/user/info.asp">基本资料</a></dd>
                                 <dd><a lay-href="set/user/password.asp">修改密码</a></dd>
+                                <dd><a lay-href="set/system/Admin_Login_Allow_IP.asp">设置IP限制</a></dd> 
+                            </dl>
+                        </li>
+          
+                        <li data-name="template" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="模板" lay-direction="2">
+                                <i class="layui-icon layui-icon-template"></i>
+                                <cite>模板</cite>
+                            </a>
+                            <dl class="layui-nav-child">
                                 <dd><a lay-href="app/tpl/userlist.asp">模板库</a></dd>
                                 <dd><a lay-href="http://res.xiyueta.com/">素材库</a></dd>
-                                <dd><a lay-href="set/system/Admin_Login_Allow_IP.asp">设置IP限制</a></dd> 
-                                <dd><a lay-href="app/iislog/list.asp">IIS日志</a></dd> 
-                                <dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap.xml</a></dd> 
                             </dl>
                         </li>
 
                         <li data-name="system" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="系统" lay-direction="2">
-                                <i class="layui-icon layui-icon-template"></i>
+                                <i class="layui-icon layui-icon-senior"></i>
                                 <cite>系统</cite>
                             </a>
                             <dl class="layui-nav-child">
@@ -193,6 +200,8 @@ end if
                                 <dd><a lay-href="system/adminlog.asp">后台日志</a></dd>
                                 <dd><a lay-href="system/backupDatabase.asp">备份恢复数据</a></dd>
                                 <dd><a lay-href="system/updatelog.asp">更新日志</a></dd>
+                                <dd><a lay-href="app/iislog/list.asp">IIS日志</a></dd> 
+                                <dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap.xml</a></dd> 
                             </dl>
                         </li>
 

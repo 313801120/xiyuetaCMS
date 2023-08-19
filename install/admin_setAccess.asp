@@ -2,6 +2,41 @@
 '【#jump#】true为true则为跳过当前
 '【#top#】true为true则为停止全部
 
+'获得文章里的对应文章id 20230517'
+function getArticlePicInArticleId(columnName) 
+    dim splstr,s,parentid,sql,title,i,id
+    if instr(columnName,">")>0 then
+        splstr=split(columnName,">")
+        title=splstr(ubound(splstr))
+        for i=0 to ubound(splstr)-1
+            s=splstr(i)
+            sql="Select * from " & db_PREFIX & "webcolumn where columnName='" & s & "'"
+            if parentid<>"" then sql = sql & " AND parentid="&parentid
+            rsx.open sql, conn, 1, 1 
+            if not rsx.EOF then
+                parentid = rsx("id")        
+                ' call echo("parentid1",parentid)
+            end if : rsx.close 
+        next
+        ' call echo("parentid",parentid)
+        if parentid="" then parentid=-1 
+    end if 
+    rsx.open "select * from " & db_PREFIX & "articledetail where parentid="& parentid &" and title='" & title & "'", conn, 1, 1 
+    if not rsx.eof then
+        id=rsx("id")
+    end if:rsx.close
+    ' call echo(parentid,title & ",id=" & id)
+    getArticlePicInArticleId=id
+end function 
+'获得文章里的对应文章id 20230517'
+function tempdataidToGetArticleId(tempdataid) 
+    dim id 
+    rsx.open "select * from " & db_PREFIX & "articledetail where tempdataid='" & tempdataid & "'", conn, 1, 1 
+    if not rsx.eof then
+        id=rsx("id")
+    end if:rsx.close 
+    tempdataidToGetArticleId=id
+end function
 
 
 '获得题目栏目id 20230407  大类>小类
@@ -392,7 +427,7 @@ function nImportTXTData(folderPath,content, tableName, sType)
 							end if	
 						 
                         end if 
-                        'call echo(tableName,fieldName)
+                        ' call echoYellow(tableName,fieldName)
                         
 
                         '文章大类
@@ -424,8 +459,22 @@ function nImportTXTData(folderPath,content, tableName, sType)
                         elseif (tableName = "tpl" Or tableName = "tplpage") and fieldName = "ntype" then
                             fieldValue=getXiyuetaClassId(fieldValue)
                             ' call echo("xiyuetaclass",fieldValue & "," & getXiyuetaClassId(fieldValue))
+
+                        '文章图片表对应文章ID
+                        elseif (tableName = "articlepic" ) and fieldName = "articleid" then
+                           fieldValue=getArticlePicInArticleId(fieldValue)   '获得文章图片里对应的文章ID' 如 【articleid】产品展示>防腐木>保定防腐木护栏
+                          
+                           call echo("文章图片表对应文章ID",fieldValue)
 							
-							
+                        '文章图片表对应文章ID
+                        elseif (tableName = "articlepic" ) and fieldName = "tempdataid" then
+                           fieldValue=tempdataidToGetArticleId(fieldValue)   '获得文章图片里对应的文章ID' 如 【articleid】7sdf54s45d54ds
+                           
+                           fieldName="articleid"   '改字段类型'
+                           addFieldList=replace(addFieldList,"tempdataid","articleid")
+                           call echo("tempdataid文章图片表对应文章ID",fieldValue)
+                           call echo("addFieldList",addFieldList)
+                            
 						'BBS大类20171003
 						elseif (tableName = "bbsdetail" or tableName = "bbscolumn") and fieldName = "parentid" then	 
                             fieldValue = handleGetColumnID("bbscolumn", fieldValue)  
@@ -513,7 +562,7 @@ end function
 '批量导入栏目列表 20160716
 function nBatchImportColumnList(folderPath,content,splField, byval listStr, nOK, tableName)
     dim splStr, splxx, isColumn, columnName, s, c, nLen, id, parentIdArray(99), columntypeArray(99), flagsArray(99), nIndex, fieldStr, fieldName, valueStr, nCount, bodycontent
-    dim fileName, templatepath, rowC,addColumnNameData
+    dim fileName, templatepath, rowC,addColumnNameData,sAboutContent
     isColumn = false 
     nCount = 0 
     listStr = replace(listStr, vbTab, "    ") 
@@ -581,7 +630,9 @@ function nBatchImportColumnList(folderPath,content,splField, byval listStr, nOK,
                 addColumnNameData=readFile(folderPath & "/" & columnName & ".dat","utf-8")
                 'if addColumnNameData<>"" then call eerr("addColumnNameData",addColumnNameData)
 				s=getStrCut(content & addColumnNameData,"【"& columnName &"】","【/"& columnName &"】",2)
+                sAboutContent=getStrCut(content & addColumnNameData,"【"& columnName &"-aboutcontent】","【/"& columnName &"-aboutcontent】",2)
                 rowC = rowC & "【bodycontent】" & s & "【/bodycontent】" & vbCrLf
+                rowC = rowC & "【aboutcontent】" & sAboutContent & "【/aboutcontent】" & vbCrLf
 				if s <>"" then
 					'call echo("s",s)				
 				end if

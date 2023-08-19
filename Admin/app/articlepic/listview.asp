@@ -1,13 +1,15 @@
 ﻿<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 '#禁止自动更新当前文件'  #号去掉代表此文件不被程序自动更新替换掉
 call openconn()  
-dim msg,isTrue,addSql,id,articleid,title,pic,createtime,isthrough
+dim msg,isTrue,addSql,id,articleid,title,pic,sortrank,createtime,isthrough
 
 id=getStrToNumber(request("id"))
 articleid=getStrToNumber(request("articleid"))
 if articleid="" then articleid=null
 title=request("title")
 pic=request("pic")
+sortrank=getStrToNumber(request("sortrank"))
+if sortrank="" then sortrank=null
 createtime=request("createtime")
 if createtime="" then createtime=null
 isthrough=request("isthrough")
@@ -37,6 +39,7 @@ if request("act")="save" then
       rs("articleid")=articleid
       rs("title")=title
       rs("pic")=pic
+      rs("sortrank")=sortrank
       rs("createtime")=createtime
       rs("isthrough")=isthrough
       rs("ip")=getIP()
@@ -53,6 +56,7 @@ elseif id<>"" then
     articleid=rs("articleid")
     title=rs("title")
     pic=rs("pic")
+    sortrank=rs("sortrank")
     createtime=rs("createtime")
     isthrough=rs("isthrough")
 
@@ -104,6 +108,11 @@ i.icon-wenhao {border: 1px #ff5722 solid; color: #ff5722; font-size: 10px; margi
       <label class='layui-form-label'>图片：</label>
       <div class='layui-input-inline' style='line-height:40px;color: #999;'>
     <a href='<%=pic%>' target='_blank' title='点击查看'><%=IIF(pic<>"",pic,"")%></a>      </div><!--pic-->
+    </div>
+    <div class='layui-form-item'>
+      <label class='layui-form-label'>排序：</label>
+      <div class='layui-input-inline' style='line-height:40px;color: #999;'>
+    <%=sortrank%>      </div><!--sortrank-->
     </div>
     <div class='layui-form-item'>
       <label class='layui-form-label'>创建时间：</label>

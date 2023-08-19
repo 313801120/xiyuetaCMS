@@ -537,7 +537,7 @@ end function
 function TS_getTableMemberPicImg(sType,userid) 
   dim splxx,nHeight
   nHeight=80
-  userid=userid&""
+  userid=userid&"" 
   if userid="" then 
   	TS_getTableMemberPicImg=""
   	exit function
@@ -552,6 +552,18 @@ function TS_getTableMemberPicImg(sType,userid)
   	TS_getTableMemberPicImg="<img src='"& rs("pic") &"' height='"& nHeight &"'>"
   end if:rs.close
 end function
+'图片地址转显示html图片-80  为图片宽高 srctohtmlimg-80-60
+function TS_srctohtmlimg(sType,pic)
+	dim splA,width,height
+	splA=split(sType&"--","-") 
+	width=splA(1)
+	height=splA(2)
+	if width="" then width="80"
+	if height="" then height="80"
+  	TS_srctohtmlimg="<img src='"& pic &"' style='max-width:"& width &"px;max-height:"& height &"px'>"
+end function 
+
+
  
 '特殊处理 20230424'  如 TS_getTableCount("getTableCount-xiyuetaarticle-xiyuetaid-isthrough1",rs("userid"))
 function TS_getTableCount(sType,id)

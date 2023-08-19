@@ -17,6 +17,8 @@ onAutoAddDataToAccess=true  '开启自动添加数组到数据库里(主要是�
  
 dim sKeyword
 sKeyword=replace(request("k"),"'","")'搜索'
+dim searchDid
+searchDid=replace(request("searchDid"),"'","")'搜索大类'
 
 id=replace(request("id"),"'","")
 ' if id<>"" then call eerr("id",id)
@@ -100,7 +102,7 @@ if request("nav")<>"" then
   end if
 
 '为文章详细内容页'
-elseif thisUrlFileName="detail.asp" then
+elseif right(thisUrlFileName,10)="detail.asp" then
     pageType="detail"
     webFileName=phptrim(replace(request("filename"),"'",""))
     if webFileName<>"" then
@@ -115,6 +117,8 @@ elseif thisUrlFileName="detail.asp" then
         rs.update
       	parentid=rs("parentid")            '上一级栏目ID'
         title=uTitle & rs("title")         '标题(前面加个地区信息)'
+      
+
         aboutcontent=rs("aboutcontent")    '文章介绍'
         bodycontent=rs("bodycontent")      '文章内容'
         createtime=rs("createtime")        '文章创建时间'
@@ -191,6 +195,11 @@ elseif id<>"" then
       if rs("webtitle")<>"" then webtitle=uTitle & rs("webtitle")              '网页标题等于栏目自定标题(前面加个地区信息)'
       if rs("webkeywords")<>"" then webkeywords=rs("webkeywords")              '网页关键词'
       if rs("webdescription")<>"" then webdescription=rs("webdescription")     '网页描述'
+    else
+      '导航不存在显示404    20230818
+      Response.Clear()
+      Response.Status = "404 Not Found"
+      Response.End()
     end if:rs.close
 
 end if
@@ -328,7 +337,7 @@ end function
 
 '获得文章链接 重写于20220524
 function getArticleUrl(id) 
-  dim dirName,parentid
+  dim dirName,parentid,columntype
   if id="" then getArticleUrl="": exit function
 
 
@@ -340,23 +349,27 @@ function getArticleUrl(id)
         getArticleUrl=urlWanZhen(rs("filename") )
         exit function
     end if
-    parentid=id
+    parentid=rs("parentid")
   end if:rs.close
-
-  '为动态网站时，直接显示㚃'
-  if asporhtml=false then
-    getArticleUrl=urlWanZhen("detail.asp?id="&id)
-    exit function
-  end if
 
   '栏目目录 文件名称不为空'
   if parentid<>"" then
-    rs.open "select * from ["& db_PREFIX &"webcolumn] where filename<>'' and id="&parentid,conn,1,1
+    rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&parentid,conn,1,1
     if not rs.eof then      
-      dirName=rs("filename") & "/"'目录名'
+      if rs("filename")<>"" then
+        dirName=rs("filename") & "/"'目录名' 
+      end if
+      columntype=rs("columntype") & "_"
     end if:rs.close
   end if 
-  getArticleUrl=urlWanZhen(dirName & "detail_"& id &".html")
+
+  '为动态网站时，直接显示㚃'
+  if asporhtml=false then
+    getArticleUrl=urlWanZhen(columntype & "detail.asp?id="&id)
+    exit function
+  end if
+  ' call echo(parentid,columntype)
+  getArticleUrl=urlWanZhen(dirName & columntype & "detail_"& id &".html")
 end function
  
 

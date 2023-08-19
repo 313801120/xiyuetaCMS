@@ -579,6 +579,9 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[tags] VarChar Default """","                                        '标签
         sql = sql & "[price] float Default 0,"                                            '价格(积分)
         sql = sql & "[nbuy] Int Default 0,"                                               '是否购买，默认为0
+
+
+        sql = sql & "[tempdataid] Text Default """","                                      '暂存，文章图片对应用20230518
         
 
         sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
@@ -674,6 +677,22 @@ sub webData(db_PREFIX, loginname, loginpwd)
         conn.execute(sql) 
     end if
 
+    '文章搜索统计(20230517)-------------------------------
+    tableName = db_PREFIX & "articlesearch" 
+    if checkCreateTable(tableName) = false then
+        sql = "Create Table [" & tableName & "] (id Int Identity(0,1) Primary Key,"  
+        
+        sql = sql & "[title] VarChar Default """","                                       '标题
+        sql = sql & "[count] Int Default 1,"                                              '统计数
+        sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
+        sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
+        sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 
+        sql = sql & "[ip] VarChar Default """","                                          'IP地址  
+        sql = sql & "[bodycontent] Text Default """")"                                    '备注
+        if MDBPath = "" then sql = handleSqlServer(sql)                                 '把Access数据库类型转成SqlServer数据库类型
+        conn.execute(sql) 
+    end if
+
     '文章图片(20230516)-------------------------------
     tableName = db_PREFIX & "articlepic" 
     if checkCreateTable(tableName) = false then
@@ -682,6 +701,8 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[memberid] Int Default -1,"                                          '会员ID  
         sql = sql & "[pic] VarChar Default """","                                         '图片
         sql = sql & "[title] VarChar Default """","                                       '标题
+        sql = sql & "[tempdataid] Text Default """","                                      '暂存，文章图片对应用20230518
+        sql = sql & "[sortrank] Int Default 0,"                                           '顺序
         sql = sql & "[isthrough] Int Default 1,"                                          '是否通过
         sql = sql & "[createtime] DateTime Default Now(),"                                '创建时间 
         sql = sql & "[updatetime] DateTime Default Now(),"                                '修改时间 

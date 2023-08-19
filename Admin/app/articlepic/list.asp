@@ -37,7 +37,7 @@ If Request("act") = "list" Then
       '搜索追加部分'
     End If
     '追加sql部分'
-    mysql = sql1 & sql & " order by id desc"'" order by sortrank" 
+    mysql = sql1 & sql & " order by sortrank desc"'" order by sortrank" 
     'call die(mysql)
     rs.Open mysql, conn, 1, 1 
 
@@ -74,7 +74,7 @@ If Request("act") = "list" Then
                 sHr = "," 
             End If 
 
-	       stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""tsfieldarticletitle"":""" & TS_getArticleTitle("getArticleTitle-articleid",rs("articleid")) & """,""title"":""" & jsonCL(rs("title")) & """,""pic"":""" & jsonCL(rs("pic")) & """,""createtime"":""" & rs("createtime") & """,""isthrough"":""" &  IIF(rs("isthrough")<>0," checked","") & """}" &sHr & ""
+	       stemp = stemp & "{""i"":""" & i & """,""id"":""" & rs("id") & """,""tsfieldarticletitle"":""" & TS_getArticleTitle("getArticleTitle-articleid",rs("articleid")) & """,""title"":""" & jsonCL(rs("title")) & """,""pic"":""" & TS_srctohtmlimg("srctohtmlimg-80-80",rs("pic")) & """,""sortrank"":""" & rs("sortrank") & """,""createtime"":""" & rs("createtime") & """,""isthrough"":""" &  IIF(rs("isthrough")<>0," checked","") & """}" &sHr & ""
            rs.MoveNext 
         Wend 
     End If 
@@ -93,6 +93,7 @@ elseif request("act")="del" then
 
 '在线修改
 elseif request("act")="onlineedit" then 
+  dim field 
   field=request("field")
   if field="" then field=title
   title=request("title")
@@ -242,7 +243,8 @@ layui.use(['form','table','upload'],function(){
                ,{ field: 'id', title: 'ID',width:70, sort: true }
                ,{ field: 'tsfieldarticletitle', title: '文章标题', sort: true }
                ,{ field: 'title', title: '标题', sort: true }
-               ,{ field: 'pic', title: '图片', sort: true }
+               ,{ field: 'pic', title: '图片',minWidth:120, sort: true }
+               ,{ field: 'sortrank', title: '排序',edit:true, sort: true }
                ,{ field: 'createtime', title: '创建时间',width:160, sort: true }
                ,{field: 'isthrough', title: '审核',width:180, sort: true, align:'center', templet:function(d){
 return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' <%=IIF(checkPermission("{isthrough审核}")=false," disabled","")%>>'}}
@@ -485,7 +487,7 @@ return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isth
                 cache: true,
                 dataType: "json",
                 url: "?act=onlineedit&id="+data.id,
-                data: { "title":  value  },
+                data: { "title":  value,"field":field  },
                 success: function(data) {
                     switch (data.status) {
                         case "y": 

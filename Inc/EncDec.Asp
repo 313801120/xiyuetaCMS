@@ -89,7 +89,7 @@ Public Function toUnicode(str)
         j = AscW(c) 
         If j < 0 Then
             j = j + 65536 
-        End If 
+        End If  
         If j >= 0 And j <= 128 Then
             If p = "c" Then
                 toUnicode = " " & toUnicode 

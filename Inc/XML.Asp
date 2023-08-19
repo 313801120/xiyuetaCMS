@@ -90,6 +90,16 @@ function saveRemoteFile_WinHttp(httpurl,localFileName, refererUrl)
             .send(postStr)                                                                  'Post 方式：.Send (参数)
             .waitForResponse                                                                '等待返回请求，XMLHTTP中也可以使用
 			
+
+            '暂时留着20230617'
+            ' dim responseHeaders,header        
+            ' responseHeaders = .GetAllResponseHeaders
+            ' responseHeaders = Split(responseHeaders, vbCrLf)
+            ' For Each header in responseHeaders
+            '   Response.Write(header & "<br>")
+            ' Next
+            ' call echo("Set-Cookie",.getResponseHeader("Set-Cookie"))
+
 		 
             getRemoteData =.responseBody 
 			saveRemoteFile_WinHttp =.Status   
@@ -136,6 +146,10 @@ function saveRemoteFile_WinHttp(httpurl,localFileName, refererUrl)
 	if err then
 		saveRemoteFile_WinHttp=9999
 	end if
+end function
+'获得请求后的cooke值'20230615
+function getWinHttpCooke(winHttp)
+    winHttp.getResponseHeader("Set-Cookie")
 end function
 '获得网址内容，WinHttp版 20230516'
 function getHttpurl_WinHttp(httpurl,sCharSet,refererUrl)

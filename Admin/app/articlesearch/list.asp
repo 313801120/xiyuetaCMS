@@ -13,7 +13,7 @@ If Request("act") = "list" Then
     stemp = "{""data"":[" 
     sql1 = "select * from ["& db_PREFIX &"articlesearch]" 
 
-    
+     
     If Request("date_min") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
       sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0" 
@@ -198,7 +198,7 @@ End If
  
 
  <script type="text/html" id="barDemo">
-  <!-- <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>  -->
+  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a> 
   <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> 
 </script>
 <table class="layui-hide" id="demo" lay-filter="demo"></table>
