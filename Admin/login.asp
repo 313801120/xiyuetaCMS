@@ -5,7 +5,7 @@ function checkAdminLoginIPAllow(ip)
     dim content,isAllowLogin,splstr,splxx,i,s,splA,splB,j,s1
     isAllowLogin=false
     content=readfile("Admin_Login_Allow_IP.dat","")
-    splstr=split(content,vbcrlf)
+    splstr=split(content,chr(10))  'vbcrlf 换成chr(10) 传github再下载这里需要这么改'
     for each s in splstr
         s=phptrim(s)
         if s<>"" then
