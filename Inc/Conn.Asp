@@ -29,10 +29,10 @@ Public Sub openConn()
 	'sqlServerDatabaseName="aabb"
 	'sqlServerHostIP="127.0.0.1"
 	dim splstr,s
-	splstr=split("/Templates2015/sharembweb/WebData|/Templates2015/test/WebData|/Data/WebData","|")
+	splstr=split("/install/WebData","|")
 	for each s in splstr
 		if checkFolder(s)=true and s<>"" then
-			autoCreateDataUrl=autoCreateDataUrl & "<a href='/inc/install.asp?webdataDir="& s &"'>点击创建数据库("& s &")</a><br>" 
+			autoCreateDataUrl=autoCreateDataUrl & "<a href='/install/?webdataDir="& s &"'>点击创建数据库("& s &")</a><br>" 
 		end if
 	next
 	
