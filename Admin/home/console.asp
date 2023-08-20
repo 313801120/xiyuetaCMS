@@ -8,47 +8,13 @@ dim totalVisits,dayVisits,sql,chatTotalVisits,chatDayVisits,activeUser,totalUser
 
 if request("act")="usetpl" then
 
-  call useTpl2022(request("tpl"))
-
-end if
-
-function useTpl2022(tpl) 
-  dim tplFolderPath,content,splstr,backFolder,fileName,filePath,toFilePath,backFilePath
-  dim cssFolder,cssFilePath,toCssFilePath
-  if tpl="" then
-    call die( "{""info"": ""模板为空!"",""status"": ""n""}")
-  end if
-  tplFolderPath="../../tpl/" & tpl
-  content=getDirFileNameList(tplFolderPath,"asp")
-  call createfolder("../../back")  '备份目录'
-  backFolder="../../back/" & format_Time(now(),6)  '备份目录'
-  call createfolder(backFolder)  '备份目录'
-  splstr=split(content,vbcrlf)
-  for each fileName in splstr
-    if fileName<>"" then
-      filePath = tplFolderPath & "/" &fileName
-      toFilePath="../../" & fileName'left(fileName,len(fileName)-4)
-      backFilePath=backFolder & "/" & fileName'left(fileName,len(fileName)-4)
-      ' call echo(filePath,toFilePath)
-      ' call echo(backFilePath,backFilePath)
-      call moveFile(toFilePath,backFilePath) '移到备份区'
-      content=readfile(filePath,"utf-8")
-      content=replace(content,"<!--#Include file = ""tpl/","<!--#Include file = ""tpl/" & tpl & "/tpl/")
-      ' call copyFile(filePath,toFilePath)  '复制一份'
-      call writetofile(toFilePath,content,"utf-8")
-    end if 
-  next
-    '更新当前使用模板名称'
-    rs.open"select * from ["&db_PREFIX&"website]",conn,1,3
-    if not rs.eof then
-        rs("tplname")=tpl
-        rs.update
-    end if:rs.close
+  call useTpl2022("../../",request("tpl"))
 
   response.write "{""info"": ""应用成功!"",""status"": ""y""}"
   Response.end()
-end function
- 
+
+end if
+
 '总访问量PV'
 rs.open"select sum(pv)as tpv from ["&db_PREFIX&"count]",conn,1,1
 totalVisits=IIF(isnull(rs("tpv"))=true,0,rs("tpv")):rs.close
@@ -160,7 +126,12 @@ totalUser=conn.execute("select count(*) from["&db_PREFIX&"member]")(0)
             </div>
             <div class="layui-col-sm12">
                 <div class="layui-card">
-                    <div class="layui-card-header">本地模板</div>
+                    <div class="layui-card-header">本地模板
+
+                        <div class="layui-btn-group layuiadmin-btn-group">
+                            <a lay-href="app/tpl/userlist.asp" class="layui-btn layui-btn-primary layui-btn-xs">更多模板</a>
+                        </div>
+                    </div>
                     <div class="layui-card-body">
                         <%
 dim contnet,splstr,folderName,img

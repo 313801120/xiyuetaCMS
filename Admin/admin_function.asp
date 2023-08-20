@@ -646,4 +646,43 @@ function TS_getArticleTitle(sType,articleid)
 		TS_getArticleTitle=rsx("title")   
 	end if:rsx.close
 end function
+
+
+
+function useTpl2022(dir,tpl) 
+  ' call  eerr("tpl",tpl)
+  dim tplFolderPath,content,splstr,backFolder,fileName,filePath,toFilePath,backFilePath
+  dim cssFolder,cssFilePath,toCssFilePath
+  if tpl="" then
+    call die( "{""info"": ""模板为空!"",""status"": ""n""}")
+  end if
+  tplFolderPath=dir & "/tpl/" & tpl
+  content=getDirFileNameList(tplFolderPath,"asp")
+  call createfolder(dir & "/back")  '备份目录'
+  backFolder=dir & "/back/" & format_Time(now(),6)  '备份目录'
+  call createfolder(backFolder)  '备份目录'
+  splstr=split(content,vbcrlf)
+  for each fileName in splstr
+    if fileName<>"" then
+      filePath = tplFolderPath & "/" &fileName
+      toFilePath=dir & "/" & fileName'left(fileName,len(fileName)-4)
+      backFilePath=backFolder & "/" & fileName'left(fileName,len(fileName)-4)
+      ' call echo(filePath,toFilePath)
+      ' call echo(backFilePath,backFilePath)
+      call moveFile(toFilePath,backFilePath) '移到备份区'
+      content=readfile(filePath,"utf-8")
+      content=replace(content,"<!--#Include file = ""tpl/","<!--#Include file = ""tpl/" & tpl & "/tpl/")
+      ' call copyFile(filePath,toFilePath)  '复制一份'
+      call writetofile(toFilePath,content,"utf-8")
+    end if 
+  next
+    '更新当前使用模板名称'
+    rs.open"select * from ["&db_PREFIX&"website]",conn,1,3
+    if not rs.eof then
+        rs("tplname")=tpl
+        rs.update
+    end if:rs.close
+    useTpl2022="OK=" & handlepath(tplFolderPath) & " -> " & ubound(splstr)
+end function
+ 
 %>

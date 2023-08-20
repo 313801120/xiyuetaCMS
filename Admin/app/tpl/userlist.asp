@@ -1,18 +1,20 @@
 ﻿<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><%
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname
 isDebug=false  '调试为假，则不显示信息'
 
 '获得当前版本号与账号，与服务器端匹配'
 dim serverUrl,webinfo
 webinfo=request.serverVariables("SERVER_NAME")
-rs.open "select username,version,resurl from " & db_PREFIX & "website" ,conn,1,1
+rs.open "select username,version,resurl,tplname from " & db_PREFIX & "website" ,conn,1,1
 if not rs.eof then 
     webinfo=webinfo&"@"&rs("username")&"@"&rs("version")
     '服务器地址'
     serverUrl=rs("resurl")      '资源服务器地址'
+    tplname=rs("tplname")        '当前使用模板名'
 end if:rs.close
 if serverUrl="" then serverUrl=getServerUrl()
+ 
 
 ' call echo("webinfo",webinfo)
 ' call echo("serverUrl",serverUrl)
@@ -38,7 +40,7 @@ end function
 
 
 '应用模板并运行动作'
-sub useTplAction(tplid,action)
+function useTplAction(tplid,action)
     dim c,splstr,splxx,pagename,saction,s,res,url
     call createFolder("../../../tpl")      '创建TPL文件夹'
     url=serverUrl & "/api/tpl/action/?tplid="&tplid&"&info="&webinfo
@@ -71,11 +73,11 @@ sub useTplAction(tplid,action)
     next 
 
     if isDebug then 
-        call die(c) 
+        useTplAction = c
     else
-        call die("完成，调试为假，不显示详细信息，可手机修改后查看回显信息")
+        useTplAction = "完成，调试为假，不显示详细信息，可手动修改后查看回显信息"
     end if
-end sub
+end function
 '下载服务器上的资源'
 function downServerRes(res)
     dim splstr,s,filePath,url,msg
@@ -85,7 +87,7 @@ function downServerRes(res)
             filePath="../../../" & s
             url=serverUrl & s
             filePath=handlePath(filePath)
-            msg="msg"
+            msg=""
             if checkfile(filePath) then
                 msg=" &nbsp; <font color=red>本有存在，无需下载</font>"
             end if
@@ -150,8 +152,7 @@ function forActionList(tplid,action,pagename,saction)
         end if
     next
 
-    if action<>"view" then  '为查看是不要生成网站了'
-        call eerr("aa","bb")
+    if action<>"view" then  '为查看是不要生成网站了' 
         filePath="../../../" & pagename
         if checkfile(filePath)=false then    '不存在调用默认模块'       
             if checkfile("../../../tpl.asp")=false then
@@ -238,7 +239,7 @@ end function
 If Request("act") = "list" Then
     dim updateusername,sListStr,splVersion
     ' call eerr("url",serverUrl & "/api/tpl/list/?info="&webinfo)
-    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&key="&escape(request("key"))&"&page="&request("page"),"utf-8")
+    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&tplname="&tplname&"&key="&escape(request("key"))&"&page="&request("page"),"utf-8")
 
     '服务器地址错误时，重复获得地址，并更新资源地址'
     if instr(sListStr,"count"":")=false then
@@ -255,9 +256,14 @@ If Request("act") = "list" Then
     call die(sListStr)
 
 elseIf Request("act") = "use" Then  '为使用模板'
-    call useTplAction(request("tplid"),"use")  
+    ' call useTplAction(request("tplid"),"use")  
+    s= useTplAction(request("tplid"),"view")
+
+    call useTpl2022("../../../",request("tplid"))
+    call die(s)
 elseIf Request("act") = "view" Then   '为查看模板，放到对应的目录 如 /tpl/TPL500'
-    call useTplAction(request("tplid"),"view")
+    s= useTplAction(request("tplid"),"view")
+    call die(s)
 elseIf Request("act") = "myuser" Then  '获得用户信息20230819'
     sListStr=gethttpurl(serverUrl & "/api/tpl/user/?info="&webinfo,"utf-8")
     call die("{""info"": """& sListStr &""",""status"": ""y""}")
