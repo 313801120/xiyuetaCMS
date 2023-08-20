@@ -1,6 +1,7 @@
 ﻿<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><%
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug
+isDebug=false  '调试为假，则不显示信息'
 
 '获得当前版本号与账号，与服务器端匹配'
 dim serverUrl,webinfo
@@ -23,19 +24,14 @@ webinfo=escape(webinfo)'转码'
 '获得服务器地址，并更新'
 function getServerUrl()
     dim c,url
-    if getip()="127.0.0.1" then '为本地则测试本地'
-        c="{resurl:'http://res/'}"
-    else
-        c=gethttpurl("http://xiyueta.com/api/cms/?act=resurl&info="&webinfo,"utf-8")
-    end if
+    c="{resurl:'http://res/'}"
+    c=gethttpurl("http://xiyueta.com/api/cms/?act=resurl&info="&webinfo,"utf-8")  '获得服务器对应资源地址'
     if instr(c,"{resurl:'")>0 then
         url=strcut(c,"{resurl:'","'}",0)
         if url<>"" then
             conn.execute("update " & db_PREFIX & "website set resurl='"& url &"'") '更新资源地址'            
         end if
     end if
-    ' call echo("c",c)
-    ' call echo("url",url)
     getServerUrl=url
 end function
 
@@ -50,10 +46,12 @@ sub useTplAction(tplid,action)
     if instr(c,"[$]")>0 then
         splxx=split(c,"[$]")
         if ubound(splxx)>=2 then
-            call die(c)
+            call eerr("提示信息",c)
         end if
     end if
-    call echo(url,c)
+    if instr(c,"[,]")=false then
+        call eerr(url,c)
+    end if
     splstr=split(c,"[,]")
     for each s in splstr
         if instr(s,"[|]")>0 then
@@ -61,33 +59,41 @@ sub useTplAction(tplid,action)
             pagename=splxx(1)
             saction=splxx(2)
             res=splxx(3)
-            call echo("pagename",pagename)'页名'
-            call echo("saction",saction)'动作'
-            call echo("res",res)'资源
+            if isDebug then call echo("pagename",pagename)'页名'
+            if isDebug then call echo("saction",saction)'动作'
+            if isDebug then call echo("res",res)'资源
             if pagename<>"" then
                 call forActionList(tplid,action,pagename,saction)        
                 call downServerRes(res)    
             end if
+            if isDebug then call hr()
         end if
     next 
 
-
-    call die(c) 
+    if isDebug then 
+        call die(c) 
+    else
+        call die("完成，调试为假，不显示详细信息，可手机修改后查看回显信息")
+    end if
 end sub
 '下载服务器上的资源'
 function downServerRes(res)
-    dim splstr,s,filePath,url
+    dim splstr,s,filePath,url,msg
     splstr=split(res,vbcrlf)
     for each s in splstr
         if s<>"" then
             filePath="../../../" & s
             url=serverUrl & s
-            call echo("下载资源",url & " ==>> " & filePath)
-            call echo(handlePath(filePath),checkfile(filePath))
-            if checkfile(filePath)=false then
+            filePath=handlePath(filePath)
+            msg="msg"
+            if checkfile(filePath) then
+                msg=" &nbsp; <font color=red>本有存在，无需下载</font>"
+            end if
+            if isDebug then call echo("资源地址",url & " ==>> " & filePath & msg)
+            if msg="" then
                 call saveRemoteFile(url,filePath)
                 call createDirFolder(filePath)'创建一组目录'
-                call echo("下载资源成功",filePath)
+                if isDebug then call echo("下载资源成功",filePath)
             end if
         end if
     next
@@ -107,9 +113,9 @@ function forActionList(tplid,action,pagename,saction)
         did="":row="":ascdesc="":str="":str1="":str2=""  '初始化为空内容'
         if s <>"" then
             did="":row=""
-            call echo("s",s)
+            if isDebug then call echo("s",s)
             parame=strCut(s,"{","}",0)
-            call echo("parame",parame)
+            if isDebug then call echo("parame",parame)
             if parame<>"" then
                 s=replace(s,"{"& parame &"}","")
                 parame=parame&","
@@ -122,17 +128,19 @@ function forActionList(tplid,action,pagename,saction)
                 str3=strCut(parame,"str3:",",",0)
                 str4=strCut(parame,"str4:",",",0)
                 str5=strCut(parame,"str5:",",",0)
-                call echo("did",did)
-                call echo("row",row)
-                call echo("asc",ascdesc)
-                call echo("str",str)
-                call echo("str1",str1)
-                call echo("str2",str2)
-                call echo("str3",str3)
-                call echo("str4",str4)
-                call echo("str5",str5)
+                if isDebug then 
+                    call echo("did",did)
+                    call echo("row",row)
+                    call echo("asc",ascdesc)
+                    call echo("str",str)
+                    call echo("str1",str1)
+                    call echo("str2",str2)
+                    call echo("str3",str3)
+                    call echo("str4",str4)
+                    call echo("str5",str5)
+                end if
             end if
-            call echo("s2",s)
+            if isDebug then call echo("s2",s)
             s=replace(s,vbtab," ")
             s=replace(s,"  "," ")
             s=replace(s,"  "," ")
@@ -143,9 +151,12 @@ function forActionList(tplid,action,pagename,saction)
     next
 
     if action<>"view" then  '为查看是不要生成网站了'
-
+        call eerr("aa","bb")
         filePath="../../../" & pagename
-        if checkfile(filePath)=false then    '不存在调用默认模块'    
+        if checkfile(filePath)=false then    '不存在调用默认模块'       
+            if checkfile("../../../tpl.asp")=false then
+                call die("默认模板页未找到，查看失败，请注意查看 =>> " & handlePath(filePath))
+            end if
             html=readfile("../../../tpl.asp","utf-8")
         else
             html=readfile(filePath,"utf-8")
@@ -154,13 +165,16 @@ function forActionList(tplid,action,pagename,saction)
         c=splxx(0) & "<body>" & vbcrlf & c & vbcrlf & "</body>" & vbcrlf &"</html>"
 
         call writetofile(filePath,c,"utf-8")
-        call echo("生成网页",filePath)
+        if isDebug then call echo("生成网页",filePath)
 
     else
         '生成预览网页' 
         filePath="../../../tpl/" & tplid & "/" & pagename
 
-        if checkfile(filePath)=false then    '不存在调用默认模块'    
+        if checkfile(filePath)=false then    '不存在调用默认模块'     
+            if checkfile("../../../tpl.asp")=false then
+                call die("默认模板页未找到，应用失败，请注意查看 =>> " & handlePath(filePath))
+            end if
             html=readfile("../../../tpl.asp","utf-8")
         else
             html=readfile(filePath,"utf-8")
@@ -169,12 +183,12 @@ function forActionList(tplid,action,pagename,saction)
         c=splxx(0) & "<body>" & vbcrlf & c & vbcrlf & "</body>" & vbcrlf &"</html>"
         c=replace(c,"<body>","<body>" & vbcrlf & "<"&"% onAutoAddDataToAccess=false %"&">" & showThisWebAuthorInfo2022())    
         call writetofile(filePath,c,"utf-8")
-        call echo("生成预览网页",filePath)
+        if isDebug then call echo("生成预览网页",filePath)
 
     end if 
 
 end function
-
+'显示当前网站作者信息'
 function showThisWebAuthorInfo2022()
     dim content,splstr,s,c
     content=authorInfo2()
@@ -212,10 +226,10 @@ function getTplModle(testViewDir,sType,id,style,did,row,ascdesc,str,str1,str2,st
 
   
 
-    call echo("样式url",url)
+    if isDebug then call echo("样式url",url)
     c=gethttpurl(url,"utf-8")
     call writetofile("../../../tpl/" & testViewDir & fileName,c,"utf-8")
-    call echo("获得模板块",fileName)
+    if isDebug then call echo("获得模板块",fileName)
     getTplModle="<!--#Include file = ""tpl/"& fileName &"""-->"
 end function
 
@@ -240,14 +254,13 @@ If Request("act") = "list" Then
     end if
     call die(sListStr)
 
-elseIf Request("act") = "use" Then  
-    call useTplAction(request("tplid"),"use")
-elseIf Request("act") = "view" Then  
+elseIf Request("act") = "use" Then  '为使用模板'
+    call useTplAction(request("tplid"),"use")  
+elseIf Request("act") = "view" Then   '为查看模板，放到对应的目录 如 /tpl/TPL500'
     call useTplAction(request("tplid"),"view")
 elseIf Request("act") = "myuser" Then  '获得用户信息20230819'
     sListStr=gethttpurl(serverUrl & "/api/tpl/user/?info="&webinfo,"utf-8")
-
-  call die("{""info"": """& sListStr &""",""status"": ""y""}")
+    call die("{""info"": """& sListStr &""",""status"": ""y""}")
 End If 
 
 
