@@ -68,11 +68,11 @@ dim db_PREFIX : db_PREFIX = "xy_"                                               
 
 dim countTi:countTi=200 '默认显示题数
 dim WEB_CACHEFile : WEB_CACHEFile = "[adminDir]/[EDITORTYPE]cachedata.txt" '缓冲文件
-dim isLoginIPAllow:isLoginIPAllow=true  '是否开启登录后台管理IP限制 20220627
-dim isUniquelogin:isUniquelogin=true  '开启后台唯一登录 20230316
+dim isLoginIPAllow:isLoginIPAllow=false  '是否开启登录后台管理IP限制 20220627
+dim isUniquelogin:isUniquelogin=false  '开启后台唯一登录 20230316
 dim version:version="V1.3"       '(20230311升级到1.3)'
 
-dim pubIsDownIPJson:pubIsDownIPJson=true'是否下载IP查询不到时下载ip138数据20221029
+dim pubIsDownIPJson:pubIsDownIPJson=false'是否下载IP查询不到时下载ip138数据20221029
 dim pubWebSite:pubWebSite=""   '全部网站域名地址20221115' https://www.xiyueta.com/
 
 
