@@ -155,10 +155,10 @@ function forActionList(tplid,action,pagename,saction)
     if action<>"view" then  '为查看是不要生成网站了' 
         filePath="../../../" & pagename
         if checkfile(filePath)=false then    '不存在调用默认模块'       
-            if checkfile("../../../tpl.asp")=false then
+            if checkfile("../../../web/tpl.asp")=false then
                 call die("默认模板页未找到，查看失败，请注意查看 =>> " & handlePath(filePath))
             end if
-            html=readfile("../../../tpl.asp","utf-8")
+            html=readfile("../../../web/tpl.asp","utf-8")
         else
             html=readfile(filePath,"utf-8")
         end if
@@ -173,10 +173,10 @@ function forActionList(tplid,action,pagename,saction)
         filePath="../../../tpl/" & tplid & "/" & pagename
 
         if checkfile(filePath)=false then    '不存在调用默认模块'     
-            if checkfile("../../../tpl.asp")=false then
+            if checkfile("../../../web/tpl.asp")=false then
                 call die("默认模板页未找到，应用失败，请注意查看 =>> " & handlePath(filePath))
             end if
-            html=readfile("../../../tpl.asp","utf-8")
+            html=readfile("../../../web/tpl.asp","utf-8")
         else
             html=readfile(filePath,"utf-8")
         end if

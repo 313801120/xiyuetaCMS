@@ -23,7 +23,7 @@ if sType="hf" then
 
 end if 
 %>
-<!--#include file="member_safe.asp"-->
+<!--#include file="../inc/member_safe.asp"-->
 <%
 webTitle="联系客服"
 nickname="客服"
@@ -51,14 +51,14 @@ end if
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><%=webTitle%></title>
-    <link rel="stylesheet" href="kf/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="headerbox">
         <div class="header">
             <div class="headerL">
                 <a onclick="javascript:history.back(-1)" class="goback">
-                    <img src="kf/images/goback.png" /></a>
+                    <img src="images/goback.png" /></a>
             </div>
             <div class="headerC">
                 <p><%=webTitle%></p>
@@ -94,7 +94,7 @@ end if
 
 <iframe name="chat" id="chat" src="chat.asp?type=<%=sType%>&touserid=<%=touserid%>" scrolling="no" class="bfEgQL"></iframe>
 
-<script src="js/jquery-1.8.1.min.js"></script>
+<script src="../js/jquery-1.8.1.min.js"></script>
 <script>
     var nWidth=$(window).width();
     if(nWidth<500){

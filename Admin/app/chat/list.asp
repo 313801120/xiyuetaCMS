@@ -127,7 +127,7 @@ End If
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>部件列表</title>
+<title>在线客服列表</title>
 <script type="text/javascript" src="../../js/jquery.js"></script><link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
 <style>
@@ -198,7 +198,7 @@ layui.use(['form','table'],function(){
                 // , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
 
   , { fixed: 'right', title: '操作', width: 210, templet:function(d){
-return '<a class="layui-btn layui-btn-xs layui-btn-normal" target="_blank" href="/kf.asp?type=hf&touserid='+d.userid+'"><i class="layui-icon layui-icon-edit"></i>聊天</a>  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除聊天记录</a> '
+return '<a class="layui-btn layui-btn-xs layui-btn-normal" target="_blank" href="/kf/?type=hf&touserid='+d.userid+'"><i class="layui-icon layui-icon-edit"></i>聊天</a>  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除聊天记录</a> '
 
 }}
 

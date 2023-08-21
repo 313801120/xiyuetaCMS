@@ -1,5 +1,5 @@
 <!--#Include virtual = "/common.Asp"-->
-<!--#include file="member_safe.asp"--><%
+<!--#include file="../inc/member_safe.asp"--><%
 dim content,isMobile,startId,endId,isDebug,nPageSize
 isDebug=false       '调试是否开启'
 endId=0  '最后ID'
@@ -361,7 +361,7 @@ html, body {
 }
 
 #__widget_msg_container .upimg{
-    max-width: 50%;
+    max-width:100%;
 }
 
 </style>
@@ -376,7 +376,7 @@ html, body {
             <div class="sc-hehmy0-2 gFEAYH">
                 <div class="sc-17esfwn-0 kQtTCX">
                     <div class="sc-17esfwn-1 jIxeoH">
-                        <div><img class="avatar" alt="#" src="kf/images/YjrSvTxbOikeXFpUwcv2.jpg"></div>
+                        <div><img class="avatar" alt="#" src="images/YjrSvTxbOikeXFpUwcv2.jpg"></div>
                     </div>
                     <div class="sc-17esfwn-2 ohCFd">
                         <div class="sc-17esfwn-4 bjaDuv">
@@ -439,7 +439,7 @@ html, body {
                                        <img src="images/qqface/chatico001.jpg" title="选择表情" id="clickqqface" style="cursor:pointer;">
                                        <img src="images/qqface/chatico002.jpg" title="上传图片" id="layuiadmin-upload-image" style="cursor:pointer;">
                                        <img src="images/qqface/chatico003.jpg" title="上传视频" id="layuiadmin-upload-video" style="cursor:pointer;">
-                                       <img src="images/qqface/chatico004.jpg" title="点赞" onclick="clickzan();" style="cursor:pointer;">
+                                       <img src="images/qqface/chatico004.jpg" title="点赞" onClick="clickzan();" style="cursor:pointer;">
 
 
                                     </div>
@@ -502,7 +502,7 @@ html, body {
 <img src="images/qqface/chatico001.jpg" title="选择表情" id="clickqqface" style="cursor:pointer;">
 <img src="images/qqface/chatico002.jpg" title="上传图片" id="layuiadmin-upload-image" style="cursor:pointer;">
 <img src="images/qqface/chatico003.jpg" title="上传视频" id="layuiadmin-upload-video" style="cursor:pointer;">
-<img src="images/qqface/chatico004.jpg" title="点赞" onclick="clickzan();" style="cursor:pointer;">
+<img src="images/qqface/chatico004.jpg" title="点赞" onClick="clickzan();" style="cursor:pointer;">
 
            <!--  <div class="sc-kci2kp-0 lnaYRJ"><label title="表情" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_face " size="20"></i></label><label title="发送图片" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_picture " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="image/*"></span></label><label title="发送视频" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_video " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="video/mp4,video/quicktime" value=""></span></label><label title="评价" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_assess " size="20"></i></label></div> -->
 
@@ -533,7 +533,7 @@ html, body {
             </div>
         </div>
     </div>
-<script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
     $("#fasong").click(function(){
@@ -591,10 +591,10 @@ function revoke(id,domid){
 
 
 
-<script src="admin/layuiadmin/layui/layui.js"></script>  
+<script src="../admin/layuiadmin/layui/layui.js"></script>  
 <script>
 layui.config({
-    base: 'admin/layuiadmin/' //静态资源所在路径
+    base: '../admin/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
 }).use(['index', 'form', 'upload', 'laydate','set','layedit'], function() {
@@ -669,7 +669,8 @@ function clickzan(){
         url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
         type: 'POST',
         data: {
-            'content': "<img src='/images/qqface/999.png' title='赞'>"
+            // 'content': "<img src='/kf/images/qqface/999.png' title='赞'>"
+            'content': "[em_999]"
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest)
@@ -908,7 +909,7 @@ end function
 }
 #facebox{bottom: 32px;top:0px}
 </style> 
-<script type="text/javascript" src="js/jquery.qqFace.js?v6"></script>
+<script type="text/javascript" src="../js/jquery.qqFace.js?v6"></script>
 <script type="text/javascript">
 $(function(){
     $('#clickqqface').qqFace({

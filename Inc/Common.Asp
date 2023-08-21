@@ -254,8 +254,11 @@ end function
 function handleBodyQQFace(c)
   dim i
   for i=1 to 75
-    c=replace(c,"[em_"& i  &"]","<img src='/images/qqface/"& i & ".png' style='vertical-align:middle;margin-left:5px;margin-right:5px' title='"& getQQFaceDescribe(i) &"'>")
+    c=replace(c,"[em_"& i  &"]","<img src='/kf/images/qqface/"& i & ".png' style='vertical-align:middle;margin-left:5px;margin-right:5px' title='"& getQQFaceDescribe(i) &"'>")
   next
+  c=replace(c,"[em_999]","<img src='/kf/images/qqface/999.png' style='vertical-align:middle;margin-left:5px;margin-right:5px' title='赞'>")  '单独赞处理20230821
+  
+  
   handleBodyQQFace=c
 end function
 function getQQFaceDescribe(i)

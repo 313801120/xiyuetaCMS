@@ -1,5 +1,5 @@
 <!--#Include file = "inc/config.asp"-->
-<!--#Include file = "website.asp"-->
+<!--#Include file = "inc/website.asp"-->
 <%
 ' +-----oOO-------------------+"
 ' |    author:XIYUETA         |"
