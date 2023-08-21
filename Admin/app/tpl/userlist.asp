@@ -1,4 +1,6 @@
 ﻿<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><%
+'网站模板处理核心文件'
+
 call openconn() 
 dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname
 isDebug=false  '调试为假，则不显示信息'
@@ -38,7 +40,6 @@ function getServerUrl()
 end function
 
 
-
 '应用模板并运行动作'
 function useTplAction(tplid,action)
     dim c,splstr,splxx,pagename,saction,s,res,url
@@ -72,6 +73,14 @@ function useTplAction(tplid,action)
         end if
     next 
 
+
+    dim webViewPic
+    webViewPic="../../../tpl/" & tplid & "/" & tplid & ".jpg"
+    if checkfile(webViewPic)=false then
+        url=getServerUrl & "/uploadfiles/mb/" & tplid & ".jpg"
+        if isDebug then call echo("下载缩浏图完成",webViewPic & " =>> "  & url)
+        call saveRemoteFile(url,webViewPic) '下载网站的缩浏图'
+    end if
     if isDebug then 
         useTplAction = c
     else
@@ -233,13 +242,12 @@ function getTplModle(testViewDir,sType,id,style,did,row,ascdesc,str,str1,str2,st
     if isDebug then call echo("获得模板块",fileName)
     getTplModle="<!--#Include file = ""tpl/"& fileName &"""-->"
 end function
-
-
+  
 '列表查询
 If Request("act") = "list" Then
     dim updateusername,sListStr,splVersion
     ' call eerr("url",serverUrl & "/api/tpl/list/?info="&webinfo)
-    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&tplname="&tplname&"&key="&escape(request("key"))&"&page="&request("page"),"utf-8")
+    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&tplname="&tplname&"&key="&escape(request("key"))&"&order="&escape(request("orderBy"))&"&page="&request("page"),"utf-8")
 
     '服务器地址错误时，重复获得地址，并更新资源地址'
     if instr(sListStr,"count"":")=false then
@@ -276,7 +284,7 @@ End If
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>列表</title>
+<title>模板列表</title>
 <script type="text/javascript" src="../../js/jquery.js"></script><link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
 <style>
@@ -308,10 +316,17 @@ td .layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项
       </div>
     </div>
 
+    <div class="layui-inline" style="width:110px"> 
+        <select name="orderBy">
+        <option value="">选择排序</option> 
+        <option value="hot">热度</option> 
+        <option value="sortrank">排序</option>  
+        <option value="id">ID</option>  
+        </select> 
+    </div>
  
-  <div class="layui-inline"> 
- 
-    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称">
+    <div class="layui-inline"> 
+        <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称">
     </div>
 
 
@@ -433,6 +448,7 @@ layui.use(['form','table'],function(){
                         ,date_max: $('input[name=date_max]').val()
                         ,key: $('input[name=key]').val()
                         ,parentid: $('select[name=parentid]').val()
+                        ,orderBy: $('select[name=orderBy]').val()
                     }
 
                 });
@@ -530,6 +546,7 @@ layui.use(['form','table'],function(){
             });
         }else if (obj.event === 'use') {
             layer.confirm('确定要使用此模板？',{icon:3, title:'提示信息'}, function(index) {
+                var aTplHtml="<a href='/' style='color:red' target='_blank'>点击查看：/</a>"
                 var winObj=layer.open({
                   title: '应用模板'
                   ,content: '正在应用当前选中模板，请等待！'
@@ -548,8 +565,11 @@ layui.use(['form','table'],function(){
                               title: '提示'
                               ,content: splxx[1]
                             });  
-                        }else{
-                            layer.msg('处理应该模板完成。');
+                        }else{ 
+                            layer.msg("处理应该模板完成。"+aTplHtml, {
+                              icon: 1,
+                              time: 4000 //2秒关闭（如果不配置，默认是3秒）
+                            });
                         }
                     }
                 });
@@ -558,9 +578,10 @@ layui.use(['form','table'],function(){
         }else if (obj.event === 'view') {
             layer.confirm('确定要查看此模板？',{icon:3, title:'提示信息'}, function(index) {
                 
+                var aTplHtml="<a href='/tpl/"+tplid+"' style='color:red' target='_blank'>点击查看：/tpl/"+tplid+"</a>"
                 var winObj=layer.open({
                   title: '预览模板'
-                  ,content: '正在处理预览模板，完成后自动跳转 <a href="'+'/tpl/'+tplid+'" style="color:red">/tpl/'+tplid+'</a>，请等待！'
+                  ,content: "正在处理预览模板，请等待！"
                 });  
                 $.ajax({
                     type: "POST",
@@ -577,8 +598,11 @@ layui.use(['form','table'],function(){
                             });  
                         }else{
                         // layer.msg('查找模板成功' +tplid);
-                            window.open('/tpl/'+tplid,"xiyueta.com"+tplid)
-                            layer.msg('处理预览模板完成。');
+                            // window.open('/tpl/'+tplid,"xiyueta.com"+tplid)
+                            layer.msg("处理预览模板完成。"+aTplHtml, {
+                              icon: 1,
+                              time: 4000 //2秒关闭（如果不配置，默认是3秒）
+                            });
                         }
                     }
                 });

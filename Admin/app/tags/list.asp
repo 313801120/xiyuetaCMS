@@ -31,7 +31,7 @@ If Request("act") = "list" Then
       sql=IIF(sql=""," where ",sql & " and ")
       sql =sql & "[title] like '%" & Request("key") & "%' " 
     End If 
-    mysql = sql1 & sql & request("countOrderyBy")
+    mysql = sql1 & sql & request("orderBy")
     'call die(mysql)
     rs.Open mysql, conn, 1, 1 
 
@@ -173,7 +173,7 @@ End If
     </div>
 
     <div class="layui-inline"> 
-        <select name="countOrderyBy">
+        <select name="orderBy">
         <option value="">请选择</option> 
         <option value=" order by count">统计数正排序</option> 
         <option value=" order by count desc">统计数倒排序</option>  
@@ -319,7 +319,7 @@ layui.use(['form','table','upload'],function(){
                         ,date_max: $('input[name=date_max]').val()
                         ,key: $('input[name=key]').val()
                         ,parentid: $('select[name=parentid]').val()
-                        ,countOrderyBy: $('select[name=countOrderyBy]').val()
+                        ,orderBy: $('select[name=orderBy]').val()
                     }
 
                 });
