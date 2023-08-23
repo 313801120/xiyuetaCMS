@@ -20,26 +20,7 @@
                         </div>
                         <div class="layui-card-body ">
                           <ul class="layui-timeline">
-                            <li class="layui-timeline-item">
-                              <i class="layui-icon layui-timeline-axis"></i>
-                              <div class="layui-timeline-content layui-text">
-                                <h3 class="layui-timeline-title">2022-02-22</h3>
-                                <p>
-                                  http://www.xiyueta.com/   <a href='http://www.xiyueta.com/' target="_blank">查看</a>
-                                </p>
-                              </div>
-                            </li>
-                            <li class="layui-timeline-item">
-                              <i class="layui-icon layui-timeline-axis"></i>
-                              <div class="layui-timeline-content layui-text">
-                                <h3 class="layui-timeline-title">2022-02-23</h3>
-                                <p>后台功能完善<br>
-用法:<br>
-/app/content/list.asp 文章列表<br>
-/app/content/tags.asp 文章分类</p>
-                              </div>
-                            </li>
-                             
+                              <%=getHttpUrl("http://xiyueta.com/api/cms/xiyuetacms/?act=updatelog","utf-8")%> 
                           </ul>
                     </div>
                   </div>

@@ -2,7 +2,7 @@
 【title】企业-自适应网站模板500(初始版)
 【author】xiyueta
 【sortrank】200
-【smallimage】/UploadFiles/testpic/TPL500.jpg
+【smallimage】/UploadFiles/mb/TPL500.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -11,7 +11,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500A(蓝色版)
 【author】xiyueta
 【sortrank】300
-【smallimage】/UploadFiles/testpic/TPL500A.jpg
+【smallimage】/UploadFiles/mb/TPL500A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -20,7 +20,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500B(红色版)
 【author】xiyueta
 【sortrank】400
-【smallimage】/UploadFiles/testpic/TPL500B.jpg
+【smallimage】/UploadFiles/mb/TPL500B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -29,7 +29,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500C(黄色版)
 【author】xiyueta
 【sortrank】500
-【smallimage】/UploadFiles/testpic/TPL500C.jpg
+【smallimage】/UploadFiles/mb/TPL500C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -38,7 +38,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500D(紫色版)
 【author】xiyueta
 【sortrank】600
-【smallimage】/UploadFiles/testpic/TPL500D.jpg
+【smallimage】/UploadFiles/mb/TPL500D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -47,7 +47,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500E(黑色版)
 【author】xiyueta
 【sortrank】700
-【smallimage】/UploadFiles/testpic/TPL500E.jpg
+【smallimage】/UploadFiles/mb/TPL500E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -56,7 +56,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500F(绿色版)
 【author】xiyueta
 【sortrank】800
-【smallimage】/UploadFiles/testpic/TPL500F.jpg
+【smallimage】/UploadFiles/mb/TPL500F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -65,7 +65,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500G(粉色版)
 【author】xiyueta
 【sortrank】900
-【smallimage】/UploadFiles/testpic/TPL500G.jpg
+【smallimage】/UploadFiles/mb/TPL500G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -74,7 +74,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500H(浅绿色版)
 【author】xiyueta
 【sortrank】1000
-【smallimage】/UploadFiles/testpic/TPL500H.jpg
+【smallimage】/UploadFiles/mb/TPL500H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -83,7 +83,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板500K(其它版)
 【author】xiyueta
 【sortrank】1100
-【smallimage】/UploadFiles/testpic/TPL500K.jpg
+【smallimage】/UploadFiles/mb/TPL500K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL500K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -92,7 +92,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501(初始版)
 【author】xiyueta
 【sortrank】1200
-【smallimage】/UploadFiles/testpic/TPL501.jpg
+【smallimage】/UploadFiles/mb/TPL501.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -101,7 +101,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501A(蓝色版)
 【author】xiyueta
 【sortrank】1300
-【smallimage】/UploadFiles/testpic/TPL501A.jpg
+【smallimage】/UploadFiles/mb/TPL501A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -110,7 +110,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501B(红色版)
 【author】xiyueta
 【sortrank】1400
-【smallimage】/UploadFiles/testpic/TPL501B.jpg
+【smallimage】/UploadFiles/mb/TPL501B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -119,7 +119,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501C(黄色版)
 【author】xiyueta
 【sortrank】1500
-【smallimage】/UploadFiles/testpic/TPL501C.jpg
+【smallimage】/UploadFiles/mb/TPL501C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -128,7 +128,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501D(紫色版)
 【author】xiyueta
 【sortrank】1600
-【smallimage】/UploadFiles/testpic/TPL501D.jpg
+【smallimage】/UploadFiles/mb/TPL501D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -137,7 +137,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501E(黑色版)
 【author】xiyueta
 【sortrank】1700
-【smallimage】/UploadFiles/testpic/TPL501E.jpg
+【smallimage】/UploadFiles/mb/TPL501E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -146,7 +146,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501F(绿色版)
 【author】xiyueta
 【sortrank】1800
-【smallimage】/UploadFiles/testpic/TPL501F.jpg
+【smallimage】/UploadFiles/mb/TPL501F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -155,7 +155,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501G(粉色版)
 【author】xiyueta
 【sortrank】1900
-【smallimage】/UploadFiles/testpic/TPL501G.jpg
+【smallimage】/UploadFiles/mb/TPL501G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -164,7 +164,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501H(浅绿色版)
 【author】xiyueta
 【sortrank】2000
-【smallimage】/UploadFiles/testpic/TPL501H.jpg
+【smallimage】/UploadFiles/mb/TPL501H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -173,7 +173,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板501K(其它版)
 【author】xiyueta
 【sortrank】2100
-【smallimage】/UploadFiles/testpic/TPL501K.jpg
+【smallimage】/UploadFiles/mb/TPL501K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL501K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -182,7 +182,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503(初始版)
 【author】xiyueta
 【sortrank】2200
-【smallimage】/UploadFiles/testpic/TPL503.jpg
+【smallimage】/UploadFiles/mb/TPL503.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -191,7 +191,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503A(蓝色版)
 【author】xiyueta
 【sortrank】2300
-【smallimage】/UploadFiles/testpic/TPL503A.jpg
+【smallimage】/UploadFiles/mb/TPL503A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -200,7 +200,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503B(红色版)
 【author】xiyueta
 【sortrank】2400
-【smallimage】/UploadFiles/testpic/TPL503B.jpg
+【smallimage】/UploadFiles/mb/TPL503B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -209,7 +209,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503C(黄色版)
 【author】xiyueta
 【sortrank】2500
-【smallimage】/UploadFiles/testpic/TPL503C.jpg
+【smallimage】/UploadFiles/mb/TPL503C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -218,7 +218,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503D(紫色版)
 【author】xiyueta
 【sortrank】2600
-【smallimage】/UploadFiles/testpic/TPL503D.jpg
+【smallimage】/UploadFiles/mb/TPL503D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -227,7 +227,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503E(黑色版)
 【author】xiyueta
 【sortrank】2700
-【smallimage】/UploadFiles/testpic/TPL503E.jpg
+【smallimage】/UploadFiles/mb/TPL503E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -236,7 +236,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503F(绿色版)
 【author】xiyueta
 【sortrank】2800
-【smallimage】/UploadFiles/testpic/TPL503F.jpg
+【smallimage】/UploadFiles/mb/TPL503F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -245,7 +245,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503G(粉色版)
 【author】xiyueta
 【sortrank】2900
-【smallimage】/UploadFiles/testpic/TPL503G.jpg
+【smallimage】/UploadFiles/mb/TPL503G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -254,7 +254,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503H(浅绿色版)
 【author】xiyueta
 【sortrank】3000
-【smallimage】/UploadFiles/testpic/TPL503H.jpg
+【smallimage】/UploadFiles/mb/TPL503H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -263,7 +263,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板503K(其它版)
 【author】xiyueta
 【sortrank】3100
-【smallimage】/UploadFiles/testpic/TPL503K.jpg
+【smallimage】/UploadFiles/mb/TPL503K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL503K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -272,7 +272,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504(初始版)
 【author】xiyueta
 【sortrank】3200
-【smallimage】/UploadFiles/testpic/TPL504.jpg
+【smallimage】/UploadFiles/mb/TPL504.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -281,7 +281,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504A(蓝色版)
 【author】xiyueta
 【sortrank】3300
-【smallimage】/UploadFiles/testpic/TPL504A.jpg
+【smallimage】/UploadFiles/mb/TPL504A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -290,7 +290,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504B(红色版)
 【author】xiyueta
 【sortrank】3400
-【smallimage】/UploadFiles/testpic/TPL504B.jpg
+【smallimage】/UploadFiles/mb/TPL504B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -299,7 +299,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504C(黄色版)
 【author】xiyueta
 【sortrank】3500
-【smallimage】/UploadFiles/testpic/TPL504C.jpg
+【smallimage】/UploadFiles/mb/TPL504C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -308,7 +308,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504D(紫色版)
 【author】xiyueta
 【sortrank】3600
-【smallimage】/UploadFiles/testpic/TPL504D.jpg
+【smallimage】/UploadFiles/mb/TPL504D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -317,7 +317,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504E(黑色版)
 【author】xiyueta
 【sortrank】3700
-【smallimage】/UploadFiles/testpic/TPL504E.jpg
+【smallimage】/UploadFiles/mb/TPL504E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -326,7 +326,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504F(绿色版)
 【author】xiyueta
 【sortrank】3800
-【smallimage】/UploadFiles/testpic/TPL504F.jpg
+【smallimage】/UploadFiles/mb/TPL504F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -335,7 +335,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504G(粉色版)
 【author】xiyueta
 【sortrank】3900
-【smallimage】/UploadFiles/testpic/TPL504G.jpg
+【smallimage】/UploadFiles/mb/TPL504G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -344,7 +344,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504H(浅绿色版)
 【author】xiyueta
 【sortrank】4000
-【smallimage】/UploadFiles/testpic/TPL504H.jpg
+【smallimage】/UploadFiles/mb/TPL504H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -353,7 +353,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板504K(其它版)
 【author】xiyueta
 【sortrank】4100
-【smallimage】/UploadFiles/testpic/TPL504K.jpg
+【smallimage】/UploadFiles/mb/TPL504K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL504K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -362,7 +362,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505(初始版)
 【author】xiyueta
 【sortrank】4200
-【smallimage】/UploadFiles/testpic/TPL505.jpg
+【smallimage】/UploadFiles/mb/TPL505.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -371,7 +371,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505A(蓝色版)
 【author】xiyueta
 【sortrank】4300
-【smallimage】/UploadFiles/testpic/TPL505A.jpg
+【smallimage】/UploadFiles/mb/TPL505A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -380,7 +380,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505B(红色版)
 【author】xiyueta
 【sortrank】4400
-【smallimage】/UploadFiles/testpic/TPL505B.jpg
+【smallimage】/UploadFiles/mb/TPL505B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -389,7 +389,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505C(黄色版)
 【author】xiyueta
 【sortrank】4500
-【smallimage】/UploadFiles/testpic/TPL505C.jpg
+【smallimage】/UploadFiles/mb/TPL505C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -398,7 +398,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505D(紫色版)
 【author】xiyueta
 【sortrank】4600
-【smallimage】/UploadFiles/testpic/TPL505D.jpg
+【smallimage】/UploadFiles/mb/TPL505D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -407,7 +407,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505E(黑色版)
 【author】xiyueta
 【sortrank】4700
-【smallimage】/UploadFiles/testpic/TPL505E.jpg
+【smallimage】/UploadFiles/mb/TPL505E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -416,7 +416,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505F(绿色版)
 【author】xiyueta
 【sortrank】4800
-【smallimage】/UploadFiles/testpic/TPL505F.jpg
+【smallimage】/UploadFiles/mb/TPL505F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -425,7 +425,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505G(粉色版)
 【author】xiyueta
 【sortrank】4900
-【smallimage】/UploadFiles/testpic/TPL505G.jpg
+【smallimage】/UploadFiles/mb/TPL505G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -434,7 +434,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505H(浅绿色版)
 【author】xiyueta
 【sortrank】5000
-【smallimage】/UploadFiles/testpic/TPL505H.jpg
+【smallimage】/UploadFiles/mb/TPL505H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -443,7 +443,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板505K(其它版)
 【author】xiyueta
 【sortrank】5100
-【smallimage】/UploadFiles/testpic/TPL505K.jpg
+【smallimage】/UploadFiles/mb/TPL505K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL505K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -452,7 +452,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506(初始版)
 【author】xiyueta
 【sortrank】5200
-【smallimage】/UploadFiles/testpic/TPL506.jpg
+【smallimage】/UploadFiles/mb/TPL506.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -461,7 +461,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506A(蓝色版)
 【author】xiyueta
 【sortrank】5300
-【smallimage】/UploadFiles/testpic/TPL506A.jpg
+【smallimage】/UploadFiles/mb/TPL506A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -470,7 +470,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506B(红色版)
 【author】xiyueta
 【sortrank】5400
-【smallimage】/UploadFiles/testpic/TPL506B.jpg
+【smallimage】/UploadFiles/mb/TPL506B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -479,7 +479,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506C(黄色版)
 【author】xiyueta
 【sortrank】5500
-【smallimage】/UploadFiles/testpic/TPL506C.jpg
+【smallimage】/UploadFiles/mb/TPL506C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -488,7 +488,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506D(紫色版)
 【author】xiyueta
 【sortrank】5600
-【smallimage】/UploadFiles/testpic/TPL506D.jpg
+【smallimage】/UploadFiles/mb/TPL506D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -497,7 +497,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506E(黑色版)
 【author】xiyueta
 【sortrank】5700
-【smallimage】/UploadFiles/testpic/TPL506E.jpg
+【smallimage】/UploadFiles/mb/TPL506E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -506,7 +506,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506F(绿色版)
 【author】xiyueta
 【sortrank】5800
-【smallimage】/UploadFiles/testpic/TPL506F.jpg
+【smallimage】/UploadFiles/mb/TPL506F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -515,7 +515,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506G(粉色版)
 【author】xiyueta
 【sortrank】5900
-【smallimage】/UploadFiles/testpic/TPL506G.jpg
+【smallimage】/UploadFiles/mb/TPL506G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -524,7 +524,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506H(浅绿色版)
 【author】xiyueta
 【sortrank】6000
-【smallimage】/UploadFiles/testpic/TPL506H.jpg
+【smallimage】/UploadFiles/mb/TPL506H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -533,7 +533,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板506K(其它版)
 【author】xiyueta
 【sortrank】6100
-【smallimage】/UploadFiles/testpic/TPL506K.jpg
+【smallimage】/UploadFiles/mb/TPL506K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL506K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -542,7 +542,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507(初始版)
 【author】xiyueta
 【sortrank】6200
-【smallimage】/UploadFiles/testpic/TPL507.jpg
+【smallimage】/UploadFiles/mb/TPL507.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -551,7 +551,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507A(蓝色版)
 【author】xiyueta
 【sortrank】6300
-【smallimage】/UploadFiles/testpic/TPL507A.jpg
+【smallimage】/UploadFiles/mb/TPL507A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -560,7 +560,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507B(红色版)
 【author】xiyueta
 【sortrank】6400
-【smallimage】/UploadFiles/testpic/TPL507B.jpg
+【smallimage】/UploadFiles/mb/TPL507B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -569,7 +569,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507C(黄色版)
 【author】xiyueta
 【sortrank】6500
-【smallimage】/UploadFiles/testpic/TPL507C.jpg
+【smallimage】/UploadFiles/mb/TPL507C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -578,7 +578,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507D(紫色版)
 【author】xiyueta
 【sortrank】6600
-【smallimage】/UploadFiles/testpic/TPL507D.jpg
+【smallimage】/UploadFiles/mb/TPL507D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -587,7 +587,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507E(黑色版)
 【author】xiyueta
 【sortrank】6700
-【smallimage】/UploadFiles/testpic/TPL507E.jpg
+【smallimage】/UploadFiles/mb/TPL507E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -596,7 +596,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507F(绿色版)
 【author】xiyueta
 【sortrank】6800
-【smallimage】/UploadFiles/testpic/TPL507F.jpg
+【smallimage】/UploadFiles/mb/TPL507F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -605,7 +605,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507G(粉色版)
 【author】xiyueta
 【sortrank】6900
-【smallimage】/UploadFiles/testpic/TPL507G.jpg
+【smallimage】/UploadFiles/mb/TPL507G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -614,7 +614,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507H(浅绿色版)
 【author】xiyueta
 【sortrank】7000
-【smallimage】/UploadFiles/testpic/TPL507H.jpg
+【smallimage】/UploadFiles/mb/TPL507H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -623,7 +623,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板507H(其它版)
 【author】xiyueta
 【sortrank】7100
-【smallimage】/UploadFiles/testpic/TPL507H.jpg
+【smallimage】/UploadFiles/mb/TPL507H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL507H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -632,7 +632,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508(初始版)
 【author】xiyueta
 【sortrank】7200
-【smallimage】/UploadFiles/testpic/TPL508.jpg
+【smallimage】/UploadFiles/mb/TPL508.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -641,7 +641,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508A(蓝色版)
 【author】xiyueta
 【sortrank】7300
-【smallimage】/UploadFiles/testpic/TPL508A.jpg
+【smallimage】/UploadFiles/mb/TPL508A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -650,7 +650,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508B(红色版)
 【author】xiyueta
 【sortrank】7400
-【smallimage】/UploadFiles/testpic/TPL508B.jpg
+【smallimage】/UploadFiles/mb/TPL508B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -659,7 +659,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508C(黄色版)
 【author】xiyueta
 【sortrank】7500
-【smallimage】/UploadFiles/testpic/TPL508C.jpg
+【smallimage】/UploadFiles/mb/TPL508C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -668,7 +668,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508D(紫色版)
 【author】xiyueta
 【sortrank】7600
-【smallimage】/UploadFiles/testpic/TPL508D.jpg
+【smallimage】/UploadFiles/mb/TPL508D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -677,7 +677,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508E(黑色版)
 【author】xiyueta
 【sortrank】7700
-【smallimage】/UploadFiles/testpic/TPL508E.jpg
+【smallimage】/UploadFiles/mb/TPL508E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -686,7 +686,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508F(绿色版)
 【author】xiyueta
 【sortrank】7800
-【smallimage】/UploadFiles/testpic/TPL508F.jpg
+【smallimage】/UploadFiles/mb/TPL508F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -695,7 +695,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508G(粉色版)
 【author】xiyueta
 【sortrank】7900
-【smallimage】/UploadFiles/testpic/TPL508G.jpg
+【smallimage】/UploadFiles/mb/TPL508G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -704,7 +704,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508H(浅绿色版)
 【author】xiyueta
 【sortrank】8000
-【smallimage】/UploadFiles/testpic/TPL508H.jpg
+【smallimage】/UploadFiles/mb/TPL508H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -713,7 +713,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板508K(其它版)
 【author】xiyueta
 【sortrank】8100
-【smallimage】/UploadFiles/testpic/TPL508K.jpg
+【smallimage】/UploadFiles/mb/TPL508K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL508K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -722,7 +722,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509(初始版)
 【author】xiyueta
 【sortrank】8200
-【smallimage】/UploadFiles/testpic/TPL509.jpg
+【smallimage】/UploadFiles/mb/TPL509.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -731,7 +731,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509A(蓝色版)
 【author】xiyueta
 【sortrank】8300
-【smallimage】/UploadFiles/testpic/TPL509A.jpg
+【smallimage】/UploadFiles/mb/TPL509A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -740,7 +740,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509B(红色版)
 【author】xiyueta
 【sortrank】8400
-【smallimage】/UploadFiles/testpic/TPL509B.jpg
+【smallimage】/UploadFiles/mb/TPL509B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -749,7 +749,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509C(黄色版)
 【author】xiyueta
 【sortrank】8500
-【smallimage】/UploadFiles/testpic/TPL509C.jpg
+【smallimage】/UploadFiles/mb/TPL509C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -758,7 +758,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509D(紫色版)
 【author】xiyueta
 【sortrank】8600
-【smallimage】/UploadFiles/testpic/TPL509D.jpg
+【smallimage】/UploadFiles/mb/TPL509D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -767,7 +767,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509E(黑色版)
 【author】xiyueta
 【sortrank】8700
-【smallimage】/UploadFiles/testpic/TPL509E.jpg
+【smallimage】/UploadFiles/mb/TPL509E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -776,7 +776,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509F(绿色版)
 【author】xiyueta
 【sortrank】8800
-【smallimage】/UploadFiles/testpic/TPL509F.jpg
+【smallimage】/UploadFiles/mb/TPL509F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -785,7 +785,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509G(粉色版)
 【author】xiyueta
 【sortrank】8900
-【smallimage】/UploadFiles/testpic/TPL509G.jpg
+【smallimage】/UploadFiles/mb/TPL509G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -794,7 +794,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509H(浅绿色版)
 【author】xiyueta
 【sortrank】9000
-【smallimage】/UploadFiles/testpic/TPL509H.jpg
+【smallimage】/UploadFiles/mb/TPL509H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -803,7 +803,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板509K(其它版)
 【author】xiyueta
 【sortrank】9100
-【smallimage】/UploadFiles/testpic/TPL509K.jpg
+【smallimage】/UploadFiles/mb/TPL509K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL509K/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -812,7 +812,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510(初始版)
 【author】xiyueta
 【sortrank】9200
-【smallimage】/UploadFiles/testpic/TPL510.jpg
+【smallimage】/UploadFiles/mb/TPL510.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -821,7 +821,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510A(蓝色版)
 【author】xiyueta
 【sortrank】9300
-【smallimage】/UploadFiles/testpic/TPL510A.jpg
+【smallimage】/UploadFiles/mb/TPL510A.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510A/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -830,7 +830,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510B(红色版)
 【author】xiyueta
 【sortrank】9400
-【smallimage】/UploadFiles/testpic/TPL510B.jpg
+【smallimage】/UploadFiles/mb/TPL510B.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510B/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -839,7 +839,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510C(黄色版)
 【author】xiyueta
 【sortrank】9500
-【smallimage】/UploadFiles/testpic/TPL510C.jpg
+【smallimage】/UploadFiles/mb/TPL510C.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510C/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -848,7 +848,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510D(紫色版)
 【author】xiyueta
 【sortrank】9600
-【smallimage】/UploadFiles/testpic/TPL510D.jpg
+【smallimage】/UploadFiles/mb/TPL510D.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510D/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -857,7 +857,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510E(黑色版)
 【author】xiyueta
 【sortrank】9700
-【smallimage】/UploadFiles/testpic/TPL510E.jpg
+【smallimage】/UploadFiles/mb/TPL510E.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510E/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -866,7 +866,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510F(绿色版)
 【author】xiyueta
 【sortrank】9800
-【smallimage】/UploadFiles/testpic/TPL510F.jpg
+【smallimage】/UploadFiles/mb/TPL510F.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510F/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -875,7 +875,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510G(粉色版)
 【author】xiyueta
 【sortrank】9900
-【smallimage】/UploadFiles/testpic/TPL510G.jpg
+【smallimage】/UploadFiles/mb/TPL510G.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510G/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -884,7 +884,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510H(浅绿色版)
 【author】xiyueta
 【sortrank】10000
-【smallimage】/UploadFiles/testpic/TPL510H.jpg
+【smallimage】/UploadFiles/mb/TPL510H.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510H/' target='_blank'>查看演示</a>
 【/bodycontent】
@@ -893,7 +893,7 @@ xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、
 【title】企业-自适应网站模板510K(其它版)
 【author】xiyueta
 【sortrank】10100
-【smallimage】/UploadFiles/testpic/TPL510K.jpg
+【smallimage】/UploadFiles/mb/TPL510K.jpg
 【bodycontent】
 xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。 产品优势： 源码可控 源码注释详细，便于阅读 代码无后门，统统开源 提供丰富的接口，易于扩展 功能完善 包含管理系统常用的基础功能 拥有众多原创功能模块 集成丰富的优秀插件及页面 多端支持 HTML5响应式设计 支持平板、智能手机、微信浏览器 支持IE8+，支持各种常见的浏览器 上手容易 完善的在线开发文档 你不会？我教你啊 提供授权用户专属VIP技术服务群 低成本 帮您省去了架构师、产品、设计等人员的工作 一次永久授权，终身免费更新 与同类产品相比性价比更高 售后保障 完善的售后保障，5x8小时服务 版本持续更新，满足大众需求 始终采用前沿技术<br><a href='http://xiyueta.com/tpl/TPL510K/' target='_blank'>查看演示</a>
 【/bodycontent】

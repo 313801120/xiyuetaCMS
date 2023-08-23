@@ -14,6 +14,10 @@ if request("act")="outLogin" then
     userRs.update
     response.redirect("login.asp?out")
 end if
+rs.open "select version from " & db_PREFIX & "website" ,conn,1,1
+if not rs.eof then 
+    version=rs("version")  '调用网站里版本号'
+end if:rs.close  
 %>
 <!DOCTYPE html>
 <html>
@@ -149,7 +153,8 @@ end if
                                 <dd><a lay-href="app/OnePage/list.asp">单页管理</a></dd>
                                 <dd><a lay-href="app/friendLink/list.asp">友情管理</a></dd>
                                 <dd><a lay-href="app/articlecount/list.asp">文章统计</a></dd>
-                                <!-- <dd><a lay-href="app/sheshi/list.asp">省市县</a></dd> -->
+                                <dd><a lay-href="app/sheshi/list2.asp">省市县</a></dd>
+
                                 <dd><a lay-href="app/articlemessage/list.asp">文章留言</a></dd>
                                 <dd><a lay-href="app/tags/list.asp">文章标签</a></dd>
                                 <dd><a lay-href="app/articlesearch/list.asp">文章搜索</a></dd>

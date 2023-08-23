@@ -270,7 +270,7 @@ sub resetAccessData()
 
     ' call eerr(getTableList(),webdataDir)
     call echo("提示", "恢复数据完成") 
-    call rw("<hr><a href='"& WEB_VIEWURL &"' target='_blank'>进入首页</a> | <a href=""?"" target='_blank'>进入后台</a>") 
+    call rw("<hr><a href='"& WEB_VIEWURL &"' target='_blank'>进入首页</a> | <a href=""../admin/"" target='_blank'>进入后台</a>") 
 
     call writeSystemLog("", "恢复默认数据" & db_PREFIX)                             '系统日志
 end sub

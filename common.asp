@@ -10,9 +10,11 @@
 
 call openconn()
 dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webbiglogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,webcompanyen,weburl,websql
-dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags
+dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags,detailPagingTypeList
 asporhtml=true   '静态网页为真'0为asp 1为html
 onAutoAddDataToAccess=true  '开启自动添加数组到数据库里(主要是对onepage操作)20220602'
+
+detailPagingTypeList=",," '详细页是否根据不同类型分页，如 product_detail_207.asp'  参数可选：,product,news,down,case,
  
  
 dim sKeyword
@@ -25,7 +27,7 @@ id=replace(request("id"),"'","")
 '读网站信息'
 rs.open "select * from " & db_PREFIX & "website" ,conn,1,1
 if not rs.eof then
-  webtitle=uTitle & rs("webtitle")       '网页标题'(前面加个地区信息)
+  webtitle=rs("webtitle")       '网页标题'(前面加个地区信息)
   webkeywords=rs("webkeywords")          '网页关键词'  
   webdescription=rs("webdescription")    '网页描述'
   webfoot=rs("webfoot")                  '网页底部'
@@ -131,7 +133,7 @@ elseif right(thisUrlFileName,10)="detail.asp" then
         id=rs("id")                        '文章ID，如果以文件名来查的的，需要加上id 2020715'
 
 
-        if rs("title")<>"" then webtitle=uTitle & rs("title")                   '网页标题(前面加个地区信息)'
+        if rs("title")<>"" then webtitle=rs("title")                   '网页标题(前面加个地区信息)'
         if rs("webtitle")<>"" then webtitle=rs("webtitle")                      '网页标题'
         if rs("webkeywords")<>"" then webkeywords=rs("webkeywords")             '网页关键词'
         if rs("webdescription")<>"" then webdescription=rs("webdescription")    '网页描述'
@@ -191,8 +193,8 @@ elseif id<>"" then
       aboutcontent=rs("aboutcontent")        '栏目介绍'
       bodycontent=rs("bodycontent")          '栏目内容'
         
-      if rs("columnname")<>"" then webtitle=uTitle & rs("columnname")          '网页标题等于栏目名(前面加个地区信息)'
-      if rs("webtitle")<>"" then webtitle=uTitle & rs("webtitle")              '网页标题等于栏目自定标题(前面加个地区信息)'
+      if rs("columnname")<>"" then webtitle=rs("columnname")          '网页标题等于栏目名(前面加个地区信息)'
+      if rs("webtitle")<>"" then webtitle=rs("webtitle")              '网页标题等于栏目自定标题(前面加个地区信息)'
       if rs("webkeywords")<>"" then webkeywords=rs("webkeywords")              '网页关键词'
       if rs("webdescription")<>"" then webdescription=rs("webdescription")     '网页描述'
     else
@@ -347,7 +349,7 @@ function getArticleUrl(id)
   if not rs.eof then
     if rs("filename")<>"" then           '文件名不为空则URL为文件名       
         getArticleUrl=urlWanZhen(rs("filename") )
-        exit function
+        exit function 
     end if
     parentid=rs("parentid")
   end if:rs.close
@@ -359,9 +361,14 @@ function getArticleUrl(id)
       if rs("filename")<>"" then
         dirName=rs("filename") & "/"'目录名' 
       end if
-      columntype=rs("columntype") & "_"
+      '判断是否有这个详细页分页的类型 20230822'
+      if instr(","& detailPagingTypeList &",", ","& rs("columntype") &",")>0 then
+        columntype=rs("columntype") & "_"
+      end if
     end if:rs.close
   end if 
+
+
 
   '为动态网站时，直接显示㚃'
   if asporhtml=false then

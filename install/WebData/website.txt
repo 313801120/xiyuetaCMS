@@ -2,6 +2,7 @@
 【webkeywords】xiyuetaCMS,xiyueta,喜悦TA,xiyueta.com
 【webdescription】xiyuetaCMS内容管理系统通用型后台权限管理框架，紧随潮流、开箱即用拥有多种版本选择，随意搭配使用
 【weburl】http://www.xiyueta.com/
+【version】v2.0
 【logo】/UploadFiles/testpic/logo.jpg
 【biglogo】/UploadFiles/testpic/logo.png
 【qrcode】/UploadFiles/testpic/qrcode.png

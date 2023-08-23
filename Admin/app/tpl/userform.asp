@@ -27,44 +27,17 @@ tplid=request("tplid")
 idlist=request("idlist") 
 
 
-'添加修改
-if request("act")="save" then
-  ' call echo("idlist",idlist)
-  splstr=split(idlist,", ")
-  for each id in splstr
-    ' call echo("id",id)
-    rs.open"select * from ["& db_PREFIX &"tplpage] where id="&id,conn,1,1
-    if not rs.eof then
-      if rs("saction")<>request("saction"&id) then
-        rsx.open"select * from ["& db_PREFIX &"tplpage] where tplid='"& webinfo & tplid &"' and ntype="&rs("ntype"),conn,1,3
-        if rsx.eof then rsx.addnew
-        rsx("tplid")=webinfo & tplid
-        rsx("ntype")=rs("ntype")
-        rsx("title")=rs("title")
-        rsx("isthrough")=rs("isthrough")
-        rsx("saction")=request("saction"&id)
-        rsx.update:rsx.close
-      end if
-
-
-    end if:rs.close
-
-  next
-  call die("<script>parent.location.reload();</script>")
-end if
  
-
 %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>添加修改</title> 
+<title>修改自定义模板</title> 
  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  /> 
 </head>
 <body>  
-
-<%if msg<>"" then  call rw("<blockquote class=""layui-elem-quote"">"& msg &" &nbsp;<a href='javascript:window.history.go(-1); '>返回</a></blockquote>")%>
+ 
 
 <form id="form1" name="form1" class="layui-form"  method="post" action="<%=serverUrl%>/api/tpl/list/userfrom.asp?act=save&tplid=<%=tplid%>&info=<%=webinfo%>">
   <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">

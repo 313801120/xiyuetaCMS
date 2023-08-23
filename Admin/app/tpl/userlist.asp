@@ -2,7 +2,7 @@
 '网站模板处理核心文件'
 
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname,url
 isDebug=false  '调试为假，则不显示信息'
 
 '获得当前版本号与账号，与服务器端匹配'
@@ -207,6 +207,8 @@ function showThisWebAuthorInfo2022()
     c="<script>"& c &"</script>"
     showThisWebAuthorInfo2022="<!--"& vbcrlf & content &"-->" & vbcrlf & c
 end function
+
+dim modleUrlList ' 记录模板请求的URL,重复的不要再提交，减少服务器请求'
 '获得模块'
 function getTplModle(testViewDir,sType,id,style,did,row,ascdesc,str,str1,str2,str3,str4,str5)
     dim fileName
@@ -233,8 +235,12 @@ function getTplModle(testViewDir,sType,id,style,did,row,ascdesc,str,str1,str2,st
     if str4<>"" then url=url & "&str4="&escape(str4)
     if str5<>"" then url=url & "&str5="&escape(str5)
 
-
-  
+    '之前获得了，就不要再请求了'
+    if instr("【"& modleUrlList &"】","【"& url &"】")>0 then
+        getTplModle="<!--#Include file = ""tpl/"& fileName &"""-->"
+        exit function   '退出，'
+    end if
+    modleUrlList=modleUrlList & "【"& url &"】"   '添加模块URL列表'
 
     if isDebug then call echo("样式url",url)
     c=gethttpurl(url,"utf-8")
@@ -275,6 +281,24 @@ elseIf Request("act") = "view" Then   '为查看模板，放到对应的目录 �
 elseIf Request("act") = "myuser" Then  '获得用户信息20230819'
     sListStr=gethttpurl(serverUrl & "/api/tpl/user/?info="&webinfo,"utf-8")
     call die("{""info"": """& sListStr &""",""status"": ""y""}")
+
+elseIf Request("act") = "editusername" Then  '获得用户信息20230819'
+    
+    url=serverUrl & "/api/tpl/user/?act=checkusername&info="&webinfo&"&username="&escape(request("username"))
+    s=gethttpurl(url,"utf-8")
+    ' call echo("s",s)
+    ' call eerr("url",url)
+    if left(s,4)="[OK]" then 
+        rs.open "select username from " & db_PREFIX & "website" ,conn,1,3
+        if not rs.eof then
+            rs("username")=request("username")
+            rs.update
+        end if:rs.close
+        call die("{""info"": ""修改成功"",""status"": ""y""}")
+    else
+        call die("{""info"": ""修改失败，域名对应的账号不正确"",""status"": ""n""}")
+    end if
+
 End If 
 
 
@@ -319,7 +343,7 @@ td .layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项
     <div class="layui-inline" style="width:110px"> 
         <select name="orderBy">
         <option value="">选择排序</option> 
-        <option value="hot">热度</option> 
+        <option value="hot" selected>热度</option> 
         <option value="sortrank">排序</option>  
         <option value="id">ID</option>  
         </select> 
@@ -332,7 +356,7 @@ td .layui-table-cell .layui-form-checkbox[lay-skin="primary"] {/*让列表选项
 
 
       
-  <button class="layui-btn" data-type="reload">搜索</button>
+  <button class="layui-btn" data-type="reload" id="btnsearch">搜索</button>
   <button class="layui-btn"  data-type="myuser" id="myuser"></button>
   <!-- <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button> -->
           <!-- <button class="layui-btn" data-type="batchdel">删除</button> -->
@@ -381,7 +405,7 @@ layui.use(['form','table'],function(){
                // ,{ field: 'pic', title: '预览', sort: false } 
                ,{ field: 'ntype', title: '类型', width:90, sort: false }
                ,{ field: 'title', title: '标题', sort: false }
-               ,{ field: 'sortrank', title: '排序', width:90, sort: false }
+               // ,{ field: 'sortrank', title: '排序', width:90, sort: false }
                , { fixed: 'right', title: '操作', width: 240, toolbar: '#barDemo' }
             ]
         ],
@@ -484,35 +508,34 @@ layui.use(['form','table'],function(){
                     });
 
                 });
-            },myuser: function(){  
-                 
-                     $.ajax({
-                        type: "POST",
-                        cache: true,
-                        dataType: "json",
-                        url: "?act=myuser", 
-                        success: function(data) {
-                            switch (data.status) {
-                                case "y": 
-                                    var splxx=data.info.split("[$]");
-                                    if(splxx.length>=3){
-                                        layer.open({
-                                          title: '提示'
-                                          ,content: splxx[1]
-                                        });
-                                        if(splxx.length>=4){
-                                            $("#myuser",).text("积分："+splxx[2])
-                                        }
-                                    }else{
-                                        layer.msg(data.info);
-                                    } 
-                                    break;
-                            }
+            },myuser: function(){                   
+                 $.ajax({
+                    type: "POST",
+                    cache: true,
+                    dataType: "json",
+                    url: "?act=myuser", 
+                    success: function(data) {
+                        switch (data.status) {
+                            case "y": 
+                                var splxx=data.info.split("[$]");
+                                if(splxx.length>=3){
+                                    layer.open({
+                                      title: '提示'
+                                      ,content: splxx[1]
+                                    });
+                                    if(splxx.length>=4){
+                                        $("#myuser",).text("积分："+splxx[2])
+                                    }
+                                }else{
+                                    layer.msg(data.info);
+                                } 
+                                break;
                         }
-                    });
+                    }
+                });
 
                 
-            }
+            } 
         };
 
     $('.layui-form .layui-btn').on('click', function() {
@@ -618,6 +641,35 @@ layui.use(['form','table'],function(){
             
         } else if (obj.event === 'customizecustomize') {
             showwin('自定义', 'userform.asp?editor=no&tplid=' + tplid)
+            
+        } else if (obj.event === 'editusername') {
+            layer.prompt({
+                formType: 1,
+                title: '输入网站对应的账号'
+            }, function(value, index) {
+                layer.close(index);
+                $.ajax({
+                    type: "POST",
+                    cache: true,
+                    dataType: "json",
+                    url: "?act=editusername",
+                    data: { "username":value }, 
+                    success: function(data) { 
+                        switch (data.status) {
+                            case "y":                                                    
+                                layer.msg(data.info,{icon:1});
+                                $("#btnsearch").click();//刷新列表
+                                break;
+                            case "n":                                    
+                                layer.msg(data.info,{icon:2});
+                                break;
+                        }
+                    }
+                });
+            });
+
+
+
         }
 
     });
