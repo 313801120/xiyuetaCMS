@@ -40,7 +40,7 @@ totalUser=conn.execute("select count(*) from["&db_PREFIX&"member]")(0)
 
 <head>
     <meta charset="utf-8">
-    <title>layuiAdmin 主页示例模板二</title>
+    <title>主页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -168,7 +168,7 @@ for each folderName in splstr
 
 
                                         <span class="flow">
-                                            <a href="<%=" https://www.xiyueta.com/tpl/" & folderName & "/" %>" target="_blank" class="layui-btn layui-btn-xs ">
+                                            <a href="<%="/tpl/" & folderName & "/" %>" target="_blank" class="layui-btn layui-btn-xs ">
                                                 查看
                                             </a>
                                         </span>

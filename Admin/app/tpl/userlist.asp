@@ -1,8 +1,9 @@
-﻿<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><%
-'网站模板处理核心文件'
+<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><%
+'网站模板处理核心文件 xiyueta2023'
 
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname,url
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname,url,thisV
+thisV=2  '当前页版本号'
 isDebug=false  '调试为假，则不显示信息'
 
 '获得当前版本号与账号，与服务器端匹配'
@@ -253,7 +254,7 @@ end function
 If Request("act") = "list" Then
     dim updateusername,sListStr,splVersion
     ' call eerr("url",serverUrl & "/api/tpl/list/?info="&webinfo)
-    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&tplname="&tplname&"&key="&escape(request("key"))&"&order="&escape(request("orderBy"))&"&page="&request("page"),"utf-8")
+    sListStr=gethttpurl(serverUrl & "/api/tpl/list/?info="&webinfo&"&tplname="&tplname&"&thisv="& thisV &"&key="&escape(request("key"))&"&order="&escape(request("orderBy"))&"&page="&request("page"),"utf-8")
 
     '服务器地址错误时，重复获得地址，并更新资源地址'
     if instr(sListStr,"count"":")=false then
@@ -299,8 +300,25 @@ elseIf Request("act") = "editusername" Then  '获得用户信息20230819'
         call die("{""info"": ""修改失败，域名对应的账号不正确"",""status"": ""n""}")
     end if
 
+elseIf Request("act") = "update" Then  '更新模板程序20230823
+    call updateTemplatePage()
 End If 
 
+function updateTemplatePage()
+    dim updatePath
+    updatePath="update.asp"
+    if checkfile(updatePath)=false then
+        url=serverUrl & "/api/tpl/update/?act=updatepage"
+        ' call echo("url",url)
+        call saveRemoteFile(url,updatePath)
+    end if
+    if checkfile(updatePath) then
+        response.redirect("update.asp")
+    end if
+
+
+    call die("{""info"": ""更新模板完成"",""status"": ""y""}")
+end function
 
 
 %>
@@ -413,8 +431,31 @@ layui.use(['form','table'],function(){
         page: true,
         limit: 20,
         done: function(res, curr, count) {
-            console.log(res)
+            // console.log(res)
             $("#myuser",).text("积分："+res.money)
+            if(res.isUpdateTemplatePage!=undefined){ 
+                layer.confirm('已经有新版模板更新程序，是否更新？', function(index) { 
+                     layer.close(index);
+
+var layerIndex = layer.msg('正在处理更新模板程序，请等待！', { icon: 16, time: false, shade: 0.8 });
+                     $.ajax({
+                        type: "POST",
+                        cache: true,
+                        dataType: "json",
+                        url: "?act=update",
+                        data: {  },
+                        success: function(data) {
+                            switch (data.status) {                                
+                                case "y":
+                                    layer.msg(data.info);
+                                    location.reload();
+                                    break;
+                            }
+                        }
+                    });
+
+                });
+            }
             // alert("加载完成")
             // 表格加载完成后执行其他动作
             // res 为接口返回的数据

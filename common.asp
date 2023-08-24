@@ -10,7 +10,7 @@
 
 call openconn()
 dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webbiglogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,webcompanyen,weburl,websql
-dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags,detailPagingTypeList
+dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags,detailPagingTypeList,sUrl
 asporhtml=true   '静态网页为真'0为asp 1为html
 onAutoAddDataToAccess=true  '开启自动添加数组到数据库里(主要是对onepage操作)20220602'
 
@@ -279,19 +279,17 @@ function getNavUrl(navid,navtype)
   end if
 
   if navtype="home" then
-    url="./"
+    url=urlAddDiQu("./")
   elseif navtype="text" then               '这个是自定义，系统已经设置好了
     if asporhtml=true then
-      url="about_" & id &  ".html"
+      url=urlAddDiQu("about_" & id &  ".html")
     else
-      url="about.asp?id="&id
+      url=urlAddDiQu("about.asp?id="&id)
     end if
   elseif asporhtml=true then
-    url=navtype & "_" & id &  ".html"
-
-
+    url=urlAddDiQu(navtype & "_" & id &  ".html")
   else
-    url=navtype & ".asp?id="&id
+    url=urlAddDiQu(navtype & ".asp?id="&id)
   end if
   getNavUrl=urlWanZhen(url)
 end function
@@ -307,11 +305,11 @@ function getNavGoToUrl(navid,navtype)
   end if
 
   if navtype="home" then
-    url="./"
+    url=urlWanZhen("./")
   elseif navtype="text" then
-    url="about.asp?id="&navid
+    url=urlWanZhen("about.asp?id="&navid)
   else
-    url=navtype & ".asp?id="&navid
+    url=urlWanZhen(navtype & ".asp?id="&navid)
   end if
   getNavGoToUrl=url
 end function
@@ -372,11 +370,11 @@ function getArticleUrl(id)
 
   '为动态网站时，直接显示㚃'
   if asporhtml=false then
-    getArticleUrl=urlWanZhen(columntype & "detail.asp?id="&id)
+    getArticleUrl=urlWanZhen( urlAddDiQu(columntype & "detail.asp?id="&id) )
     exit function
   end if
   ' call echo(parentid,columntype)
-  getArticleUrl=urlWanZhen(dirName & columntype & "detail_"& id &".html")
+  getArticleUrl=urlWanZhen( urlAddDiQu(dirName & columntype & "detail_"& id &".html") )
 end function
  
 

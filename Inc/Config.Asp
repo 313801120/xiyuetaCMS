@@ -120,14 +120,12 @@ end function
 '排除指定域名 '
 ' if webDoMain()="http://demo.xiyueta.com" then
 
-
-' if instr(webDoMain(),"xiyueta.com")>0 then
-' 	'不同IP显示不同内容'
-' 	if getIP()<>"127.0.0.1" then
-' 		MDBPath = "/data/data_" & getIP() &".mdb" 
-' 		if checkFile(MDBPath)=false then
-' 			call copyFile("/data/data.mdb",MDBPath)
-' 		end if
-' 	end if
-' end if
+'指定域名做不同IP显示不同网站'
+if instr(webDoMain(),"xiyueta.com")>0 then
+	'不同IP显示不同内容'
+	MDBPath = "/data/data_" & getIP() &".mdb"
+	if checkFile(MDBPath)=false then
+		call copyFile("/data/data.mdb",MDBPath)
+	end if
+end if
 %> 
