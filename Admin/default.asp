@@ -146,18 +146,28 @@ end if
                                 <i class="layui-icon layui-icon-app"></i>
                                 <cite>应用</cite>
                             </a>
-                            <dl class="layui-nav-child">                                 
-                                <dd><a lay-href="app/content/list.asp">文章管理</a></dd>
+                            <dl class="layui-nav-child">    
+
+                                <dd class="layui-nav-itemed">
+                                    <a href="javascript:;">内容系统</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a lay-href="app/content/list.asp">文章管理</a></dd>
+                                        <!-- <dd><a lay-href="app/articlepic/list.asp">文章图片</a></dd> -->
+                                        <dd><a lay-href="app/articlecount/list.asp">文章统计</a></dd> 
+                                        <dd><a lay-href="app/articlemessage/list.asp">文章留言</a></dd>
+                                        <dd><a lay-href="app/tags/list.asp">文章标签</a></dd>
+                                        <dd><a lay-href="app/articlesearch/list.asp">文章搜索</a></dd>
+                                    </dl>
+                                </dd>
+
+
                                 <dd><a lay-href="app/content/tags.asp">分类管理</a></dd>
                                 <dd><a lay-href="app/guestBook/list.asp">留言管理</a></dd>
                                 <dd><a lay-href="app/OnePage/list.asp">单页管理</a></dd>
-                                <dd><a lay-href="app/friendLink/list.asp">友情管理</a></dd>
-                                <dd><a lay-href="app/articlecount/list.asp">文章统计</a></dd>
+                                <dd><a lay-href="app/friendLink/list.asp">友情管理</a></dd> 
                                 <dd><a lay-href="app/sheshi/list2.asp">省市县</a></dd>
-
-                                <dd><a lay-href="app/articlemessage/list.asp">文章留言</a></dd>
-                                <dd><a lay-href="app/tags/list.asp">文章标签</a></dd>
-                                <dd><a lay-href="app/articlesearch/list.asp">文章搜索</a></dd>
+                                <dd><a lay-href="app/xiyuetaclass/list.asp">分类</a></dd>
+   
                             </dl>
                         </li> 
                         <li data-name="chat" class="layui-nav-item">

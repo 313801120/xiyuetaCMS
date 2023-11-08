@@ -2,7 +2,7 @@
 <!--#Include File = "../../admin_function.asp"-->
 <!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping,isiplimit
+dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping,isiplimit,isThisAdmin
 dim splxx,i,s
 id=request("id")
 username=request("username")              '用户名'
@@ -56,29 +56,55 @@ if request("act")="save" then
     if not rs.eof then
       msg="用户名 "& username &" 已经存在"
     else
+      isThisAdmin=false
       if id="" then
         rs.addnew
       else
-        rs.close
-        rs.open"select * from ["& db_PREFIX &"Admin] where id="&id,conn,1,3
-      end if 
-      rs("username")=username 
-      rs("nickname")=nickname 
-      ' if rs("level")=1 then isthrough=1'最高权限 自动审核
-      if level<>1 then '排除最高权限者20220616
-        rs("isthrough")=isthrough
+        if cint(id)=userrs("id") then
+          isThisAdmin=true
+        else
+          rs.close
+          rs.open"select * from ["& db_PREFIX &"Admin] where id="&id,conn,1,3
+        end if
       end if
-      rs("email")=email
-      rs("tel")=tel
-      rs("pic")=pic
-      rs("sex")=sex
-      rs("level")=level 
-      rs("permission")=permission
-      rs("grouping")=grouping 
-      rs("bodyContent")=bodyContent 
-      rs("isiplimit")=isiplimit 'IP限制'
-      if pwd<>"" then rs("pwd")=pwd
-      rs.update  
+      'Access里不可对同一表里同一条记录同时操作，所以只能用之前打开的对象，在sqlserver里不存在20231108' 
+      if isThisAdmin then
+        userrs("username")=username 
+        userrs("nickname")=nickname 
+        ' if userrs("level")=1 then isthrough=1'最高权限 自动审核
+        if level<>1 then '排除最高权限者20220616
+          userrs("isthrough")=isthrough
+        end if
+        userrs("email")=email
+        userrs("tel")=tel
+        userrs("pic")=pic
+        userrs("sex")=sex
+        userrs("level")=level 
+        userrs("permission")=permission
+        userrs("grouping")=grouping 
+        userrs("bodyContent")=bodyContent 
+        userrs("isiplimit")=isiplimit 'IP限制'
+        if pwd<>"" then userrs("pwd")=pwd
+        userrs.update  
+      else
+        rs("username")=username 
+        rs("nickname")=nickname 
+        ' if rs("level")=1 then isthrough=1'最高权限 自动审核
+        if level<>1 then '排除最高权限者20220616
+          rs("isthrough")=isthrough
+        end if
+        rs("email")=email
+        rs("tel")=tel
+        rs("pic")=pic
+        rs("sex")=sex
+        rs("level")=level 
+        rs("permission")=permission
+        rs("grouping")=grouping 
+        rs("bodyContent")=bodyContent 
+        rs("isiplimit")=isiplimit 'IP限制'
+        if pwd<>"" then rs("pwd")=pwd
+        rs.update  
+      end if
       response.Write"<script>parent.location.reload();</script>"
       response.end()
     end if:rs.close 

@@ -161,13 +161,13 @@ layui.use('table', function() {
             [
 
                 { field: 'i', title: '序列', width: 80, sort: true }
-                , { field: 'username', title: '登录名',minWidth:90, sort: false }
-                , { field: 'nickname', title: '昵称',minWidth:90, sort: false }
+                , { field: 'username', title: '登录名',width:100, sort: false }
+                , { field: 'nickname', title: '昵称',width:120, sort: false }
                 , { field: 'tel', title: '手机',width:120, sort: false } 
                 , { field: 'email', title: '邮箱',width:120, sort: false }
                 , { field: 'level', title: '角色',width:100, sort: true }
                 , { field: 'grouping', title: '分组',width:100, sort: true }
-                , { field: 'permission', title: '权限列表',width:100, sort: true }
+                , { field: 'permission', title: '权限列表',minWidth:130, sort: true }
                 , { field: 'isthrough', title: '审核状态',width:100,sort: false }
                 , { field: 'createTime', title: '加入时间',width:160, sort: true }
                 , { fixed: 'right', title: '操作', width: 150, toolbar: '#barDemo' }
