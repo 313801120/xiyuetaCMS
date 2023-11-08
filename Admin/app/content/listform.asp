@@ -35,7 +35,7 @@ if request("act")="save" then
     isTrue=false 
   end if
   if isTrue=true then
-    addsql=" where title='"& title &"'"
+    addsql=" where (title='"& title &"' and parentid=" & parentid & ")"  '判断时加上栏目20231012'
     if id<>"" then
       addsql=addsql & " and id<>"&id
     end if
@@ -100,7 +100,36 @@ end if
  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  /> 
 </head>
 <body>  
+<script> 
+function showBigPic(filepath) {
+    var html = "<div id='bigPic' style='position:absolute;display:none; z-index:99999'><img style=\"max-width:300px\" src='' id='pre_view'/><br /></div>";
 
+    $("#form1").append(html);
+    //将文件路径传给img大图
+    document.getElementById('pre_view').src = filepath;
+    //获取大图div是否存在
+    
+    
+    var div = document.getElementById("bigPic");
+    if (!div) {
+        return;
+    }
+    //如果存在则展示
+    document.getElementById("bigPic").style.display="block";
+    //获取鼠标坐标
+    var intX = window.event.clientX;
+    var intY = window.event.clientY;
+    //设置大图左上角起点位置
+    div.style.left = intX +5+ "px";
+    div.style.top = intY + 5+"px";
+}
+
+//隐藏
+function closeimg(){
+    document.getElementById("bigPic").style.display="none";
+}
+
+</script>
 <%if msg<>"" then  call rw("<blockquote class=""layui-elem-quote"">"& msg &" &nbsp;<a href='javascript:window.history.go(-1); '>返回</a></blockquote>")%>
 
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save&id=<%=id%>">
@@ -133,17 +162,37 @@ end if
     <div class="layui-form-item">
       <label class="layui-form-label">缩略图</label>
       <div class="layui-input-inline">
-        <input type="text" name="smallimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=smallimage%>">
+        <input type="text" name="smallimage" id="smallimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=smallimage%>" onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
       </div>
-      <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin">上传图片</button> 
+      <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin">上传图片</button>  
+
+<%if isAdminArticleOnPaiZhan then%>
+  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
+  onclick="picDomId='smallimage';layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
+
+  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
+  onclick="picDomId='smallimage';layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
+<%end if%>
+
+
     </div>
 
     <div class="layui-form-item">
       <label class="layui-form-label">大图</label>
       <div class="layui-input-inline">
-        <input type="text" name="bigimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=bigimage%>">
+        <input type="text" name="bigimage" id="bigimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=bigimage%>" onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
       </div>
       <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin2">上传图片</button> 
+
+
+<%if isAdminArticleOnPaiZhan then%>
+  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
+  onclick="picDomId='bigimage';layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
+
+  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
+  onclick="picDomId='bigimage';layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
+  <%end if%>
+
     </div>
 
     <div class="layui-form-item">
@@ -351,5 +400,113 @@ layui.config({
 </style>
 <script type='text/javascript' src='../../set/system/tagsinput.min.js'></script>
 
+<script>
+var layuiOpenIndex;
+var picDomId='smallimage';//默认为小图
+function getPaiZhaoImg(src){ 
+  $("input[name='"+picDomId+"']").val(src)
+  layer.close(layuiOpenIndex);
+}
+
+
+
+
+
+
+
+
+
+
+
+ var imgInputObj;//图片的input对象
+    //获得粘贴板内容
+    document.getElementById("smallimage").addEventListener('paste', function (event) {  
+      imgInputObj=$(this);
+      uploadclipboardDataImage(event);
+    })
+    document.getElementById("bigimage").addEventListener('paste', function (event) {  
+      imgInputObj=$(this);
+      uploadclipboardDataImage(event);
+    })
+
+    // let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
+
+    //上传粘贴板里的图片
+    function uploadclipboardDataImage(event){
+        console.log("粘贴内容22") 
+        if (!event || !event.clipboardData) return;
+        let pText = event.clipboardData.getData('text/plain');
+        if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
+            // showCVText(pText);
+        } else if (event.clipboardData.items) {//没有文本内容，判断这个数组，文件可能在这个数组里
+            let blob = null, items = event.clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].kind === 'file') {//类型 是 文件
+                    blob = items[i].getAsFile();
+                    if (items[i].type.indexOf("image") !== -1) {//文件类型是图像
+                        showImage(blob);
+                    } else if (items[i].type.indexOf("text") !== -1) {//文件类型是文本
+                        // showText(blob);
+                    }
+                } 
+            }
+        } else {
+            alert("粘了个寂寞");
+        }
+    }
+
+    function showImage(blob) {
+        getContext(blob).then(res => { //图片数据能直接被img识别
+            // document.getElementById("previewImage").src = res; 
+            jQuery.ajax({
+                url: '/api/upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'content': res
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest)
+                    console.log(textStatus)
+                    console.log(errorThrown)
+                },
+                success: function(data) { 
+                    // var data=jQuery.parseJSON(result); 
+                    // alert("aa")
+                    switch (data.status) {
+                        case "y": 
+                            // alert(data.info)
+                            imgInputObj.val("/"+data.img)
+                            break;
+                        case "n": 
+                            break;
+                    }
+                }
+            });
+
+
+        })
+    }
+
+ 
+    /**
+     * 把字节转为web识别的base64格式数据
+     * @param blob
+     * @returns {Promise<unknown>}
+     */
+    function getContext(blob) {
+        return new Promise((resolve) => {
+            if (blob == null) resolve();
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                console.log(event)
+                resolve(event.target.result);
+            }
+            reader.readAsDataURL(blob);
+        });
+    }
+
+</script>
+<script type="text/javascript" src="../../js/pc.js"></script> 
 </body>
 </html>

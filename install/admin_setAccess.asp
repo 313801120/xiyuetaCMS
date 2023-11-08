@@ -336,7 +336,7 @@ function batchImportDirTXTData(webdataDir, tableNameList)
                 folderPath = handlePath(webdataDir & "/" & tableName) 
                 if checkFolder(folderPath) = true then
                     conn.execute("delete from " & db_PREFIX & tableName)                            '删除当前表全部数据
-                    call echo("tableName", tableName) 
+                    call echo("tableName", tableName)
                     content = getDirAllFileList(folderPath, "txt") 
                     splxx = split(content, vbCrLf) 
                     for each filePath in splxx
@@ -346,7 +346,8 @@ function batchImportDirTXTData(webdataDir, tableNameList)
                             fileName = getFileName(filePath) 
                             if filePath <> "" and inStr("_#", left(fileName, 1)) = false then
                                 call echo(tableName, filePath) 
-                                call nImportTXTData(folderPath,readFile(filePath,"utf-8"), tableName, "添加") 
+                                '这里不要规定什么编码，之间是utf-8 20230828'
+                                call nImportTXTData(folderPath,readFile(filePath,""), tableName, "添加") 
                                 doevents 
                             end if 
                         end if
@@ -369,6 +370,7 @@ function nImportTXTData(folderPath,content, tableName, sType)
 		content=replace(content,vbcrlf & vbcrlf, vbcrlf)
     end if 
     fieldConfigList = lcase(getFieldConfigList(db_PREFIX & tableName)) 
+
     splStr = split(fieldConfigList, ",") 
     splList = split(content, vbCrLf & "-------------------------------") 
     nOK = 0 
@@ -451,8 +453,13 @@ function nImportTXTData(folderPath,content, tableName, sType)
                             'call echo("fieldValue",fieldValue)
 
                         '题目分类 20230407
-                        elseif (tableName = "timoclass" or tableName = "timo") and fieldName = "parentid" then 
+                        elseif ((tableName = "timoclass" or tableName = "timo") and fieldName = "parentid") or (tableName = "exam" and fieldName = "timoclassid" ) then 
+
+                     
+
                             fieldValue = gettimoclassId(fieldValue)  
+
+
 
 
                         '分类20220517

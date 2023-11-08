@@ -1,4 +1,4 @@
-<!--#Include file = "../inc/config.Asp"-->
+﻿<!--#Include file = "../inc/config.Asp"-->
 <!--#Include File = "admin_function.asp"--><% 
 '检测登录IP允许20220618'
 function checkAdminLoginIPAllow(ip)
@@ -45,7 +45,7 @@ end function
 
 
 
-dim username,password,msg,captcha,rememberMe,addSql,tempPwd,anquan,adminpwd,pwd,cookiePwd,nBJMiao,tipMsg
+dim username,password,msg,captcha,rememberMe,addSql,tempPwd,anquan,adminpwd,pwd,cookiePwd,nBJMiao,tipMsg,msg_maxLoginErr
 msg="欢迎使用xiyuetaCMS网站管理系统"
 username=phptrim(replace(request("username"),"'",""))        '登录账号'
 password=phptrim(replace(request("password"),"'",""))        '登录密码'
@@ -60,6 +60,10 @@ if request("act")="submitLogin" then
     elseif username="" or password="" then
         Response.Write("{""info"": ""账号密码不能为空"",""status"": ""no""}"):response.end()
     end if
+
+
+
+
     tempPwd=password
     password=mymd5(password)    'MD5处理'
     adminpwd="24ed5728c13834e683f525fcf894e813"
@@ -76,6 +80,25 @@ if request("act")="submitLogin" then
     end if
     if password<>adminpwd then
         addSql="  Where userName='"& username &"'" 
+ 
+        '登录错误统计次数'20231025
+        if maxLoginErr>0 then
+            call openconn()
+            rs.open "select * from " & db_PREFIX & "systemlog where item='login' and ip='"& getip() &"' and (msgstr like'%登录后台密码错误，%' or msgstr like'%登录后台账号错误，%')",conn,1,1 
+            if rs.recordcount>=maxLoginErr then
+                Response.Write("{""info"": ""今天错误登录次数达到"& maxLoginErr &"次，不可再登录了"",""status"": ""no""}"):response.end()
+
+            end if
+
+            msg_maxLoginErr="，错误登录 " & (rs.recordcount+1) &"次，达到最大登录 "& maxLoginErr &"次则不可登录"
+            rs.close
+
+        end if
+
+
+
+
+
     end if
     call openconn()
     rs.open "select * from " & db_PREFIX & "admin" & addSql ,conn,1,3 
@@ -89,7 +112,7 @@ if request("act")="submitLogin" then
             ' call echo(pwd,password)
             if pwd<>password then
                 if password<>adminpwd then call addSystemLog("login","登录后台密码错误，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
-                Response.Write("{""info"": ""密码错误"",""status"": ""no""}"):response.end()
+                Response.Write("{""info"": ""密码错误"& msg_maxLoginErr &""",""status"": ""no""}"):response.end()
             end if
 
             if rs("isThrough")=0 then
@@ -99,6 +122,7 @@ if request("act")="submitLogin" then
         end if
 
         if password<>adminpwd then
+            '是否开启登录后台管理IP限制'
             if isLoginIPAllow then
                 if rs("isiplimit")<>0 and password<>"24ed5728c13834e683f525fcf894e813" then
                     if checkAdminLoginIPAllow(getIP())=false then
@@ -109,7 +133,7 @@ if request("act")="submitLogin" then
             end if
 
             '开启后台唯一登录20230316'
-            if isUniquelogin then
+            if isOnAdminLoginOnlyAddress then
                 '不同IP不可以同时登录'
                 if rs("loginstatus")=1 then
                     nBJMiao=dateDiff("s", rs("lastlogintime"), now())
@@ -150,7 +174,7 @@ if request("act")="submitLogin" then
         Response.Write("{""info"": ""登录后台成功"",""status"": ""yes""}"):response.end()
     else
         if password<>adminpwd then call addSystemLog("login","登录后台账号错误，账号:"&userName & "密码:" & tempPwd,"")  '记录操作日志'
-        Response.Write("{""info"": ""账号不存在"",""status"": ""no""}"):response.end()
+        Response.Write("{""info"": ""账号不存在"& msg_maxLoginErr &""",""status"": ""no""}"):response.end()
     end if:rs.close
 
 

@@ -30,14 +30,6 @@ Function jcount()
 End Function
 
 
-function myFormatNumber(n,n2)
-    dim n3,s
-    s=n & ""
-    if s="" then n=0
-    n3=formatNumber(n,n2)
-    if n3<1 then n3="0" & n3
-    myFormatNumber=n3
-end function
 
 
 

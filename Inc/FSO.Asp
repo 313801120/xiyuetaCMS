@@ -1,4 +1,4 @@
-﻿<% 
+<% 
 'FSO  Scripting.FileSystemObject组件操作大全 (2013,9,27)
 
 '读文件内容 (2013,9,27
@@ -986,7 +986,7 @@ function getUpdateFile(byVal folderPath, fileTypeList, folderType, setTime, byVa
         setTimeType = "s" 
     end if 
     if setTime = "" then
-        setTime = -1 
+        setTime = -1  
     else
         setTime = cLng(setTime)                                                         '设置时间为数值类型
     end if 

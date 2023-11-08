@@ -101,8 +101,12 @@ end if
               </div>
               <div class="layui-form-item">
                 <div class="layui-input-block"> 
-                    <input type="submit" class="layui-btn" value="确认修改" lay-submit="lay-submit" /><%=msg%>
-                  <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                  <!-- 改成两个字，以便在手机端显示在一行 -->
+                  <input type="submit" class="layui-btn" value="保存" lay-submit="lay-submit" />
+                  <!-- <input type="submit" class="layui-btn" value="确认修改" lay-submit="lay-submit" /> -->
+                  <%=msg%>
+                  <button type="reset" class="layui-btn layui-btn-primary">重写</button>
+                  <!-- <button type="reset" class="layui-btn layui-btn-primary">重新填写</button> -->
                 </div>
               </div>
             </div>

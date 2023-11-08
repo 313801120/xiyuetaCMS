@@ -10,7 +10,8 @@ function visitorLogin(money)
 	    '不存在则追加'
 	    if rs.eof then
 	        rs.addnew
-	        rs("username")="youke" & handleMD5(getip() & getrnd(11) & now(),16) 
+	        ' rs("username")="youke" & handleMD5(getip() & getrnd(11) & now(),16) 
+	        rs("username")="A" & getrnd(4)
 	        rs("nickname")="游客"
 	        rs("pic")="/images/userpic/" & phpRnd(1,68) & ".gif"
 	        rs("tel")="138" & getRndTel(8) '追加于20230421'

@@ -40,7 +40,7 @@ if session("memberid")<>"" then
         session("memberpass")=""
         session("onloadchat")="" '清空在线聊天的第一次登录'
 		' response.Redirect("/login.asp?1="&session("memberuser") & "&pass="&session("memberpass") )
-    call eerr("没有登录","<a href='?act=loginTourist&1'>点击以游客身份登录</a>")
+    call eerr("没有登录","<a href='?act=loginTourist&1'>登录失效，点击以游客身份登录</a>")
     call eerr("会员账号密码登录，再先登录","<a href='"& "/login.asp?1="&session("memberuser") & "&pass="&session("memberpass") &"'>"& "/login.asp?"& session("memberid") &"="&session("memberuser") & "&pass="&session("memberpass") &"</a>")
 	end if
 

@@ -93,7 +93,7 @@ i.icon-wenhao {border: 1px #ff5722 solid; color: #ff5722; font-size: 10px; margi
        <div class='layui-form-item'>
       <label class='layui-form-label'>文章ID</label>
       <div class='layui-input-inline'>
-        <input type='text' name='articleid' placeholder='请输入文章ID' autocomplete='off' class='layui-input' value="<%=articleid%>" >
+        <input type='number' name='articleid' placeholder='请输入文章ID' autocomplete='off' class='layui-input' value="<%=articleid%>"  lay-verify='required'>
       </div><!--articleid-->
     </div>
     <div class='layui-form-item'>
@@ -105,7 +105,7 @@ i.icon-wenhao {border: 1px #ff5722 solid; color: #ff5722; font-size: 10px; margi
     <div class='layui-form-item'>
       <label class='layui-form-label'>图片</label>
       <div class='layui-input-inline'>
-        <input type='text' name='pic' placeholder='请输入图片' autocomplete='off' class='layui-input' value="<%=pic%>"  onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
+        <input type='text' name='pic' placeholder='请输入图片' autocomplete='off' class='layui-input' value="<%=pic%>"  lay-verify='required' onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
       </div><!--pic-->
 <button style='float: left;' type='button' class='layui-btn' id='layuiadmin-upload-useradmin'>上传图片</button>     </div>
 

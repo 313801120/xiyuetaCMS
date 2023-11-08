@@ -17,6 +17,7 @@ sub handleIISLog(logPath)
 			rs.open"select * from ["& db_PREFIX &"iislog]",conn,1,3
 			rs.addnew
 			' call echo("i",i)
+			' call echo("splxx长度",ubound(splxx))
 			' call echo("浏览时间",format_Time(splxx(0) & " "& splxx(1),1) )
 			' call echo("serverip",splxx(2))
 			' call echo("方法",splxx(3))
@@ -36,7 +37,7 @@ sub handleIISLog(logPath)
 	        rs("browsetime")=format_Time(splxx(0) & " "& splxx(1),1) 
 	        rs("serverip")=splxx(2)
 	        rs("method")=splxx(3)
-	        rs("url")=splxx(4)
+	        rs("url")=left(splxx(4),255)   '只提取255个字符'
 	        rs("urlparameter")=splxx(5)
 	        rs("port")=splxx(6)
 	        rs("username")=splxx(7)

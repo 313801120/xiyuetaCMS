@@ -1096,6 +1096,10 @@ function showwin(title,url){
     if(n<nWidth)nWidth=n;
     var index=tc2(title,url, nWidth, 450);
     // alert("index="+index);
+    if(n<800){//宽度小于800，则全屏
+        layer.full(index);//全屏
+    }
+
     return index;
 }
 //显示窗体，宽度不超过800    20220210  不显示底部的确认和取消按钮

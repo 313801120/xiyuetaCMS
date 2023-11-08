@@ -4,6 +4,7 @@
 
 call openconn() 
 dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,columnName,id,title,parentid,isthrough
+dim istop
 parentid=request("parentid")
 '网站栏目查询
 If Request("act") = "list" Then  
@@ -72,8 +73,12 @@ If Request("act") = "list" Then
             if rs("isthrough")<>0 then 
                 isthrough=" checked" 
             end if 
+            istop=""
+            if rs("istop")<>0 then 
+                istop=" checked" 
+            end if 
 
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""parentid"":""" & getSubTree(rs("parentid")) & """,""isthrough"":""" & isthrough & """,""title"":""" & jsonCL(rs("title")) & """,""tsfield001"":""" & TS_getTableCount("getTableCount-articlepic-articleid",rs("id")) & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""parentid"":""" & getSubTree(rs("parentid")) & """,""isthrough"":""" & isthrough & """,""istop"":""" & istop & """,""title"":""" & jsonCL(rs("title")) & """,""tsfield001"":""" & TS_getTableCount("getTableCount-articlepic-articleid",rs("id")) & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
     
  
 
@@ -105,10 +110,17 @@ elseif request("act")="onlineedit" then
   end if:rs.close
   Response.end()
 '通过或取消'
-elseif request("act")="isthrough" then
-    conn.execute"update ["& db_PREFIX &"articleDetail] set isthrough="&IIF(request("isthrough")="true",1,0) &" where id="&request("id")
-    response.write "{""info"": ""设置成功"",""status"": ""y""}"
-    Response.end()
+elseif request("act")="isOnOff" then 
+    dim fieldname
+    fieldname=request("fieldname")
+    if fieldname="" then fieldname="isthrough"
+    if instr(",isthrough,istop,ishot,",","& fieldname &",")>0 then
+        conn.execute"update ["& db_PREFIX &"articleDetail] set "& fieldname &"="&IIF(request("value")="true",1,0) &" where id="&request("id")
+        call die("{""info"": ""设置成功"",""status"": ""y""}")
+    end if
+
+    call die("{""info"": ""设置失败"",""status"": ""n""}")
+
 
 
 
@@ -216,8 +228,11 @@ layui.use(['form','table','upload'],function(){
                     return '<span style="cursor: pointer;" lay-event="tsfield001" title="点击添加修改">'+d.tsfield001+'</span>'}}
 
                 , { field: 'createtime', title: '发布时间', width: 160, sort: true }
-                 ,{field: 'isthrough', title: '是否置顶',width:100, align:'center', templet:function(d){
-                    return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}
+                 ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
+                    return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}                 
+
+                ,{field: 'istop', title: '是否置顶',width:100, align:'center', templet:function(d){
+                    return '<input type="checkbox" value="'+d.id+'" name="istop" lay-event="istop" lay-skin="switch" lay-text="是|否" '+d.istop+' >'}}
                 , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
 
 
@@ -233,7 +248,7 @@ layui.use(['form','table','upload'],function(){
     //是否置顶
     form.on('switch', function(data){
         var index = layer.msg('修改中，请稍候',{icon: 16,time:false,shade:0.8});
-        setTimeout(function(){
+        setTimeout(function(){ 
             var pid=data.elem.value
             layer.close(index);
 
@@ -241,8 +256,8 @@ layui.use(['form','table','upload'],function(){
                 type: "POST",
                 cache: true,
                 dataType: "json",
-                url: "?act=isthrough",
-                data: { "id": pid,"isthrough":data.elem.checked }, 
+                url: "?act=isOnOff",
+                data: { "id": pid,"value":data.elem.checked,fieldname:data.elem.name }, 
                 success: function(data) { 
                     switch (data.status) {
                         case "y": 
@@ -253,9 +268,9 @@ layui.use(['form','table','upload'],function(){
                 }
             });
             if(data.elem.checked){
-                layer.msg("置顶成功！");
+                layer.msg("设置成功！");
             }else{
-                layer.msg("取消置顶成功！");
+                layer.msg("取消成功！");
             }
         },500);
     })
@@ -385,7 +400,7 @@ layer.full(showwin2('列表', '../articlepic/list.asp?articleid=' + pid ))
 </script>
 
 
-<script type="text/javascript" src="../../js/pc.js"></script>	
+<script type="text/javascript" src="../../js/pc.js?v13"></script>	
 
 </body>
 

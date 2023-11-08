@@ -3,6 +3,17 @@ dim adminLevelList:adminLevelList=",网站管理员,管理人员,入库人员,�
 '管理员的权限列表''
 dim adminPermissionLits
 adminPermissionLits="文章管理,文章添加,文章修改,文章审核,文章删除"
+'检测管理员权限20230913' 如  checkAdminPower("财务人员")
+function checkAdminPower(title)
+	dim splxx,s
+	splxx=split(adminLevelList,",")
+	s=splxx(userrs("level"))
+	if s=title then
+		checkAdminPower=true
+	else
+		checkAdminPower=false
+	end if	
+end function
 dim isAddSystemLog:isAddSystemLog=true	'是否自动添加信息日志'
 
  
@@ -635,6 +646,15 @@ function TS_handleAllAction(sType,rs)
 	  	if not rsx.eof then
 			TS_handleAllAction=rsx("title")   
 		end if:rsx.close
+	elseif sAction="getwebsiteinfo" then '获得活动标题'   
+		if rs("webid")<>"" then
+		  	rsx.open"select * from ["& db_PREFIX &"web] where id="&rs("webid"),conn,1,1
+		  	if not rsx.eof then
+				TS_handleAllAction=rsx("website") & "(" & rsx("version") & ")积分 " & rsx("money")
+			end if:rsx.close
+		else
+			TS_handleAllAction="webid为空，注意"
+		end if
 	end if
 end function
 

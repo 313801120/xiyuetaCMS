@@ -34,7 +34,7 @@ else
 end if
 
 '开启后台唯一登录20230316'
-if isUniquelogin then
+if isOnAdminLoginOnlyAddress then
     if userrs("upip")<>getip() and userrs("upip")<>"*" then
         session("adminid")=""
         call removeCookie("adminuser")
@@ -42,6 +42,10 @@ if isUniquelogin then
         call eerr("提示","账号被IP("& userrs("upip") &")登录，你已退出。<a href='"& adminDir &"login.asp?3'>点击重新登录</a>")
     end if
 end if
+
+'更新下状态时间 20230304'
+userrs("lastlogintime")=now()'最后登录时间  20230304
+userrs.update
 
 '检测权限 返回true或false   20220604'
 function checkPermission(did)

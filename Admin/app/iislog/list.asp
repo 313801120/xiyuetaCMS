@@ -42,10 +42,14 @@ If Request("act") = "list" Then
       sql=IIF(sql=""," where ",sql & " and ")
       sql =sql & "["& request("searchField") &"] like '%" & Request("key") & "%' " 
     End If
+    If 1=1 Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql =sql & " userip<>'218.22.62.13' " 
+    End If
 
 
     mysql = sql1 & sql & request("sqlOrderyBy")
-    'call die(mysql)
+    ' call die(mysql)
     rs.Open mysql, conn, 1, 1 
 
     If Not rs.EOF Then
@@ -207,7 +211,7 @@ End If
     <div class="layui-inline"> 
         <select name="filetypeSQL">
         <option value="">选择文件后缀</option> 
-        <option value=" (filetype='' or filetype='asp' or filetype='htm'  or filetype='html') "  >网址</option> 
+        <option value=" (filetype='' or filetype='asp' or filetype='php' or filetype='htm'  or filetype='html') "  >网址</option> 
         <option value="filetype='asp'">asp</option>   
         <option value="filetype='htm'">htm</option>  
         <option value="filetype='html'">html</option>  
@@ -251,14 +255,16 @@ End If
 
   <div class="layui-inline"> 
  
-    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称">
+    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称" onkeypress="if (event.keyCode === 13) {$('button[data-type=reload]').click(); }">
     </div>
 
 
 
       
   <button class="layui-btn" data-type="reload">搜索</button>
-  <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
+  
+  <!-- <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button> -->
+
           <button class="layui-btn" data-type="batchdel">删除</button> 
   <button class="layui-btn" id="importXls">导入</button> 
   <button class="layui-btn" onclick="cleardata()">清空数据</button> 
@@ -267,7 +273,7 @@ End If
  
 
  <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a> 
+  <!-- <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>  -->
   <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> 
 </script>
 <table class="layui-hide" id="demo" lay-filter="demo"></table>
@@ -305,6 +311,12 @@ layui.use(['form','table','upload'],function(){
         exts: 'log', //只允许上传log文件
         done: function(res) {
             // alert("res.data[0].src="+res.data[0].src)
+            
+             var winObj=layer.open({
+                  title: '提示'
+                  ,content: "正在导入IIS数据，请等待！"
+                });  
+            
               $.get('handleIISLog.asp?act=send', {
                     logPath:res.data[0].src
                 }, function (strData) {
@@ -341,14 +353,14 @@ layui.use(['form','table','upload'],function(){
                 , { field: 'win32statuscode', title: 'Win32状态', width:120, sort: true }
                 , { field: 'handletime', title: '处理时间', width:120, sort: true }
                 // , { field: 'createtime', title: '发布时间', width: 160, sort: true }
-                , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
+                , { fixed: 'right', title: '操作', width: 90, toolbar: '#barDemo' }
 
 
             ]
         ],
         id: 'testReload',
         page: true,
-        limit: 120
+        limit: 17   //太大加载会很慢
     });
 
  

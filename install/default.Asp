@@ -579,7 +579,8 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[tags] VarChar Default """","                                        '标签
         sql = sql & "[price] float Default 0,"                                            '价格(积分)
         sql = sql & "[nbuy] Int Default 0,"                                               '是否购买，默认为0
-
+        sql = sql & "[istop] Int Default 0,"                                               '是否置顶20231012
+        sql = sql & "[ishot] Int Default 0,"                                               '是否热门产品hot20231012
 
         sql = sql & "[tempdataid] Text Default """","                                      '暂存，文章图片对应用20230518
         
@@ -769,7 +770,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
         sql = sql & "[email] VarChar Default """","                                       '邮箱
         sql = sql & "[tel] VarChar Default """","                                         '电话
         sql = sql & "[isthrough] Int Default 1,"                                          '通过审核
-        sql = sql & "[flags] VarChar Default """","                                       '电话
+        sql = sql & "[flags] VarChar Default """","                                       '旗
         sql = sql & "[grouping]  Int Default -1,"                                         '分组
         sql = sql & "[isiplimit] Int Default 1,"                                          '是否开启IP限制
         sql = sql & "[iplimitlist] VarChar Default """","                                 'IP限制列表
@@ -1073,7 +1074,7 @@ sub webData(db_PREFIX, loginname, loginpwd)
 
         dim fieldNameList, fieldValueList 
         fieldNameList = "webtitle,webkeywords,webdescription,WebUrl,Webfoot,username,version" 
-        fieldValueList = "'网站标题','网站关键词','网站描述','http://www.xiyueta.com','版权所有 小云所有 电话：021-66666666 传真：021-8888888<br>联系QQ：313801120 邮箱：313801120@qq.com','test','v1.0'" 
+        fieldValueList = "'网站标题','网站关键词','网站描述','http://www.xiyueta.com','版权所有 小云所有 电话：021-66666666 传真：021-8888888<br>联系QQ：313801120 邮箱：313801120@qq.com','test2023','v2.0'" 
         conn.execute("insert into " & db_PREFIX & "website (" & fieldNameList & ") values(" & fieldValueList & ")") 
  
 

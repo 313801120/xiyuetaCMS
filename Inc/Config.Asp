@@ -29,7 +29,7 @@
 <!--#Include file = "2015_hexSwitch.asp"-->   
 <!--#Include file = "2016_Log.Asp"-->   
 <!--#Include file = "SystemInfo.Asp"-->   
-<!--#Include file = "ip.Asp"-->   
+<!--#Include file = "ip.Asp"-->    
 <!--#Include file = "function.Asp"-->
 <!--#Include file = "PinYin.Asp"-->
 <!--#Include file = "Class_image.asp"-->
@@ -69,7 +69,9 @@ dim db_PREFIX : db_PREFIX = "xy_"                                               
 dim countTi:countTi=200 '默认显示题数
 dim WEB_CACHEFile : WEB_CACHEFile = "[adminDir]/[EDITORTYPE]cachedata.txt" '缓冲文件
 dim isLoginIPAllow:isLoginIPAllow=false  '是否开启登录后台管理IP限制 20220627
-dim isUniquelogin:isUniquelogin=false  '开启后台唯一登录 20230316
+dim isOnAdminLoginOnlyAddress:isOnAdminLoginOnlyAddress=false  '是否开启登录后台一个账号只能同一IP登录，不可多IP登录 20220923
+dim maxLoginErr:maxLoginErr=5  '登录错误最大次数  ，超过则不可再登录了 0为不设置
+dim isAdminArticleOnPaiZhan:isAdminArticleOnPaiZhan=true  '后台文章添加开启拍照按钮 20230828
 dim version:version="V1.3"       '(20230311升级到1.3)'
 
 dim pubIsDownIPJson:pubIsDownIPJson=false'是否下载IP查询不到时下载ip138数据20221029
@@ -92,6 +94,28 @@ function getAccessDatediffTime(zdName,sTime)
 		getAccessDatediffTime=" datediff(day,"& zdName &",'"& sTime &"')"   '要加上'号，要不然会报错
 	end if	
 end function
+
+
+'秒'
+function getAccessDatediffsecond(zdName)
+    if databaseType = "acc"&"ess" then'防止被替换
+        getAccessDatediffsecond=" datediff('s',"& zdName &",now())" 
+    else
+        getAccessDatediffsecond=" datediff(second,"& zdName &",GETDATE())"
+    end if  
+end function
+
+'时
+function getAccessDatediffHour(zdName)
+    if databaseType = "acc"&"ess" then'防止被替换
+        getAccessDatediffHour=" datediff('h',"& zdName &",now())" 
+    else
+        getAccessDatediffHour=" datediff(hour,"& zdName &",GETDATE())"
+    end if  
+end function
+
+
+
 '周'
 function getAccessDatediffWeek(zdName)
 	if databaseType = "acc"&"ess" then'防止被替换
@@ -115,6 +139,36 @@ function getAccessDatediffYear(zdName)
 	else
 		getAccessDatediffYear=" datediff(year,"& zdName &",GETDATE())"
 	end if	
+end function
+
+'处理sql在accces与sqlserver里显示不一样' 20231101
+function sqlAorS(stype)
+    if databaseType = "acc"&"ess" then'防止被替换
+        if instr("|s|h|d|ww|m|yyyy|","|"& stype &"|")>0 then
+            stype="'"& stype &"'"
+        end if
+    else
+        ' call echo("stype",stype)
+        if sType="'s'" or sType="s" then
+            sType="second"
+        elseif sType="'h'" or sType="h" then
+            sType="hour"
+        elseif sType="'d'" or sType="d" then
+            sType="day"
+        elseif sType="'ww'" or sType="ww" then
+            sType="week"
+        elseif sType="'m'" or sType="m" then
+            sType="month"
+        elseif sType="'yyyy'" or sType="yyyy" then
+            sType="year"
+        elseif sType="now()" or sType="now" then
+            sType="GETDATE()"
+        elseif left(sType,1)="#" then
+            sType="'" & mid(sType,2,len(sType)-2) & "'"
+        end if
+        ' call echo("stype",stype):call hr()
+    end if
+    sqlAorS=sType
 end function
 
 '排除指定域名 '

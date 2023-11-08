@@ -1,7 +1,51 @@
 ﻿<%
-function myFormatNumber(n)
-    myFormatNumber=numberBeforeAddZero(formatnumber(price,2))
+'通过ChatGPT写的代码 20231011'
+Function getCharacterLength(str)
+  Dim i, count
+
+  count = 0
+  For i = 1 To Len(str)
+    If AscW(Mid(str, i, 1)) < 256 Then
+      count = count + 1
+    Else
+      count = count + 2
+    End If
+  Next
+
+  getCharacterLength = count
+End Function
+
+'处理数字后两位 20231012'
+function handleFormatNumber(n,n2)
+    dim c,splxx,s,s1,s2,i
+    if isNul(n) then handleFormatNumber=0:exit function
+    ' call echo(typename(n),typename(n2))
+    ' call echo(n & "",n2 & ""):doevents
+    c=cstr(numberBeforeAddZero(formatNumber(n,n2)))
+    splxx=split(c,".")
+    s1=splxx(0)    
+    for i=1 to len(splxx(1))
+        s=mid(splxx(1),i,1)
+        if s="" or s="0" then exit for
+        s2=s2 & s
+    next
+    if s2<>"" then
+        s1=s1 & "." & s2
+    end if
+    handleFormatNumber=s1
 end function
+
+function myFormatNumber(n,n2)
+    dim n3,s
+    s=n & ""
+    if s="" then n=0
+    n3=formatNumber(n,n2)
+    if n3<1 then n3="0" & n3
+    myFormatNumber=n3
+end function
+
+
+ 
 '数字前面加零 20230427'
 function numberBeforeAddZero(n) 
     if left(cstr(n),1)="." then
@@ -675,6 +719,20 @@ function getNumberGroup(content)
     getNumberGroup = c 
 end function 
 
+
+'获得参数里的数字 20231001
+function getParamNumb(content)
+    dim i, s, c 
+    c = "" 
+    for i = 1 to len(content)
+        s = mid(content, i, 1) 
+        if inStr("0123456789", s) > 0 then
+            c = c & s 
+        end if
+    next 
+    getParamNumb = c 
+end function 
+
 '获得随机数 20141212
 '用法response.write makePassword(6)
 function makePassword(byVal nMaxLen)
@@ -876,18 +934,7 @@ function unicodeto(str) 'unicode转中文
 	next
 	unicodeto=c
 end function
-
-'改进 asp 中 formatnumber函数，让.00 这种，前面加个0  20220718'
-function myFormatnumber(n,nWei)
-    dim nNew
-    nNew=formatnumber(n,nWei)
-    if left(cstr(nNew),1)="." then
-        nNew="0" & nNew
-    end if
-    myFormatnumber=nNew
-end function
-
-
+ 
 
 
 '获得汉字文本部分20230509'

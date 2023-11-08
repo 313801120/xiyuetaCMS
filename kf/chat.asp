@@ -1063,7 +1063,8 @@ function replace_em(str){
 
 <script>
     //拖拽上传图片
-    var dp = document.body;
+    // var dp = document.body;
+    var dp = document;//这样区域会更大些20230920
     dp.addEventListener('dragover', function(e) {
         e.stopPropagation();
         //阻止浏览器默认打开文件的操作

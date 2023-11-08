@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,splxx,idlist
+dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,splxx,idlist,id
 
 '会员列表查询
 If Request("act") = "userlist" Then
@@ -83,12 +83,15 @@ If Request("act") = "userlist" Then
     Response.end()
 
 elseif request("act")="del" then 
+    id=getParamNumb(request("id"))
     if userrs("pwd")<>mymd5(request("pwd")) then
         call die("{""info"": ""验证密码错误，删除失败"",""status"": ""n""}")
+    elseif id=cstr(userrs("id")) then
+        call die("{""info"": ""不可删除自身，删除失败"",""status"": ""n""}")
     elseif userrs("level")<>1 then
         call die("{""info"": ""只有超级管理员才可操作，删除失败"",""status"": ""n""}")
     else 
-        conn.execute"delete from ["& db_PREFIX &"admin] where id="&request("id")
+        conn.execute"delete from ["& db_PREFIX &"admin] where id="&id
         call die("{""info"": ""删除成功"",""status"": ""y""}")
     end if
 

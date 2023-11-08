@@ -579,11 +579,25 @@ function jsonCL(c)
     'c=chineseToUnicode(c)'汉字转uni编码，网站也可以显示  如 "  ==  &#x22;           20220722
     'c=chineseToUnicode2(c)'汉字转uni编码第二种，网站也可以显示  如 "  ==  &#34;           20220722  html字符实体#34或quot  一般用这个
     if isnul(c) then c=""
-    c=replace(c,"""","&quot;")
+    c=replace(c,"&nbsp;"," ") 
+    c=replace(c,"""","&quot;")   
     c=replace(c,"\","\\") 
+    c=replace(c, vbtab,"  ")   'tab退格替换成两个空格20231014
     c=replace(replace(c,chr(10),""),chr(13),"")
 
     jsonCL=inputCL(c)
+end function
+'解决json处理文本时出错的函数20231011
+function jsonCL2(c)
+    'c=chineseToUnicode(c)'汉字转uni编码，网站也可以显示  如 "  ==  &#x22;           20220722
+    'c=chineseToUnicode2(c)'汉字转uni编码第二种，网站也可以显示  如 "  ==  &#34;           20220722  html字符实体#34或quot  一般用这个
+    if isnul(c) then c="" 
+    c=replace(c,"\","\\") 
+    c=replace(c,vbcrlf,"\n") 
+    c=replace(c,vbtab,"\t") 
+    c=replace(replace(c,chr(10),"\n"),chr(13),"\n")
+
+    jsonCL2=c
 end function
 '解决表里&lt;这种显示为<的问题 20220727'
 function inputCL(c)

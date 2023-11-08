@@ -38,7 +38,7 @@ end if
 
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">当前IP</label>
-                                    <div class="layui-input-block">
+                                    <div class="layui-input-block" style="line-height:38px;">  
                                         <%=getIP()%>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,title,guestname,tel,email,address,isthrough,bodycontent,reply
+dim msg,isTrue,addSql,id,title,guestname,tel,email,address,isthrough,bodycontent
 
 id=request("id")
 title=request("title")                    '标题' 
@@ -9,7 +9,6 @@ tel=request("tel")                    '电话'
 email=request("email")                    '电话' 
 address=request("address")                    '地址' 
 bodycontent=request("bodycontent")        '留言内容' 
-reply=request("reply")                    '回复内容' 
 isthrough=request("isthrough")            '审核'  
 isthrough=IIF(isthrough="on",1,0)         '处理下'
 
@@ -17,11 +16,11 @@ isthrough=IIF(isthrough="on",1,0)         '处理下'
 if request("act")="save" then
   isTrue=true 
   if isTrue=true then
-    addsql=" where title='"& title &"'"
+    addsql=" where title='【#0a#】'"
     if id<>"" then
       addsql=addsql & " and id<>"&id
     end if
-    rs.open"select * from ["& db_PREFIX &"guestBook]"&addsql,conn,1,3
+    rs.open"select * from ["& db_PREFIX &"articlemessage]"&addsql,conn,1,3
     if not rs.eof then
       msg="栏目名称已经存在"
     else
@@ -29,15 +28,14 @@ if request("act")="save" then
         rs.addnew
       else
         rs.close
-        rs.open"select * from ["& db_PREFIX &"guestBook] where id="&id,conn,1,3
+        rs.open"select * from ["& db_PREFIX &"articlemessage] where id="&id,conn,1,3
       end if 
       rs("title")=title  
       rs("guestname")=guestname  
       rs("tel")=tel  
       rs("email")=email  
       rs("address")=address  
-      rs("bodycontent")=bodycontent  
-      rs("reply")=reply  
+      rs("bodycontent")=bodycontent   
       rs("isthrough")=isthrough  
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
@@ -46,7 +44,7 @@ if request("act")="save" then
   end if
 '显示
 elseif id<>"" then
-  rs.open"select * from ["& db_PREFIX &"guestBook] where id="&id,conn,1,1
+  rs.open"select * from ["& db_PREFIX &"articlemessage] where id="&id,conn,1,1
   if not rs.eof then
     id=rs("id") 
     title=rs("title")    
@@ -54,8 +52,7 @@ elseif id<>"" then
     tel=rs("tel")    
     email=rs("email")    
     address=rs("address")    
-    bodycontent=rs("bodycontent")    
-    reply=rs("reply")    
+    bodycontent=rs("bodycontent")     
     isthrough=rs("isthrough")  
   end if
 end if
@@ -76,12 +73,7 @@ end if
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save&id=<%=id%>">
   <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
         
-    <div class="layui-form-item">
-      <label class="layui-form-label">标题</label>
-      <div class="layui-input-inline">
-        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>">
-      </div>
-    </div> 
+ 
     <div class="layui-form-item">
       <label class="layui-form-label">姓名</label>
       <div class="layui-input-inline">
@@ -113,14 +105,7 @@ end if
         <textarea name="bodycontent" id="bodycontent" placeholder="请输入留言内容" class="layui-textarea"><%=bodycontent%></textarea>
       </div>
     </div>
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">回复内容</label>
-      <div class="layui-input-block">
-        <textarea name="reply" id="reply" placeholder="请输入回复内容" class="layui-textarea"><%=reply%></textarea>
-      </div>
-    </div>  
-
+ 
 
   
     <div class="layui-form-item">
@@ -176,7 +161,7 @@ layui.config({
         }
     });
     layedit.build('bodycontent');   //建立编辑器
-    layedit.build('reply');   //建立编辑器
+    // layedit.build('reply');   //建立编辑器
 
 })
 
