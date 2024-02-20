@@ -1107,11 +1107,12 @@ function showwin2(title,url){
     var nWidth=800;
     var n=($(window).width());
     if(n<nWidth)nWidth=n;
-
+    // alert('url='+url)
     return pop_up(title,url, nWidth, 450)
     // tc3(title,url, nWidth, 450)
 }
-
-
-
+//显示xiyuetaCMS对应的帮助文档信息20240107
+function xiyuetaCMSHelp(title){
+    showwin2('文档', "//xiyueta.com/api/cms/xiyuetacms/?act=help&title="+title) 
+}
 

@@ -1,6 +1,9 @@
 <!--#include file="../../../inc/Config.asp"--><!--#include file="../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
 dim icon,msg,id  
+
+call checkAdminPermission("修改密码") 
+
 if request("act")="save" then
     if userrs("pwd")<>mymd5(request("oldPassword")) then
         icon=0

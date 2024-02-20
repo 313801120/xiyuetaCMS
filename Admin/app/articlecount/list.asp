@@ -156,7 +156,7 @@ End If
 
       
   <button class="layui-btn" data-type="reload">搜索</button>
-  <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button>
+  <!-- <button class="layui-btn" onclick="showwin('添加信息','listform.asp?')">添加</button> -->
   <button class="layui-btn" data-type="batchdel">删除</button>
   
   
@@ -165,7 +165,7 @@ End If
  
 
  <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a> 
+  <!-- <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>  -->
   <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> 
 </script>
 <table class="layui-hide" id="demo" lay-filter="demo"></table>
@@ -211,7 +211,7 @@ layui.use(['form','table','upload'],function(){
                ,{ field: 'createtime',width:160, title: '创建时间', sort: false }
                ,{ field: 'updatetime',width:160, title: '最新时间', sort: false }
 
-                , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
+                , { fixed: 'right', title: '操作', width: 100, toolbar: '#barDemo' }
 
 
             ]

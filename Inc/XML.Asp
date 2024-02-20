@@ -456,7 +456,7 @@ function imagesToBase64(fileName)
 
         imagesToBase64 = base64 
 end function
-
+'处理需要保存base64图片，只要;base64,后面字符
 function handleSaveBase64(base64Data)
     dim nLen,sCheck 
 	sCheck=";base64,"
@@ -540,11 +540,11 @@ function sqlInUrl(byVal httpurl)
             if xmlOject.status <> 200 then
                 exit function 
             end if 
-            call.open("GET", httpurl & " And 1=1", false)                                   '测试页面是否存在
+            call xmlOject.open("GET", httpurl & " And 1=1", false)                                   '测试页面是否存在
             .send 
             isTrue1 =.status 
 
-            call.open("GET", httpurl & " And 1=2", false)                                   '测试页面是否存在
+            call xmlOject.open("GET", httpurl & " And 1=2", false)                                   '测试页面是否存在
             .send("") 
             isTrue2 =.status 
         end with 
@@ -591,7 +591,8 @@ function handleGetWinHttp(byval httpurl, byval refererUrl, byval cookiesStr, byv
             '组成 HTTP 头信息
             .setRequestHeader "Accept", "*/*"                                               '接受数据类型
             .setRequestHeader "Accept-Language", "zh-cn,zh"                                 '用户系统语言
-            .setRequestHeader "User-Agent", "Mozilla/6.0"                                   '用户浏览器信息
+            ' .setRequestHeader "User-Agent", "Mozilla/6.0"                                   '用户浏览器信息
+            .setRequestHeader "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"                                   '用户浏览器信息
             .setRequestHeader "Content-Type", "application/x-www-form-urlencoded"           '编码方式
             .setRequestHeader "Referer", refererUrl                                         '来路
             .setRequestHeader "Connection", "Close"                                         'Close  不保持连接，Keep-Alive  保持连接（持久连接）

@@ -38,8 +38,10 @@ if request("act")="save" then
       msg="栏目名称已经存在"
     else
       if id="" then
+        call checkAdminPermission("分类添加")
         rs.addnew
-      else
+      else        
+        call checkAdminPermission("分类修改")
         rs.close
         rs.open"select * from ["& db_PREFIX &"xiyuetaclass] where id="&id,conn,1,3
       end if 

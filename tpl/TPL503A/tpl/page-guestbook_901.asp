@@ -15,28 +15,7 @@
 '              ooO Ooo
 
  %>
-<style>.pageguestbook901 a{-webkit-text-decoration-skip:objects;background-color:transparent;}
-.pageguestbook901 button,.pageguestbook901 input,.pageguestbook901 optgroup,.pageguestbook901 select,.pageguestbook901 textarea{line-height:1.42857143;margin:0;outline: none;}
-.pageguestbook901 body,.pageguestbook901 button,.pageguestbook901 input,.pageguestbook901 select,.pageguestbook901 textarea{text-rendering: optimizeLegibility;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;-moz-font-feature-settings: "liga","kern";}
-.pageguestbook901 button,.pageguestbook901 input{overflow:visible;border: 1px solid #ddd;}
-.pageguestbook901 [type=reset],.pageguestbook901 [type=submit]{-webkit-appearance:button;}
-.pageguestbook901 button::-moz-focus-inner,.pageguestbook901 [type=button]::-moz-focus-inner,.pageguestbook901 [type=reset]::-moz-focus-inner,.pageguestbook901 [type=submit]::-moz-focus-inner{border-style:none;padding:0;}
-.pageguestbook901 button:-moz-focusring,.pageguestbook901 [type=button]:-moz-focusring,.pageguestbook901 [type=reset]:-moz-focusring,.pageguestbook901 [type=submit]:-moz-focusring{outline:1px dotted ButtonText;}
-.pageguestbook901 textarea{overflow:auto;border: 1px solid #ddd;}
-.pageguestbook901 ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit;}
-.clearfixguestbook901{zoom:1;}
-.clearfixguestbook901:before,.clearfixguestbook901:after{display:table;line-height:0;content:"";}
-.clearfixguestbook901:after{clear:both;}
-.pageguestbook901 a{color: #333;text-decoration: none;}
-.pageguestbook901 a:hover{color: #007333;}
-.pageguestbook901{/*padding: 0 10px;width: 1200px;*/margin: 0 auto;overflow-x: hidden;}
-.pageguestbook901 .ct2-mn901{/*float: right;width: 940px;*/}
-.pageguestbook901 .mn-box901{/*border: 1px solid #efefef;*/padding: 20px;margin-bottom: 15px;}
-.pageguestbook901 .content-body901{line-height: 1.8;}
-@media screen and (max-width: 767px){
-.pageguestbook901{width: auto;}
-.pageguestbook901 .ct2-mn901{float: none;width: auto;}
-.pageguestbook901 .mn-box901{padding: 0;border: none;}}</style>
+
 
     <div class="pageguestbook901 clearfixguestbook901">
         <!--栏目侧边栏-->

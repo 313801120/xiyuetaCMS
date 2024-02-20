@@ -43,6 +43,7 @@ class GPS
     '///以下是调用代码/// 获得图片文件大小
     function getImageSize(filespec)
         dim bFlag, p1 
+		filespec=handlePath(filespec)   '处理路径下
         if checkFile(filespec) = false or getFSize(filespec)=0 then exit function                               '图片文件不存 则退出
 
         aso.loadFromFile(filespec) 

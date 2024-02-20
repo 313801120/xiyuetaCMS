@@ -25,6 +25,8 @@
     <script src='/web/js/jquery.lazyload.min.js'></script><!-- jQuery懒加载插件 -->
     <script src='/web/js/clipboard.min.js'></script><!-- 复制内容 -->
     <script>document.writeln("<script src=\'/api/webstat.asp?act=webstat&tourl="+escape(document.referrer)+"&url="+escape(window.location.href)+"&w="+escape(window.screen.width)+"&h="+escape(window.screen.height)+"&useragent="+escape(navigator.userAgent)+" \'><\/script>");</script> 
+    
+    <link rel='stylesheet' href='/tpl/TPL503A/style.css?n=n3Y0n7v5X1b'>
 </head>
 
 <body>
@@ -35,7 +37,7 @@
    |                                          |
    |    Powered By xiyueta - www.xiyueta.com  |
    |    QQ:313801120                          |
-   |    Creation:2023-11-08                   |
+   |    Creation:2024-01-08                   |
    |    xiyuetaCMS V1.3                       |
    |                                          |
    +----------------------------oOO-----------+
@@ -43,7 +45,7 @@
                       || ||
                      ooO Ooo
 -->
-<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2023-11-08                   |\n   |    xiyuetaCMS V1.3                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
+<script>console.log("                      '''\n                     (0 0)\n   +--------oOO-------(_)---------------------+\n   |                                          |\n   |    Powered By xiyueta - www.xiyueta.com  |\n   |    QQ:313801120                          |\n   |    Creation:2024-01-08                   |\n   |    xiyuetaCMS V1.3                       |\n   |                                          |\n   +----------------------------oOO-----------+\n                     |__|__|\n                      || ||\n                     ooO Ooo\n")</script>
 <!--#Include file = "tpl/TPL503A/tpl/topnav_005_Default.asp"-->
 <!--#Include file = "tpl/TPL503A/tpl/banner_001.asp"-->
 <!--#Include file = "tpl/TPL503A/tpl/product_001.asp"-->

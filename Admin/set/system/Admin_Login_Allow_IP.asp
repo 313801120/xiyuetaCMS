@@ -1,7 +1,9 @@
 <!--#include file="../../../inc/Config.asp"-->
 <!--#include file="../../admin_function.asp"-->
+<!--#Include File = "../../admin_safe.Asp"-->
 <%  
-    '<!--#Include File = "../../admin_safe.Asp"-->'
+call checkAdminPermission("设置IP限制")
+
 dim content,msg,filePath
 filePath="../../Admin_Login_Allow_IP.dat"
 content=request("content")

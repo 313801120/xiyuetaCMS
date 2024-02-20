@@ -32,7 +32,7 @@ function handleFormatNumber(n,n2)
     if s2<>"" then
         s1=s1 & "." & s2
     end if
-    handleFormatNumber=s1
+    handleFormatNumber=replace(s1,",","")  '把这个,号去掉'
 end function
 
 function myFormatNumber(n,n2)

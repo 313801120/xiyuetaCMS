@@ -17,15 +17,22 @@ If Request("act") = "list" Then
     else
     	sql1=sql1 & " where parentId=-1"
     end if
+ 
+
     If Request("date_min") <> "" Then
-        sql = sql & " and datediff('d',createTime,#" & Request("date_min") & "#)<=0" 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0"  
     End If 
     If Request("date_max") <> "" Then
-        sql = sql & " and datediff('d',createTime,#" & Request("date_max") & "#)>=0" 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If 
     If Request("key") <> "" Then
-        sql = " and [columnname] like '%" & Request("key") & "%' " 
-    End If 
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql =sql & "[columnname] like '%" & Request("key") & "%' " 
+    End If   
+
+
     mysql = sql1 & sql' & " order by sortrank asc" 
     rs.Open mysql, conn, 1, 1 
 
@@ -160,6 +167,7 @@ end function
       
   <button class="layui-btn" data-type="reload">搜索</button>
   <button class="layui-btn" onclick="showwin('添加栏目','tagsform.asp?')">添加</button>
+  <i class="layui-icon layui-icon-help" style="cursor:pointer;" onclick="xiyuetaCMSHelp('webcolumn')"></i>
 </div>
  
 
@@ -317,7 +325,7 @@ layui.use(['form','table'],function(){
 
 
 
-<script type="text/javascript" src="../../js/pc.js"></script>	
+<script type="text/javascript" src="../../js/pc.js?v4"></script>	
 
 </body>
 

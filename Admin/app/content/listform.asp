@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename,tags
+dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename,tags,flags,titlecolor
 
 id=request("id")
 parentid=request("parentid")              '大类'
@@ -25,7 +25,17 @@ if parentid="" then
   parentid=-1
 else
   parentid=int(parentid)
-end if 
+end if
+flags="|"
+flags=flags & IIF(Request("flags_h")="on","h|","") 
+flags=flags & IIF(Request("flags_c")="on","c|","") 
+flags=flags & IIF(Request("flags_f")="on","f|","") 
+flags=flags & IIF(Request("flags_a")="on","a|","") 
+flags=flags & IIF(Request("flags_s")="on","s|","") 
+flags=flags & IIF(Request("flags_b")="on","b|","") 
+titlecolor=request("titlecolor")            '标题颜色'
+
+ 
 
 '添加修改
 if request("act")="save" then
@@ -63,6 +73,8 @@ if request("act")="save" then
       rs("webdescription")=webdescription 
       rs("filename")=filename 
       rs("tags")=tags
+      rs("flags")=flags
+      rs("titlecolor")=titlecolor
       rs.update 
       response.Write"<script>parent.location.reload();</script>"
       response.end()
@@ -77,7 +89,7 @@ elseif id<>"" then
     title=inputCL(rs("title") )  
     sortrank=inputCL(rs("sortrank") )  
     isthrough=inputCL(rs("isthrough"))  
-    smallimage=inputCL(rs("smallimage"))  
+    smallimage=inputCL(rs("smallimage"))   
     bigimage=inputCL(rs("bigimage"))  
     aboutcontent=inputCL(rs("aboutcontent"))  
     bodycontent=inputCL(rs("bodycontent"))  
@@ -87,6 +99,17 @@ elseif id<>"" then
     webdescription=inputCL(rs("webdescription"))  
     filename=inputCL(rs("filename"))  
     tags=inputCL(rs("tags"))  
+    flags=inputCL(rs("flags"))  
+    titlecolor=inputCL(rs("titlecolor"))  
+
+
+    '因为isThrough 为 YesNo 对错类型的
+    if isthrough="True" then 
+      isthrough=1
+    else
+      isthrough=0
+    end if
+
   end if
 end if
   
@@ -155,7 +178,15 @@ function closeimg(){
     <div class="layui-form-item">
       <label class="layui-form-label">标题</label>
       <div class="layui-input-block">
-        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>">
+        <input type="text" name="title" id="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>" style='<%=IIF(titlecolor<>"","color:" & titlecolor & ";","")%><%=IIF(instr(flags,"|b|")>0,"font-weight:bold;","")%>' >
+
+<input name="titlecolor" type="hidden" id="titlecolor" value="<%=titlecolor%>" />
+<script language="javascript" type="text/javascript" src="../../js/colorpicker.js?v1"></script>
+<img src="../../Images/colour.png" width="15" height="16" onClick="colorpicker('title_colorpanel','set_title_color');" style="cursor:hand">
+<span id="title_colorpanel" style="position:absolute; z-index:200" class="colorpanel"></span>
+<img src="../../Images/bold.png" width="10" height="10" onClick="input_font_bold()" id="titleb" style="cursor:hand">  
+
+
       </div>
     </div>    
 
@@ -273,6 +304,24 @@ function closeimg(){
         <input type="checkbox" lay-filter="switch" name="isThrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isThrough=0,""," checked")%>>
       </div>
     </div>   
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">自定义属性</label>
+      <div class="layui-input-block">
+
+       
+
+<div class="layui-form">
+  <input type="checkbox" name="flags_h" title="头条[h]"<%=IIF(instr(flags,"|h|")>0," checked","")%>>
+  <input type="checkbox" name="flags_c" title="推荐[c]"<%=IIF(instr(flags,"|c|")>0," checked","")%>>
+  <input type="checkbox" name="flags_f" title="幻灯[f]"<%=IIF(instr(flags,"|f|")>0," checked","")%>> 
+  <input type="checkbox" name="flags_a" title="特荐[a]"<%=IIF(instr(flags,"|a|")>0," checked","")%>> 
+  <input type="checkbox" name="flags_s" title="滚动[s]"<%=IIF(instr(flags,"|s|")>0," checked","")%>> 
+  <input type="checkbox" name="flags_b" title="加粗[b]"<%=IIF(instr(flags,"|b|")>0," checked","")%> lay-filter="checkboxTest"> 
+</div>
+
+      </div>
+    </div>   
  
  
 
@@ -283,6 +332,7 @@ function closeimg(){
 </form>
  
 <script src="../../layuiadmin/layui/layui.js"></script>  
+<script src="../../js/jquery.js"></script>  
 <script>
 layui.config({
     base: '../../layuiadmin/' //静态资源所在路径
@@ -366,6 +416,29 @@ layui.config({
     layedit.build('bodycontent');   //建立编辑器
 
 
+    //加粗    
+    form.on('checkbox(checkboxTest)', function(data){
+      input_font_bold();
+      // $("span:contains('特荐[a]')").parent().addClass('layui-form-checked');//选中
+
+
+
+
+    }); 
+
+    $("#titleb").click(function(){
+      
+      var s=$("input[name='title']").css("font-weight")+"";
+      if(s=="700"){//700为加粗
+        $("input[name='flags_b']").prop("checked",false);
+      }else{
+
+        $("input[name='flags_b']").prop("checked",true);
+      }
+      form.render('checkbox');
+
+
+    })
 
 
 

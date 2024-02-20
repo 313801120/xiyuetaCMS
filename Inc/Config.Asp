@@ -61,9 +61,11 @@ dim ipMDBPath:ipMDBPath="/data/ip.dat"                                          
  
 dim databaseType : databaseType = "access"                                      '数据库类型，Access与SqlServer之分
 dim sqlServerHostIP : sqlServerHostIP = "localhost"                          'SQL主机IP地址（服务器名）在2008版本使用
+dim sqlServerVersion : sqlServerVersion = "2012"                          'SQL版本，有2008，和2012，建议使用2012,翻页用到
 dim sqlServerUsername : sqlServerUsername = "sa"                                'SQL数据库用户名
 dim sqlServerPassword : sqlServerPassword = "sa"                                'SQL数据库用户密码
 dim sqlServerDatabaseName : sqlServerDatabaseName = "webdata"                   'SQL数据库名
+dim sqlServerPort : sqlServerPort = "1433"   '数据库端口号20240114'
 dim db_PREFIX : db_PREFIX = "xy_"                                               '表前缀
 
 dim countTi:countTi=200 '默认显示题数
@@ -139,6 +141,23 @@ function getAccessDatediffYear(zdName)
 	else
 		getAccessDatediffYear=" datediff(year,"& zdName &",GETDATE())"
 	end if	
+end function
+
+'sql语句里Text字段类型相等比较20231121'  如  sqlTextFieldEquation("bodycontent","xiyuetacom")
+function sqlTextFieldEquation(fieldName,sValue)
+    if databaseType = "acc"&"ess" then'防止被替换
+        sqlTextFieldEquation= fieldName & "='"&  sValue &"'"
+    else
+        sqlTextFieldEquation="cast("& fieldName &" as varchar(7999))='"& sValue &"'"
+    end if
+end function
+'sql语句里两个Text字段类型相等比较20231121 ''
+function sqlTowTextFieldEquation(fieldName,fieldNameTow)
+    if databaseType = "acc"&"ess" then'防止被替换
+        sqlTowTextFieldEquation= fieldName & "='"&  fieldNameTow &"'"
+    else
+        sqlTowTextFieldEquation="cast("& fieldName &" as varchar(7999))='"& fieldNameTow &"'"
+    end if
 end function
 
 '处理sql在accces与sqlserver里显示不一样' 20231101

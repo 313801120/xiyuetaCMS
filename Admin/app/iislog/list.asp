@@ -3,17 +3,26 @@
  
 
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,columnName,id,title,parentid,isthrough,tags
-dim spider,nLen
+dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,totalrec,columnName,id,title,parentid,isthrough,tags
+dim spider,nLen,startIndex,endIndex,sql2,pageSize,nCount,x,maxpage,iPageSize
 parentid=request("parentid")
 '网站栏目查询
 If Request("act") = "list" Then  
 
     num = Request("limit")
     page = Request("page")
-    stemp = "{""data"":[" 
+    stemp = ""
     sql1 = "select * from ["& db_PREFIX &"iislog]" 
 
+    '20240125'
+    pageSize=cint(num)
+    If Request("page") = "" Then
+        currentPage = 1 
+    Else
+        currentPage = CInt(Request("page")) 
+    End If
+    startIndex = (currentPage - 1) * pageSize + 1
+    endIndex = startIndex + pageSize - 1
     
     If Request("date_min") <> "" Then
       sql=IIF(sql=""," where ",sql & " and ")
@@ -42,48 +51,58 @@ If Request("act") = "list" Then
       sql=IIF(sql=""," where ",sql & " and ")
       sql =sql & "["& request("searchField") &"] like '%" & Request("key") & "%' " 
     End If
-    If 1=1 Then
-      sql=IIF(sql=""," where ",sql & " and ")
-      sql =sql & " userip<>'218.22.62.13' " 
-    End If
 
 
-    mysql = sql1 & sql & request("sqlOrderyBy")
-    ' call die(mysql)
+    if databaseType = "sqlserver"  then
+        rs.open"select count(*)as ct from ["&db_PREFIX&"iislog]" & sql ,conn,1,1
+        nCount=IIF(isnull(rs("ct"))=true,0,rs("ct")):rs.close
+
+        if sqlServerVersion="2012" or sqlServerVersion="2014" then            
+            mysql= "select * from ["& db_PREFIX &"iislog] " & sql & "  order by id desc OFFSET "& (pageSize*(currentPage-1)) &" ROWS FETCH NEXT "& pageSize &" ROWS ONLY"
+                ' SELECT *  
+                ' FROM Employees  
+                ' ORDER BY EmployeeID  
+                ' OFFSET 90 ROWS -- 跳过前9页的记录  
+                ' FETCH NEXT 10 ROWS ONLY; -- 取接下来的10条记录 
+        elseif sqlServerVersion="2008" then
+            if left(sql,8)=" where " then sql=" " & mid(sql,8)
+            mysql="SELECT TOP (" & num & ") * FROM (SELECT ROW_NUMBER() OVER ( order by id desc) AS RowNum, * FROM "& db_PREFIX &"iislog) AS SubQuery WHERE RowNum BETWEEN " & startIndex & " AND " & endIndex & sql
+
+            '第二种方法，效果一样'
+            'mysql="WITH NumberedRows AS (SELECT *, ROW_NUMBER() OVER ( order by id desc) AS RowNum FROM "& db_PREFIX &"iislog ) SELECT * FROM NumberedRows WHERE RowNum BETWEEN " & startIndex & " AND " & endIndex & sql
+        end if
+
+    else
+        '追加sql部分'
+        mysql = sql1 & sql & " order by id desc"'" order by sortrank" 
+    end if
+
+
+
+    'call die(mysql)
     rs.Open mysql, conn, 1, 1 
 
     If Not rs.EOF Then
-        If Request("page") = "" Then
-            currentPage = 1 
-        Else
-            currentPage = CInt(Request("page")) 
-        End If 
-        perpage = num 
-        rs.PageSize = perpage 
-        rs.AbsolutePage = currentPage 
-        page_count = 0 
-        i =(page - 1) * num 
-        totalrec = rs.RecordCount 
-        While (Not rs.EOF) And(Not page_count = rs.PageSize)
-            i = i + 1 
-            page_count = page_count + 1 
-            If totalrec Mod perpage = 0 Then
-                n = totalrec \ perpage 
-            Else
-                n = totalrec \ perpage + 1 
-            End If 
-            If CInt(page) = n Then
-                sS = totalrec 
-            Else
-                sS = page * num  
-            End If 
+        '为access数据库'
+        if databaseType = "access"  then
+            iPageSize = num 
+            rs.PageSize = iPageSize 
+            rs.AbsolutePage = currentPage 
+            nCount=rs.recordcount  '总条数'
+            maxpage=rs.PageCount 
 
-
-            If i = sS Then
-                sHr = "" 
-            Else
-                sHr = "," 
-            End If 
+            if page=maxpage then
+                x=nCount-(maxpage-1)*iPageSize
+            else
+                x=iPageSize
+            end if 
+        else
+            x=num
+        end if 
+ 
+        For i=1 To x 
+            if rs.eof then exit for'在最后退出    
+            if stemp<>"" then stemp=stemp & ","
  
             isthrough=""
             if rs("isthrough")<>0 then 
@@ -130,15 +149,15 @@ If Request("act") = "list" Then
             end if
  
 
-	       stemp = stemp & "{""id"":""" & rs("id") & """,""browsetime"":""" &rs("browsetime") & """,""url"":""" & jsonCL(rs("url")) & """,""method"":""" & jsonCL(rs("method")) & """,""urlparameter"":""" &jsonCL(rs("urlparameter")) & """,""port"":""" &rs("port") & """,""username"":""" & jsonCL(rs("username")) & """,""userip"":""" &rs("userip") & """,""useripaddr"":""" &ipToAddr2022(rs("userip"),"all") & """,""incomingroad"":""" & jsonCL(rs("incomingroad")) & """,""statuscode"":""" &rs("statuscode") & """,""bottomstatuscode"":""" &rs("bottomstatuscode") & """,""win32statuscode"":""" &rs("win32statuscode") & """,""handletime"":""" &rs("handletime") & """,""filename"":""" & jsonCL(rs("filename")) & """,""filetype"":""" &rs("filetype") & """,""spider"":""" & spider & """,""createtime"":""" & rs("createtime") & """}" &sHr & "" 
+	       stemp = stemp & "{""id"":""" & rs("id") & """,""browsetime"":""" &rs("browsetime") & """,""url"":""" & jsonCL(rs("url")) & """,""method"":""" & jsonCL(rs("method")) & """,""urlparameter"":""" &jsonCL(rs("urlparameter")) & """,""port"":""" &rs("port") & """,""username"":""" & jsonCL(rs("username")) & """,""userip"":""" &rs("userip") & """,""useripaddr"":""" &ipToAddr2022(rs("userip"),"all") & """,""incomingroad"":""" & jsonCL(rs("incomingroad")) & """,""statuscode"":""" &rs("statuscode") & """,""bottomstatuscode"":""" &rs("bottomstatuscode") & """,""win32statuscode"":""" &rs("win32statuscode") & """,""handletime"":""" &rs("handletime") & """,""filename"":""" & jsonCL(rs("filename")) & """,""filetype"":""" &rs("filetype") & """,""spider"":""" & spider & """,""createtime"":""" & rs("createtime") & """}" 
     
  
 
             rs.MoveNext 
-        Wend 
+        next 
     End If 
 
-    stemp = stemp & "],""count"":""" & rs.RecordCount & """,""code"":""0"",""msg"":""""}" 
+    stemp ="{""data"":[" & stemp & "],""count"":""" & nCount & """,""code"":""0"",""msg"":"""& vbEchoTimer() &""",""mysql"":"""& jsonCL(mysql) &"""}" 
 
     Response.Write stemp 
     rs.Close 
@@ -320,8 +339,8 @@ layui.use(['form','table','upload'],function(){
               $.get('handleIISLog.asp?act=send', {
                     logPath:res.data[0].src
                 }, function (strData) {
-                    table.reload('testReload');
                     layer.msg(strData);
+                    table.reload('testReload');
 
                 })
         }
@@ -360,7 +379,8 @@ layui.use(['form','table','upload'],function(){
         ],
         id: 'testReload',
         page: true,
-        limit: 17   //太大加载会很慢
+        limit: 20
+        ,limits:[10,20,30,40,50,60,70,80,90,200,500,1000]   //选择每页显示条数
     });
 
  

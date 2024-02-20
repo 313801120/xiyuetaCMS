@@ -5,6 +5,8 @@
 call openconn() 
 dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,idList,name,splxx,isthrough,sData
 
+ 
+call checkAdminPermission("分类")
 
 '获得全部栏目ID列表 20210321  如1,4,5,6,2,6,8,9
 function getxiyuetaclassIdList(parentid,addSql)
@@ -74,6 +76,9 @@ If Request("act") = "list" Then
     call die(stemp)
 
 elseif request("act")="del" then
+  if isAdminPermission("分类删除")=false then
+     call die("{""info"": ""删除失败，没有删除分类权限"",""status"": ""n""}")
+  end if
   conn.execute"delete from ["& db_PREFIX &"xiyuetaclass] where id="&request("id")
   response.write "{""info"": ""删除成功"",""status"": ""y""}"
   Response.end()
@@ -117,16 +122,16 @@ End If
   
       
   <button class="layui-btn" data-type="reload">搜索</button>
-  <button class="layui-btn" onclick="showwin('添加栏目','listform2.asp?')">添加</button>
-</div>
+  <button class="layui-btn<%=IIF(isAdminPermission("分类添加")=false," layui-btn-disabled","")%>" onclick<%=IIF(isAdminPermission("分类添加")=false,"no","")%>="showwin('添加栏目','listform2.asp?')">添加</button>
+</div>  
  
-
  <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+  <a class="layui-btn layui-btn-xs layui-btn-normal<%=IIF(isAdminPermission("分类修改")=false," layui-btn-disabled","")%>" lay-event="edit<%=IIF(isAdminPermission("分类修改")=false,"no","")%>"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+  <a class="layui-btn layui-btn-xs layui-btn-danger<%=IIF(isAdminPermission("分类删除")=false," layui-btn-disabled","")%>" lay-event="del<%=IIF(isAdminPermission("分类删除")=false,"no","")%>"><i class="layui-icon layui-icon-delete"></i>删除</a>
 </script>
 <table class="layui-hide" id="table" lay-filter="demo"></table>
- 
+
+
 
 <script>
 layui.use(['form','table'],function(){
@@ -220,9 +225,13 @@ layui.use(['form','table'],function(){
                     url: "?act=del",
                     data: { "id": pid },
                     success: function(data) {
-                        switch (data.status) {
-                            case "y":
+                        switch (data.status) { 
+                            case "y": 
                                 obj.del();
+                                layer.msg(data.info, {icon: 1});
+                                break;
+                            case "n": 
+                                layer.msg(data.info, {icon: 2}); 
                                 break;
                         }
                     }

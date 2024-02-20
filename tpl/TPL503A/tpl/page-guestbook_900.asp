@@ -16,46 +16,7 @@
 
 resurl="/web/tpl/page-guestbook/900/"
  %>
-<style>.pageguestbook900 #message-form{
-    font-size: 0;
-}
-.pageguestbook900 #message-form .red-star{
-    color: red;
-}
-.pageguestbook900 #message-form label{
-    font-size: 14px;
-}
-.pageguestbook900 #message-form textarea{
-    resize: none;
-}
-.pageguestbook900 #message-form #checkcode{
-    display: inline-block;
-    width: 30%;
-}
-.pageguestbook900 #message-form .error-info{
-    padding-top: 4px;
-    display: inline-block;
-    vertical-align: top;
-    position: absolute;
-}
-@media (max-width: 768px){
-.pageguestbook900 #message-form .form-group{
-        margin-bottom: 25px;
-    }
-.pageguestbook900 #message-form .error-info{
-        display: block;
-        padding-top: 0;
-        float: none !important;
-        padding-left: 10px;
-    }}
-
-.pageguestbook900 img{
-    image-rendering: -moz-crisp-edges; /* Firefox */
-    image-rendering: -o-crisp-edges; /* Opera */
-    image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
-    image-rendering: crisp-edges;
-    -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
-}</style> 
+ 
 <span class="pageguestbook900"> 
                     <form action="/api/liuyan.asp?act=submit" method="post" class="form-horizontal nice-validator n-default" id="message-form" novalidate="novalidate" style="    padding-top: 20px;">
                         <div class="form-group">

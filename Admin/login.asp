@@ -304,7 +304,7 @@ end if
 				data: {
 					"username":data.username,
 					"password":pwd,
-                    "p1":md5(md5(data.password)),
+                    // "p1":md5(md5(data.password)),
                     "captcha":data.captcha,
                     "anquan":anquang,
                     "rememberMe":data.rememberMe

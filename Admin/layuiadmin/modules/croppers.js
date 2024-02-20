@@ -1,13 +1,14 @@
 /*!
- * Cropper v3.0.0
+ * Cropper v3.0.0      修复于20231122
  */
 
 layui.config({
     base: '../../layuiadmin/modules/' //layui自定义layui组件目录
 }).define(['jquery','layer','cropper'],function (exports) {
     var $ = layui.jquery
-        ,layer = layui.layer;
+        ,layer = layui.layer;  
     var html = "<link rel=\"stylesheet\" href=\"../../layuiadmin/modules/cropper.css\">\n" +
+        "<link rel=\"stylesheet\" href=\"../../layuiadmin/style/fontawesome.all.min.css\">\n" +
         "<div class=\"layui-fluid showImgEdit\" style=\"display: none\">\n" +
         "    <div class=\"layui-form-item\">\n" +
         "        <div class=\"layui-input-inline layui-btn-container\" style=\"width: auto;\">\n" +
@@ -32,15 +33,17 @@ layui.config({
         "    <div class=\"layui-row layui-col-space15\">\n" +
         "        <div class=\"layui-col-xs9\">\n" +
         "            <div class=\"layui-row\">\n" +
-        "                <div class=\"layui-col-xs6\">\n" +
-        "                    <button type=\"button\" class=\"layui-btn layui-icon layui-icon-left\" cropper-event=\"rotate\" data-option=\"-15\" title=\"Rotate -90 degrees\"> 向左旋转</button>\n" +
-        "                    <button type=\"button\" class=\"layui-btn layui-icon layui-icon-right\" cropper-event=\"rotate\" data-option=\"15\" title=\"Rotate 90 degrees\"> 向右旋转</button>\n" +
-        "                </div>\n" +
-        "                <div class=\"layui-col-xs5\" style=\"text-align: right;\">\n" +
-        "                    <button type=\"button\" class=\"layui-btn\" title=\"移动\"></button>\n" +
-        "                    <button type=\"button\" class=\"layui-btn\" title=\"放大图片\"></button>\n" +
-        "                    <button type=\"button\" class=\"layui-btn\" title=\"缩小图片\"></button>\n" +
-        "                    <button type=\"button\" class=\"layui-btn layui-icon layui-icon-refresh\" cropper-event=\"reset\" title=\"重置图片\"></button>\n" +
+        "                <div style='flaot:left'>\n" +
+        "                    <button type=\"button\" class=\"layui-btn\" title='向左旋转' cropper-event=\"rotate\" data-option=\"-15\" title=\"Rotate -90 degrees\"><span class=\"fa fa-undo-alt\"></span> </button>\n" +
+        "                    <button type=\"button\" class=\"layui-btn\" title='向右旋转' cropper-event=\"rotate\" data-option=\"15\" title=\"Rotate 90 degrees\"><span class=\"fa fa-redo-alt\"></span></button>\n" +
+        
+       "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"moveleft\" title=\"向左移动\"><span class=\"fa fa-arrow-left\"></span></button>\n" +
+       "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"moveright\" title=\"向左移动\"><span class=\"fa fa-arrow-right\"></span></button>\n" +
+       "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"moveup\" title=\"向上移动\"><span class=\"fa fa-arrow-up\"></span></button>\n" +
+       "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"movedown\" title=\"向下移动\"><span class=\"fa fa-arrow-down\"></span></button>\n" +
+       "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"zoombig\" title=\"放大图片\" ><span class='fa fa-search-plus'></span></button>\n" +
+       "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"zoomsmall\"  title=\"缩小图片\"><span class=\"fa fa-search-minus\"></span></button>\n" +
+        "                    <button type=\"button\" class=\"layui-btn\" cropper-event=\"reset\" title=\"重置图片\"><span class=\"fa fa-sync-alt\"></span></button>\n" +
         "                </div>\n" +
         "            </div>\n" +
         "        </div>\n" +
@@ -114,6 +117,24 @@ layui.config({
                     //重设图片
                 }else if(event === 'reset'){
                     image.cropper('reset');
+                    //向左移动
+                }else if(event === 'moveleft'){ 
+                    image.cropper("move", -10, 0);
+                    //向右移动
+                }else if(event === 'moveright'){ 
+                    image.cropper("move", 10, 0);
+                    //向上移动
+                }else if(event === 'moveup'){ 
+                    image.cropper("move", 0, -10);
+                    //向下移动
+                }else if(event === 'movedown'){ 
+                    image.cropper("move", 0, 10);
+                    //放大
+                }else if(event === 'zoombig'){ 
+                    image.cropper('zoom',0.1);
+                    //缩小
+                }else if(event === 'zoomsmall'){ 
+                    image.cropper('zoom',-0.1);
                 }
                 //文件选择
                 file.change(function () {

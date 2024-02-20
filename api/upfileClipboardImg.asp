@@ -1,4 +1,4 @@
-<!--#Include file = "../common.Asp"-->
+<!--#Include file = "../inc/config.asp"-->
 <%
 '上传剪贴板里的图片，复制图片文件或截取图片，都可以上传的 20230227'
 if request("act")="submit" then

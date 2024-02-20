@@ -1,4 +1,4 @@
-<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
+<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
 dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,isthrough,id
 
@@ -14,15 +14,14 @@ If Request("act") = "userlist" Then
 
 
     If Request("date_min") <> "" Then
-      sql=IIF(sql=""," where ",sql & " and ") 
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
       sql = sql & getAccessDatediffTime("regtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then
-      sql=IIF(sql=""," where ",sql & " and ") 
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
       sql = sql & getAccessDatediffTime("regtime",Request("date_max")) & ">=0" 
     End If 
-     If Request("key") <> "" Then
-      sql=IIF(sql=""," where ",sql & " and ")
+     If Request("key") <> "" Then 
       sql =sql & IIF(instr(sql," where ")=false," where "," and ") & "[username] like '%" & Request("key") & "%' " 
     End If 
     sql=sql & " order by id desc" 
@@ -140,17 +139,18 @@ End If
   
   <div class="layui-inline">
  
-    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的账号">
+    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的账号" onkeypress="if (event.keyCode === 13) {$('button[data-type=reload]').click(); }">
     </div>
       
   <button class="layui-btn" data-type="reload">搜索</button>
-  <button class="layui-btn" onclick="showwin('添加用户','userform.asp?')">添加</button>
+  <button class="layui-btn<%=IIF(isAdminPermission("会员添加")=false," layui-btn-disabled","")%>" onclick<%=IIF(isAdminPermission("会员添加")=false,"no","")%>="showwin('添加用户','userform.asp?')">添加</button>
+  <i class="layui-icon layui-icon-help" style="cursor:pointer;" onclick="xiyuetaCMSHelp('memeber')"></i>
 </div>
  
 
  <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> 
+  <a class="layui-btn layui-btn-xs layui-btn-normal<%=IIF(isAdminPermission("会员修改")=false," layui-btn-disabled","")%>" lay-event="edit<%=IIF(isAdminPermission("会员修改")=false,"no","")%>"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+  <a class="layui-btn layui-btn-xs layui-btn-danger<%=IIF(isAdminPermission("会员删除")=false," layui-btn-disabled","")%>" lay-event="del<%=IIF(isAdminPermission("会员删除")=false,"no","")%>"><i class="layui-icon layui-icon-delete"></i>删除</a> 
   <!-- <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="jizhang"><i class="layui-icon layui-icon-edit"></i>记账</a>  -->
 </script>
 
@@ -182,12 +182,12 @@ layui.use(['form','table'],function(){
                 , { field: 'logincount', title: '登录次数',width:100, sort: false }
                 , { field: 'money', title: '金币',width:80, sort: false }
 
-                , { field: 'onlinetime', title: '最后在线时间',width:150,sort: false }
+                , { field: 'onlinetime', title: '最后在线时间',width:160,sort: false }
                 , { field: 'loginip', title: '登录IP',width:140,sort: false }
                 , { field: 'loginaddr', title: '登录地址',  sort: false }
                 
                 // , { field: 'onlineip', title: '最后在线IP',width:140,sort: false }
-                , { field: 'wxopenid', title: '微信openid',width:100, sort: false }  
+                , { field: 'wxopenid', title: '微信openid',width:150, sort: false }  
 
                 ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}} 
@@ -303,7 +303,7 @@ layui.use(['form','table'],function(){
 
 
 </script>
-<script type="text/javascript" src="../../js/pc.js?v3"></script>
+<script type="text/javascript" src="../../js/pc.js?v4"></script>
  
 
 </body>

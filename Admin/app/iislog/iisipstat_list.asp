@@ -118,7 +118,7 @@ elseif request("act")="handleIISIP" then
 End If 
 
 '处理IIS日志到IP'
-sub handleIISIP()
+sub handleIISIP() 
     dim i,nCount,browsetime,spider,nLen,viewcount
     call openconn()
     rs.open"select userip from ["& db_PREFIX &"iislog] GROUP BY userip",conn,1,1
@@ -174,9 +174,9 @@ sub handleIISIP()
                 spider="SemrushBot"
             end if 
         end if  
-      end if:rsx.close
+      end if:rsx.close 
 
-      rsx.open"select * from ["& db_PREFIX &"iisipstat] where ip='"& rs("userip") &"' and iptime=#"& browsetime &"#",conn,1,3
+      rsx.open"select * from ["& db_PREFIX &"iisipstat] where ip='"& rs("userip") &"' and iptime=" & sqlAorS("#"& browsetime &"#"),conn,1,3
       if rsx.eof then
         rsx.addnew
         rsx("ip")=rs("userip")
@@ -344,12 +344,12 @@ layui.use(['form','table','upload'],function(){
             [
                 {type: 'checkbox', fixed: 'left'},
                 { field: 'id', title: 'ID', width: 70, sort: true }
-                , { field: 'ip', title: 'IP',minWidth:140, sort: true }
+                , { field: 'ip', title: 'IP',width:150, sort: true }
                 , { field: 'ipaddr', title: 'IP地址',minWidth:140, sort: true }
-                , { field: 'viewcount', title: '浏览网页总数',minWidth:120, sort: true }
-                , { field: 'ipcount', title: '访问总数',minWidth:100, sort: true }
-                , { field: 'spider', title: '蜘蛛',minWidth:105, sort: true }
-                , { field: 'iptime', title: '日期',minWidth:105, sort: true }
+                , { field: 'viewcount', title: '网页浏览量',width:120, sort: true }
+                , { field: 'ipcount', title: '访问总数',width:110, sort: true }
+                , { field: 'spider', title: '蜘蛛',width:105, sort: true }
+                , { field: 'iptime', title: '日期',width:160, sort: true }
                 // , { field: 'createtime', title: '发布时间', width: 160, sort: true }
                 , { fixed: 'right', title: '操作', width: 90, toolbar: '#barDemo' }
 

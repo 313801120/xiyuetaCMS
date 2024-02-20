@@ -118,6 +118,37 @@ end if
 </head>
 <body>  
 
+<script src="../../js/jquery.js"></script>
+<script> 
+function showBigPic(filepath) {
+    var html = "<div id='bigPic' style='position:absolute;display:none; z-index:99999'><img style=\"max-width:300px\" src='' id='pre_view'/><br /></div>";
+
+    $("#form1").append(html);
+    //将文件路径传给img大图
+    document.getElementById('pre_view').src = filepath;
+    //获取大图div是否存在
+    
+    
+    var div = document.getElementById("bigPic");
+    if (!div) {
+        return;
+    }
+    //如果存在则展示
+    document.getElementById("bigPic").style.display="block";
+    //获取鼠标坐标
+    var intX = window.event.clientX;
+    var intY = window.event.clientY;
+    //设置大图左上角起点位置
+    div.style.left = intX +5+ "px";
+    div.style.top = intY + 5+"px";
+}
+
+//隐藏
+function closeimg(){
+    document.getElementById("bigPic").style.display="none";
+}
+
+</script>
 <%if msg<>"" then  call rw("<blockquote class=""layui-elem-quote"">"& msg &" &nbsp;<a href='javascript:window.history.go(-1); '>返回</a></blockquote>")%>
 
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save&id=<%=id%>">
@@ -154,7 +185,7 @@ end if
     <div class="layui-form-item">
       <label class="layui-form-label">头像</label>
       <div class="layui-input-inline">
-        <input type="text" name="pic" placeholder="请上传图片" class="layui-input" value="<%=pic%>">
+        <input type="text" name="pic" placeholder="请上传图片" class="layui-input" value="<%=pic%>" onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
       </div>
       <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin">上传图片</button> 
     </div>
@@ -335,7 +366,12 @@ layui.config({
         elem: '#layuiadmin-upload-useradmin',
         url: '/api/upload/',
         done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data[0].src)
+            if(typeof(res.data[0])!="undefined"){
+              var imgSrc=res.data[0].src;
+            }else{
+              var imgSrc=res.data.src;
+            }
+            $(this.item).prev("div").children("input").val(imgSrc)
         }
     });
 

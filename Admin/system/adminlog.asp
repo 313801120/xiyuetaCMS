@@ -1,30 +1,30 @@
 <!--#include file="../../inc/Config.asp"--><!--#Include File = "../admin_function.asp"--><!--#Include File = "../admin_safe.Asp"--><% 
 call openconn() 
-dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec
+dim num,page,stemp,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec
 
 '列表查询
 If Request("act") = "list" Then  
     num = Request("limit")
     page = Request("page")
     stemp = "{""data"":[" 
-    sql1 = "select * from ["& db_PREFIX &"systemLog]" 
+    sql = "select * from ["& db_PREFIX &"systemLog]" 
  
     If Request("date_min") <> "" Then
-      sql=IIF(sql=""," where ",sql & " and ")
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
       sql = sql & getAccessDatediffTime("createtime",Request("date_min")) & "<=0" 
     End If 
     If Request("date_max") <> "" Then      
-      sql=IIF(sql=""," where ",sql & " and ")
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
       sql = sql & getAccessDatediffTime("createtime",Request("date_max")) & ">=0" 
     End If  
 	
 	If Request("key") <> "" Then
-      sql=IIF(sql=""," where ",sql & " and ")
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
       sql =sql & " ([adminname] like '%" & Request("key") & "%' ) " 
       '搜索追加部分'
     End If
 	
-    mysql = sql1 & sql & " order by id desc"  
+    mysql = sql & " order by id desc"  
     rs.Open mysql, conn, 1, 1 
 
     If Not rs.EOF Then
@@ -104,7 +104,7 @@ End If
       </div>
     </div>
    <div class="layui-inline"> 
-        <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称">
+        <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询的名称" onkeypress="if (event.keyCode === 13) {$('button[data-type=reload]').click(); }">
     </div>
       
   <button class="layui-btn" data-type="reload">搜索</button> 
@@ -131,7 +131,7 @@ layui.use('table', function() {
                 , { field: 'ip', title: 'IP', minWidth: 100, sort: false }
                 , { field: 'addr', title: '地址', minWidth: 200, sort: false }
                 , { field: 'msgstr', title: '信息',minWidth: 150, sort: false }
-                , { field: 'createTime', title: '时间2', width: 160, sort: true }
+                , { field: 'createTime', title: '时间', width: 160, sort: true }
 
 
 

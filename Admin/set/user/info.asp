@@ -1,6 +1,10 @@
 <!--#include file="../../../inc/Config.asp"--><!--#include file="../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn() 
 dim msg,id  
+
+call checkAdminPermission("基本资料")
+
+
 if request("act")="save" then 
     userrs("nickname")=request("nickname")
     userrs("sex")=request("sex")

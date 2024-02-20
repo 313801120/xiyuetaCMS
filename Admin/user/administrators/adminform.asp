@@ -2,7 +2,7 @@
 <!--#Include File = "../../admin_function.asp"-->
 <!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping,isiplimit,isThisAdmin
+dim sql,title,id,msg,addsql,username,isThrough,nickname,pwd,isTrue,pic,sex,level,email,tel,bodyContent,permission,grouping,isiplimit
 dim splxx,i,s
 id=request("id")
 username=request("username")              '用户名'
@@ -14,6 +14,8 @@ level=request("level")                    '角色等级'
 email=request("email")                    '邮箱
 tel=request("tel")                    '手机
 bodyContent=request("bodyContent")                    '备注+
+
+if level="" then level=2
 
 
 permission=replace(request("permission")," ","")  '权限'空格去掉
@@ -55,56 +57,33 @@ if request("act")="save" then
     rs.open"select * from ["& db_PREFIX &"Admin]"&addsql,conn,1,3
     if not rs.eof then
       msg="用户名 "& username &" 已经存在"
-    else
-      isThisAdmin=false
+    else 
       if id="" then
         rs.addnew
-      else
-        if cint(id)=userrs("id") then
-          isThisAdmin=true
-        else
+      else 
           rs.close
-          rs.open"select * from ["& db_PREFIX &"Admin] where id="&id,conn,1,3
-        end if
+          rs.open"select * from ["& db_PREFIX &"Admin] where id="&id,conn,1,3 
       end if
       'Access里不可对同一表里同一条记录同时操作，所以只能用之前打开的对象，在sqlserver里不存在20231108' 
-      if isThisAdmin then
-        userrs("username")=username 
-        userrs("nickname")=nickname 
-        ' if userrs("level")=1 then isthrough=1'最高权限 自动审核
-        if level<>1 then '排除最高权限者20220616
-          userrs("isthrough")=isthrough
-        end if
-        userrs("email")=email
-        userrs("tel")=tel
-        userrs("pic")=pic
-        userrs("sex")=sex
-        userrs("level")=level 
-        userrs("permission")=permission
-        userrs("grouping")=grouping 
-        userrs("bodyContent")=bodyContent 
-        userrs("isiplimit")=isiplimit 'IP限制'
-        if pwd<>"" then userrs("pwd")=pwd
-        userrs.update  
-      else
-        rs("username")=username 
-        rs("nickname")=nickname 
-        ' if rs("level")=1 then isthrough=1'最高权限 自动审核
-        if level<>1 then '排除最高权限者20220616
-          rs("isthrough")=isthrough
-        end if
-        rs("email")=email
-        rs("tel")=tel
-        rs("pic")=pic
-        rs("sex")=sex
-        rs("level")=level 
-        rs("permission")=permission
-        rs("grouping")=grouping 
-        rs("bodyContent")=bodyContent 
-        rs("isiplimit")=isiplimit 'IP限制'
-        if pwd<>"" then rs("pwd")=pwd
-        rs.update  
-      end if
+      '去掉了，因为找到原因了，详细说明：https://xiyueta.com/article/asp.html#rsupdateerr'
+	   
+	    rs("username")=username 
+	    rs("nickname")=nickname 
+	    ' if rs("level")=1 then isthrough=1'最高权限 自动审核
+	    if level<>1 then '排除最高权限者20220616
+	      rs("isthrough")=isthrough
+	    end if
+	    rs("email")=email
+	    rs("tel")=tel
+	    rs("pic")=pic
+	    rs("sex")=sex
+	    rs("level")=level 
+	    rs("permission")=permission
+	    rs("grouping")=grouping 
+	    rs("bodyContent")=bodyContent 
+	    rs("isiplimit")=isiplimit 'IP限制'
+	    if pwd<>"" then rs("pwd")=pwd
+	    rs.update  
       response.Write"<script>parent.location.reload();</script>"
       response.end()
     end if:rs.close 
@@ -237,9 +216,13 @@ next
 splxx=split(adminPermissionLits,",")
 for i=0 to ubound(splxx)
   s=splxx(i)
+  if s="" or s="<br>" then
+    call rw("<br>")
+  else
 %>
                   <input type="checkbox" name="permission" title="<%=s%>" value="<%=s%>" <%=IIF(instr(","&permission&",",","&s&",")>0," checked","")%>>
-<%next%> 
+<%end if
+next%> 
                 </div>
               </div>
 

@@ -49,6 +49,7 @@ userrs.update
 
 '检测权限 返回true或false   20220604'
 function checkPermission(did)
+    on error resume next
     if userrs("level")=1 then checkPermission=true:exit function'超级总管理管理员，返回真
     dim permission
     permission=replace(userrs("permission") & ""," ",",") 
@@ -57,6 +58,9 @@ function checkPermission(did)
         exit function
     end if
     checkPermission=false
+    if err.number<>0 then
+        checkPermission=false
+    end if
 end function
 '检测权限 为false则输出信息并停止'
 function checkPermissionRw(did) 

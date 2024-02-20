@@ -115,6 +115,7 @@ elseif request("act")="isOnOff" then
     fieldname=request("fieldname")
     if fieldname="" then fieldname="isthrough"
     if instr(",isthrough,istop,ishot,",","& fieldname &",")>0 then
+        
         conn.execute"update ["& db_PREFIX &"articleDetail] set "& fieldname &"="&IIF(request("value")="true",1,0) &" where id="&request("id")
         call die("{""info"": ""设置成功"",""status"": ""y""}")
     end if
@@ -179,6 +180,7 @@ End If
           <button class="layui-btn" data-type="batchdel">删除</button> 
   <a href="backupData.asp?act=article" class="layui-btn">导出</a>
   <button class="layui-btn" id="importXls">导入</button> 
+  <i class="layui-icon layui-icon-help" style="cursor:pointer;" onclick="xiyuetaCMSHelp('article')"></i>
 
 </div>
  
@@ -231,8 +233,8 @@ layui.use(['form','table','upload'],function(){
                  ,{field: 'isthrough', title: '审核状态',width:100, align:'center', templet:function(d){
                     return '<input type="checkbox" value="'+d.id+'" name="isthrough" lay-event="isthrough" lay-skin="switch" lay-text="是|否" '+d.isthrough+' >'}}                 
 
-                ,{field: 'istop', title: '是否置顶',width:100, align:'center', templet:function(d){
-                    return '<input type="checkbox" value="'+d.id+'" name="istop" lay-event="istop" lay-skin="switch" lay-text="是|否" '+d.istop+' >'}}
+                //,{field: 'istop', title: '是否置顶',width:100, align:'center', templet:function(d){
+                //    return '<input type="checkbox" value="'+d.id+'" name="istop" lay-event="istop" lay-skin="switch" lay-text="是|否" '+d.istop+' >'}}
                 , { fixed: 'right', title: '操作', width: 160, toolbar: '#barDemo' }
 
 
@@ -400,7 +402,7 @@ layer.full(showwin2('列表', '../articlepic/list.asp?articleid=' + pid ))
 </script>
 
 
-<script type="text/javascript" src="../../js/pc.js?v13"></script>	
+<script type="text/javascript" src="../../js/pc.js?v4"></script>	
 
 </body>
 

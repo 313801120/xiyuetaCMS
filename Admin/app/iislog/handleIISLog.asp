@@ -67,7 +67,7 @@ sub handleIISLog(logPath)
 	        nOK=nOK+1
 		end if
 	next
-	call die("共添加"& nOK &"条")
+	call die("共添加"& nOK &"条，" & vbEchoTimer())
 end sub
 %>
      

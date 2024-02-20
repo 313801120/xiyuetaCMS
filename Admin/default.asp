@@ -51,6 +51,11 @@ end if:rs.close
                             <i class="layui-icon layui-icon-website"></i>
                         </a>
                     </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="../crm" target="_blank" title="CRM页面">
+                            <i class="layui-icon layui-icon-chrome"></i>
+                        </a>
+                    </li>
                     <li class="layui-nav-item" lay-unselect>
                         <a href="javascript:;" layadmin-event="refresh" title="刷新">
                             <i class="layui-icon layui-icon-refresh-3"></i>
@@ -131,16 +136,19 @@ end if
                                 </dd>  -->
                             </dl>
                         </li>
+                        <%if isAdminPermission("用户") then%>
                         <li data-name="user" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="用户" lay-direction="2">
                                 <i class="layui-icon layui-icon-user"></i>
                                 <cite>用户</cite>
                             </a>
                             <dl class="layui-nav-child">
-                                <dd><a lay-href="user/user/list.asp">会员列表</a></dd>
-                                <dd><a lay-href="user/administrators/list.asp">后台管理员</a></dd>
+                                <%if isAdminPermission("会员列表") then%><dd><a lay-href="user/user/list.asp">会员列表</a></dd><%end if%>
+                                <%if isAdminPermission("后台管理员") then%><dd><a lay-href="user/administrators/list.asp">后台管理员</a></dd><%end if%>
                             </dl>
                         </li>
+                        <%end if%>
+
                         <li data-name="app" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="应用" lay-direction="2">
                                 <i class="layui-icon layui-icon-app"></i>
@@ -216,7 +224,47 @@ end if
                                 <dd><a lay-href="system/backupDatabase.asp">备份恢复数据</a></dd>
                                 <dd><a lay-href="system/updatelog.asp">更新日志</a></dd>
                                 <dd><a lay-href="app/iislog/list.asp">IIS日志</a></dd> 
+                                <dd><a lay-href="app/iislog/iisipstat_list.asp">IIS统计IP</a></dd> 
+                                <dd><a lay-href="app/iislog/iisURLstat_list.asp">IIS统计URL</a></dd> 
                                 <dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap.xml</a></dd> 
+                            </dl>
+                        </li>
+
+
+                        <li data-name="system" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="记账" lay-direction="2">
+                                <i class="layui-icon layui-icon-cart"></i>
+                                <cite>记账</cite>
+                            </a>
+                            <dl class="layui-nav-child"> 
+                                <dd><a lay-href="home/console_jz.asp">记账控制台</a></dd>
+                                <dd><a lay-href="app/money/list.asp">收入支出</a></dd>
+                                <dd><a lay-href="user/userjz/list.asp">会员统计</a></dd>
+                                <dd><a lay-href="app/diary/list.asp">工作日记</a></dd> 
+
+ 
+
+
+  <%
+            rs.open"select * from ["& db_PREFIX &"admin] where isthrough=1 order by id asc",conn,1,1
+            while not rs.eof
+            %>  
+            <dd class="layui-nav-item">
+                <a href="javascript:;">用户(<%=rs("nickname")%>)</a>
+                <dl class="layui-nav-child">
+                    <dd><a lay-href="home/console_jz.asp?inadminid=<%=rs("id")%>">控制台(<%=rs("nickname")%>)</a></dd>
+                    <dd><a lay-href="app/money/list.asp?inadminid=<%=rs("id")%>">收入支出(<%=rs("nickname")%>)</a></dd>  
+                    <dd><a lay-href="user/userjz/list.asp?inadminid=<%=rs("id")%>">会员统计(<%=rs("nickname")%>)</a></dd>
+                </dl>
+            </dd>
+
+
+
+
+
+
+          <%rs.movenext:wend:rs.close%>
+
                             </dl>
                         </li>
 

@@ -15,11 +15,17 @@ end function
 '打开数据库
 Public Sub openConn()
     Dim connStr,autoCreateDataUrl
+    '当conn不为空，则不需要再去连接数据库了 20240105'
+    if isNul(conn)=false then
+    	exit sub
+    end if
+    ' call echo("提示","连接数据库了")
+
 	'20161111
 	if session("MDBPath")<>"" then
 		MDBPath=handlePath(session("MDBPath"))
-	elseIf Request("MDBPath") <> "" And isNul(Request("MDBPath")) = False Then
-		MDBPath = handlePath(Request("MDBPath")) 
+	' elseIf Request("MDBPath") <> "" And isNul(Request("MDBPath")) = False Then  '不要这个20231126'
+	' 	MDBPath = handlePath(Request("MDBPath")) 
 	end if
     'call eerr("",MDBPath)
 	
@@ -40,7 +46,7 @@ Public Sub openConn()
 	
 	if databaseType = "mysql"  then
 	'链接mysql数据库
-		connStr="dsn=conn;Driver={mysql driver};server=127.0.0.1;uid=root;pwd=#Sa123456;database=phpwebdata"
+		connStr="dsn=conn;Driver={mysql driver};server=127.0.0.1;uid=root;pwd=" & sqlServerPassword & ";database=" & sqlServerDatabaseName & ""
         Set conn = CreateObject("Adodb.Connection")
 		conn.Open connStr 
 

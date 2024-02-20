@@ -2,7 +2,13 @@
 dim adminLevelList:adminLevelList=",网站管理员,管理人员,入库人员,审核人员,出库人员,其它人员" 'admin管理员的权限列表' 
 '管理员的权限列表''
 dim adminPermissionLits
-adminPermissionLits="文章管理,文章添加,文章修改,文章审核,文章删除"
+
+adminPermissionLits=""  '文章管理,文章添加,文章修改,文章审核,文章删除'
+adminPermissionLits= adminPermissionLits & ",<br>,用户,<br>,会员列表,会员添加,会员修改,会员删除,会员审核,后台管理员" 
+
+
+adminPermissionLits= adminPermissionLits & ",<br>,设置,<br>,基本资料,修改密码,设置IP限制," 
+adminPermissionLits=adminPermissionLits& ",<br>,分类,分类添加,分类修改,分类删除"
 '检测管理员权限20230913' 如  checkAdminPower("财务人员")
 function checkAdminPower(title)
 	dim splxx,s
@@ -14,6 +20,34 @@ function checkAdminPower(title)
 		checkAdminPower=false
 	end if	
 end function
+
+'检测权限列表 20231109  call checkAdminPermission("分类添加")
+sub checkAdminPermission(title)  
+	if isAdminPermission(title)=false then 
+	    call eerr("提示","没有【"& title &"】权限")
+	end if
+end sub
+'检测权限列表里是否有，返回真假 20231109  call isAdminPermission("设置IP限制")
+function isAdminPermission(title) 
+	dim splxx,isOK,s
+	isOK=false
+	splxx=split(title,",")
+	for each s in splxx
+		if s<>"" then
+			if instr(","& userrs("permission") &",", ","& s &",")>0 then
+				' call echo(userrs("permission"),s)
+				isOK=true
+				exit for
+			end if
+		end if
+	next
+	if isOK=false and userrs("level")<>1 then 
+	    isAdminPermission=false
+	else
+		isAdminPermission=true
+	end if
+end function
+
 dim isAddSystemLog:isAddSystemLog=true	'是否自动添加信息日志'
 
  
@@ -56,6 +90,32 @@ function getColumAllID(parentid)
 	getColumAllID=c
 end function
 
+'获得栏目名称对应的ID 20240115
+function getColumNameToID(columnname)
+	dim rs:Set rs = CreateObject("Adodb.RecordSet")
+	dim id
+	rs.open "select * from ["& db_PREFIX &"webcolumn] where columnname='"& columnname &"'",conn,1,1
+	if not rs.eof then
+		id=rs("id")
+	end if:rs.close
+	getColumNameToID=id
+end function
+'获得主导航名称 追加于20240115
+function getRootNavName(id)
+  if id="" then getRootNavName="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&id,conn,1,1
+  while not rs.EOF
+    if rs("parentid")=-1 then
+      getRootNavName=rs("columnname")
+      exit function
+    else
+      getRootNavName=getRootNavName(rs("parentid"))
+    end if
+  rs.movenext:wend:rs.close
+end function
+
 '获得子栏目树状20210331  如  ├─栏目名称
 function getSubColumSort(parentid,subStr)
 	dim rs:Set rs = CreateObject("Adodb.RecordSet")
@@ -73,11 +133,12 @@ function getSubColumSort(parentid,subStr)
 	getSubColumSort=subStr
 end function
 '显示栏目列表成input方式 20210331 如 <option> ├─栏目名称</opton>
-function columnSubInput(parentid,focusid,focusParentid)
+'parentid=父级ID列表，hideIDList=隐藏ID列表，focusParentid=选中ID'
+function columnSubInput(parentid,hideIDList,focusParentid)
   dim rs:Set rs = CreateObject("Adodb.RecordSet")
   dim c,s,sel,addsql
-  if focusid<>"" then addSql=" and id<>"& focusid
-  rs.open "select * from ["& db_PREFIX &"webcolumn] where parentid="&parentid & addsql &" order by sortrank asc",conn,1,1
+  if hideIDList<>"" then addSql=" and id not in("& hideIDList &")"
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where parentid in("&parentid&")" & addsql &" order by sortrank asc",conn,1,1
   while not rs.EOF  
   	sel=""
   	if focusParentid<>"" then
@@ -85,7 +146,7 @@ function columnSubInput(parentid,focusid,focusParentid)
   	end if
 
     c=c & "<option value="""& rs("id") &""""& sel &">"& getSubColumSort(rs("parentid"),"")  & rs("columnName")&"</option>"    
-    c=c & columnSubInput(rs("id"),IIF(focusid=-2,-3,focusid),focusParentid)  
+    c=c & columnSubInput(rs("id"),IIF(hideIDList=-2,-3,hideIDList),focusParentid)  
   rs.movenext:wend:rs.close
   columnSubInput=c
 end function
@@ -185,7 +246,7 @@ function handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,default
   handleGetXiyuetaColumnSubInputList=c
 end function
 
-'获得CheckBox列表20220515'
+'获得CheckBox列表20220515'   getColumnCheckBoxList("专业","profession",profession) 
 function getColumnCheckBoxList(columnname,fieldName,sValue)
 	dim c,id,sel
 	id=-2

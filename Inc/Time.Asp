@@ -8,19 +8,24 @@ function getFormatYMD(timeStr, sType)
 end function
 '获得时间处理后多久前，天，时  20171010
 function getHandleHowLongAgoTime(timeStr)
-	dim nYear,nDay,nHour,nMinute,s
-	nYear=dateDiff("y", timeStr, now())  
-    nDay=dateDiff("d", timeStr, now())  
-	nHour=dateDiff("h", timeStr, now())  
-	nMinute=dateDiff("n", timeStr, now())
+	dim nYear,nDay,nHour,nMinute,nSecond,s
+
+	nYear=dateDiff("yyyy", timeStr, now())   '年'
+    nDay=dateDiff("d", timeStr, now())       '天'
+	nHour=dateDiff("h", timeStr, now())      '时'
+	nMinute=dateDiff("n", timeStr, now())    '分'
+    nSecond = DateDiff("s", timeStr, now())   '秒'
+
 	if nYear>0 then
 		s=nYear & "年前"
     elseif nDay>0 then
         s=nDay & "天前"
-	elseif nHour>0 then
+	elseif nHour>0 then 
 		s=nHour & "小时前"
-	else
+    elseif nMinute>0 then 
 		s=nMinute & "分钟前"
+    else
+        s=nSecond & "秒前"
 	end if
 	getHandleHowLongAgoTime=s
 end function
@@ -329,6 +334,15 @@ Function fromUnixTime(nIntTime, nIntTimeZone)
     If IsEmpty(nIntTime) or Not IsNumeric(nIntTimeZone) Then nIntTimeZone = 0
     fromUnixTime = DateAdd("s", nIntTime, "1970-01-01 00:00:00")
     fromUnixTime = DateAdd("h", nIntTimeZone, fromUnixTime)
+End Function
+
+'把标准时间转换为13位UNIX时间戳 20231216
+Function to13UnixTime(strTime)
+    to13UnixTime = (strTime - CDate("01/01/1970 00:00:00")) * 86400000 
+End Function
+'把13位UNIX时间戳转换为标准时间 
+Function from13UnixTime(intTime)
+    from13UnixTime=DateAdd("s", CLng(intTime / 1000), "01/01/1970 00:00:00")
 End Function
 %>   
 

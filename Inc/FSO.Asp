@@ -767,7 +767,7 @@ end function
 function getDirCssNameList(byVal folderPath)
     getDirCssNameList = getDirFileNameList(folderPath, "css") 
 end function 
-'获得当前目录下全部Html文件名称
+'获得当前目录下全部Html文件名称 
 function getDirHtmlNameList(byVal folderPath)
     getDirHtmlNameList = getDirFileNameList(folderPath, "html") 
 end function 

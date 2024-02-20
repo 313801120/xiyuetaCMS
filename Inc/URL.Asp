@@ -3,7 +3,7 @@
 
 'byref PubAHrefList, byref PubATitleList   为为什么要加上byref  是因为在转PHP时需要这个判断，请明它是地址传递 是关联变量
 
-'NOVBNet start
+'NOVBNet start 
 '使用手册 
 'call echo("'获得当前网址第一种（getUrl）",getUrl())
 'call echo("'获得当前网址第二种（getThisUrl）",getThisUrl())

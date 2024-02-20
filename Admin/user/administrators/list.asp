@@ -2,6 +2,9 @@
 call openconn() 
 dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,splxx,idlist,id
 
+call checkAdminPermission("后台管理员")
+
+
 '会员列表查询
 If Request("act") = "userlist" Then
     num = UCase(Request("limit")) 
@@ -128,11 +131,12 @@ End If
   
   <div class="layui-inline">
  
-    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询内容">
+    <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="输入要查询内容" onkeypress="if (event.keyCode === 13) {$('button[data-type=reload]').click(); }">
     </div>
       
   <button class="layui-btn" data-type="reload">搜索</button>
   <button class="layui-btn" onclick="showwin('添加管理员','adminform.asp?')">添加</button>
+  <i class="layui-icon layui-icon-help" style="cursor:pointer;" onclick="xiyuetaCMSHelp('admin')"></i>
 </div>
  
 
@@ -251,7 +255,7 @@ layui.use('table', function() {
 </script>
 
 
-<script type="text/javascript" src="../../js/pc.js"></script>	
+<script type="text/javascript" src="../../js/pc.js?v4"></script>	
 
 </body>
 

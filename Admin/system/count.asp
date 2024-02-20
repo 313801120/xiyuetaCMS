@@ -1,30 +1,34 @@
 <!--#include file="../../inc/Config.asp"--><!--#Include File = "../admin_safe.Asp"--><% 
 call openconn()
-dim sql,i,d,num,page,stemp,sql1,mysql,currentPage,perpage,page_count,totalrec,n,sS,useragent,curl,sHr
+dim sql,i,d,num,page,stemp,mysql,currentPage,perpage,page_count,totalrec,n,sS,useragent,curl,sHr
 
 '统计查询
 If Request("act") = "list" Then
     num = Request("limit")
     page = Request("page")
     stemp = "{""data"":["  
-    sql1 = "select * from ["+db_PREFIX+"count] where ip<>''" 
+    sql = "select * from ["+db_PREFIX+"count] where ip<>''" 
 
     If Request("type") <> "" Then
         sql = sql & " and instr(type," & Request("type") & ")>0" 
     End If 
+
+
     If Request("date_min") <> "" Then
-        sql = sql & " and datediff('d',intime,#" & Request("date_min") & "#)<=0" 
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
+      sql = sql & getAccessDatediffTime("intime",Request("date_min")) & "<=0"  
     End If 
-
     If Request("date_max") <> "" Then
-        sql = sql & " and datediff('d',intime,#" & Request("date_max") & "#)>=0" 
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
+      sql = sql & getAccessDatediffTime("intime",Request("date_max")) & ">=0" 
     End If 
-
     If Request("key") <> "" Then
-        sql = " and ip like '%" & Request("key") & "%' " 
-    End If 
+      sql=sql & IIF(instr(sql," where ")=false," where "," and ")
+      sql =sql & "[ip] like '%" & Request("key") & "%' " 
+    End If    
 
-    mysql = sql1 & sql & " order by id desc" 
+    mysql = sql & " order by id desc" 
+    ' call die(mysql)
     rs.Open mysql, conn, 1, 1 
     If Not rs.EOF Then
         If Request("page") = "" Then

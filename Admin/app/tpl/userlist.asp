@@ -1,4 +1,5 @@
-<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"--><%
+<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"-->
+<!--#Include File = "merge.asp"--><%
 '网站模板处理核心文件 xiyueta2023'
 
 call openconn() 
@@ -28,14 +29,17 @@ webinfo=escape(webinfo)'转码'
 
 '获得服务器地址，并更新'
 function getServerUrl()
+    on error resume next
     dim c,url
-    c="{resurl:'http://res/'}"
+    ' c="{resurl:'http://res/'}"
     c=gethttpurl("http://xiyueta.com/api/cms/?act=resurl&info="&webinfo,"utf-8")  '获得服务器对应资源地址'
     if instr(c,"{resurl:'")>0 then
         url=strcut(c,"{resurl:'","'}",0)
         if url<>"" then
             conn.execute("update " & db_PREFIX & "website set resurl='"& url &"'") '更新资源地址'            
         end if
+    else        
+        url="http://res/"    '提取服务器地址出错，就用本地测试的'
     end if
     getServerUrl=url
 end function
@@ -82,6 +86,10 @@ function useTplAction(tplid,action)
         if isDebug then call echo("下载缩浏图完成",webViewPic & " =>> "  & url)
         call saveRemoteFile(url,webViewPic) '下载网站的缩浏图'
     end if
+	call echo("mergeCssStyle","mergeCssStyle")
+    '处理css的style样式到一个文件里20240108'
+    call mergeCssStyle(tplid)   '合并模块里的css样式20240108'
+
     if isDebug then 
         useTplAction = c
     else
@@ -103,8 +111,8 @@ function downServerRes(res)
             end if
             if isDebug then call echo("资源地址",url & " ==>> " & filePath & msg)
             if msg="" then
-                call saveRemoteFile(url,filePath)
                 call createDirFolder(filePath)'创建一组目录'
+                call saveRemoteFile(url,filePath)
                 if isDebug then call echo("下载资源成功",filePath)
             end if
         end if

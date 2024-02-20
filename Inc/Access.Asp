@@ -712,7 +712,7 @@ function showAccessStream(conn, tableName, fieldName, id, addSql)
             response.binaryWrite rs(fieldName).getChunk(7500000) 
         end if : rs.close 
 end function
-'Access数据库转成Mysql生成SQL,再放到php里生成就可以20220425'
+'Access数据库转成Mysql生成SQL,再放到php里生成就可以20220425' 
 function accessToMySql(findTableList)
    dim content,splstr,i,tableName,fieldList,isDXX,splxx,fieldName,c,fieldAlt,cleanTableName,focusId
    content=getTableList_Conn(conn)
@@ -746,20 +746,36 @@ function accessToMySql(findTableList)
                       c=c & "`"& fieldName &"` int(3) NOT NULL default '0',"&vbcrlf
                    elseif instr("|lottery|npagesize|","|"&fieldName&"|")>0 then
                       c=c & "`"& fieldName &"` int(4) NOT NULL default '0',"&vbcrlf
-                   elseif instr("|views|sortrank|pv|frequency|maxfrequency|days|logincount|errcount|difficulty|education|socialsecurity|registrationtype|continuingeducation|performance|payment|personalpayment|auditadminid|outadminid|securityexam|certificatestatus|companyaddress|contractperiod|selectcontractperiod|servicecharge|companysocialsecurity|jobtitle|certificatereminderday|signingdatereminderday|personnea|personneb|enterprisea|enterpriseb||","|"&fieldName&"|")>0 then
+                   elseif instr("|views|sortrank|pv|frequency|maxfrequency|days|logincount|errcount|difficulty|education|socialsecurity|registrationtype|continuingeducation|performance|payment|personalpayment|auditadminid|outadminid|securityexam|certificatestatus|companyaddress|contractperiod|selectcontractperiod|servicecharge|companysocialsecurity|jobtitle|certificatereminderday|signingdatereminderday|personnea|personneb|enterprisea|enterpriseb|loginstatus|port|statuscode|bottomstatuscode|win32statuscode|handletime|workyear|workmonth|no1|no2|no3|no4|no5|no6|no7|no8|no9|no10|no11|no12|no13|no14|no15|no16|no17|no18|no19|no20|no21|no22|no23|no24|no25|no26|no27|no28|no29|no30|no31||||||||","|"&fieldName&"|")>0 then
                       c=c & "`"& fieldName &"` int(5) NOT NULL default '0',"&vbcrlf
-                   elseif instr("|id|parentid|exid|userid|timoid|money|hanziid|adminid|toadminid|websize|ntype|","|"&fieldName&"|")>0 then
+                   elseif instr("|parentid|exid|userid|timoid|money|hanziid|adminid|toadminid|websize|ntype|articleid|memberid|touserid|ipcount|inadminid|||||||||","|"&fieldName&"|")>0 then
                       c=c & "`"& fieldName &"` int(6) NOT NULL default '0',"&vbcrlf 
-                   elseif instr("|isthrough|isdel|onregistered|sex|nstate|isiplimit|","|"&fieldName&"|")>0 then
-                      c=c & "`"& fieldName &"` tinyint(1) NOT NULL default '1',  "&vbcrlf
+
+                   elseif instr("|count|fabulous|good|bad|articlemessageid|viewcount|urlcount|||||","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` int(9) NOT NULL default '0',"&vbcrlf 
+
+
+                   elseif instr("|isthrough|isdel|onregistered|sex|nstate|isiplimit|nbuy|istop|ishot|sustain|oppose|nofollow|boyorgirl|asporhtml|||||","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` tinyint(1) NOT NULL default '1',  "&vbcrlf 
+
+
+                  elseif instr("|id|","|"&fieldName&"|")>0 then
+                      c=c&"`"& fieldName &"` int(6) unsigned NOT NULL auto_increment," & vbcrlf
+                      focusId=fieldName'ID
+
+
                    else
                       call eerr("提示" & fieldName,"Int数字类型没有判断")   
                    end if
+
                 elseif fieldAlt="Float" then 
-                    if instr("|fenshu|","|"&fieldName&"|")>0 then
+                    if instr("|fenshu|gotowork|askforleave|compensatoryleave|belate|salary|netsalary|||","|"&fieldName&"|")>0 then
                       c=c & "`"& fieldName &"` float(3) NOT NULL default '0',"&vbcrlf
                     elseif instr("|referralfee|","|"&fieldName&"|")>0 then
                       c=c & "`"& fieldName &"` float(5) NOT NULL default '0',"&vbcrlf
+
+                    elseif instr("|price|","|"&fieldName&"|")>0 then
+                      c=c & "`"& fieldName &"` float(9) NOT NULL default '0',"&vbcrlf
                   else
                       call eerr("提示","Float浮点类型没有判断")   
                    end if
@@ -1111,7 +1127,7 @@ end function
 
 
 ' call die(accessDataToSqlServerData())  调用方法
-'access数据转换成sqlServer数组，可运行添加的文件'20230113  showRow 为每个表提取多少条数组
+'access数据转换成sqlServer数据，可运行添加的文件'20230113  showRow 为每个表提取多少条数组
 function accessDataToSqlServerData(showRow)
     dim cTableList,splTable,parentTableName,tableName,c,content,filePath,tempContent
     if showRow="" then showRow=3
