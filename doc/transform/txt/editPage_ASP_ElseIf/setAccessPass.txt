@@ -1,0 +1,9 @@
+'设置Access密码'
+elseif request("act")="setAccessPass" then  
+    if checkFile(request("databaseippath"))=false then
+        call die("{""info"": ""设置Access密码失败，文件不存在2。"",""pass"": """",""status"": ""n""}")
+    elseif checkMdbPositionSafe(request("databaseippath"))=false then
+        call die("{""info"": ""设置Access密码失败，数据库位置不在/uploadfiles/mdb/里"",""pass"": """",""status"": ""n""}")
+    else
+        call die("{""info"": ""设置Access密码，"&editAccessPassWord(request("databaseippath"), getAccessPass(request("databaseippath")), request("newpass"))&"！"",""status"": ""y""}")
+    end if

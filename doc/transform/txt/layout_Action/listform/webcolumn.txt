@@ -1,0 +1,24 @@
+    // 监听栏目类型变化，控制每页显示字段的显示/隐藏
+    form.on('select(columntype)', function(data){
+        var columntype = data.value;
+        var npagesizeDiv = $('#npagesize');
+        
+        // 当选择产品(product)或新闻(news)时显示每页显示字段
+        if(columntype === 'product' || columntype === 'news') {
+            npagesizeDiv.show();
+        } else {
+            // 选择其他类型时隐藏每页显示字段
+            npagesizeDiv.hide();
+        }
+    });
+    
+    // 页面加载时根据当前栏目类型设置每页显示字段的显示状态
+    $(document).ready(function(){
+        var currentColumntype = $('select[name="columntype"]').val();
+        var npagesizeDiv = $('#npagesize'); 
+        if(currentColumntype === 'product' || currentColumntype === 'news' || currentColumntype === 'video' || currentColumntype === 'down' || currentColumntype === 'case') {
+            npagesizeDiv.show();
+        } else {
+            npagesizeDiv.hide();
+        }
+    });

@@ -1,0 +1,105 @@
+    // 通用获取内容弹窗函数（类似showExportModal，包含确认和请求） 20250928  改20251025
+    function showContentRequestModal(options) {
+        var defaultOptions = {
+            confirmText: '确定要获取内容吗？',
+            confirmTitle: '确认获取',
+            action: '',
+            requestData: {},
+            exportTitle: '内容显示',
+            filePrefix: 'content_',
+            fileExtension: '.txt',
+            successTitle: '以下是获取到的内容：',
+            copyBtnText: '复制全部',
+            downloadBtnText: '下载文件',
+            closeBtnText: '关闭'
+        };
+        
+        // 合并默认选项和用户选项
+        var config = Object.assign({}, defaultOptions, options);
+        
+        layer.confirm(config.confirmText, {
+            icon: 3,
+            title: config.confirmTitle
+        }, function(index) {
+            layer.close(index);
+            NProgress.start();
+            $.ajax({
+                type: "POST",
+                cache: true,
+                dataType: "json",
+                url: "?act=" + config.action,
+                data: config.requestData,
+                success: function(data) {
+                    NProgress.done();
+                    switch (data.status) {
+                        case "y":
+                            layer.open({
+                                type: 1,
+                                title: config.exportTitle + ' <span style="font-size:12px;color:#999;">(共' + data.info.length + '字符)</span>',
+                                area: ['95%', '90%'],
+                                maxmin: true,
+                                content: '<div style="padding: 15px; height: calc(100% - 60px); box-sizing: border-box;">' +
+                                    '<div style="margin-bottom: 10px; color: #666; font-size: 12px;">' +
+                                    '<i class="layui-icon layui-icon-tips" style="color: #1E9FFF;"></i> ' +
+                                    config.successTitle +
+                                    '</div>' +
+                                    '<textarea id="exportDataTextarea" style="width: 100%; height: calc(100% - 40px); font-family: \'Consolas\', \'Monaco\', \'Courier New\', monospace; font-size: 11px; line-height: 1.4; border: 1px solid #e6e6e6; border-radius: 4px; padding: 10px; resize: none; background: #fafafa; white-space: pre; overflow-x: auto; overflow-y: auto; box-sizing: border-box; tab-size: 2;" readonly>' + data.info + '</textarea>' +
+                                    '</div>',
+                                btn: ['<i class="layui-icon layui-icon-copy"></i> ' + config.copyBtnText, '<i class="layui-icon layui-icon-download-circle"></i> ' + config.downloadBtnText, config.closeBtnText],
+                                success: function(layero, index) {
+                                    var textarea = layero.find('#exportDataTextarea')[0];
+                                    if (textarea) {
+                                        // 保持原始文本，不做自动换行或重排
+                                        textarea.style.whiteSpace = 'pre';
+                                        textarea.style.overflowX = 'auto';
+                                        textarea.style.overflowY = 'auto';
+                                    }
+                                },
+                                yes: function(index, layero) {
+                                    var textarea = layero.find('#contentTextarea')[0];
+                                    textarea.select();
+                                    try {
+                                        document.execCommand('copy');
+                                        layer.msg('<i class="layui-icon layui-icon-ok"></i> 已复制到剪贴板', {icon: 1, time: 2000});
+                                    } catch(e) {
+                                        layer.msg('复制失败，请手动选择复制', {icon: 2});
+                                    }
+                                },
+                                btn2: function(index, layero) {
+                                    var content = layero.find('#contentTextarea')[0].value;
+                                    var blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
+                                    var url = URL.createObjectURL(blob);
+                                    var a = document.createElement('a');
+                                    var now = new Date();
+                                    var timestamp = now.getFullYear() + 
+                                        String(now.getMonth() + 1).padStart(2, '0') + 
+                                        String(now.getDate()).padStart(2, '0') + '_' +
+                                        String(now.getHours()).padStart(2, '0') + 
+                                        String(now.getMinutes()).padStart(2, '0') + 
+                                        String(now.getSeconds()).padStart(2, '0');
+                                    a.href = url;
+                                    a.download = config.filePrefix + timestamp + config.fileExtension;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                    URL.revokeObjectURL(url);
+                                    layer.msg('<i class="layui-icon layui-icon-ok"></i> 文件已下载', {icon: 1, time: 2000});
+                                    return false;
+                                },
+                                btn3: function(index) {
+                                    layer.close(index);
+                                }
+                            });
+                            break;
+                        case "n":
+                            layer.msg('获取失败：' + data.info, {icon: 2});
+                            break;
+                    }
+                },
+                error: function() {
+                    NProgress.done();
+                    layer.msg('请求失败，请重试', {icon: 2});
+                }
+            });
+        });
+    }

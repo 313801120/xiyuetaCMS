@@ -1,0 +1,9 @@
+'内容不为空则后缀加.html' 20251014
+function suffixIsHtml(rs,fileName)
+    dim splxx,s
+    s=getFileAttr(filename ,"3") 
+    splxx=split(s&".",".")
+    s=splxx(0) 
+    if s<>"" then s=s & ".html"
+    suffixIsHtml=s
+end function

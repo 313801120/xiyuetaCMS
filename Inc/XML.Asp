@@ -1,629 +1,565 @@
-﻿<% 
-'XML Microsoft.XMLHTTP组件操作大全 (2013,9,27)
-'下载远程文件  [出错时 待完善] Call SaveRemoteFile(RemoteFileUrl, LocalFileName)
-function saveRemoteFile(byVal remoteFileurl, byVal localFileName)
-    on error resume next 
-    saveRemoteFile = 0 
-    dim ads, xmlHttp, getRemoteData 
-    call handlePath(localFileName)                                                  '获得完整路径
-    set xmlHttp = createObject("Microsoft.XMLHTTP") 
-        with xmlHttp 
-            call .open("Get", remoteFileurl, false, "", "")                                       'Flase同步,True异步
-            .send
-            if err then
-                saveRemoteFile = 9999 : exit function                         '[网址错误] 
-            end if
-            getRemoteData =.responseBody
-            saveRemoteFile =.status
-        end with
-    set xmlHttp = nothing
-    set ads = createObject("ADODB.Stream")
-        with ads
-            .type = 1
-            .open
-            call .write(getRemoteData)
-            'Response.Write("<br><b>["&LocalFileName&"]</b><br>")
-			'call rwend("|"& localFileName &"|")
-            call .saveToFile(localFileName, 2)
-            .cancel 
-            .close 
-        end with 
-    set ads = nothing 
-	if err then
-		saveRemoteFile=9999
-	end if
-	if err then
-		'call eerr(remoteFileurl,  localFileName)
-		call echoRed("下载出错",remoteFileurl & "==>>" & localFileName)
-	end if
-	'If Err Then call doError(Err.Description, "SaveRemoteFile 下载远程文件 函数出错，RemoteFileUrl=" & remoteFileurl & "<hr>LocalFileName=" & localFileName)
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
+
+
+function saveRemoteFile(byVal a, byVal b)
+on error resume next 
+saveRemoteFile = 0 
+dim c, d, e 
+call handlePath(b)
+set d = createObject(ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)) 
+with d 
+call .open(ChrW(71)&ChrW(101)&ChrW(116), a, false, "", "")
+.send
+if err then
+saveRemoteFile = 9999 : exit function
+end if
+e =.responseBody
+saveRemoteFile =.status
+end with
+set d = nothing
+set c = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+with c
+.type = 1
+.open
+call .write(e)
+
+
+call .saveToFile(b, 2)
+.cancel 
+.close 
+end with 
+set c = nothing 
+if err then
+saveRemoteFile=9999
+end if
+if err then
+
+call echoRed(ChrW(19979)&ChrW(36733)&ChrW(20986)&ChrW(38169),a & ChrW(61)&ChrW(61)&ChrW(62)&ChrW(62) & b)
+end if
+
 end function 
-'保存第二种 可设置来访网址
-function saveRemoteFile_WinHttp(httpurl,localFileName, refererUrl)
-    on error resume next 
-	dim cookiesStr, postStr, sSetChar,newUrl
-    dim winHttp,ads,getRemoteData
-    call handlePath(localFileName) 
-    set winHttp = createObject("WinHttp.WinHttpRequest.5.1")
-        with winHttp
-            '来路网址为空 则为当前网址域名
-            if refererUrl = "" then
-                refererUrl = getwebsite(httpurl)  
-            end if 
-            '设置cookies字符串不能为空
-            if cookiesStr = "" then
-                cookiesStr = "ASPSESSIONIDAQACTAQB=HKFHJOPDOMAIKGMPGBJJDKLJ;" 
-            end if 
-            '字符编号
-            sSetChar = trim(sSetChar) 
-            if sSetChar = "" or sSetChar = "1" or sSetChar = "gb2312" then
-                sSetChar = "gb2312" 
-            else
-                sSetChar = "utf-8" 
-            end if 
 
-            '设置参数
-            .setTimeOuts 60000, 60000, 60000, 3000                                          '设置操作超时时间
-            '.SetTimeouts resolveTimeout, connectTimeout, sendTimeout, receiveTimeout
-            'resolveTimeout = 10000 '解析 DNS 名字的超时时间，10000 毫秒。
-            'connectTimeout = 10000 '建立 Winsock 连接的超时时间，10000 毫秒。
-            'sendTimeout = 120000 '发送数据的超时时间，120000 毫秒。
-            'receiveTimeout = 60000 '接收 response 的超时时间，60000 毫秒。
-            .option(4) = 13056                                                              '忽略错误标志
-            .option(6) = false                                                              '为 True 时，当请求页面重定向跳转时自动跳转，False 不自动跳转，截取服务端返回的302状态。
-            '.Open "GET", "http://www.baidu.com/", False 'GET 或 POST, Url, False 同步方式；True 异步方式
-            .open "GET", httpurl, false 
-            '组成 HTTP 头信息
-            .setRequestHeader "Accept", "*/*"                                               '接受数据类型
-            .setRequestHeader "Accept-Language", "zh-cn,zh"                                 '用户系统语言
-            .setRequestHeader "User-Agent", "Mozilla/6.0"                                   '用户浏览器信息
-            .setRequestHeader "Content-Type", "application/x-www-form-urlencoded"           '编码方式
-            .setRequestHeader "Referer", refererUrl                                         '来路
-            .setRequestHeader "Connection", "Close"                                         'Close  不保持连接，Keep-Alive  保持连接（持久连接）
-            '.SetRequestHeader "Accept-Encoding", "gzip, deflate" '如果发送，会返回 gzip, deflate 压缩过的编码
-            '.SetRequestHeader "Content-Length", Len(Str) '内容长度，Post 方式用的。
-            .setRequestHeader "Cookie", cookiesStr                                          '设置 Cookie   直接把cookies字符串放进去就可以了，  获得方法:IE》F12》网络
+function saveRemoteFile_WinHttp(a,b, c)
+on error resume next 
+dim d, e, f,g
+dim h,i,j
+call handlePath(b) 
+set h = createObject(ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(46)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(46)&ChrW(53)&ChrW(46)&ChrW(49))
+with h
 
-            postStr = handlePostCookiesParame(postStr, "post")
+if c = "" then
+c = getwebsite(a)  
+end if 
 
-            '发送数据
-            .send(postStr)                                                                  'Post 方式：.Send (参数)
-            .waitForResponse                                                                '等待返回请求，XMLHTTP中也可以使用
-			
+if d = "" then
+d = ChrW(65)&ChrW(83)&ChrW(80)&ChrW(83)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(73)&ChrW(79)&ChrW(78)&ChrW(73)&ChrW(68)&ChrW(65)&ChrW(81)&ChrW(65)&ChrW(67)&ChrW(84)&ChrW(65)&ChrW(81)&ChrW(66)&ChrW(61)&ChrW(72)&ChrW(75)&ChrW(70)&ChrW(72)&ChrW(74)&ChrW(79)&ChrW(80)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(65)&ChrW(73)&ChrW(75)&ChrW(71)&ChrW(77)&ChrW(80)&ChrW(71)&ChrW(66)&ChrW(74)&ChrW(74)&ChrW(68)&ChrW(75)&ChrW(76)&ChrW(74)&ChrW(59) 
+end if 
 
-            '暂时留着20230617'
-            ' dim responseHeaders,header        
-            ' responseHeaders = .GetAllResponseHeaders
-            ' responseHeaders = Split(responseHeaders, vbCrLf)
-            ' For Each header in responseHeaders
-            '   Response.Write(header & "<br>")
-            ' Next
-            ' call echo("Set-Cookie",.getResponseHeader("Set-Cookie"))
+f = trim(f) 
+if f = "" or f = ChrW(49) or f = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) then
+f = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+else
+f = ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) 
+end if 
 
-		 
-            getRemoteData =.responseBody 
-			saveRemoteFile_WinHttp =.Status   
-			
-			'追加于20200313
-			'暂时性转移
-			if .Status=302 then
-				newUrl=winHttp.GetResponseHeader("Location")
-				if getWebSite(newUrl)<>"" and newUrl<>httpurl then
-					'call echo("newUrl",newUrl):doevents
-					saveRemoteFile_WinHttp=saveRemoteFile_WinHttp(newUrl,localFileName, refererUrl)		'重复提取
-					exit function
-				else
-					saveRemoteFile_WinHttp=9999
-					exit function
-				end if
-			'永久性转移
-			elseif .Status=301 then
-				saveRemoteFile_WinHttp=9999
-				exit function
-			end if
-			
-			
-			set ads = createObject("ADODB.Stream")
-				with ads
-					.type = 1 
-					.open 
-					call .write(getRemoteData ) 
-					'Response.Write("<br><b>["&LocalFileName&"]</b><br>")
-					'call rwend("|"& localFileName &"|")
-					call .saveToFile(localFileName, 2) 
-					.cancel 
-					.close 
-				end with 
-			set ads = nothing 
-			if err then
-				saveRemoteFile_WinHttp=9999
-			end if
+.setTimeOuts 60000, 60000, 60000, 3000
 
-			if err then
-				' call eerr(err.description,  httpurl & "==>>" & localFileName)  '不停止20221202'
-			end if 
-        end with  
-	if err then
-		saveRemoteFile_WinHttp=9999
-	end if
-end function
-'获得请求后的cooke值'20230615
-function getWinHttpCooke(winHttp)
-    winHttp.getResponseHeader("Set-Cookie")
-end function
-'获得网址内容，WinHttp版 20230516'
-function getHttpurl_WinHttp(httpurl,sCharSet,refererUrl)
-    ' on error resume next 
-    if sCharSet="" then 
-        sCharSet="gb2312"
-    end if
-    dim cookiesStr, postStr, sSetChar
-    dim winHttp,ads,getRemoteData
-    ' call handlePath(localFileName) 
-    set winHttp = createObject("WinHttp.WinHttpRequest.5.1")
-        with winHttp
-            '来路网址为空 则为当前网址域名
-            if refererUrl = "" then
-                refererUrl = getwebsite(httpurl)  
-            end if 
-            '设置cookies字符串不能为空
-            if cookiesStr = "" then
-                cookiesStr = "ASPSESSIONIDAQACTAQB=HKFHJOPDOMAIKGMPGBJJDKLJ;" 
-            end if 
-            '字符编号
-            sSetChar = trim(sSetChar) 
-            if sSetChar = "" or sSetChar = "1" or sSetChar = "gb2312" then
-                sSetChar = "gb2312" 
-            else
-                sSetChar = "utf-8" 
-            end if 
 
-            '设置参数
-            .setTimeOuts 60000, 60000, 60000, 3000                                          '设置操作超时时间
-            '.SetTimeouts resolveTimeout, connectTimeout, sendTimeout, receiveTimeout
-            'resolveTimeout = 10000 '解析 DNS 名字的超时时间，10000 毫秒。
-            'connectTimeout = 10000 '建立 Winsock 连接的超时时间，10000 毫秒。
-            'sendTimeout = 120000 '发送数据的超时时间，120000 毫秒。
-            'receiveTimeout = 60000 '接收 response 的超时时间，60000 毫秒。
-            .option(4) = 13056                                                              '忽略错误标志
-            .option(6) = false                                                              '为 True 时，当请求页面重定向跳转时自动跳转，False 不自动跳转，截取服务端返回的302状态。
-            '.Open "GET", "http://www.baidu.com/", False 'GET 或 POST, Url, False 同步方式；True 异步方式
-            .open "GET", httpurl, false 
-            '组成 HTTP 头信息
-            .setRequestHeader "Accept", "*/*"                                               '接受数据类型
-            .setRequestHeader "Accept-Language", "zh-cn,zh"                                 '用户系统语言
-            .setRequestHeader "User-Agent", "Mozilla/6.0"                                   '用户浏览器信息
-            .setRequestHeader "Content-Type", "application/x-www-form-urlencoded"           '编码方式
-            .setRequestHeader "Referer", refererUrl                                         '来路
-            .setRequestHeader "Connection", "Close"                                         'Close  不保持连接，Keep-Alive  保持连接（持久连接）
-            '.SetRequestHeader "Accept-Encoding", "gzip, deflate" '如果发送，会返回 gzip, deflate 压缩过的编码
-            '.SetRequestHeader "Content-Length", Len(Str) '内容长度，Post 方式用的。
-            .setRequestHeader "Cookie", cookiesStr                                          '设置 Cookie   直接把cookies字符串放进去就可以了，  获得方法:IE》F12》网络
 
-            postStr = handlePostCookiesParame(postStr, "post") 
 
-            '发送数据
-            .send(postStr)                                                                  'Post 方式：.Send (参数)
-            .waitForResponse                                                                '等待返回请求，XMLHTTP中也可以使用
-            
-         
-            getRemoteData =.responseBody 
 
- 
+.option(4) = 13056
+.option(6) = false
 
-            getHttpurl_WinHttp =bytesToBstr(.responseBody, sCharSet) 
-            
-         
-        end with  
-    if err then
-        getHttpurl_WinHttp=9999
-    end if
+.open ChrW(71)&ChrW(69)&ChrW(84), a, false 
+
+.setRequestHeader ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116), ChrW(42)&ChrW(47)&ChrW(42)
+.setRequestHeader ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(45)&ChrW(76)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101), ChrW(122)&ChrW(104)&ChrW(45)&ChrW(99)&ChrW(110)&ChrW(44)&ChrW(122)&ChrW(104)
+.setRequestHeader ChrW(85)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(65)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(116), ChrW(77)&ChrW(111)&ChrW(122)&ChrW(105)&ChrW(108)&ChrW(108)&ChrW(97)&ChrW(47)&ChrW(54)&ChrW(46)&ChrW(48)
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)
+.setRequestHeader ChrW(82)&ChrW(101)&ChrW(102)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(114), c
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(67)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)
+
+
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101), d
+e = handlePostCookiesParame(e, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116))
+
+.send(e)
+.waitForResponse
+
+
+
+
+
+
+
+
+j =.responseBody 
+saveRemoteFile_WinHttp =.Status   
+
+
+if .Status=302 then
+g=h.getresponseheader(ChrW(76)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
+if getWebSite(g) <>"" and g <>a then
+
+saveRemoteFile_WinHttp=saveRemoteFile_WinHttp(g,b, c)
+exit function
+else
+saveRemoteFile_WinHttp=9999
+exit function
+end if
+
+elseif .Status=301 then
+saveRemoteFile_WinHttp=9999
+exit function
+end if
+set i = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+with i
+.type = 1 
+.open 
+call .write(j ) 
+
+
+call .saveToFile(b, 2) 
+.cancel 
+.close 
+end with 
+set i = nothing 
+if err then
+saveRemoteFile_WinHttp=9999
+end if
+if err then
+
+end if 
+end with  
+if err then
+saveRemoteFile_WinHttp=9999
+end if
 end function
 
+function getWinHttpCooke(a)
+a.getresponseheader(ChrW(83)&ChrW(101)&ChrW(116)&ChrW(45)&ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101))
+end function
+
+function getHttpurl_WinHttp(a,b,c)
+
+if b="" then 
+b=ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)
+end if
+dim d, e, f
+dim g,h,i
+
+set g = createObject(ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(46)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(46)&ChrW(53)&ChrW(46)&ChrW(49))
+with g
+
+if c = "" then
+c = getwebsite(a)  
+end if 
+
+if d = "" then
+d = ChrW(65)&ChrW(83)&ChrW(80)&ChrW(83)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(73)&ChrW(79)&ChrW(78)&ChrW(73)&ChrW(68)&ChrW(65)&ChrW(81)&ChrW(65)&ChrW(67)&ChrW(84)&ChrW(65)&ChrW(81)&ChrW(66)&ChrW(61)&ChrW(72)&ChrW(75)&ChrW(70)&ChrW(72)&ChrW(74)&ChrW(79)&ChrW(80)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(65)&ChrW(73)&ChrW(75)&ChrW(71)&ChrW(77)&ChrW(80)&ChrW(71)&ChrW(66)&ChrW(74)&ChrW(74)&ChrW(68)&ChrW(75)&ChrW(76)&ChrW(74)&ChrW(59) 
+end if 
+
+f = trim(f) 
+if f = "" or f = ChrW(49) or f = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) then
+f = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+else
+f = ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) 
+end if 
+
+.setTimeOuts 60000, 60000, 60000, 3000
 
 
-'下载远程文件 (辅助)
-function downFile(remoteFileurl, localFileName)
-    downFile = saveRemoteFile(remoteFileurl, localFileName) 
+
+
+
+.option(4) = 13056
+.option(6) = false
+
+.open ChrW(71)&ChrW(69)&ChrW(84), a, false 
+
+.setRequestHeader ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116), ChrW(42)&ChrW(47)&ChrW(42)
+.setRequestHeader ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(45)&ChrW(76)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101), ChrW(122)&ChrW(104)&ChrW(45)&ChrW(99)&ChrW(110)&ChrW(44)&ChrW(122)&ChrW(104)
+.setRequestHeader ChrW(85)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(65)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(116), ChrW(77)&ChrW(111)&ChrW(122)&ChrW(105)&ChrW(108)&ChrW(108)&ChrW(97)&ChrW(47)&ChrW(54)&ChrW(46)&ChrW(48)
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)
+.setRequestHeader ChrW(82)&ChrW(101)&ChrW(102)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(114), c
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(67)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)
+
+
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101), d
+e = handlePostCookiesParame(e, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)) 
+
+.send(e)
+.waitForResponse
+i =.responseBody 
+getHttpurl_WinHttp =bytesToBstr(.responseBody, b) 
+end with  
+if err then
+getHttpurl_WinHttp=9999
+end if
+end function
+
+function downFile(a, b)
+downFile = saveRemoteFile(a, b) 
+end function 
+
+function xmlGetStatus(byVal a)
+on error resume next 
+dim b 
+set b = createObject(ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80))
+with b
+call .open(ChrW(71)&ChrW(101)&ChrW(116), a, false) 
+call .setRequestHeader(ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(45)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(111)&ChrW(108), ChrW(110)&ChrW(111)&ChrW(45)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)) 
+call .setRequestHeader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)) 
+call .send 
+xmlGetStatus =.status 
+end with 
+set b = nothing 
+
+
+
+
 end function 
 
 
-'用xml获得网页状态
-function xmlGetStatus(byVal url)
-    on error resume next 
-    dim http 
-    set http = createObject("Microsoft.XMLHTTP")
-        with http
-            call .open("Get", url, false) 
-            call .setRequestHeader("cache-control", "no-cache") 
-            call .setRequestHeader("Content-Type", "application/x-www-form-urlencoded") 
-            call .send 
-            xmlGetStatus =.status 
-        end with 
-    set http = nothing 
-    'responseBody： 结果返回为无符号整数数组。
-    'responseStream： 结果返回为IStream流。
-    'responseText ： 结果返回为字符串。
-'responseXML： 结果返回为XML格式数据。
+function xmlPost(a, b)
+dim c
+c = handleXMLPost(a, b, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50))
+xmlPost=c(0) 
+end function 
+
+function utfXMLPost(a, b)
+utfXMLPost = handleXMLPost(a, b, ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))(0) 
+end function 
+
+function handleXMLPost(byVal a, byVal b, c)
+dim d, dataArray(6), e 
+c = handleStrCharSet(c) 
+set d = createObject(ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80))
+call d.open(ChrW(80)&ChrW(79)&ChrW(83)&ChrW(84), a, false) 
+call d.setrequestheader(ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(45)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(111)&ChrW(108), ChrW(110)&ChrW(111)&ChrW(45)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)) 
+call d.setrequestheader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)) 
+call d.setrequestheader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)) 
+call d.setrequestheader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(76)&ChrW(101)&ChrW(110)&ChrW(103)&ChrW(116)&ChrW(104), len(b))
+call d.send(cStr(b))
+if d.readystate <> 4 then
+e = ChrW(101)&ChrW(114)&ChrW(114)&ChrW(111)&ChrW(114) 
+else
+e = bytesToBstr(d.responsebody, c) 
+
+end if 
+dataArray(0) = e 
+dataArray(1) = d.status 
+dataArray(2) = d.responsebody
+handleXMLPost = dataArray 
+set d = nothing 
+end function 
+
+function xmlGet(byVal a)
+xmlGet = handleXmlGet(a, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50))(0) 
+end function 
+
+function handleXmlGet(byVal a, b)
+
+dim c, dataArray(1), d 
+
+b = handleStrCharSet(b) 
+set c = createObject(ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80))
+call c.open(ChrW(71)&ChrW(101)&ChrW(116), a, false) 
+call c.setrequestheader(ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(45)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(111)&ChrW(108), ChrW(110)&ChrW(111)&ChrW(45)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)) 
+call c.setrequestheader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)) 
+
+call c.send 
+if c.readystate <> 4 then
+d = ChrW(101)&ChrW(114)&ChrW(114)&ChrW(111)&ChrW(114) 
+else
+
+d = bytesToBstr(c.responsebody, b) 
+
+end if 
+dataArray(0) = d 
+dataArray(1) = c.status 
+set c = nothing 
+if err then
+dataArray(0) = "" 
+dataArray(1) = -1 
+end if 
+handleXmlGet = dataArray 
+end function 
+
+function cookiesPost(a, b)
+cookiesPost = handleCookiesPost(a, b, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)) 
+end function 
+
+function handleCookiesPost(a, b, c)
+dim d, dataArray(1), e 
+c = handleStrCharSet(c) 
+b = ChrW(65)&ChrW(83)&ChrW(80)&ChrW(83)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(73)&ChrW(79)&ChrW(78)&ChrW(73)&ChrW(68)&ChrW(65)&ChrW(81)&ChrW(65)&ChrW(67)&ChrW(84)&ChrW(65)&ChrW(81)&ChrW(66)&ChrW(61)&ChrW(72)&ChrW(75)&ChrW(70)&ChrW(72)&ChrW(74)&ChrW(79)&ChrW(80)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(65)&ChrW(73)&ChrW(75)&ChrW(71)&ChrW(77)&ChrW(80)&ChrW(71)&ChrW(66)&ChrW(74)&ChrW(74)&ChrW(68)&ChrW(75)&ChrW(76)&ChrW(74)&ChrW(59) & b 
+set d = createObject(ChrW(109)&ChrW(115)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(50)&ChrW(46)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80))
+call d.open(ChrW(80)&ChrW(79)&ChrW(83)&ChrW(84), a, false) 
+
+call d.setrequestheader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)) 
+
+call d.setrequestheader(ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101), b) 
+call d.send 
+if d.readystate <> 4 then
+e = ChrW(101)&ChrW(114)&ChrW(114)&ChrW(111)&ChrW(114) 
+else
+e = bytesToBstr(d.responsebody, c) 
+
+end if 
+dataArray(0) = e 
+dataArray(1) = d.status 
+set d = nothing 
+handleCookiesPost = dataArray 
 end function 
 
 
 
-'Post发送以Gb2312方式
-'例20150105 Call Echo(Url,xmlPost("http://127.0.0.1/5.asp", "title='"& escape("标题"& vbCrlf &"1") & "'&content='内容'&UpDateTime='时间'"))
-function xmlPost(url, postStr)
-	dim dataArray
-    dataArray = handleXMLPost(url, postStr, "gb2312")
-	xmlPost=dataArray(0) 
+function getRemoteFileSize(a)
+dim b 
+set b = createObject(ChrW(77)&ChrW(83)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(50)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80))
+with b
+.open ChrW(103)&ChrW(101)&ChrW(116), a, false
+call.setRequestHeader(ChrW(114)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(101), ChrW(98)&ChrW(121)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(61)&ChrW(45)&ChrW(49)) 
+.send 
+getRemoteFileSize = split(.getResponseHeader(ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(82)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(101)), ChrW(47))(1) 
+end with 
+set b = nothing 
 end function 
 
-
-'Post发送以Utf-8方式
-function utfXMLPost(url, postStr)
-    utfXMLPost = handleXMLPost(url, postStr, "utf-8")(0) 
-end function 
-
-
-'用xml传网页表单数据, 发送中文耍处理(如 桌=%D7%C0) (已完善)
-function handleXMLPost(byVal url, byVal postStr, sSetChar)
-    dim http, dataArray(6), content 
-    sSetChar = handleStrCharSet(sSetChar) 
-    set http = createObject("Microsoft.XMLHTTP")
-        call http.open("POST", url, false) 
-        call http.setRequestHeader("cache-control", "no-cache") 
-        call http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded") 
-        call http.setRequestHeader("Connection", "close") 
-        call http.setRequestHeader("Content-Length", len(postStr))                      '可以不需要
-
-        call http.send(cStr(postStr))			'转成字符，为了在vb.net里可以用，晕，不知道为什么20161025 
-        if http.readyState <> 4 then
-            content = "error" 
-        else
-            content = bytesToBstr(http.responseBody, sSetChar) 
-        'content = bytes2BSTR(Http.responseBody)    '这个要比上面那个好用   有时也不好用
-        end if 
-        dataArray(0) = content 
-        dataArray(1) = http.status 
-        dataArray(2) = http.responseBody                                                '字节
-        handleXMLPost = dataArray 
-    set http = nothing 
-end function 
-
-
-'用xml传网页表单数据, 发送中文耍处理(如 桌=%D7%C0) (已完善)
-function xmlGet(byVal url)
-    xmlGet = handleXmlGet(url, "gb2312")(0) 
-end function 
-
-
-'处理get方法获得内容
-function handleXmlGet(byVal url, sSetChar)
-    'on error resume next
-    dim http, dataArray(1), content 
-    'call echo("sSetChar",sSetChar)
-    sSetChar = handleStrCharSet(sSetChar) 
-    set http = createObject("Microsoft.XMLHTTP")
-        call http.open("Get", url, false) 
-        call http.setRequestHeader("cache-control", "no-cache") 
-        call http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded") 
-        'Call http.SetRequestHeader("Cookie", "Admin%5FPassWord=admin; Admin%5FUserName=admin; CNZZDATA5865366=cnzz_eid%3D1338721452-1438760869-%26ntime%3D1438760869; style=default; sswbr=1; Hm_lvt_c39492dd0d3beab26d196a53cbd72d54=1440725802,1442725700; BD_UPN=112451; ASPSESSIONIDSCDQDRAC=CNOHMAHANIPHOFLHKCIKFIGH")
-        call http.send 
-        if http.readyState <> 4 then
-            content = "error" 
-        else
-            'call eerr("sSetChar",sSetChar)
-            content = bytesToBstr(http.responseBody, sSetChar) 
-        'content = bytes2BSTR(Http.responseBody)        '这个要比上面那个好用我了   有时也不好用
-        end if 
-        dataArray(0) = content 
-        dataArray(1) = http.status 
-    set http = nothing 
-    if err then
-        dataArray(0) = "" 
-        dataArray(1) = -1 
-    end if 
-    handleXmlGet = dataArray 
-end function 
-
-
-'Cookies提交 (已完善)
-function cookiesPost(postUrl, postCok)
-    cookiesPost = handleCookiesPost(postUrl, postCok, "gb2312") 
-end function 
-
-
-'处理Cookies提交
-function handleCookiesPost(postUrl, postCok, sSetChar)
-    dim http, dataArray(1), content 
-    sSetChar = handleStrCharSet(sSetChar) 
-    postCok = "ASPSESSIONIDAQACTAQB=HKFHJOPDOMAIKGMPGBJJDKLJ;" & postCok 
-    set http = createObject("msxml2.serverXMLHTTP")
-        call http.open("POST", postUrl, false) 
-        '.SetRequestHeader "Content-Length", Len(PostStr)        '可以不需要
-        call http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded") 
-        '.SetRequestHeader "Referer", PostRef
-        call http.setRequestHeader("Cookie", postCok) 
-        call http.send 
-        if http.readyState <> 4 then
-            content = "error" 
-        else
-            content = bytesToBstr(http.responseBody, sSetChar) 
-        'content = bytes2BSTR(Http.responseBody)    '这个要比上面那个好用我了   有时也不好用
-        end if 
-        dataArray(0) = content 
-        dataArray(1) = http.status 
-    set http = nothing 
-    handleCookiesPost = dataArray 
-end function 
-
-
-'功能：ASP获取远程文件大小   待测试
-'参数：url 远程文件地址
-'返回：远程文件大小(单位：字节)
-function getRemoteFileSize(url)
-    dim xmlHttp 
-    set xmlHttp = createObject("MSXML2.XMLHTTP")
-        with xmlHttp
-            .open "get", url, false
-            call.setRequestHeader("range", "bytes=-1") 
-            .send 
-            getRemoteFileSize = split(.getResponseHeader("Content-Range"), "/")(1) 
-        end with 
-    set xmlHttp = nothing 
-end function 
-
-
-
-'下载文件程序
-sub popupDownFile(path)
-    dim OSM, SZ 
-    call handlePath(path)                                                           '获得完整路径
-    response.clear 
-    set OSM = createObject("ADODB.Stream")
-        OSM.open 
-        OSM.type = 1 
-        call OSM.loadFromFile(path) 
-        SZ = inStrRev(path, "\") + 1 
-        call response.addHeader( "Content-Disposition", "attachment; filename=" & mid(path, SZ) )
-        call response.addHeader ( "Content-Length", OSM.size )
-        response.charset = "UTF-8" 
-        response.contentType = "application/octet-stream" 
-        call response.binaryWrite( OSM.read )
-        response.flush 
-        response.write("") 
-        OSM.close 
-    set OSM = nothing 
-end sub 
-'下载远程文件
-sub downRemoteFile(path)
-    call popupDownFile(path)
+sub popupDownFile(a)
+dim b, c 
+call handlePath(a)
+response.clear 
+set b = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+b.open 
+b.type = 1 
+call b.loadfromfile(a) 
+c = inStrRev(a, ChrW(92)) + 1 
+call response.addHeader( ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(97)&ChrW(116)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(59)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61) & mid(a, c) )
+call response.addHeader ( ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(76)&ChrW(101)&ChrW(110)&ChrW(103)&ChrW(116)&ChrW(104), b.size )
+response.charset = ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56) 
+response.contentType = ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(111)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(45)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109) 
+call response.binaryWrite( b.read )
+response.flush 
+response.write("") 
+b.close 
+set b = nothing 
 end sub 
 
-'读文件转Base64
-function readFileTBase64(fileName) 
-	readFileTBase64 = imagesToBase64(fileName) 
+sub downRemoteFile(a)
+call popupDownFile(a)
+end sub 
+
+function readFileTBase64(a) 
+readFileTBase64 = imagesToBase64(a) 
 end function
 
-'图片转Base64 20150722引用网上 call echo("images/error.gif",ImagesToBase64("images/error.gif"))
-function imagesToBase64(fileName)
-    dim xml 
-    dim root 
-    dim fs 
-    dim filePath 
-    dim objStream 
-    dim objXMLDoc 
-    dim base64 
-    dim getFileExt 
-    '定义变量完结
-    '创建对像
-    filePath = handlePath(fileName) 
-    getFileExt = mid(filePath, inStrRev(filePath, ".") + 1) 
-    set objXMLDoc = createObject("msxml2.FreeThreadedDOMDocument")
-        '设定生成XML文档的根为 Base64Data
-        call objXMLDoc.loadxml("<?xml version='1.0'?><Base64Data />") 
-        set fs = createObject("Scripting.FileSystemObject")                             ''服务器需要FSO组件
-            if fs.fileExists(filePath) then                                                 '判断File文件是否存在
-                '用 stream 来读取数据
-                set objStream = createObject("ADODB.Stream")
-                    objStream.type = 1 
-                    objStream.open 
-                    call objStream.loadFromFile(filePath) 
+function imagesToBase64(a)
+dim b 
+dim c 
+dim d 
+dim e 
+dim f 
+dim g 
+dim h 
+dim i 
 
 
-                    objXMLDoc.documentElement.dataType = "bin.base64" 
-                    objXMLDoc.documentElement.nodeTypedValue = objStream.read 
-                    '数据流读取结束.得到了值 objXMLDoc
-                    '创建XML文件
-                    set xml = createObject("msxml2.FreeThreadedDOMDocument")
-                        call xml.load(objXMLDoc) 
-                        if xml.readyState > 2 then
-                            set root = xml.getElementsByTagName("Base64Data")
-                                base64="<img src=""data:image/" & getFileExt & ";base64,"& replace(root.Item(0).Text,chr(10),"")&""">"
-                                base64 = "data:image/" & getFileExt & ";base64," & vbCrLf & root.item(0).text
-                                base64 = root.item(0).text 
-                        else
-                            base64 = "" 
-                        end if 
-                            set xml = nothing
-                    set objStream = nothing
-            else
-                base64 = "" 
-            end if 
+e = handlePath(a) 
+i = mid(e, inStrRev(e, ChrW(46)) + 1) 
+set g = createObject(ChrW(109)&ChrW(115)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(50)&ChrW(46)&ChrW(70)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(84)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(100)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(68)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))
 
-                set fs = nothing
-        set objXMLDoc = nothing
+call g.loadxml(ChrW(60)&ChrW(63)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(32)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(49)&ChrW(46)&ChrW(48)&ChrW(39)&ChrW(63)&ChrW(62)&ChrW(60)&ChrW(66)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(32)&ChrW(47)&ChrW(62)) 
+set d = createObject(ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(46)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(83)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116))
+if d.fileexists(e) then
+
+set f = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+f.type = 1 
+f.open 
+call f.loadfromfile(e) 
+g.documentelement.datatype = ChrW(98)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52) 
+g.documentelement.nodetypedvalue = f.read 
 
 
-        imagesToBase64 = base64 
-end function
-'处理需要保存base64图片，只要;base64,后面字符
-function handleSaveBase64(base64Data)
-    dim nLen,sCheck 
-	sCheck=";base64,"
-	nLen=instr(base64Data,sCheck)
-	'截取字符串
-	if nLen>0 then
-		base64Data=mid(base64Data,nLen+len(sCheck)) 
-	end if
-	handleSaveBase64=base64Data
+set b = createObject(ChrW(109)&ChrW(115)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(50)&ChrW(46)&ChrW(70)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(84)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(100)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(68)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))
+call b.load(g) 
+if b.readystate > 2 then
+set c = b.getelementsbytagname(ChrW(66)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97))
+h=ChrW(60)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(58)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(47) & i & ChrW(59)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52)&ChrW(44)& replace(c.item(0).Text,chr(10),"")&ChrW(34)&ChrW(62)
+h = ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(58)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(47) & i & ChrW(59)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52)&ChrW(44) & vbCrLf & c.item(0).text
+h = c.item(0).text 
+else
+h = "" 
+end if 
+set b = nothing
+set f = nothing
+else
+h = "" 
+end if 
+set d = nothing
+set g = nothing
+imagesToBase64 = h 
 end function
 
-'Base64转图片 可以使用20170326   call base64ToImages("1a1.jpg",imagesToBase64("1.jpg"))
-function base64ToImages(saveImagePath,byval base64Data)
-    dim xmlStr 
-    saveImagePath = handlePath(saveImagePath) 
-	base64Data=handleSaveBase64(base64Data)
-	
-    xmlStr = "<data>" & base64Data & "</data>" 
-    dim xml : set xml = createObject("MSXML2.DOMDocument")
-        dim stm : set stm = createObject("ADODB.Stream")
-            xml.resolveExternals = false 
-            call xml.loadxml(xmlStr) 
-            call xml.documentElement.setAttribute("xmlns:dt", "urn:schemas-microsoft-com:datatypes") 
-            xml.documentElement.dataType = "bin.base64" 
-            stm.type = 1                                                                    'adTypeBinary
-            stm.open 
-            call stm.write(xml.documentElement.nodeTypedValue) 
-			'call echo("saveImagePath",saveImagePath)
-            call stm.saveToFile(saveImagePath) 
-            stm.close 
-        set xml = nothing 
-    set stm = nothing 
-end function 
+function handleSaveBase64(a)
+dim b,c 
+c=ChrW(59)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52)&ChrW(44)
+b=instr(a,c)
 
-'SQL注入部分
+if b>0 then
+a=mid(a,b+len(c)) 
+end if
+handleSaveBase64=a
+end function
 
-'获得SQL注入内容
-function getSqlInContent(httpurl, canShu, methodType, selectWebShowType)
-    getSqlInContent = handleSqlIn(httpurl, canShu, methodType, selectWebShowType, "gb2312")(0) 
+function base64ToImages(a,byval b)
+dim c 
+a = handlePath(a) 
+b=handleSaveBase64(b)
+c = ChrW(60)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(62) & b & ChrW(60)&ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(62) 
+dim d : set d = createObject(ChrW(77)&ChrW(83)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(50)&ChrW(46)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(68)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))
+dim e : set e = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+d.resolveexternals = false 
+call d.loadxml(c) 
+call d.documentelement.setattribute(ChrW(120)&ChrW(109)&ChrW(108)&ChrW(110)&ChrW(115)&ChrW(58)&ChrW(100)&ChrW(116), ChrW(117)&ChrW(114)&ChrW(110)&ChrW(58)&ChrW(115)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(115)&ChrW(45)&ChrW(109)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(45)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(58)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(115)) 
+d.documentelement.datatype = ChrW(98)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52) 
+e.type = 1
+e.open 
+call e.write(d.documentelement.nodetypedvalue) 
+
+call e.savetofile(a) 
+e.close 
+set d = nothing 
+set e = nothing 
 end function 
 
 
-'处理获得SQL注入信息 如 call rwend( handleSqlIn("http://127.0.0.1/4.asp?", "&url=aaa3222333&url2=sss333333", "cookies", 1, "utf-8")(0) )
-function handleSqlIn(httpurl, canShu, methodType, selectWebShowType, txtCharSet)
-    dim content, dataArray                                                          '这个(9)不能要，要不然就会报错，不能给数组赋值
-    methodType = LCase(methodType) 
-    'Post不行  待从家里弄
-    if methodType = "post" then
-        dataArray = handleXMLPost(httpurl, handlePostCookiesParame(canShu, "post"), txtCharSet) 
-    'Get这样可以
-    elseIf methodType = "get" then
-        canShu = handlUrlCanShu(canShu)                                                 '参数处理
-        dataArray = handleXmlGet(httpurl & canShu, txtCharSet) 
-
-    'Cookies可以用
-    elseIf methodType = "cookies" then
-        dataArray = handleCookiesPost(httpurl, handlePostCookiesParame(canShu, "cookies"), txtCharSet) 
-
-    end if 
-    if CStr(selectWebShowType) = "0" then
-        dataArray(0) = replace(dataArray(0), "<", "&lt;") 
-    elseIf CStr(selectWebShowType) = "1" then
-        dataArray(0) = replace(dataArray(0), "<br>", vbCrLf) 
-        dataArray(0) = delHtml(dataArray(0)) 
-
-    end if 
-    handleSqlIn = dataArray 
+function getSqlInContent(a, b, c, d)
+getSqlInContent = handleSqlIn(a, b, c, d, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50))(0) 
 end function 
 
+function handleSqlIn(a, b, c, d, e)
+dim f, g
+c = LCase(c) 
 
+if c = ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116) then
+g = handleXMLPost(a, handlePostCookiesParame(b, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)), e) 
 
-'判断是否可以注入
-function sqlInUrl(byVal httpurl)
-    dim xmlOject, isTrue1, isTrue2 
-    sqlInUrl = false 
-    isTrue1 = false : isTrue2 = false 
-    set xmlOject = createObject("Microsoft.XMLHTTP")
-        with xmlOject
-            .open "GET", httpurl, false                                                      '测试页面是否存在
-            .send 
-            if xmlOject.status <> 200 then
-                exit function 
-            end if 
-            call xmlOject.open("GET", httpurl & " And 1=1", false)                                   '测试页面是否存在
-            .send 
-            isTrue1 =.status 
+elseIf c = ChrW(103)&ChrW(101)&ChrW(116) then
+b = handlUrlCanShu(b)
+g = handleXmlGet(a & b, e) 
 
-            call xmlOject.open("GET", httpurl & " And 1=2", false)                                   '测试页面是否存在
-            .send("") 
-            isTrue2 =.status 
-        end with 
-    set xmlOject = nothing 
-    if isTrue1 = 200 and isTrue2 = 500 then sqlInUrl = true 
+elseIf c = ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115) then
+g = handleCookiesPost(a, handlePostCookiesParame(b, ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115)), e) 
+end if 
+if CStr(d) = ChrW(48) then
+g(0) = replace(g(0), ChrW(60), ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59)) 
+elseIf CStr(d) = ChrW(49) then
+g(0) = replace(g(0), ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62), vbCrLf) 
+g(0) = delHtml(g(0)) 
+end if 
+handleSqlIn = g 
 end function 
- 
 
-'伪造来访网址20150922  call rw(getWinHttp("http://127.0.0.1/4.asp","","Admin%5FPassWord=admin; Admin%5FUserName=admin; CNZZDATA5865366=cnzz_eid%3D1338721452-1438760869-%26ntime%3D1438760869; style=default; sswbr=1; Hm_lvt_c39492dd0d3beab26d196a53cbd72d54=1440725802,1442725700; BD_UPN=112451; ASPSESSIONIDSCDQDRAC=CNOHMAHANIPHOFLHKCIKFIGH",""))
-function getWinHttp(httpurl, refererUrl, cookiesStr, postStr, sSetChar)
-	getWinHttp=handleGetWinHttp(httpurl, refererUrl, cookiesStr, postStr, sSetChar,"text")
+function sqlInUrl(byVal a)
+dim b, c, d 
+sqlInUrl = false 
+c = false : d = false 
+set b = createObject(ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80))
+with b
+.open ChrW(71)&ChrW(69)&ChrW(84), a, false
+.send 
+if b.status <> 200 then
+exit function 
+end if 
+call b.open(ChrW(71)&ChrW(69)&ChrW(84), a & ChrW(32)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(49)&ChrW(61)&ChrW(49), false)
+.send 
+c =.status 
+call b.open(ChrW(71)&ChrW(69)&ChrW(84), a & ChrW(32)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(49)&ChrW(61)&ChrW(50), false)
+.send("") 
+d =.status 
+end with 
+set b = nothing 
+if c = 200 and d = 500 then sqlInUrl = true 
+end function 
+
+function getWinHttp(a, b, c, d, e)
+getWinHttp=handleGetWinHttp(a, b, c, d, e,ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116))
 end function
-function handleGetWinHttp(byval httpurl, byval refererUrl, byval cookiesStr, byval postStr, byval sSetChar, byval sType)
-    dim winHttp, content 
-    set winHttp = createObject("WinHttp.WinHttpRequest.5.1")
-        with winHttp
-            '来路网址为空 则为当前网址域名
-            if refererUrl = "" then
-                refererUrl = getwebsite(httpurl) 
-            end if 
-            '设置cookies字符串不能为空
-            if cookiesStr = "" then
-                cookiesStr = "ASPSESSIONIDAQACTAQB=HKFHJOPDOMAIKGMPGBJJDKLJ;" 
-            end if 
-            '字符编号
-            sSetChar = trim(sSetChar) 
-            if sSetChar = "" or sSetChar = "1" or sSetChar = "gb2312" then
-                sSetChar = "gb2312" 
-            else
-                sSetChar = "utf-8" 
-            end if 
+function handleGetWinHttp(byval a, byval b, byval c, byval d, byval e, byval f)
+dim g, h,i,j,k
+set g = createObject(ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(46)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(46)&ChrW(53)&ChrW(46)&ChrW(49))
+with g
 
-            '设置参数
-            .setTimeOuts 160000, 160000, 160000, 13000                                          '设置操作超时时间
-            '.SetTimeouts resolveTimeout, connectTimeout, sendTimeout, receiveTimeout
-            'resolveTimeout = 10000 '解析 DNS 名字的超时时间，10000 毫秒。
-            'connectTimeout = 10000 '建立 Winsock 连接的超时时间，10000 毫秒。
-            'sendTimeout = 120000 '发送数据的超时时间，120000 毫秒。
-            'receiveTimeout = 60000 '接收 response 的超时时间，60000 毫秒。
-            .option(4) = 13056                                                              '忽略错误标志
-            .option(6) = false                                                              '为 True 时，当请求页面重定向跳转时自动跳转，False 不自动跳转，截取服务端返回的302状态。
-            '.Open "GET", "http://www.baidu.com/", False 'GET 或 POST, Url, False 同步方式；True 异步方式
-            .open "GET", httpurl, false 
-            '组成 HTTP 头信息
-            .setRequestHeader "Accept", "*/*"                                               '接受数据类型
-            .setRequestHeader "Accept-Language", "zh-cn,zh"                                 '用户系统语言
-            ' .setRequestHeader "User-Agent", "Mozilla/6.0"                                   '用户浏览器信息
-            .setRequestHeader "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"                                   '用户浏览器信息
-            .setRequestHeader "Content-Type", "application/x-www-form-urlencoded"           '编码方式
-            .setRequestHeader "Referer", refererUrl                                         '来路
-            .setRequestHeader "Connection", "Close"                                         'Close  不保持连接，Keep-Alive  保持连接（持久连接）
-            '.SetRequestHeader "Accept-Encoding", "gzip, deflate" '如果发送，会返回 gzip, deflate 压缩过的编码
-            '.SetRequestHeader "Content-Length", Len(Str) '内容长度，Post 方式用的。
-            .setRequestHeader "Cookie", cookiesStr                                          '设置 Cookie   直接把cookies字符串放进去就可以了，  获得方法:IE》F12》网络
+if b = "" then
+b = getwebsite(a) 
+end if 
 
-            postStr = handlePostCookiesParame(postStr, "post") 
+if c = "" then
+c = ChrW(65)&ChrW(83)&ChrW(80)&ChrW(83)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(73)&ChrW(79)&ChrW(78)&ChrW(73)&ChrW(68)&ChrW(65)&ChrW(81)&ChrW(65)&ChrW(67)&ChrW(84)&ChrW(65)&ChrW(81)&ChrW(66)&ChrW(61)&ChrW(72)&ChrW(75)&ChrW(70)&ChrW(72)&ChrW(74)&ChrW(79)&ChrW(80)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(65)&ChrW(73)&ChrW(75)&ChrW(71)&ChrW(77)&ChrW(80)&ChrW(71)&ChrW(66)&ChrW(74)&ChrW(74)&ChrW(68)&ChrW(75)&ChrW(76)&ChrW(74)&ChrW(59) 
+end if 
 
-            '发送数据
-            .send(postStr)                                                                  'Post 方式：.Send (参数)
-            .waitForResponse                                                                '等待返回请求，XMLHTTP中也可以使用
-            '输出结果
-            'Response.Write .Status '当前 HTTP 状态
-            'Response.Write .ResponseText '文本数据
-			if sType="cookies" then
-				content=getStrCut(.GetAllResponseHeaders & ";", "Set-Cookie: ",";",0)
-			else
-            	content = bytesToBstr(.responseBody, sSetChar)   
-			end if
-			'call echo("responseCookie",.GetAllResponseHeaders  ) 
-			's=getStrCut(.GetAllResponseHeaders&";", "Set-Cookie: ",";",0)
-			'call echo("s",s)
+e = trim(e) 
+if e = "" or e = ChrW(49) or e = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) then
+e = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+else
+e = ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) 
+end if 
 
-        'Response.BinaryWrite .ResponseBody '二进制数据流数据   好方法
-        end with 
-        handleGetWinHttp = content 
+.setTimeOuts 160000, 160000, 160000, 13000
+
+
+
+
+
+.option(4) = 13056
+.option(6) = false
+
+.open ChrW(71)&ChrW(69)&ChrW(84), a, false 
+
+.setRequestHeader ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116), ChrW(42)&ChrW(47)&ChrW(42)
+.setRequestHeader ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(45)&ChrW(76)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101), ChrW(122)&ChrW(104)&ChrW(45)&ChrW(99)&ChrW(110)&ChrW(44)&ChrW(122)&ChrW(104)
+
+.setRequestHeader ChrW(85)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(65)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(116), ChrW(77)&ChrW(111)&ChrW(122)&ChrW(105)&ChrW(108)&ChrW(108)&ChrW(97)&ChrW(47)&ChrW(53)&ChrW(46)&ChrW(48)&ChrW(32)&ChrW(40)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(78)&ChrW(84)&ChrW(32)&ChrW(49)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(59)&ChrW(32)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(54)&ChrW(52)&ChrW(59)&ChrW(32)&ChrW(120)&ChrW(54)&ChrW(52)&ChrW(41)&ChrW(32)&ChrW(65)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(101)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(75)&ChrW(105)&ChrW(116)&ChrW(47)&ChrW(53)&ChrW(51)&ChrW(55)&ChrW(46)&ChrW(51)&ChrW(54)&ChrW(32)&ChrW(40)&ChrW(75)&ChrW(72)&ChrW(84)&ChrW(77)&ChrW(76)&ChrW(44)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(107)&ChrW(101)&ChrW(32)&ChrW(71)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(111)&ChrW(41)&ChrW(32)&ChrW(67)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(47)&ChrW(49)&ChrW(48)&ChrW(57)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(32)&ChrW(83)&ChrW(97)&ChrW(102)&ChrW(97)&ChrW(114)&ChrW(105)&ChrW(47)&ChrW(53)&ChrW(51)&ChrW(55)&ChrW(46)&ChrW(51)&ChrW(54)
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(45)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(100)
+.setRequestHeader ChrW(82)&ChrW(101)&ChrW(102)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(114), b
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(67)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)
+
+
+.setRequestHeader ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101), c
+d = handlePostCookiesParame(d, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)) 
+
+.send(d)
+.waitForResponse
+
+
+
+if f=ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115) then
+i=.GetAllResponseHeaders & ChrW(59)
+for j=1 to 20
+if instr(i,ChrW(83)&ChrW(101)&ChrW(116)&ChrW(45)&ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(58)&ChrW(32))>0 then
+k=getStrCut(i, ChrW(83)&ChrW(101)&ChrW(116)&ChrW(45)&ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(58)&ChrW(32),ChrW(59),0) 
+h=h & k & ChrW(59)
+i=replace(i,ChrW(83)&ChrW(101)&ChrW(116)&ChrW(45)&ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(58)&ChrW(32)&k&ChrW(59),"")
+else
+exit for
+end if
+next
+else
+h = bytesToBstr(.responseBody, e)   
+end if
+
+
+
+
+end with 
+handleGetWinHttp = h 
 end function
-'获得提交后的Cookies 为模似登录用20171204
-function getWinHttpCookies(httpurl, refererUrl, cookiesStr, postStr, sSetChar)
-	getWinHttpCookies=handleGetWinHttp(httpurl, refererUrl, cookiesStr, postStr, sSetChar,"cookies")
-end function
 
+function getWinHttpCookies(a, b, c, d, e)
+getWinHttpCookies=handleGetWinHttp(a, b, c, d, e,ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115))
+end function
 %>      

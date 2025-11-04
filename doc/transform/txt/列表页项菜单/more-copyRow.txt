@@ -1,0 +1,27 @@
+                            layer.confirm('是否要复制该行数据？', {
+                                icon: 3,
+                                title: '确认复制'
+                            }, function(index) {
+                                layer.close(index); // 关闭确认弹窗
+                                NProgress.start(); // 显示进度条
+                                $.ajax({
+                                    type: "POST",
+                                    cache: true,
+                                    dataType: "json",
+                                    url: "?act=copyRow",
+                                    data: { "id": pid }, // 传递当前行id
+                                    success: function(res) {
+                                        NProgress.done();
+                                        if (res.status === "y") {
+                                            layer.msg('复制成功！',{icon: 1});
+                                            table.reload('testReload'); // 复制成功后刷新表格
+                                        } else {
+                                            layer.msg('复制失败：' + res.info,{icon: 2});
+                                        }
+                                    },
+                                    error: function() {
+                                        NProgress.done();
+                                        layer.msg('请求失败，请重试',{icon: 2});
+                                    }
+                                });
+                            });

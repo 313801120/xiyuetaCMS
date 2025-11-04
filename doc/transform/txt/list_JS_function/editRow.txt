@@ -1,0 +1,39 @@
+    //处理修改行
+    var handleEditRow=function(pid,fieldName){
+        if(fieldName!=undefined && fieldName!=""){           
+            // 让用户输入值
+            layer.prompt({
+                formType: 0,
+                title: '请输入替换'+fieldName+'值',
+                area: ['300px', '150px'],
+                value: ''
+            }, function(value, index) {
+                layer.close(index); // 关闭输入弹窗
+                NProgress.start(); // 显示进度条
+                $.ajax({
+                    type: "POST",
+                    cache: true,
+                    dataType: "json",
+                    url: "?act=editRow",
+                    data: { 
+                        "id": pid,
+                        "fieldName": fieldName,
+                        "fieldValue": value // 传递用户输入的值
+                    },
+                    success: function(res) {
+                        NProgress.done();
+                        if (res.status === "y") {
+                            layer.msg('修改成功！');
+                            table.reload('testReload'); // 修改成功后刷新表格
+                        } else {
+                            layer.msg('修改失败：' + res.info);
+                        }
+                    },
+                    error: function() {
+                        NProgress.done();
+                        layer.msg('请求失败，请重试');
+                    }
+                });
+            });
+        }
+    }

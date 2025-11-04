@@ -1,1175 +1,1046 @@
-<!--#Include virtual = "/common.Asp"-->
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><!--#Include virtual = "/common.Asp"-->
 <!--#include file="../inc/member_safe.asp"--><%
 dim content,isMobile,startId,endId,isDebug,nPageSize
-isDebug=false       '调试是否开启'
-endId=0  '最后ID'
-startId=99999'开始位置的ID，开始历史记录用的
-nPageSize=20  '页显示条数'
+isDebug=false
+endId=0
+startId=99999
+nPageSize=20
+function chat_language(a)
+if language=ChrW(102)&ChrW(116) then
+a=jtToft(a)
+elseif language=ChrW(101)&ChrW(110) then
+if a=ChrW(20146)&ChrW(65292)&ChrW(24744)&ChrW(22909)&ChrW(65292)&ChrW(36825)&ChrW(37324)&ChrW(26159)&ChrW(22312)&ChrW(32447)&ChrW(23458)&ChrW(26381)&ChrW(65292)&ChrW(35831)&ChrW(38382)&ChrW(24744)&ChrW(38656)&ChrW(35201)&ChrW(21672)&ChrW(35810)&ChrW(20160)&ChrW(20040)&ChrW(38382)&ChrW(39064)&ChrW(21602)&ChrW(126) then
+a=ChrW(72)&ChrW(101)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(44)&ChrW(32)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(32)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(46)&ChrW(32)&ChrW(77)&ChrW(97)&ChrW(121)&ChrW(32)&ChrW(73)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(107)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(32)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(126)
+elseif a=ChrW(25764)&ChrW(28040)&ChrW(20449)&ChrW(24687)&ChrW(23436)&ChrW(25104) then
+a=ChrW(67)&ChrW(97)&ChrW(110)&ChrW(99)&ChrW(101)&ChrW(108)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(100)
+elseif a=ChrW(21152)&ChrW(36733)&ChrW(26356)&ChrW(22810)&ChrW(21382)&ChrW(21490)&ChrW(28040)&ChrW(24687) then
+a=ChrW(76)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(32)&ChrW(109)&ChrW(111)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(32)&ChrW(109)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)
+elseif a=ChrW(35831)&ChrW(36755)&ChrW(20837) then
+a=ChrW(69)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)
+elseif a=ChrW(21457)&ChrW(36865) then
+a=ChrW(115)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(105)&ChrW(110)&ChrW(103)
+elseif a=ChrW(25764)&ChrW(28040) then
+a=ChrW(117)&ChrW(110)&ChrW(100)&ChrW(111)
+elseif a=ChrW(32852)&ChrW(31995)&ChrW(23458)&ChrW(26381) then
+a=ChrW(67)&ChrW(85)&ChrW(83)&ChrW(84)&ChrW(79)&ChrW(77)&ChrW(69)&ChrW(82)&ChrW(32)&ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(73)&ChrW(67)&ChrW(69)
+elseif a=ChrW(23458)&ChrW(26381) then
+a=ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(105)&ChrW(99)&ChrW(101)
+elseif a=ChrW(32842)&ChrW(22825) then
+a=ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)
+end if        
+end if 
+chat_language=a
+end function
 
+if session(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)) <>ChrW(111)&ChrW(107) then
+content=replace(replace( chat_language(ChrW(20146)&ChrW(65292)&ChrW(24744)&ChrW(22909)&ChrW(65292)&ChrW(36825)&ChrW(37324)&ChrW(26159)&ChrW(22312)&ChrW(32447)&ChrW(23458)&ChrW(26381)&ChrW(65292)&ChrW(35831)&ChrW(38382)&ChrW(24744)&ChrW(38656)&ChrW(35201)&ChrW(21672)&ChrW(35810)&ChrW(20160)&ChrW(20040)&ChrW(38382)&ChrW(39064)&ChrW(21602)&ChrW(126)),ChrW(60),ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59)),ChrW(62),ChrW(38)&ChrW(103)&ChrW(116)&ChrW(59))
 
-'用户第一次登录时，客服自动给个提示'
-if session("onloadchat")<>"ok" then
-    content=replace(replace("亲，您好，这里是在线客服，请问您需要咨询什么问题呢~","<","&lt;"),">","&gt;")
-
-    '亲， 有什么可以帮助您的呢~
-    
-    rs.open "select * from " & db_PREFIX & "chat" ,conn,1,3
-    rs.addnew
-    rs("bodycontent")=content
-    rs("userid")=0
-    rs("touserid")=session("memberid")
-    rs.update:rs.close
-
-    session("onloadchat")="ok"
-    
-    userRs("chatendtime")=now()
-    userRs.update
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116) ,conn,1,3
+rs.addnew
+rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=content
+rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=0
+rs(ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=session(ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))
+rs.update:rs.close
+session(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116))=ChrW(111)&ChrW(107)
+userRs(ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101))=now()
+userRs.update
 end if
-' call echo("onloadchat",session("onloadchat"))
- 
+
 dim sType,touserid,nickname
-sType=request("type")
-webTitle="联系客服"
-nickname="客服"
-touserid=request("touserid")
-if sType="hf" then
-    webTitle="聊天"
-    userRs.close
-    userRs.open "select * from " & db_PREFIX & "member Where id=0" ,conn,1,3
-    ' call echo("id",userrs("id"))
+sType=request(ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))
+webTitle=chat_language(ChrW(32852)&ChrW(31995)&ChrW(23458)&ChrW(26381))
+nickname=chat_language(ChrW(23458)&ChrW(26381))
+touserid=request(ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))
+if sType=ChrW(104)&ChrW(102) then
+webTitle=chat_language(ChrW(32842)&ChrW(22825))
+userRs.close
+userRs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(87)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(48) ,conn,1,3
+
 end if
-if touserid<>"" then
-    rs.open"select * from ["& db_PREFIX &"member] where id="&touserid,conn,1,1
-    if not rs.eof then
-        nickname=rs("nickname")'& "(id:"& rs("id") & ")"
-    end if:rs.close
+if touserid <>"" then
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&touserid,conn,1,1
+if not rs.eof then
+nickname=rs(ChrW(110)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+end if:rs.close
 end if
- 
-'撤回20220729'
-if request("act")="revoke" then
-    rs.open "select * from " & db_PREFIX & "chat where userid="& userRs("id") &" and id="&id,conn,1,3
-    if not rs.eof then
-        rs("isdel")=1
-        rs.update
-        call die("撤消信息完成")
-    end if:rs.close
-    call die("error")
 
+if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(114)&ChrW(101)&ChrW(118)&ChrW(111)&ChrW(107)&ChrW(101) then
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,3
+if not rs.eof then
+rs(ChrW(105)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(108))=1
+rs.update
+call die( chat_language(ChrW(25764)&ChrW(28040)&ChrW(20449)&ChrW(24687)&ChrW(23436)&ChrW(25104)) )
+end if:rs.close
+call die(ChrW(101)&ChrW(114)&ChrW(114)&ChrW(111)&ChrW(114))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(110)&ChrW(101)&ChrW(119) then
 
-elseif request("act")="new" then
-    '去除删除的'
-    rss.open "select * from " & db_PREFIX & "chat where (userid="& userRs("id") &" and touserid="& touserid &") or (userid="& touserid &" and touserid="& userRs("id") &") and isdel<>1 order by id desc" ,conn,1,1
-    if not rss.eof then
-        if cstr(rss("id"))<>cstr(id) then 
-            call rw("update&Array&" & rss("id") & "&Array&")
-            if isDebug then call echo("id",rss("id"))
-            call getChatList(nPageSize,touserid,rss("id"),"down")
-            call die("")
-        end if
-        call die(rss("id"))
-    end if:rss.close
-    call die("ddd")
+rss.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& touserid &ChrW(41)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& touserid &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(41)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(108)&ChrW(60)&ChrW(62)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99) ,conn,1,1
+if not rss.eof then
+if cstr(rss(ChrW(105)&ChrW(100))) <>cstr(id) then 
+call rw(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(38)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(38) & rss(ChrW(105)&ChrW(100)) & ChrW(38)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(38))
+if isDebug then call echo(ChrW(105)&ChrW(100),rss(ChrW(105)&ChrW(100)))
+call getChatList(nPageSize,touserid,rss(ChrW(105)&ChrW(100)),ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110))
+call die("")
+end if
+call die(rss(ChrW(105)&ChrW(100)))
+end if:rss.close
+call die(ChrW(100)&ChrW(100)&ChrW(100))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(103)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(112)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116) then
+call rw(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(38)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(38))
+if isDebug then call echo(ChrW(105)&ChrW(100),rss(ChrW(105)&ChrW(100)))
+call getChatList(nPageSize,touserid,id,ChrW(117)&ChrW(112))
+call die(ChrW(38)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(38) & startId)
 
-elseif request("act")="getupchat" then
-        call rw("update&Array&")
-        if isDebug then call echo("id",rss("id"))
-        call getChatList(nPageSize,touserid,id,"up")
-        call die("&Array&" & startId)
-    
-'发送'
-elseif request("act")="send" then
-    content=replace(replace(request("content"),"<","&lt;"),">","&gt;")
-    rs.open "select * from " & db_PREFIX & "chat" ,conn,1,3
-    rs.addnew
-    rs("bodycontent")=content
-    rs("userid")=userRs("id")
-    rs("touserid")=touserid
-    rs.update:rs.close
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(115)&ChrW(101)&ChrW(110)&ChrW(100) then
+content=replace(replace(request(ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)),ChrW(60),ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59)),ChrW(62),ChrW(38)&ChrW(103)&ChrW(116)&ChrW(59))
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116) ,conn,1,3
+rs.addnew
+rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=content
+rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=userRs(ChrW(105)&ChrW(100))
+rs(ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=touserid
+rs.update:rs.close
+userRs(ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101))=now()
+userRs.update
+call die(ChrW(79)&ChrW(75))
 
-    userRs("chatendtime")=now()
-    userRs.update
-
-
-    call die("OK")
-'发送图片'
-elseif request("act")="send2" then
-    content=request("content")
-    rs.open "select * from " & db_PREFIX & "chat" ,conn,1,3
-    rs.addnew
-    rs("bodycontent")=content
-    rs("userid")=userRs("id")
-    rs("touserid")=touserid
-    rs.update:rs.close
-    
-    userRs("chatendtime")=now()
-    userRs.update
-    call die("OK")
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(115)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(50) then
+content=request(ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116) ,conn,1,3
+rs.addnew
+rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=content
+rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=userRs(ChrW(105)&ChrW(100))
+rs(ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=touserid
+rs.update:rs.close
+userRs(ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101))=now()
+userRs.update
+call die(ChrW(79)&ChrW(75))
 end if
 isMobile=false
-if instr(request.servervariables("http_user_agent"),"Mobile")>0 then
-    isMobile=true
+if instr(request.servervariables(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(116)),ChrW(77)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(101))>0 then
+isMobile=true
 end if
 %><html>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        html, body, div, span, ul, ol, li, p, label {
-    margin: 0px;
-    padding: 0px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html, body, div, span, ul, ol, li, p, label {
+margin: 0px;
+padding: 0px;
 } 
 html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-size: 13px;
-    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+width: 100%;
+height: 100%;
+overflow: hidden;
+font-size: 13px;
+font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 .hRSBCQ {
-    width: 100%;
-    height: 100%;
-    position: relative;
+width: 100%;
+height: 100%;
+position: relative;
 }
-
 .eapgeZ {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    background: rgb(252, 252, 252);
+width: 100%;
+height: 100%;
+display: flex;
+box-sizing: border-box;
+flex-direction: column;
+overflow: hidden;
+position: relative;
+background: rgb(252, 252, 252);
 }.gFEAYH {
-    width: 100%;
+width: 100%;
 }.evpQpB {
-    position: relative;
-    background: rgb(252, 252, 252);
-    flex: 1 1 auto;
-    height: 100px;
-    display: flex;
+position: relative;
+background: rgb(252, 252, 252);
+flex: 1 1 auto;
+height: 100px;
+display: flex;
 }.fJhyOQ {
-    flex: 1 1 auto;
-    width: 100px;
-    height: 100%;
+flex: 1 1 auto;
+width: 100px;
+height: 100%;
 }.dIrprp {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+position: relative;
 }.lnrcNw {
-    background: rgb(252, 252, 252);
-    flex: 1 1 auto;
-    height: 100px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+background: rgb(252, 252, 252);
+flex: 1 1 auto;
+height: 100px;
+position: relative;
+display: flex;
+flex-direction: column;
 }.gregEU {
-    width: 100%;
-    height: 100%;
-    padding: 40px 14px 14px;
-    box-sizing: border-box;
-    overflow-y: auto;
-    position: relative;
+width: 100%;
+height: 100%;
+padding: 40px 14px 14px;
+box-sizing: border-box;
+overflow-y: auto;
+position: relative;
 }.ePqcYq {
-    position: absolute;
-    top: 10px;
-    left: 0px;
-    right: 0px;
-    width: 100%;
-    height: 20px;
-    line-height: 20px;
-    text-align: center;
-    font-size: 12px;
-    color: rgb(119, 119, 119);
-    cursor: pointer;
+position: absolute;
+top: 10px;
+left: 0px;
+right: 0px;
+width: 100%;
+height: 20px;
+line-height: 20px;
+text-align: center;
+font-size: 12px;
+color: rgb(119, 119, 119);
+cursor: pointer;
 }.hBHzRk {
-    width: 100%;
-    position: relative;
+width: 100%;
+position: relative;
 }.ivRHdf {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+padding-left: 10px;
 }.dREyAr {
-    float: left;
-    text-align: left;
-    max-width: calc(100% - 50px);
+float: left;
+text-align: left;
+max-width: calc(100% - 50px);
 }.hJoKLV {
-    color: rgb(178, 178, 178);
-    font-size: 12px;
-    margin-bottom: 2px;
+color: rgb(178, 178, 178);
+font-size: 12px;
+margin-bottom: 2px;
 }.fsOkAd {
-    max-width: 100%;
-    position: relative;
-    background-color: rgb(255, 255, 255);
-    border-radius: 3px;
-    border: 1px solid rgb(240, 240, 240);
-    float: left;
+max-width: 100%;
+position: relative;
+background-color: rgb(255, 255, 255);
+border-radius: 3px;
+border: 1px solid rgb(240, 240, 240);
+float: left;
 }.hryzJB {
-    padding: 10px 15px;
-    border-radius: 3px;
-    font-size: 13px;
-    word-break: break-word;
+padding: 10px 15px;
+border-radius: 3px;
+font-size: 13px;
+word-break: break-word;
 }.fOaeDu {
-    color: rgb(29, 39, 84);
-    white-space: normal;
-    text-align: left;
+color: rgb(29, 39, 84);
+white-space: normal;
+text-align: left;
 } 
 .jIxeoH .avatar {
-    height: 40px;
-    width: 40px;
-    display: block;
-    border-radius: 50%;
+height: 40px;
+width: 40px;
+display: block;
+border-radius: 50%;
 }.kQtTCX {
-    width: 100%;
-    padding: 10px 12px;
-    display: flex;
-    min-height: 60px;
-    font-size: 14px;
-    box-sizing: border-box;
-    color: white;
-    background: rgb(0, 122, 255);
+width: 100%;
+padding: 10px 12px;
+display: flex;
+min-height: 60px;
+font-size: 14px;
+box-sizing: border-box;
+color: white;
+background: rgb(0, 122, 255);
 }.ccHekx {
-    font-size: 14px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    cursor: pointer;
-    color: white;
-    font-family: iconfont !important;
+font-size: 14px;
+font-style: normal;
+-webkit-font-smoothing: antialiased;
+cursor: pointer;
+color: white;
+font-family: iconfont !important;
 }.bjaDuv .handle > span i {
-    width: 100%;
-    height: 100%;
-    display: block;
+width: 100%;
+height: 100%;
+display: block;
 }.iconicon_voice1::before {
-    content: "";
+content: "";
 }.bjaDuv .handle > span {
-    display: block;
-    min-width: 26px;
-    height: 100%;
-    text-align: center;
+display: block;
+min-width: 26px;
+height: 100%;
+text-align: center;
 }.bjaDuv .handle {
-    display: flex;
-    cursor: pointer;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 100%;
-    margin-right: -4px;
+display: flex;
+cursor: pointer;
+-webkit-box-align: center;
+align-items: center;
+height: 100%;
+margin-right: -4px;
 }.fsOkAd {
-    max-width: 100%;
-    position: relative;
-    background-color: rgb(255, 255, 255);
-    border-radius: 3px;
-    border: 1px solid rgb(240, 240, 240);
-    float: left;
+max-width: 100%;
+position: relative;
+background-color: rgb(255, 255, 255);
+border-radius: 3px;
+border: 1px solid rgb(240, 240, 240);
+float: left;
 }.fOaeDu {
-    color: rgb(29, 39, 84);
-    white-space: normal;
-    text-align: left;
+color: rgb(29, 39, 84);
+white-space: normal;
+text-align: left;
 }.hJxiVm {
-    display: block;
-    width: 100%;
-    resize: none;
-    outline: 0px;
-    background: rgb(255, 255, 255);
-    border: none;
-    font-size: 13px;
-    padding: 0px;
-    height: 60px;
-    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+display: block;
+width: 100%;
+resize: none;
+outline: 0px;
+background: rgb(255, 255, 255);
+border: none;
+font-size: 13px;
+padding: 0px;
+height: 60px;
+font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
-
 .kPIFPx:hover {
-    color: white;
-    background: rgb(0, 122, 255);
-    opacity: 1;
+color: white;
+background: rgb(0, 122, 255);
+opacity: 1;
 } 
 .kPIFPx {
-    width: 60px;
-    height: 32px;
-    line-height: 32px;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 13px;
-    border: 0px;
-    outline: none;
-    border-radius: 3px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    opacity: 1;
-    color: white;
-    background: rgb(0, 122, 255);
+width: 60px;
+height: 32px;
+line-height: 32px;
+display: inline-block;
+vertical-align: middle;
+font-size: 13px;
+border: 0px;
+outline: none;
+border-radius: 3px;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+opacity: 1;
+color: white;
+background: rgb(0, 122, 255);
 }.icmNvQ {
-    flex: 0 0 60px;
-    width: 60px;
+flex: 0 0 60px;
+width: 60px;
 }.ivRHdf {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+padding-left: 10px;
 }.ecpYRO {
-    float: right;
-    text-align: right;
-    max-width: calc(100% - 50px);
+float: right;
+text-align: right;
+max-width: calc(100% - 50px);
 }.hJoKLV {
-    color: rgb(178, 178, 178);
-    font-size: 12px;
-    margin-bottom: 2px;
+color: rgb(178, 178, 178);
+font-size: 12px;
+margin-bottom: 2px;
 }.bPhHOP {
-    max-width: 100%;
-    position: relative;
-    background-color: rgb(0, 122, 255);
-    border-radius: 3px;
-    border: 1px solid rgb(240, 240, 240);
-    margin-left: 30px;
-    float: right;
+max-width: 100%;
+position: relative;
+background-color: rgb(0, 122, 255);
+border-radius: 3px;
+border: 1px solid rgb(240, 240, 240);
+margin-left: 30px;
+float: right;
 }.hryzJB {
-    padding: 10px 15px;
-    border-radius: 3px;
-    font-size: 13px;
-    word-break: break-word;
+padding: 10px 15px;
+border-radius: 3px;
+font-size: 13px;
+word-break: break-word;
 }.emBCwA {
-    color: white;
-    white-space: normal;
-    text-align: left;
+color: white;
+white-space: normal;
+text-align: left;
 }.dREyAr {
-    float: left;
-    text-align: left;
-    max-width: calc(100% - 50px);
+float: left;
+text-align: left;
+max-width: calc(100% - 50px);
 }
-
 @font-face {
-  font-family: "iconfont ";
-  src:url("images/font_1820517_sl5jy5g8e7.woff2") format("woff2")
+font-family: "iconfont ";
+src:url("images/font_1820517_sl5jy5g8e7.woff2") format("woff2")
 }
-
 .jcaPlb i {
-    color: rgb(102, 102, 102);
-    font-size: 24px;
+color: rgb(102, 102, 102);
+font-size: 24px;
 }
 <style>
 .bfgNmj {
-    font-size: 20px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    cursor: pointer;
-    font-family: iconfont !important;
+font-size: 20px;
+font-style: normal;
+-webkit-font-smoothing: antialiased;
+cursor: pointer;
+font-family: iconfont !important;
 }
 .layui-upload-file{
-    display:none;
+display:none;
 }
-
 #__widget_msg_container .upimg{
-    max-width:100%;
+max-width:100%;
 }
-
 </style>
-
-
 </head>
-
-<body><%'解决手机上键盘上提交报错的原因%>
-    <form action="?act=aabb" onsubmit="$('#fasong').click();return false;">
-    <div class="sc-1y975dg-0 hRSBCQ">
-        <div class="sc-hehmy0-1 eapgeZ">
-            <div class="sc-hehmy0-2 gFEAYH">
-                <div class="sc-17esfwn-0 kQtTCX">
-                    <div class="sc-17esfwn-1 jIxeoH">
-                        <div><img class="avatar" alt="#" src="images/YjrSvTxbOikeXFpUwcv2.jpg"></div>
-                    </div>
-                    <div class="sc-17esfwn-2 ohCFd">
-                        <div class="sc-17esfwn-4 bjaDuv">
-                            <div class="name" title="<%=nickname%>"  style="line-height:36px;padding-left:6px;"><%=nickname%></div>
-                            <!-- <div class="handle"><span><i class="sc-13t755u-0 ccHekx iconicon_voice1 close" size="14"></i></span></div> -->
-                        </div>
-                        <div class="sc-17esfwn-3 jNAeZG"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="sc-hehmy0-0 evpQpB">
-                <div class="sc-hehmy0-4 fJhyOQ" style="height: calc(550px);">
-                    <div class="sc-hehmy0-3 sc-hehmy0-5 dIrprp">
-                        <div class="sc-hehmy0-6 lnrcNw">
-                            <div id="__widget_msg_container" class="sc-1s63a33-2 gregEU" style="height: calc(445px);">
-                                <div class="sc-1s63a33-5 ePqcYq"><span>加载更多历史消息</span></div>
-
-                                    <%call getChatList(nPageSize,touserid,"","down")%>
-
+<body><%%>
+<form action="?act=aabb" onsubmit="$('#fasong').click();return false;">
+<div class="sc-1y975dg-0 hRSBCQ">
+<div class="sc-hehmy0-1 eapgeZ">
+<div class="sc-hehmy0-2 gFEAYH">
+<div class="sc-17esfwn-0 kQtTCX">
+<div class="sc-17esfwn-1 jIxeoH">
+<div><img class="avatar" alt="#" src="images/YjrSvTxbOikeXFpUwcv2.jpg"></div>
+</div>
+<div class="sc-17esfwn-2 ohCFd">
+<div class="sc-17esfwn-4 bjaDuv">
+<div class="name" title="<%=nickname%>"  style="line-height:36px;padding-left:6px;"><%=nickname%></div>
+<!-- <div class="handle"><span><i class="sc-13t755u-0 ccHekx iconicon_voice1 close" size="14"></i></span></div> -->
+</div>
+<div class="sc-17esfwn-3 jNAeZG"></div>
+</div>
+</div>
+</div>
+<div class="sc-hehmy0-0 evpQpB">
+<div class="sc-hehmy0-4 fJhyOQ" style="height: calc(550px);">
+<div class="sc-hehmy0-3 sc-hehmy0-5 dIrprp">
+<div class="sc-hehmy0-6 lnrcNw">
+<div id="__widget_msg_container" class="sc-1s63a33-2 gregEU" style="height: calc(445px);">
+<div class="sc-1s63a33-5 ePqcYq"><span><%=chat_language(ChrW(21152)&ChrW(36733)&ChrW(26356)&ChrW(22810)&ChrW(21382)&ChrW(21490)&ChrW(28040)&ChrW(24687))%></span></div>
+<%call getChatList(nPageSize,touserid,"",ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110))%>
 <!--                                 <div id="m26418369496" class="sc-1s63a33-4 hBHzRk">
-                                    <div class="sc-zdv82n-0 ivRHdf">
-                                        <div direction="left" class="sc-zdv82n-2 dREyAr sc-90je80-0 cCrFQF">
-                                            <div class="sc-zdv82n-3 hJoKLV">王权客服 13:26</div>
-                                            <div direction="left" class="sc-zdv82n-4 fsOkAd">
-                                                <div class="sc-zdv82n-6 hryzJB">
-                                                    <div class="sc-t9ar3v-0 fOaeDu">
-                                                        <div>亲， 有什么可以帮助您的呢~</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="sc-1s63a33-6 cVtboE"></div>
-                                </div>
-                                <div style="clear: both"></div> -->
-
-                       
-
- 
-
-
-                            </div>
-                            <div class="sc-14dqam-0 iXanps"></div>
-                        </div>
-
-                        <%if isMobile=false then%>
-
-                        <div class="sc-hehmy0-7 cpJwaQ">
-                            <div class="sc-n12jpw-0 iniXEV">
-                                
-                                <textarea id="_MEIQIA_INPUT" placeholder="请输入" class="sc-1j304be-0 hJxiVm"></textarea>
-                                
-                                <div class="sc-n12jpw-5 lksJxc" id="">
-
-                                    <div class="sc-n12jpw-7 eHDFyP" style="float:left;">
-                                       <!--  <div class="sc-kci2kp-0 lnaYRJ"><label title="表情" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_face " size="20"></i></label><label title="发送图片" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_picture " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="image/*"></span></label><label title="发送视频" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_video " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="video/mp4,video/quicktime" value=""></span></label><label title="评价" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_assess " size="20"></i></label></div> -->
-                                       <!-- <img src="images/chatico.jpg" id="abc" style="cursor:pointer;"> -->
-
-
-                                       <img src="images/qqface/chatico001.jpg" title="选择表情" id="clickqqface" style="cursor:pointer;">
-                                       <img src="images/qqface/chatico002.jpg" title="上传图片" id="layuiadmin-upload-image" style="cursor:pointer;">
-                                       <img src="images/qqface/chatico003.jpg" title="上传视频" id="layuiadmin-upload-video" style="cursor:pointer;">
-                                       <img src="images/qqface/chatico004.jpg" title="点赞" onClick="clickzan();" style="cursor:pointer;">
-
-
-                                    </div>
-
-                                    <div class="sc-n12jpw-6 icmNvQ" style="float:right">
-
-                                        <a data-cy="send-btn" class="sc-1l5n3rz-0 kPIFPx" id="fasong"><span>发送</span></a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-<%else%>
-
-<style>
-    
-.hmZYfm {
-    display: block;
-    width: 100%;
-    padding: 4px 6px;
-    outline: 0px;
-    background: rgb(243, 244, 248);
-    border: none;
-    font-size: 13px;
-    height: 32px;
-    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-}.fWcUgc a {
-    display: block;
-} 
-.efUOka {
-    width: auto;
-    height: auto;
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 14px;
-    border: 0px;
-    outline: none;
-    border-radius: 3px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    opacity: 1;
-    color: white;
-    background: rgb(0, 122, 255);
-}
-.fWcUgc {
-    flex: 0 0 60px;
-    width: 60px;
-    margin-left: 6px;
-}
-
-
-</style>
-
+<div class="sc-zdv82n-0 ivRHdf">
+<div direction="left" class="sc-zdv82n-2 dREyAr sc-90je80-0 cCrFQF">
+<div class="sc-zdv82n-3 hJoKLV">王权客服 13:26</div>
+<div direction="left" class="sc-zdv82n-4 fsOkAd">
+<div class="sc-zdv82n-6 hryzJB">
+<div class="sc-t9ar3v-0 fOaeDu">
+<div>亲， 有什么可以帮助您的呢~</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sc-1s63a33-6 cVtboE"></div>
+</div>
+<div style="clear: both"></div> -->
+</div>
+<div class="sc-14dqam-0 iXanps"></div>
+</div>
+<%if isMobile=false then%>
 <div class="sc-hehmy0-7 cpJwaQ">
-    <div class="sc-1ipoqpn-0 dJhGfp">
-
-        <div style="padding: 6px 0px;">
- <!-- <img src="images/chatico.jpg" id="layuiadmin-upload-image" style="cursor:pointer;"> -->
+<div class="sc-n12jpw-0 iniXEV">
+<textarea id="_MEIQIA_INPUT" placeholder="<%=chat_language(ChrW(35831)&ChrW(36755)&ChrW(20837))%>" class="sc-1j304be-0 hJxiVm"></textarea>
+<div class="sc-n12jpw-5 lksJxc" id="">
+<div class="sc-n12jpw-7 eHDFyP" style="float:left;">
+<!--  <div class="sc-kci2kp-0 lnaYRJ"><label title="表情" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_face " size="20"></i></label><label title="发送图片" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_picture " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="image/*"></span></label><label title="发送视频" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_video " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="video/mp4,video/quicktime" value=""></span></label><label title="评价" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_assess " size="20"></i></label></div> -->
+<!-- <img src="images/chatico.jpg" id="abc" style="cursor:pointer;"> -->
 <img src="images/qqface/chatico001.jpg" title="选择表情" id="clickqqface" style="cursor:pointer;">
 <img src="images/qqface/chatico002.jpg" title="上传图片" id="layuiadmin-upload-image" style="cursor:pointer;">
 <img src="images/qqface/chatico003.jpg" title="上传视频" id="layuiadmin-upload-video" style="cursor:pointer;">
 <img src="images/qqface/chatico004.jpg" title="点赞" onClick="clickzan();" style="cursor:pointer;">
-
-           <!--  <div class="sc-kci2kp-0 lnaYRJ"><label title="表情" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_face " size="20"></i></label><label title="发送图片" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_picture " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="image/*"></span></label><label title="发送视频" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_video " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="video/mp4,video/quicktime" value=""></span></label><label title="评价" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_assess " size="20"></i></label></div> -->
-
-
-    </div>
-
-   <div class="sc-1ipoqpn-2 kghdRQ">
-
-    <div class="sc-1ipoqpn-4 epWsqS" style="width: 78%;    float: left;"><form><input id="_MEIQIA_INPUT" placeholder="请输入" type="text" autocomplete="off" class="sc-1j304be-1 hmZYfm" value=""></form></div>
-
-
+</div>
+<div class="sc-n12jpw-6 icmNvQ" style="float:right">
+<a data-cy="send-btn" class="sc-1l5n3rz-0 kPIFPx" id="fasong"><span><%=chat_language(ChrW(21457)&ChrW(36865))%></span></a>
+</div>
+</div>
+</div>
+</div>
+<%else%>
+<style>
+.hmZYfm {
+display: block;
+width: 100%;
+padding: 4px 6px;
+outline: 0px;
+background: rgb(243, 244, 248);
+border: none;
+font-size: 13px;
+height: 32px;
+font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}.fWcUgc a {
+display: block;
+} 
+.efUOka {
+width: auto;
+height: auto;
+display: inline-block;
+vertical-align: middle;
+font-size: 14px;
+border: 0px;
+outline: none;
+border-radius: 3px;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+opacity: 1;
+color: white;
+background: rgb(0, 122, 255);
+}
+.fWcUgc {
+flex: 0 0 60px;
+width: 60px;
+margin-left: 6px;
+}
+</style>
+<div class="sc-hehmy0-7 cpJwaQ">
+<div class="sc-1ipoqpn-0 dJhGfp">
+<div style="padding: 6px 0px;">
+<!-- <img src="images/chatico.jpg" id="layuiadmin-upload-image" style="cursor:pointer;"> -->
+<img src="images/qqface/chatico001.jpg" title="选择表情" id="clickqqface" style="cursor:pointer;">
+<img src="images/qqface/chatico002.jpg" title="上传图片" id="layuiadmin-upload-image" style="cursor:pointer;">
+<img src="images/qqface/chatico003.jpg" title="上传视频" id="layuiadmin-upload-video" style="cursor:pointer;">
+<img src="images/qqface/chatico004.jpg" title="点赞" onClick="clickzan();" style="cursor:pointer;">
+<!--  <div class="sc-kci2kp-0 lnaYRJ"><label title="表情" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_face " size="20"></i></label><label title="发送图片" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_picture " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="image/*"></span></label><label title="发送视频" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_video " size="20"></i><span class="sc-kci2kp-2 WCATX"><input id="photoFile" type="file" accept="video/mp4,video/quicktime" value=""></span></label><label title="评价" class="sc-kci2kp-1 jcaPlb"><i class="sc-13t755u-0 bfgNmj iconicon_widget_assess " size="20"></i></label></div> -->
+</div>
+<div class="sc-1ipoqpn-2 kghdRQ">
+<div class="sc-1ipoqpn-4 epWsqS" style="width: 78%;    float: left;"><form><input id="_MEIQIA_INPUT" placeholder="请输入" type="text" autocomplete="off" class="sc-1j304be-1 hmZYfm" value=""></form></div>
 <div class="sc-1ipoqpn-3 fWcUgc" style="float: right;">
-
-
-    <a font-size="14px" width="auto" id="fasong" height="auto" class="sc-1l5n3rz-0 efUOka" style="line-height: 32px;">
-
-    <span >发送</span></a>
-
+<a font-size="14px" width="auto" id="fasong" height="auto" class="sc-1l5n3rz-0 efUOka" style="line-height: 32px;">
+<span ><%=chat_language(ChrW(21457)&ChrW(36865))%></span></a>
 </div></div></div></div>
-
 <%end if%>
-
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <script type="text/javascript" src="../js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-    $("#fasong").click(function(){
-        // localStorage.setItem('chatContent', '');//保存到本地内容 清空
-        var s=$("#_MEIQIA_INPUT").val()
-        // alert("s="+s)
-        if(s=="")return false;
-        $("#_MEIQIA_INPUT").val('');//清空发言内容
-
-        jQuery.ajax({
-            url: '?act=send&touserid=<%=touserid%>&type=<%=sType%>',
-            type: 'POST',
-            data: {
-                'content': s
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest)
-                console.log(textStatus)
-                console.log(errorThrown)
-            },
-            success: function(result) {                
-                // alert($("#sendhtml").html())
-                 // location.reload() 
-                 // alert(result)
-                getxx();//更新
-
-            }
-        });
-    })
-
+$("#fasong").click(function(){
+// localStorage.setItem('chatContent', '');//保存到本地内容 清空
+var s=$("#_MEIQIA_INPUT").val()
+// alert("s="+s)
+if(s=="")return false;
+$("#_MEIQIA_INPUT").val('');//清空发言内容
+jQuery.ajax({
+url: '?act=send&touserid=<%=touserid%>&type=<%=sType%>',
+type: 'POST',
+data: {
+'content': s
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {                
+// alert($("#sendhtml").html())
+// location.reload() 
+// alert(result)
+getxx();//更新
+}
+});
+})
 })
 function revoke(id,domid){    
-    jQuery("#"+domid).hide();
-
-        jQuery.ajax({
-            url: '?act=revoke&id='+id,
-            type: 'POST',
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest)
-                console.log(textStatus)
-                console.log(errorThrown)
-            },
-            success: function(result) {
-                // alert($("#sendhtml").html())
-                 // location.reload() 
-                 // alert(result)
-                // getxx();//更新
-                alert(result)
-
-            }
-        });
-
+jQuery("#"+domid).hide();
+jQuery.ajax({
+url: '?act=revoke&language=<%=language%>&id='+id,
+type: 'POST',
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {
+// alert($("#sendhtml").html())
+// location.reload() 
+// alert(result)
+// getxx();//更新
+alert(result)
+}
+});
 }
 </script>
-
-
-
 <script src="../admin/layuiadmin/layui/layui.js"></script>  
 <script>
 layui.config({
-    base: '../admin/layuiadmin/' //静态资源所在路径
+base: '../admin/layuiadmin/' //静态资源所在路径
 }).extend({
-    index: 'lib/index' //主入口模块
+index: 'lib/index' //主入口模块
 }).use(['index', 'form', 'upload', 'laydate','set','layedit'], function() {
-    var $ = layui.$,
-        form = layui.form,
-        upload = layui.upload,
-        laydate = layui.laydate;
-
-    upload.render({
-        elem: '#layuiadmin-upload-image',
-        url: '/api/upload/',
-        done: function(res) {
-            // $("#_MEIQIA_INPUT").val("<img src='"+ res.data[0].src +"'>") 
-            // alert(res.data[0].src)
-            jQuery.ajax({
-                url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
-                type: 'POST',
-                data: {
-                    'content': "<a href='"+res.data[0].src+"' target='_blank'><img src='"+ res.data[0].src +"' class='upimg'></a>"
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest)
-                    console.log(textStatus)
-                    console.log(errorThrown)
-                },
-                success: function(result) {                
-                    // alert($("#sendhtml").html())
-                     // location.reload()
-                     // alert(result)
-                     getxx();//更新
-                }
-            });
- 
-
-        }
-    });
-        upload.render({
-        elem: '#layuiadmin-upload-video',
-        url: '/api/upload/uploadvideo.asp',
-        exts: 'mp4', //只允许上传mp4文件
-        done: function(res) {
-            // $("#_MEIQIA_INPUT").val("<img src='"+ res.data[0].src +"'>") 
-            // alert(res.data[0].src)
-            jQuery.ajax({
-                url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
-                type: 'POST',
-                data: {
-                    'content': "<video controls=''  name='media' class='upimg'><source src='"+res.data[0].src+"' type='video/mp4'></video>"
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest)
-                    console.log(textStatus)
-                    console.log(errorThrown)
-                },
-                success: function(result) {                
-                    // alert($("#sendhtml").html())
-                     // location.reload()
-                     // alert(result)
-                     getxx();//更新
-                }
-            });
- 
-
-        }
-    });
-    
-
-})
-
-function clickzan(){
-    jQuery.ajax({
-        url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
-        type: 'POST',
-        data: {
-            // 'content': "<img src='/kf/images/qqface/999.png' title='赞'>"
-            'content': "[em_999]"
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest)
-            console.log(textStatus)
-            console.log(errorThrown)
-        },
-        success: function(result) {                
-            // alert($("#sendhtml").html())
-             // location.reload()
-             // alert(result)
-             getxx();//更新
-        }
-    });
- 
+var $ = layui.$,
+form = layui.form,
+upload = layui.upload,
+laydate = layui.laydate;
+upload.render({
+elem: '#layuiadmin-upload-image',
+url: '/api/upload/',
+done: function(res) {
+// $("#_MEIQIA_INPUT").val("<img src='"+ res.data[0].src +"'>") 
+// alert(res.data[0].src)
+jQuery.ajax({
+url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
+type: 'POST',
+data: {
+'content': "<a href='"+res.data[0].src+"' target='_blank'><img src='"+ res.data[0].src +"' class='upimg'></a>"
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {                
+// alert($("#sendhtml").html())
+// location.reload()
+// alert(result)
+getxx();//更新
 }
-
-  var endId=<%=endId%>
-  var startId=<%=startId%>
-  // alert(endId)
-   function getxx() {
-        $.get("?act=new&id="+endId+"&type=<%=sType%>&touserid=<%=touserid%>", function (data, status) {            
-            if(data.substr(0,6)=="update"){
-                var splxx=data.split("&Array&")
-                // alert("更新"+splxx[1])
-                endId=parseInt(splxx[1])
-                // localStorage.setItem('chatContent', $("#_MEIQIA_INPUT").val());//保存到本地内容
-                // window.location.reload();
-
-                $("#__widget_msg_container").append(splxx[2])
-                $('#__widget_msg_container').animate({ scrollTop:99999 }, 10);  //秒显示到最后20220723
-            }
-        });
-    } 
-    setInterval(getxx, 5000);
-
-    $('#__widget_msg_container').animate({ scrollTop:99999 }, 10);  //秒显示到最后20220723
-
-     // $('#__widget_msg_container').animate({ scrollTop: $(document).height()+99999 }, 10);  //秒显示到最后20220723
-
-     // $("#_MEIQIA_INPUT").val(localStorage.getItem('chatContent'));//恢复聊天内容
-
-    //  $("#xx").show();
-    // $("#xx").text("33");
+});
+}
+});
+upload.render({
+elem: '#layuiadmin-upload-video',
+url: '/api/upload/uploadvideo.asp',
+exts: 'mp4', //只允许上传mp4文件
+done: function(res) {
+// $("#_MEIQIA_INPUT").val("<img src='"+ res.data[0].src +"'>") 
+// alert(res.data[0].src)
+jQuery.ajax({
+url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
+type: 'POST',
+data: {
+'content': "<video controls=''  name='media' class='upimg'><source src='"+res.data[0].src+"' type='video/mp4'></video>"
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {                
+// alert($("#sendhtml").html())
+// location.reload()
+// alert(result)
+getxx();//更新
+}
+});
+}
+});
+})
+function clickzan(){
+jQuery.ajax({
+url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
+type: 'POST',
+data: {
+// 'content': "<img src='/kf/images/qqface/999.png' title='赞'>"
+'content': "[em_999]"
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {                
+// alert($("#sendhtml").html())
+// location.reload()
+// alert(result)
+getxx();//更新
+}
+});
+}
+var endId=<%=endId%>
+var startId=<%=startId%>
+// alert(endId)
+function getxx() {
+$.get("?act=new&id="+endId+"&type=<%=sType%>&touserid=<%=touserid%>", function (data, status) {            
+if(data.substr(0,6)=="update"){
+var splxx=data.split("&Array&")
+// alert("更新"+splxx[1])
+endId=parseInt(splxx[1])
+// localStorage.setItem('chatContent', $("#_MEIQIA_INPUT").val());//保存到本地内容
+// window.location.reload();
+$("#__widget_msg_container").append(splxx[2])
+$('#__widget_msg_container').animate({ scrollTop:99999 }, 10);  //秒显示到最后20220723
+}
+});
+} 
+setInterval(getxx, 5000);
+$('#__widget_msg_container').animate({ scrollTop:99999 }, 10);  //秒显示到最后20220723
+// $('#__widget_msg_container').animate({ scrollTop: $(document).height()+99999 }, 10);  //秒显示到最后20220723
+// $("#_MEIQIA_INPUT").val(localStorage.getItem('chatContent'));//恢复聊天内容
+//  $("#xx").show();
+// $("#xx").text("33");
 $("div[class='sc-1s63a33-5 ePqcYq'").click(function(){
-    
-        $.get("?act=getupchat&id="+startId+"&type=<%=sType%>&touserid=<%=touserid%>", function (data, status) {            
-            if(data.substr(0,6)=="update"){
-                var splxx=data.split("&Array&")
-                // alert("更新"+splxx[1])
-                var n=parseInt(splxx[2])
-                if(n<startId){
-                    startId =n
-                    // localStorage.setItem('chatContent', $("#_MEIQIA_INPUT").val());//保存到本地内容
-                    // window.location.reload();
-
-                    $("#__widget_msg_container").prepend(splxx[1]);//加内容在内容头部
-                    // $('#__widget_msg_container').animate({ scrollTop:0 }, 10);  //秒显示到最后20220723
-                }else{
-                    $("div[class='sc-1s63a33-5 ePqcYq'").hide();//加载历史记录在最后了，隐藏按钮功能
-                }
-            }
-        });
-
-    // alert("加载更多")
-
-
+$.get("?act=getupchat&id="+startId+"&type=<%=sType%>&touserid=<%=touserid%>", function (data, status) {            
+if(data.substr(0,6)=="update"){
+var splxx=data.split("&Array&")
+// alert("更新"+splxx[1])
+var n=parseInt(splxx[2])
+if(n<startId){
+startId =n
+// localStorage.setItem('chatContent', $("#_MEIQIA_INPUT").val());//保存到本地内容
+// window.location.reload();
+$("#__widget_msg_container").prepend(splxx[1]);//加内容在内容头部
+// $('#__widget_msg_container').animate({ scrollTop:0 }, 10);  //秒显示到最后20220723
+}else{
+$("div[class='sc-1s63a33-5 ePqcYq'").hide();//加载历史记录在最后了，隐藏按钮功能
+}
+}
+});
+// alert("加载更多")
 })
 </script>
 </form>
-
-
 </body>
-
 </html>
-
-
-
 <%
-'获得聊天指定页内容202207424'
-function getChatList(nTop,touserid,focusid,sType)
-dim sql,x,maxpage,iPageSize,iCount,id,nStartId
-'为空则自己寻找'
-if focusid="" then
-    focusid=99999
-    sql="select top "& nTop &" * from " & db_PREFIX & "chat where (userid="& userRs("id") &" and touserid="& touserid &") or (userid="& touserid &" and touserid="& userRs("id") &") and isdel<>1 order by id desc"
-    rs.open sql,conn,1,1
-    if not rs.eof then
-        rs.movelast
-        focusid=rs("id")
-    end if:rs.close
 
-    if isDebug then call echo("focusid",focusid)
+function getChatList(a,b,c,d)
+dim e,f,g,h,i,j,k
+
+if c="" then
+c=99999
+e=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(32)& a &ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(41)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(41)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(108)&ChrW(60)&ChrW(62)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)
+rs.open e,conn,1,1
+if not rs.eof then
+rs.movelast
+c=rs(ChrW(105)&ChrW(100))
+end if:rs.close
+if isDebug then call echo(ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100),c)
+end if
+if d=ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110) then
+e=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(40)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(41)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(41)&ChrW(41)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(62)&ChrW(61)& c &ChrW(32)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(108)&ChrW(60)&ChrW(62)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99)
+elseif d=ChrW(117)&ChrW(112) then 
+k=0
+e=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(32)& a &ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(40)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(41)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(41)&ChrW(41)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(60)& c &ChrW(32)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(108)&ChrW(60)&ChrW(62)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)
+rs.open e,conn,1,1
+if not rs.eof then
+rs.movelast
+k=rs(ChrW(105)&ChrW(100)) 
+end if:rs.close  
+if isDebug then call echo(ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100),c)
+if isDebug then call echo(ChrW(110)&ChrW(83)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(73)&ChrW(100),k)
+e=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(40)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(41)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(40)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& b &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(61)& userRs(ChrW(105)&ChrW(100)) &ChrW(41)&ChrW(41)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(62)& k &ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(60)& c &ChrW(32)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(108)&ChrW(60)&ChrW(62)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99)
 end if
 
-if sType="down" then
-    sql="select * from " & db_PREFIX & "chat where ((userid="& userRs("id") &" and touserid="& touserid &") or (userid="& touserid &" and touserid="& userRs("id") &")) and id>="& focusid &"  and isdel<>1 order by id asc"
-elseif sType="up" then 
-    nStartId=0
-    sql="select top "& nTop &" * from " & db_PREFIX & "chat where ((userid="& userRs("id") &" and touserid="& touserid &") or (userid="& touserid &" and touserid="& userRs("id") &")) and id<"& focusid &"  and isdel<>1 order by id desc"
-    rs.open sql,conn,1,1
-    if not rs.eof then
-        rs.movelast
-        nStartId=rs("id") 
-    end if:rs.close  
-    if isDebug then call echo("focusid",focusid)
-    if isDebug then call echo("nStartId",nStartId)
-
-    sql="select * from " & db_PREFIX & "chat where ((userid="& userRs("id") &" and touserid="& touserid &") or (userid="& touserid &" and touserid="& userRs("id") &")) and id>"& nStartId &" and id<"& focusid &"  and isdel<>1 order by id asc"
-end if
-' call echo("sql",sql)
-rs.open sql,conn,1,1
+rs.open e,conn,1,1
 while not rs.eof
-    if rs("id")>endId then endId=rs("id")
-    if rs("id")<startId then startId=rs("id")
-    if isDebug then call echo("endId",endId)
-    if rs("userid")=userRs("id") then'我
+if rs(ChrW(105)&ChrW(100))>endId then endId=rs(ChrW(105)&ChrW(100))
+if rs(ChrW(105)&ChrW(100))<startId then startId=rs(ChrW(105)&ChrW(100))
+if isDebug then call echo(ChrW(101)&ChrW(110)&ChrW(100)&ChrW(73)&ChrW(100),endId)
+if rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))=userRs(ChrW(105)&ChrW(100)) then
 %> 
-                                    <div id="chatid<%=rs("id")%>" class="sc-1s63a33-4 hBHzRk">
-                                        <div class="sc-zdv82n-0 ivRHdf">
-                                            <div direction="right" class="sc-zdv82n-2 ecpYRO sc-90je80-0 cCrFQF">
-                                                <div class="sc-zdv82n-3 hJoKLV"><%
+<div id="chatid<%=rs(ChrW(105)&ChrW(100))%>" class="sc-1s63a33-4 hBHzRk">
+<div class="sc-zdv82n-0 ivRHdf">
+<div direction="right" class="sc-zdv82n-2 ecpYRO sc-90je80-0 cCrFQF">
+<div class="sc-zdv82n-3 hJoKLV"><%
+call rw(format_Time(rs(ChrW(99)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)),17))
 
-                                                call rw(format_Time(rs("createTime"),17))
-                                                ' call rw(" - ID"&rs("id"))
-                                                call rw(showRevokeButton(rs,"chatid"&rs("id")))
-                                                %>
-                                                </div>
-                                                <div direction="right" class="sc-zdv82n-4 bPhHOP">
-                                                    <div class="sc-zdv82n-6 hryzJB">
-                                                        <div class="sc-t9ar3v-0 emBCwA">
-                                                            <div><%=handleBodyQQFace(rs("bodycontent"))%></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="sc-1s63a33-6 cVtboE"></div>
-                                    </div>
-                                    <div style="clear: both"></div> 
-
-
+call rw(showRevokeButton(rs,ChrW(99)&ChrW(104)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(100)&rs(ChrW(105)&ChrW(100))))
+%>
+</div>
+<div direction="right" class="sc-zdv82n-4 bPhHOP">
+<div class="sc-zdv82n-6 hryzJB">
+<div class="sc-t9ar3v-0 emBCwA">
+<div><%=handleBodyQQFace(rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)))%></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sc-1s63a33-6 cVtboE"></div>
+</div>
+<div style="clear: both"></div> 
 <%
-'他'
+
 else
 %>
-
-                                <div id="chatid<%=rs("id")%>" class="sc-1s63a33-4 hBHzRk">
-                                    <div class="sc-zdv82n-0 ivRHdf">
-                                        <div direction="left" class="sc-zdv82n-2 dREyAr sc-90je80-0 cCrFQF">
-                                            <div class="sc-zdv82n-3 hJoKLV"><%=nickname%><%
-                                            call rw(format_Time(rs("createTime"),17))
-
-                                            ' call rw(" - ID"&rs("id"))
-                                            ' call rw(showRevokeButton(rs,"chatid"&rs("id")))
+<div id="chatid<%=rs(ChrW(105)&ChrW(100))%>" class="sc-1s63a33-4 hBHzRk">
+<div class="sc-zdv82n-0 ivRHdf">
+<div direction="left" class="sc-zdv82n-2 dREyAr sc-90je80-0 cCrFQF">
+<div class="sc-zdv82n-3 hJoKLV"><%=nickname%><%
+call rw(format_Time(rs(ChrW(99)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)),17))
 
 
-                                        %></div>
-                                            <div direction="left" class="sc-zdv82n-4 fsOkAd">
-                                                <div class="sc-zdv82n-6 hryzJB">
-                                                    <div class="sc-t9ar3v-0 fOaeDu">
-                                                        <div><%=handleBodyQQFace(rs("bodycontent"))%></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="sc-1s63a33-6 cVtboE"></div>
-                                </div>
-                                <div style="clear: both"></div>
+%></div>
+<div direction="left" class="sc-zdv82n-4 fsOkAd">
+<div class="sc-zdv82n-6 hryzJB">
+<div class="sc-t9ar3v-0 fOaeDu">
+<div><%=handleBodyQQFace(rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)))%></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sc-1s63a33-6 cVtboE"></div>
+</div>
+<div style="clear: both"></div>
 <%end if
-
 rs.movenext:wend:rs.close
-
 end function
 
-'显示撤消按钮菜单20220729'
-function showRevokeButton(rs,domid)
-    if userRs("id")=rs("userid") then
-        showRevokeButton="<a href=""javascript:revoke("& rs("id") &",'"& domid &"')"">撤消</a>"
-    else
-
-        showRevokeButton=" - " & userRs("id")& "," &rs("userid")
-    end if
-
+function showRevokeButton(a,b)
+if userRs(ChrW(105)&ChrW(100))=a(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)) then
+showRevokeButton=ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(34)&ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(111)&ChrW(107)&ChrW(101)&ChrW(40)& a(ChrW(105)&ChrW(100)) &ChrW(44)&ChrW(39)& b &ChrW(39)&ChrW(41)&ChrW(34)&ChrW(62)& chat_language(ChrW(25764)&ChrW(28040)) &ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)
+else
+showRevokeButton=ChrW(32)&ChrW(45)&ChrW(32) & userRs(ChrW(105)&ChrW(100))& ChrW(44) &a(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100))
+end if
 end function
-
-
 %>
-
-
-
 <style>
 .comment{width:680px; margin:20px auto; position:relative; background:#fff; padding:20px 50px 50px; border:1px solid #DDD; border-radius:5px;}
 .comment h3{height:28px; line-height:28px}
 .com_form{width:100%; position:relative}
 .input{width:99%; height:60px; border:1px solid #ccc}
 .com_form p{height:28px; line-height:28px; position:relative; margin-top:10px;}
- 
 .qqFace{margin-top:4px;background:#fff;padding:2px;border:1px #dfe6f6 solid;}
 .qqFace table td{padding:0px;}
 .qqFace table td img{cursor:pointer;border:1px #fff solid;}
 .qqFace table td img:hover{border:1px #0066cc solid;}
 #show{width:770px; margin:20px auto; background:#fff; padding:5px; border:1px solid #DDD; vertical-align:top;}
-
 .sub_btn {
-    position:absolute; right:0px; top:0;
-    display: inline-block;
-    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
-    *display: inline;
-    vertical-align: baseline;
-    margin: 0 2px;
-    outline: none;
-    cursor: pointer;
-    text-align: center;
-    font: 14px/100% Arial, Helvetica, sans-serif;
-    padding: .5em 2em .55em;
-    text-shadow: 0 1px 1px rgba(0,0,0,.6);
-    -webkit-border-radius: 3px; 
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    color: #e8f0de;
-    border: solid 1px #538312;
-    background: #64991e;
-    background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
-    background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+position:absolute; right:0px; top:0;
+display: inline-block;
+zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+*display: inline;
+vertical-align: baseline;
+margin: 0 2px;
+outline: none;
+cursor: pointer;
+text-align: center;
+font: 14px/100% Arial, Helvetica, sans-serif;
+padding: .5em 2em .55em;
+text-shadow: 0 1px 1px rgba(0,0,0,.6);
+-webkit-border-radius: 3px; 
+-moz-border-radius: 3px;
+border-radius: 3px;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+box-shadow: 0 1px 2px rgba(0,0,0,.2);
+color: #e8f0de;
+border: solid 1px #538312;
+background: #64991e;
+background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
+filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
 }
 .sub_btn:hover {
-    background: #538018;
-    background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
-    background: -moz-linear-gradient(top,  #6b9d28,  #436b0c);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+background: #538018;
+background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+background: -moz-linear-gradient(top,  #6b9d28,  #436b0c);
+filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
 }
 #facebox{bottom: 32px;top:0px}
 </style> 
 <script type="text/javascript" src="../js/jquery.qqFace.js?v6"></script>
 <script type="text/javascript">
 $(function(){
-    $('#clickqqface').qqFace({
-        id : 'facebox', 
-        assign:'_MEIQIA_INPUT', 
-        path:'images/qqface/' //表情存放的路径
-    });
-    $(".sub_btn").click(function(){
-        var str = $("#saytext").val(); 
-        $("#show").html(replace_em(str));
-    });
-
-    $('#clickqqface').click(function(){ 
-        $("#facebox").css("bottom","30px").css("top","auto").css("height","240px");
-    })
+$('#clickqqface').qqFace({
+id : 'facebox', 
+assign:'_MEIQIA_INPUT', 
+path:'images/qqface/' //表情存放的路径
+});
+$(".sub_btn").click(function(){
+var str = $("#saytext").val(); 
+$("#show").html(replace_em(str));
+});
+$('#clickqqface').click(function(){ 
+$("#facebox").css("bottom","30px").css("top","auto").css("height","240px");
+})
 });
 //查看结果
 function replace_em(str){
-    str = str.replace(/\</g,'&lt;');
-    str = str.replace(/\>/g,'&gt;');
-    str = str.replace(/\n/g,'<br/>');
-    str = str.replace(/\[em_([0-9]*)\]/g,'<img src="images/qqface//$1.gif" border="0" />');
-    return str;
+str = str.replace(/\</g,'&lt;');
+str = str.replace(/\>/g,'&gt;');
+str = str.replace(/\n/g,'<br/>');
+str = str.replace(/\[em_([0-9]*)\]/g,'<img src="images/qqface//$1.gif" border="0" />');
+return str;
 }
 </script>
-
-
-
 <script>
 //获得粘贴板内容
-    document.addEventListener('paste', function (event) {  
-        uploadclipboardDataImage(event);
-    })
-
-    // let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
-
-    //上传粘贴板里的图片
-    function uploadclipboardDataImage(event){
-        console.log("粘贴内容22")
-        if (!event || !event.clipboardData) return;
-        let pText = event.clipboardData.getData('text/plain');
-        if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
-            // showCVText(pText);
-        } else if (event.clipboardData.items) {//没有文本内容，判断这个数组，文件可能在这个数组里
-            let blob = null, items = event.clipboardData.items;
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].kind === 'file') {//类型 是 文件
-                    blob = items[i].getAsFile();
-                    if (items[i].type.indexOf("image") !== -1) {//文件类型是图像
-                        showImage(blob);
-                    } else if (items[i].type.indexOf("text") !== -1) {//文件类型是文本
-                        // showText(blob);
-                    }
-                } 
-            }
-        } else {
-            alert("粘了个寂寞");
-        }
-    }
-
-
- 
-    function showCVText(text) {
-        document.getElementById("previewCVText").value = text;
-    }
- 
- 
-    function showText(blob) {
-        getContext(blob).then(res => {
-            res = res.substring(res.indexOf('base64,') + 7);//去掉头"data:text/plain;base64,"
-            res = window.atob(res);//base64解码
-            document.getElementById("previewText").value = res;
-        })
-    }
- 
-    function showImage(blob) {
-        getContext(blob).then(res => { //图片数据能直接被img识别
-            // document.getElementById("previewImage").src = res; 
-            jQuery.ajax({
-                url: '/api/upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
-                type: 'POST',
-                dataType: "json",
-                data: {
-                    'content': res
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest)
-                    console.log(textStatus)
-                    console.log(errorThrown)
-                },
-                success: function(data) { 
-                    // var data=jQuery.parseJSON(result); 
-                    // alert("aa")
-                    switch (data.status) {
-                        case "y": 
-                            // alert(data.info)
-                            sendClipboardImg("/"+data.img)
-                            break;
-                        case "n": 
-                            break;
-                    }
-                }
-            });
-
-
-        })
-    }
-
-    function sendClipboardImg(imgsrc){
-            jQuery.ajax({
-                url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
-                type: 'POST',
-                data: {
-                    'content': "<a href='"+imgsrc+"' target='_blank'><img src='"+ imgsrc +"' class='upimg'></a>"
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest)
-                    console.log(textStatus)
-                    console.log(errorThrown)
-                },
-                success: function(result) {                
-                    // alert($("#sendhtml").html())
-                     // location.reload()
-                     // alert(result)
-                     getxx();//更新
-                }
-            });
-    }
- 
-    /**
-     * 把字节转为web识别的base64格式数据
-     * @param blob
-     * @returns {Promise<unknown>}
-     */
-    function getContext(blob) {
-        return new Promise((resolve) => {
-            if (blob == null) resolve();
-            let reader = new FileReader();
-            reader.onload = function (event) {
-                console.log(event)
-                resolve(event.target.result);
-            }
-            reader.readAsDataURL(blob);
-        });
-    }
- 
+document.addEventListener('paste', function (event) {  
+uploadclipboardDataImage(event);
+})
+// let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
+//上传粘贴板里的图片
+function uploadclipboardDataImage(event){
+console.log("粘贴内容22")
+if (!event || !event.clipboardData) return;
+let pText = event.clipboardData.getData('text/plain');
+if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
+// showCVText(pText);
+} else if (event.clipboardData.items) {//没有文本内容，判断这个数组，文件可能在这个数组里
+let blob = null, items = event.clipboardData.items;
+for (let i = 0; i < items.length; i++) {
+if (items[i].kind === 'file') {//类型 是 文件
+blob = items[i].getAsFile();
+if (items[i].type.indexOf("image") !== -1) {//文件类型是图像
+showImage(blob);
+} else if (items[i].type.indexOf("text") !== -1) {//文件类型是文本
+// showText(blob);
+}
+} 
+}
+} else {
+alert("粘了个寂寞");
+}
+}
+function showCVText(text) {
+document.getElementById("previewCVText").value = text;
+}
+function showText(blob) {
+getContext(blob).then(res => {
+res = res.substring(res.indexOf('base64,') + 7);//去掉头"data:text/plain;base64,"
+res = window.atob(res);//base64解码
+document.getElementById("previewText").value = res;
+})
+}
+function showImage(blob) {
+getContext(blob).then(res => { //图片数据能直接被img识别
+// document.getElementById("previewImage").src = res; 
+jQuery.ajax({
+url: '/api/upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
+type: 'POST',
+dataType: "json",
+data: {
+'content': res
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(data) { 
+// var data=jQuery.parseJSON(result); 
+// alert("aa")
+switch (data.status) {
+case "y": 
+// alert(data.info)
+sendClipboardImg("/"+data.img)
+break;
+case "n": 
+break;
+}
+}
+});
+})
+}
+function sendClipboardImg(imgsrc){
+jQuery.ajax({
+url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
+type: 'POST',
+data: {
+'content': "<a href='"+imgsrc+"' target='_blank'><img src='"+ imgsrc +"' class='upimg'></a>"
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {                
+// alert($("#sendhtml").html())
+// location.reload()
+// alert(result)
+getxx();//更新
+}
+});
+}
+/**
+* 把字节转为web识别的base64格式数据
+* @param blob
+* @returns {Promise<unknown>}
+*/
+function getContext(blob) {
+return new Promise((resolve) => {
+if (blob == null) resolve();
+let reader = new FileReader();
+reader.onload = function (event) {
+console.log(event)
+resolve(event.target.result);
+}
+reader.readAsDataURL(blob);
+});
+}
 </script>
-
-
-
-
 <script>
-    //拖拽上传图片
-    // var dp = document.body;
-    var dp = document;//这样区域会更大些20230920
-    dp.addEventListener('dragover', function(e) {
-        e.stopPropagation();
-        //阻止浏览器默认打开文件的操作
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'copy';
-    });
-    
-    //单图上传
-    // dp.addEventListener("drop", function(e) {
-    //     e.stopPropagation();
-    //     //阻止浏览器默认打开文件的操作
-    //     e.preventDefault();
-    //     var files = e.dataTransfer.files;
-    //     var file = files[0];
-    //     var formData = new FormData();
-    //     formData.append("file", file);
-    //     $.ajax({
-    //         type: 'post',
-    //         url: '/api/upload/',
-    //         data: formData,
-    //         contentType: false, //必须  禁止jQuery设置Content-Type请求头
-    //         processData: false, //必须  禁止jQuery处理发送的数据
-    //         dataType: "json",
-    //         success: function(res){
-    //             if(res.success == 1){
-    //             }
-    //         },
-    //     });
-    // });
-
-    //多图上传
-    dp.addEventListener("drop", function(e) {
-        e.stopPropagation();
-        //阻止浏览器默认打开文件的操作
-        e.preventDefault();
-        var files = e.dataTransfer.files;
-        var formData = new FormData();
-        for(var i =0; i<files.length; i++){
-            // console.log(i,files[i],files[i].name)
-            var fileName=files[i].name;
-            //获取最后一个.的位置
-            var index= fileName.lastIndexOf(".");
-            //获取后缀
-            var ext = fileName.substring(index+1);  
-            if(isAssetTypeAnImage(ext) || isAssetTypeAnVideo(ext)){
-                formData.append("file"+i, files[i]); 
-            }
-        } 
-        $.ajax({
-            type: 'post',
-            url: '/api/upload/',
-            data: formData,
-            contentType: false, //必须  禁止jQuery设置Content-Type请求头
-            processData: false, //必须  禁止jQuery处理发送的数据
-            dataType: "json",
-            success: function(res){
-                console.log("res.data",res.data,res.data.length);
-                for(var i=0;i<res.data.length;i++){
-                    var img=res.data[i].src;
-                    console.log(i,img);
-
-                    //获取最后一个.的位置
-                    var index= img.lastIndexOf(".");
-                    //获取后缀
-                    var ext = img.substring(index+1);  
-                    if(isAssetTypeAnVideo(ext)){
-                        var datacontent="<video controls=''  name='media' class='upimg'><source src='"+img+"' type='video/mp4'></video>"
-                    }else{
-                        var datacontent="<a href='"+img+"' target='_blank'><img src='"+ img +"' class='upimg'></a>"
-                    }
-
-
-                    jQuery.ajax({
-                        url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
-                        type: 'POST',
-                        data: {
-                            'content': datacontent
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            console.log(XMLHttpRequest)
-                            console.log(textStatus)
-                            console.log(errorThrown)
-                        },
-                        success: function(result) {                
-                            // alert($("#sendhtml").html())
-                             // location.reload()
-                             // alert(result)
-                             getxx();//更新
-                        }
-                    });
-                    
-
-
-                }
-            },
-        });
-    });
-    //判断文件后缀是否为图片类型
-    function isAssetTypeAnImage(ext) {
-     return ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp',  'svg'].indexOf(ext.toLowerCase()) !== -1;
-    }
-    //判断文件后缀是否为视频类型
-    function isAssetTypeAnVideo(ext) {
-     return ['mp4'].indexOf(ext.toLowerCase()) !== -1;
-    }
-
- 
+//拖拽上传图片
+// var dp = document.body;
+var dp = document;//这样区域会更大些20230920
+dp.addEventListener('dragover', function(e) {
+e.stopPropagation();
+//阻止浏览器默认打开文件的操作
+e.preventDefault();
+e.dataTransfer.dropEffect = 'copy';
+});
+//单图上传
+// dp.addEventListener("drop", function(e) {
+//     e.stopPropagation();
+//     //阻止浏览器默认打开文件的操作
+//     e.preventDefault();
+//     var files = e.dataTransfer.files;
+//     var file = files[0];
+//     var formData = new FormData();
+//     formData.append("file", file);
+//     $.ajax({
+//         type: 'post',
+//         url: '/api/upload/',
+//         data: formData,
+//         contentType: false, //必须  禁止jQuery设置Content-Type请求头
+//         processData: false, //必须  禁止jQuery处理发送的数据
+//         dataType: "json",
+//         success: function(res){
+//             if(res.success == 1){
+//             }
+//         },
+//     });
+// });
+//多图上传
+dp.addEventListener("drop", function(e) {
+e.stopPropagation();
+//阻止浏览器默认打开文件的操作
+e.preventDefault();
+var files = e.dataTransfer.files;
+var formData = new FormData();
+for(var i =0; i<files.length; i++){
+// console.log(i,files[i],files[i].name)
+var fileName=files[i].name;
+//获取最后一个.的位置
+var index= fileName.lastIndexOf(".");
+//获取后缀
+var ext = fileName.substring(index+1);  
+if(isAssetTypeAnImage(ext) || isAssetTypeAnVideo(ext)){
+formData.append("file"+i, files[i]); 
+}
+} 
+$.ajax({
+type: 'post',
+url: '/api/upload/',
+data: formData,
+contentType: false, //必须  禁止jQuery设置Content-Type请求头
+processData: false, //必须  禁止jQuery处理发送的数据
+dataType: "json",
+success: function(res){
+console.log("res.data",res.data,res.data.length);
+for(var i=0;i<res.data.length;i++){
+var img=res.data[i].src;
+console.log(i,img);
+//获取最后一个.的位置
+var index= img.lastIndexOf(".");
+//获取后缀
+var ext = img.substring(index+1);  
+if(isAssetTypeAnVideo(ext)){
+var datacontent="<video controls=''  name='media' class='upimg'><source src='"+img+"' type='video/mp4'></video>"
+}else{
+var datacontent="<a href='"+img+"' target='_blank'><img src='"+ img +"' class='upimg'></a>"
+}
+jQuery.ajax({
+url: '?act=send2&touserid=<%=touserid%>&type=<%=sType%>',//要加个type以判断是否为客服
+type: 'POST',
+data: {
+'content': datacontent
+},
+error: function(XMLHttpRequest, textStatus, errorThrown) {
+console.log(XMLHttpRequest)
+console.log(textStatus)
+console.log(errorThrown)
+},
+success: function(result) {                
+// alert($("#sendhtml").html())
+// location.reload()
+// alert(result)
+getxx();//更新
+}
+});
+}
+},
+});
+});
+//判断文件后缀是否为图片类型
+function isAssetTypeAnImage(ext) {
+return ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp',  'svg'].indexOf(ext.toLowerCase()) !== -1;
+}
+//判断文件后缀是否为视频类型
+function isAssetTypeAnVideo(ext) {
+return ['mp4'].indexOf(ext.toLowerCase()) !== -1;
+}
 </script>

@@ -1,0 +1,41 @@
+'修改字段值20240718' 20250922
+function editFieldValue(id,fieldName,fieldValue)  
+    if checkAdminRule("编辑" & winTitle)=false then 
+        call addSystemLog(tableName,"编辑失败(没有【编辑"&winTitle&"】权限)，字段("& fieldName &")，ID("&id&")")
+        call die("{""info"": ""编辑失败，没有【编辑"&winTitle&"】权限"",""status"": ""n""}")
+    end if
+
+    if fieldName="" then
+        call die("{""info"": ""字段名为空"",""status"": ""n""}")
+    end if
+    'ID判断'
+    if id="" then
+        call die("{""info"": ""ID为空"",""status"": ""n""}")
+    end if
+    '判断是否可修改的字段'
+    if instr("|title|nickname|sex|isthrough|", "|"& lcase(fieldName) &"|")=false then  
+        call addSystemLog(tableName,"编辑失败(对应字段不可编辑)，字段("& fieldName &")，ID("&id&")")
+        call die("{""info"": ""编辑失败，对应字段不可编辑"",""status"": ""n""}")
+    end if
+ 
+    if thisDatabaseType="mysql" then
+        fieldType=getMysqlFieldAlt_conn(db_PREFIX & tableName & "", fieldName,conn) '用这种20250821'
+    else
+        fieldType=getFieldAlt_conn(db_PREFIX & tableName & "", fieldName,conn) '用这种20250821'
+    end if
+
+    if fieldType="VarChar" or fieldType="Text" or fieldType="DateTime" then
+        addsql=getTableFieldFuHao(fieldName)&"='"& replace(fieldValue,"'","''") &"'"
+    else
+        addsql=getTableFieldFuHao(fieldName)&"="& fieldValue &""          '字段加上[]类型有些字段名是内部用的，如money，不加会报错'
+    end if
+    '字段类型为空，则不处理' 
+    if fieldType="" then                
+        call addSystemLog(tableName,"编辑失败(字段类型为空)，字段("& fieldName &")，ID("&id&")")
+        call die("{""info"": ""字段类型为空"",""status"": ""n""}")
+    end if 
+
+    conn.execute"update "&thisAddPrefix(tableName)&" set  "& addsql &" where id="&id
+    call addSystemLog(tableName,"编辑成功，字段("& fieldName &")，ID("&id&")")
+    call die("{""info"": ""编辑成功"",""status"": ""y""}")
+end function

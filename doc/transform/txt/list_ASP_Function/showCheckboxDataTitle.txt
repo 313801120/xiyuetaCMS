@@ -1,0 +1,15 @@
+'显示复选项里对应的标题值，如 中文_cn-英语_en  en' 202251019
+function showCheckboxDataTitle(cList,sVal)
+	dim splstr,splxx,s,c
+	splstr=split(cList,"-")
+	for each s in splstr
+		if instr(s,"_")>0 then
+			splxx=split(s,"_")
+			if instr("|"&sVal&"|","|"&splxx(1)&"|")>0 then
+				if c<>"" then c=c&" &nbsp; "
+				c=c & splxx(0)
+			end if
+		end if
+	next
+	showCheckboxDataTitle=c
+end function

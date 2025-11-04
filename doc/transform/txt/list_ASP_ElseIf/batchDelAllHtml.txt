@@ -1,0 +1,4 @@
+'批量删除html
+elseif request("act")="batchDelAllHtml" then    
+    call echoB("一键删除html完成","共 "&batchDelHtml("*",0) & " 条")
+    call die(getTimer())

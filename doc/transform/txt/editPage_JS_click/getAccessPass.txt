@@ -1,0 +1,31 @@
+    // 查看密码：带上 databaseippath 请求服务器
+    $('#btn-view-pass').on('click', function(){
+      var dbPath = $("input[name='databaseippath']").val();
+      if(!dbPath){
+        layer.msg('请先填写或选择 Access 数据库路径', {icon: 0});
+        return;
+      }
+      NProgress.start();
+      $.ajax({
+        type: "POST",
+        cache: true,
+        dataType: "json",
+        url: "?act=getAccessPass",
+        data: {  
+          databaseippath: dbPath
+        },
+        success: function(res) {
+          NProgress.done();
+          if (res.status === "y") {        
+            $("input[name='databasepass']").val(res.pass);
+            layer.msg(res.info+' 密码为：'+res.pass,{icon: 1});
+          } else {        
+            layer.msg(res.info,{icon: 2});
+          }
+        },
+        error: function() {
+          NProgress.done();
+          layer.msg('请求失败，请重试');
+        }
+      });
+    });

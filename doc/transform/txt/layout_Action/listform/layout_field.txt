@@ -1,0 +1,237 @@
+    // 查找select元素 -20250925
+    var selectElement = $('select[name="zhujiafieldconfig"]');
+    console.log('找到select元素:', selectElement.length);
+    
+    if (selectElement.length > 0) {
+        // 定义参数显示配置函数
+        function setParamDisplay(selectedValue, isInitial) {
+            var labelparameditDiv = $('#labelparamedit');
+            var prefix = isInitial ? '初始状态：' : '';
+            
+            // 工具函数：显示前 N 个参数，隐藏其余
+            function showFirstNParams(n) {
+                labelparameditDiv.show();
+                labelparameditDiv.find('input[name^="param"]').each(function(index){
+                    var isVisible = index < n; // index 从 0 开始
+                    var parent = $(this).parent();
+                    if (isVisible) { parent.show(); } else { parent.hide(); }
+                });
+            }
+            // 工具函数：显示所有 10 个参数
+            function showAllParams() {
+                labelparameditDiv.show();
+                labelparameditDiv.find('input[name^="param"]').parent().show();
+            }
+            // 工具函数：隐藏整个参数区域
+            function hideAllParams() {
+                labelparameditDiv.hide();
+            }
+
+            // 根据选择的值显示不同数量的参数输入框
+            switch(selectedValue) {
+                case 'columnclass':
+                    // 下拉菜单：显示前10个（全部显示）
+                    showAllParams();
+                    console.log(prefix + '下拉菜单：显示全部10个参数');
+                    
+                    // 如果是下拉菜单，自动解析字段配置并填充参数
+                    if (!isInitial) {
+                        parseFieldConfigToParams();
+                    }
+                    break;
+                    
+                case 'gettablecount':
+                    // 表记录总数：显示前6个
+                    showFirstNParams(6);
+                    console.log(prefix + '表记录总数：显示前6个参数');
+                    break;
+                    
+                case 'getipaddr':
+                    // 获得IP地址：显示前2个
+                    showFirstNParams(2);
+                    console.log(prefix + '获得IP地址：显示前2个参数');
+                    break;
+          
+                case 'listCallFunction':
+                    // 列表加载调用函数：显示前2个
+                    showFirstNParams(2);
+                    console.log(prefix + '列表加载调用函数：显示前2个参数');
+                    break;
+          
+                    
+                case 'showimg':
+                    // 显示图片：显示前3个
+                    showFirstNParams(3);
+                    console.log(prefix + '显示图片：显示前3个参数');
+                    break;
+                    
+                case 'uploadfile':
+                    // 上传：显示前2个
+                    showFirstNParams(2);
+                    console.log(prefix + '上传：显示前2个参数');
+                    break;
+                    
+                case 'getTableInfo':
+                    // 获得表信息：显示前7个
+                    showFirstNParams(7);
+                    console.log(prefix + '获得表信息：显示前7个参数');
+                    break;
+                    
+                case 'null':
+                    // 默认：隐藏整个参数设置区域
+                    hideAllParams();
+                    console.log(prefix + '隐藏参数设置区域');
+                    break;
+                    
+                default:
+                    // 其他选项：隐藏整个参数设置区域
+                    hideAllParams();
+                    console.log(prefix + '隐藏参数设置区域');
+                    break;
+            }
+        }
+        
+        // 解析字段配置并填充到参数输入框的函数
+        function parseFieldConfigToParams() {
+            // 清空所有参数输入框
+            $('input[name^="param"]').val('');
+            
+            // 获取当前选择的字段配置类型
+            var currentType = $('select[name="zhujiafieldconfig"]').val();
+            
+            // 第一个参数总是显示当前选择的动作类型
+            var param1Input = $('input[name="param1"]');
+            if (param1Input.length > 0) {
+                var actionName = getActionDisplayName(currentType);
+                param1Input.val(actionName);
+                // console.log('填充 param1 (动作类型):', actionName);
+            }
+            
+            // 如果字段配置有内容，则解析并填充后续参数
+            var fieldConfigValue = $('input[name="fieldconfig"]').val();
+            if (fieldConfigValue) {
+                // console.log('开始解析字段配置:', fieldConfigValue);
+                
+                // 先处理转义的下划线，将其替换为特殊标记
+                var tempValue = fieldConfigValue.replace(/\\_/g, 'XiYueTaCom');
+                console.log("tempValue",tempValue)
+                
+                // 按_分割，但忽略转义的下划线
+                var parts = tempValue.split('_');
+                
+                // 恢复转义的下划线
+                for (var i = 0; i < parts.length; i++) {
+                    parts[i] = parts[i].replace(/XiYueTaCom/g, '_');
+                }
+                
+                // console.log('分割后的部分:', parts);
+                
+                // 从第一个参数开始，使用字段配置中的值
+                for (var i = 0; i < parts.length && i < 10; i++) {
+                    var paramInput = $('input[name="param' + (i + 1) + '"]');
+                    if (paramInput.length > 0) { 
+                        paramInput.val(parts[i]);
+                        // console.log('填充 param' + (i + 1) + ':', parts[i]);
+                    }
+                }
+                
+                // console.log('字段配置解析完成');
+            } else {
+                // console.log('字段配置为空，只设置动作类型');
+            }
+        }
+        
+        // 获取动作类型的显示名称
+        function getActionDisplayName(actionType) {
+            // 直接返回动作类型的实际值，而不是中文名称
+            return actionType;
+        }
+        
+        // 将参数重新连接并更新到字段配置的函数
+        function updateFieldConfigFromParams() {
+            var currentType = $('select[name="zhujiafieldconfig"]').val();
+            if (!currentType || currentType === 'null') {
+                console.log('请先选择字段配置类型');
+                return;
+            }
+            
+            console.log('开始更新字段配置，当前类型:', currentType);
+            
+            // 收集当前显示的参数值
+            var paramValues = [];
+            var visibleParams = $('#labelparamedit').find('input[name^="param"]:visible').parent().find('input[name^="param"]');
+            
+            visibleParams.each(function() {
+                var value = $(this).val().trim();
+                if (value) {
+                    value=value.replace(/_/g, '\\_');
+                    paramValues.push(value);
+                }
+            });
+            
+            if (paramValues.length === 0) {
+                console.log('没有找到有效的参数值');
+                return;
+            }
+            
+            // 构建字段配置字符串：包含第一个参数（动作类型）和后续参数
+            var newFieldConfig = '';
+            if (paramValues.length > 0) {
+                // 包含所有参数，包括第一个参数（动作类型）
+                newFieldConfig = paramValues.join('_');
+            }
+            
+            // 更新字段配置输入框
+            $('input[name="fieldconfig"]').val(newFieldConfig);
+            console.log('字段配置已更新为:', newFieldConfig);
+            
+            // 显示成功提示
+            layer.msg('字段配置已更新', {icon: 1, time: 2000});
+        }
+        
+        // 使用layui的form.on方法监听select变化
+        form.on('select(zhujiafieldconfig)', function(data) {
+            console.log('选择改变事件触发');
+            var selectedValue = data.value;
+            console.log('选择的值:', selectedValue);
+            
+            // 调用参数显示配置函数
+            setParamDisplay(selectedValue, false); 
+            $('input[name="param1"]').val(selectedValue);
+
+        });
+        
+        // 页面加载时执行一次，根据当前选择的值设置初始状态
+        var selectedValue = selectElement.val();
+        console.log('初始选择的值:', selectedValue);
+        
+        // 调用参数显示配置函数设置初始状态
+        setParamDisplay(selectedValue, true);
+        
+        // 绑定更新配置按钮事件
+        $('#updateconfigbtn').on('click', function() {
+            updateFieldConfigFromParams();
+        });
+    } else {
+        console.log('未找到select[name="zhujiafieldconfig"]元素');
+    } 
+
+    // 按字段类型显示/隐藏“文本域高” 20250905
+    var fieldtypeSelect = $('select[name="fieldtype"]');
+    function toggleTextareaHeightByFieldtype(value){
+        var show = (value === 'textarea' ||　value === 'editor' ||　value === 'transfer');
+        $('#textareaheight').toggle(show);
+    }
+    if(fieldtypeSelect.length > 0){
+        // 初始化
+        toggleTextareaHeightByFieldtype(fieldtypeSelect.val());
+        // 监听 layui 下拉
+        form.on('select(fieldtype)', function(data){
+            toggleTextareaHeightByFieldtype(data.value);
+        });
+        // 兜底：原生 change
+        fieldtypeSelect.on('change', function(){
+            toggleTextareaHeightByFieldtype($(this).val());
+        });
+    }
+

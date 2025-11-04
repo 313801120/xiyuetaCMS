@@ -1,769 +1,889 @@
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><!--#Include File = "class_function/admin_functin2024.asp"-->
+<!--#Include File = "class_function/class_export_data.asp"-->
 <% 
-dim adminLevelList:adminLevelList=",网站管理员,管理人员,入库人员,审核人员,出库人员,其它人员" 'admin管理员的权限列表' 
-'管理员的权限列表''
+dim adminLevelList:adminLevelList=ChrW(44)&ChrW(36229)&ChrW(32423)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(44)&ChrW(26222)&ChrW(36890)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(44)&ChrW(20837)&ChrW(24211)&ChrW(20154)&ChrW(21592)&ChrW(44)&ChrW(23457)&ChrW(26680)&ChrW(20154)&ChrW(21592)&ChrW(44)&ChrW(20986)&ChrW(24211)&ChrW(20154)&ChrW(21592)
+
 dim adminPermissionLits
-
-adminPermissionLits=""  '文章管理,文章添加,文章修改,文章审核,文章删除'
-adminPermissionLits= adminPermissionLits & ",<br>,用户,<br>,会员列表,会员添加,会员修改,会员删除,会员审核,后台管理员" 
-
-
-adminPermissionLits= adminPermissionLits & ",<br>,设置,<br>,基本资料,修改密码,设置IP限制," 
-adminPermissionLits=adminPermissionLits& ",<br>,分类,分类添加,分类修改,分类删除"
-'检测管理员权限20230913' 如  checkAdminPower("财务人员")
-function checkAdminPower(title)
-	dim splxx,s
-	splxx=split(adminLevelList,",")
-	s=splxx(userrs("level"))
-	if s=title then
-		checkAdminPower=true
-	else
-		checkAdminPower=false
-	end if	
+adminPermissionLits=get_adminPermissionLits()
+dim isAddSystemLog:isAddSystemLog=true
+dim excludeAdminIDLIst
+function get_adminPermissionLits()
+dim a,b,c
+a=a & ChrW(35774)&ChrW(32622)&ChrW(124)&ChrW(30331)&ChrW(24405)&ChrW(38480)&ChrW(21046)&ChrW(73)&ChrW(80)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(30331)&ChrW(24405)&ChrW(38480)&ChrW(21046)&ChrW(73)&ChrW(80)&ChrW(124)&ChrW(35774)&ChrW(32622)&ChrW(73)&ChrW(80)&ChrW(38480)&ChrW(21046)&ChrW(124)&ChrW(19978)&ChrW(20256)&ChrW(22270)&ChrW(29255)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(29983)&ChrW(25104)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(112)&ChrW(46)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(25968)&ChrW(25454)&ChrW(32500)&ChrW(25252)&ChrW(44)
+a=a & ChrW(20250)&ChrW(21592)&ChrW(124)&ChrW(20250)&ChrW(21592)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(20250)&ChrW(21592)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(20250)&ChrW(21592)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(20250)&ChrW(21592)&ChrW(44)
+a=a & ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(124)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(124)&ChrW(22522)&ChrW(26412)&ChrW(36164)&ChrW(26009)&ChrW(124)&ChrW(20462)&ChrW(25913)&ChrW(23494)&ChrW(30721)&ChrW(44)
+a=a & ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(35282)&ChrW(33394)&ChrW(124)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(35282)&ChrW(33394)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(35282)&ChrW(33394)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(35282)&ChrW(33394)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(35282)&ChrW(33394)&ChrW(44)
+a=a & ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(124)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(44)
+a=a & ChrW(25991)&ChrW(31456)&ChrW(124)&ChrW(25991)&ChrW(31456)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(25991)&ChrW(31456)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(25991)&ChrW(31456)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(25991)&ChrW(31456)&ChrW(44)
+a=a & ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622)&ChrW(124)&ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622)&ChrW(44)
+a=a & ChrW(21333)&ChrW(39029)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(21333)&ChrW(39029)&ChrW(31649)&ChrW(29702)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(21333)&ChrW(39029)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(21333)&ChrW(39029)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(21333)&ChrW(39029)&ChrW(31649)&ChrW(29702)&ChrW(44)
+a=a & ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509)&ChrW(124)&ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509)&ChrW(44)
+a=a & ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)&ChrW(124)&ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)&ChrW(44)
+a=a & ChrW(32842)&ChrW(22825)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(32842)&ChrW(22825)&ChrW(31649)&ChrW(29702)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(32842)&ChrW(22825)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(32842)&ChrW(22825)&ChrW(31649)&ChrW(29702)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(32842)&ChrW(22825)&ChrW(31649)&ChrW(29702)&ChrW(44)
+a=a & ChrW(35746)&ChrW(21333)&ChrW(124)&ChrW(35746)&ChrW(21333)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(35746)&ChrW(21333)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(35746)&ChrW(21333)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(35746)&ChrW(21333)&ChrW(44)
+a=a & ChrW(21518)&ChrW(21488)&ChrW(26085)&ChrW(24535)&ChrW(124)&ChrW(21518)&ChrW(21488)&ChrW(26085)&ChrW(24535)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(21518)&ChrW(21488)&ChrW(26085)&ChrW(24535)&ChrW(44) 
+a=a & ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(44)
+a=a & ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(39029)&ChrW(124)&ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(39029)&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(39029)&ChrW(124)&ChrW(32534)&ChrW(36753)&ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(39029)&ChrW(124)&ChrW(21024)&ChrW(38500)&ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(39029)&ChrW(44) 
+b=split(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(95)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(95)&ChrW(116)&ChrW(111)&ChrW(111)&ChrW(108)&ChrW(98)&ChrW(97)&ChrW(114)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(95)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(95)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(44)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110),ChrW(44))
+for each c in b
+if c <>"" then
+a=a & ""&c&ChrW(124)&c&ChrW(21015)&ChrW(34920)&ChrW(124)&ChrW(28155)&ChrW(21152)&c&ChrW(124)&ChrW(32534)&ChrW(36753)&c&ChrW(124)&ChrW(21024)&ChrW(38500)&c&ChrW(44) 
+end if
+next
+get_adminPermissionLits=a
 end function
 
-'检测权限列表 20231109  call checkAdminPermission("分类添加")
-sub checkAdminPermission(title)  
-	if isAdminPermission(title)=false then 
-	    call eerr("提示","没有【"& title &"】权限")
-	end if
+function aQX(a,b)
+if checkAQX(b) then
+aQX=a
+end if
+end function
+
+function checkAQX(a)
+checkAQX=false
+if instr(a,ChrW(124)&session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))&ChrW(124))>0 or session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))=-999 then
+checkAQX=true
+end if
+end function 
+
+function checkEditAQX(a)
+checkEditAQX=checkAQX(a)
+end function
+
+
+
+
+
+
+
+
+
+
+
+
+sub checkAdminPermission(a)  
+if isAdminPermission(a)=false then 
+call eerr(ChrW(25552)&ChrW(31034),ChrW(27809)&ChrW(26377)&ChrW(12304)& a &ChrW(12305)&ChrW(26435)&ChrW(38480))
+end if
 end sub
-'检测权限列表里是否有，返回真假 20231109  call isAdminPermission("设置IP限制")
-function isAdminPermission(title) 
-	dim splxx,isOK,s
-	isOK=false
-	splxx=split(title,",")
-	for each s in splxx
-		if s<>"" then
-			if instr(","& userrs("permission") &",", ","& s &",")>0 then
-				' call echo(userrs("permission"),s)
-				isOK=true
-				exit for
-			end if
-		end if
-	next
-	if isOK=false and userrs("level")<>1 then 
-	    isAdminPermission=false
-	else
-		isAdminPermission=true
-	end if
+
+function isAdminPermission(a) 
+dim b,c,d
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))=-999  then
+isAdminPermission=true
+exit function
+end if
+c=false
+b=split(a,ChrW(44))
+for each d in b
+if d <>"" then
+if instr(ChrW(124)& userRs_permission &ChrW(124), ChrW(124)& d &ChrW(124))>0 then
+
+c=true
+exit for
+end if
+end if
+next
+if c=false then 
+isAdminPermission=false
+else
+isAdminPermission=true
+end if
+end function
+function checkAdminRule(a)
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))=-999  then
+checkAdminRule=true
+exit function
+end if
+
+if instr(ChrW(44)&excludeAdminIDLIst&ChrW(44), ChrW(44)& session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)) &ChrW(44))>0 then
+checkAdminRule=true
+exit function
+end if
+checkAdminRule=isAdminPermission(a) 
 end function
 
-dim isAddSystemLog:isAddSystemLog=true	'是否自动添加信息日志'
-
- 
-'获得目录树
-function getSubTree(parentid)
-    dim c,s
-    dim rs:Set rs = CreateObject("Adodb.RecordSet")
-    rs.open"select * from ["& db_PREFIX &"webcolumn] where id="&parentid,conn,1,1
-    if not rs.eof then
-	    c=rs("columnname")
-	    if rs("parentid")<>-1 then
-	        s=getSubTree(rs("parentid"))
-	        if s<>"" then c=s&">>" & c
-	    end if
-	end if:rs.close
-
-    getSubTree=c
+function showCheckAdminRule(a)
+if checkAdminRule(a) = false then
+call die(ChrW(27809)&ChrW(26377)&ChrW(12304)& a &ChrW(12305)&ChrW(26435)&ChrW(38480))
+end if
 end function
 
-'添加系统日志'
-function addSystemLog(item,msg,userName)
-	if isAddSystemLog=true then
-		conn.Execute("insert into " & db_PREFIX & "SystemLog (item,msgstr,adminname,ip) values('" & item & "','" & msg & "','" & userName & "','" & getIP() & "')")
-	end if
-end function
+function checkAdminLoginIPAllow(a)
+dim b,c 
+b=readfile(adminDir & ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(95)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(95)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119)&ChrW(95)&ChrW(73)&ChrW(80)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116),"")
+c=split(b,chr(10))
+checkAdminLoginIPAllow=checkIPMatch(a, c)
+end function 
 
-'获得全部栏目ID列表 20210321  如1,4,5,6,2,6,8,9
-function getColumAllID(parentid)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	dim c,s
-	rs.open "select * from ["& db_PREFIX &"webcolumn] where parentid="&parentid & " order by sortrank asc",conn,1,1
-	while not rs.EOF 
-		if c<>"" then c=c & ","
-		c=c & rs("id")
-		s=getColumAllID(rs("id"))
-		if s<>"" then
-			c=c & "," & s
-		end if
-	rs.movenext:wend:rs.close
-	getColumAllID=c
-end function
-
-'获得栏目名称对应的ID 20240115
-function getColumNameToID(columnname)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	dim id
-	rs.open "select * from ["& db_PREFIX &"webcolumn] where columnname='"& columnname &"'",conn,1,1
-	if not rs.eof then
-		id=rs("id")
-	end if:rs.close
-	getColumNameToID=id
-end function
-'获得主导航名称 追加于20240115
-function getRootNavName(id)
-  if id="" then getRootNavName="": exit function
-  dim rs:Set rs = CreateObject("Adodb.RecordSet")
-  dim c,s
-  rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&id,conn,1,1
-  while not rs.EOF
-    if rs("parentid")=-1 then
-      getRootNavName=rs("columnname")
-      exit function
-    else
-      getRootNavName=getRootNavName(rs("parentid"))
-    end if
-  rs.movenext:wend:rs.close
-end function
-
-'获得子栏目树状20210331  如  ├─栏目名称
-function getSubColumSort(parentid,subStr)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select * from ["& db_PREFIX &"webcolumn] where id="&parentid,conn,1,1
-	if not rs.eof then
-		if subStr<>"" then
-			subStr="&nbsp;&nbsp;" & subStr
-		else
-			subStr=subStr & "&nbsp;&nbsp;├─" 
-		end if
-		if rs("parentid")<>-1 then
-			call getSubColumSort(rs("parentid"),subStr)
-		end if
-	end if:rs.close
-	getSubColumSort=subStr
-end function
-'显示栏目列表成input方式 20210331 如 <option> ├─栏目名称</opton>
-'parentid=父级ID列表，hideIDList=隐藏ID列表，focusParentid=选中ID'
-function columnSubInput(parentid,hideIDList,focusParentid)
-  dim rs:Set rs = CreateObject("Adodb.RecordSet")
-  dim c,s,sel,addsql
-  if hideIDList<>"" then addSql=" and id not in("& hideIDList &")"
-  rs.open "select * from ["& db_PREFIX &"webcolumn] where parentid in("&parentid&")" & addsql &" order by sortrank asc",conn,1,1
-  while not rs.EOF  
-  	sel=""
-  	if focusParentid<>"" then
-  		if focusParentid=rs("id") then sel=" selected"
-  	end if
-
-    c=c & "<option value="""& rs("id") &""""& sel &">"& getSubColumSort(rs("parentid"),"")  & rs("columnName")&"</option>"    
-    c=c & columnSubInput(rs("id"),IIF(hideIDList=-2,-3,hideIDList),focusParentid)  
-  rs.movenext:wend:rs.close
-  columnSubInput=c
-end function
-
-function getAdminIdToName(id)
-  dim rs:Set rs = CreateObject("Adodb.RecordSet")   
-  id = id & ""
-  if id="" then 
-  	getAdminIdToName="(ID为空)"
-  	exit function
-  end if
-  ' call echo("id",id)
-  rs.open "select * from ["& db_PREFIX &"admin] where id="&id,conn,1,1
-  if not rs.eof then
-  	dim splxx
-  	splxx=split(adminLevelList,",")
-  	getAdminIdToName=rs("username") & "("& splxx(rs("level"))&")"
-  	' getAdminIdToName=rs("username") & "("& rs("nickname")&")"
-  end if:rs.close 
-end function
-
- 
-
-'显示栏目列表成input方式 xiyuetaclass 20220517 如 <option> ├─栏目名称</opton>
-function xiyuetaColumnSubInput(parentid,isShowTab,focusParentid)
-	xiyuetaColumnSubInput=handleXiyuetaColumnSubInput(parentid,isShowTab,focusValue,"id")
-end function
-'处理显示栏目列表成input 判断选中的字段为ID或栏目 20220807'
-function handleXiyuetaColumnSubInput(parentid,isShowTab,focusValue,sType)
-  dim rs:Set rs = CreateObject("Adodb.RecordSet")
-  dim c,s,sel,addsql,sTab
-  focusValue=focusValue&""
-  rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid="&parentid & addsql &" order by sortrank asc",conn,1,1
-  while not rs.EOF  
-  	sel=""
-  	if focusValue<>"" then
-  		if sType="txt" then
-  			if focusValue=cstr(rs("columnName")) then sel=" selected"
-  		else
-  			if focusValue=cstr(rs("id")) then sel=" selected"  		
-  		end if
-  		
-  	end if
-  	'给getxiyuetaColumnSubInputList用的，指定一个大类，让大类的第一级子类前面不要显示等级提示符20220515'
-  	sTab=""
-  	if isShowTab=true then
-  		sTab=getXiyuetaSubColumSort(rs("parentid"),"")   '显示退格符'
-  	end if
-    c=c & "<option value="""& iif(sType="txt",rs("columnName"),rs("id")) &""""& sel &">"& sTab & rs("columnName")&"</option>"    
-    c=c & handleXiyuetaColumnSubInput(rs("id"),true,focusValue,sType)    '做个判断，是-2，换成-3
-  rs.movenext:wend:rs.close
-  handleXiyuetaColumnSubInput=c
-end function
+function checkIpLimitList(a)  
+dim b
+b=split(a,chr(10))
+checkIpLimitList=checkIPMatch(getip(), b)
+end function 
 
 
-'获得子栏目树状20210331  如  ├─栏目名称
-function getXiyuetaSubColumSort(parentid,subStr)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where id="&parentid,conn,1,1
-	if not rs.eof then
-		if subStr<>"" then
-			subStr="&nbsp;&nbsp;" & subStr
-		else
-			subStr=subStr & "&nbsp;&nbsp;├─" 
-		end if
-		if rs("parentid")<>-1 then
-			call getXiyuetaSubColumSort(rs("parentid"),subStr)
-		end if
-	end if:rs.close
-	getXiyuetaSubColumSort=subStr
+
+
+Function checkIPMatch(a, b)
+Dim c, d, e, f, g
+Dim h
+checkIPMatch = False
+
+If IsArray(b) = False Then
+b = Split(b, ChrW(44))
+End if
+
+For c = 0 To UBound(b)
+d = phpTrim(b(c))
+
+If d <> "" Then
+
+If InStr(d, ChrW(42)) = 0 Then
+If d = a Then
+checkIPMatch = True
+Exit function
+End if
+Else 
+
+e = Split(d, ChrW(46))
+f = Split(a, ChrW(46))
+
+If UBound(e) = 3 And UBound(f) = 3 Then
+h = True
+
+For g = 0 To 3
+
+If e(g) = ChrW(42) Then
+
+Else
+
+If e(g) <> f(g) Then
+h = False
+Exit for
+End if
+End if
+Next
+
+If h = True Then
+checkIPMatch = True
+Exit function
+End if
+End if
+End if
+End if
+Next
+End function
+
+function getSubTree(a)
+dim b,c
+dim d:Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+d.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not d.eof then
+b=d(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+if d(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) <>-1 then
+c=getSubTree(d(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
+if c <>"" then b=c&ChrW(62)&ChrW(62) & b
+end if
+end if:d.close
+getSubTree=b
+end function 
+
+function addSystemLog(a,b)
+dim c:c=-1
+dim d
+if isAddSystemLog=true and session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(114)&ChrW(117)&ChrW(108)&ChrW(101)) <>ChrW(115)&ChrW(101)&ChrW(108)&ChrW(102) then
+a=replace(a,ChrW(39),ChrW(39)&ChrW(39))
+b=replace(b,ChrW(39),ChrW(39)&ChrW(39))
+
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)) <>"" then c=session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))
+
+d=ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(83)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(32)&ChrW(40)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(44)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(44)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)&ChrW(44)&ChrW(105)&ChrW(112)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39) & a & ChrW(39)&ChrW(44)&ChrW(39) & b & ChrW(39)&ChrW(44) & c & ChrW(44)&ChrW(39) & getIP() & ChrW(39)&ChrW(41)
+
+
+conn.Execute(d) 
+end if
 end function
 
-'获得列表20220515'
-function getXiyuetaColumnSubInputList(columnname,fieldName,focusid)
-	getXiyuetaColumnSubInputList=handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,"","id")
+function getColumAllID(a)
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim c,d
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&a & ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99),conn,1,1
+while not b.eof 
+if c <>"" then c=c & ChrW(44)
+c=c & b(ChrW(105)&ChrW(100))
+d=getColumAllID(b(ChrW(105)&ChrW(100)))
+if d <>"" then
+c=c & ChrW(44) & d
+end if
+b.movenext:wend:b.close
+getColumAllID=c
 end function
 
-'获得列表20220807 值为栏目名称'
-function getXiyuetaColumnSubInputListTxt(columnname,fieldName,focusid)
-	getXiyuetaColumnSubInputListTxt=handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,"","txt")
-end function
-'获得列表 加默认值
-function handleGetXiyuetaColumnSubInputList(columnname,fieldName,focusid,defaultOption,sType)
-	dim c
-	if focusid="" then focusid=-2
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	c="<select name="""& fieldName &""">"
-	c=c & defaultOption
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid=-1 and columnname='"& columnname &"'",conn,1,1
-	if not rs.eof then
-		' c=c & xiyuetaColumnSubInput(rs("id"),false,focusid,sType)
-		c=c & handleXiyuetaColumnSubInput(rs("id"),false,focusid,sType) 
- 
-	end If:rs.close
-
-	c=c & "</select>"
-  handleGetXiyuetaColumnSubInputList=c
+function getColumNameToID(a)
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim c
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)& a &ChrW(39),conn,1,1
+if not b.eof then
+c=b(ChrW(105)&ChrW(100))
+end if:b.close
+getColumNameToID=c
 end function
 
-'获得CheckBox列表20220515'   getColumnCheckBoxList("专业","profession",profession) 
-function getColumnCheckBoxList(columnname,fieldName,sValue)
-	dim c,id,sel
-	id=-2
-	sValue=" "& sValue &","
-	dim rs:Set rs = CreateObject("Adodb.RecordSet") 
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid=-1 and columnname='"& columnname &"'",conn,1
-	if not rs.eof then
-		id=rs("id")
-	end if:rs.close
-	' call echo(columnname,id)
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid="&id,conn,1,1
-	while not rs.eof
-		sel=""
-		if instr(sValue," " & rs("columnname") & ",")>0 then sel=" checked"
-			' call echo(sValue,rs("columnname"))
-		c=c & "<input type=""checkbox""  lay-filter="""&fieldName&""" name="""&fieldName&""" value='"& rs("columnName") &"' title="""& rs("columnName") &""""& sel &">"
-	rs.movenext:wend:rs.close
- 
-  getColumnCheckBoxList=c
+function getRootNavName(a)
+if a="" then getRootNavName="": exit function
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim c,d
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+while not b.eof
+if b(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100))=-1 then
+getRootNavName=b(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+exit function
+else
+getRootNavName=getRootNavName(b(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
+end if
+b.movenext:wend:b.close
 end function
 
-'获得CheckBox列表 值为栏目ID 20220603'
-function getColumnRadioList(columnname,fieldName,sValue) 
-  getColumnRadioList=handleColumnRadioList(columnname,fieldName,sValue,"id")
-end function
-'获得CheckBox列表 值为栏目名称 20220807'
-function getColumnRadioListTxt(columnname,fieldName,sValue) 
-  getColumnRadioListTxt=handleColumnRadioList(columnname,fieldName,sValue,"txt")
-end function
-'处理单选项20220807
-function handleColumnRadioList(columnname,fieldName,sValue,sType)
-	dim c,parentid,sel,thisValue
-	sValue=sValue&""
-	parentid=-2
-	dim rs:Set rs = CreateObject("Adodb.RecordSet") 
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid=-1 and columnname='"& columnname &"'",conn,1
-	if not rs.eof then
-		parentid=rs("id")
-	end if:rs.close
-
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where parentid="&parentid,conn,1,1
-	while not rs.eof
-		sel=""
-		thisValue=cstr(IIF(sType="txt",rs("columnName"),rs("id")) & "")
-
-		if cstr(sValue) = thisValue then sel=" checked"
-			' call echo(sValue,rs("columnname"))
-		c=c & "<input type=""radio"" name="""&fieldName&""" value='"& thisValue &"' title="""& rs("columnName") &""""& sel &">"
-	rs.movenext:wend:rs.close
- 
-  handleColumnRadioList=c
-end function
-'获得栏目ID对应的名称列表20220515'
-function getXiyuetaColumnIdToName(id) 
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	id=id &""
-	if id="" then getXiyuetaColumnIdToName="": exit function
-	' call echo("id",id):doevents
-	rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where id="&id,conn,1,1
-	if not rs.eof then
-		getXiyuetaColumnIdToName=rs("columnname")
-	else
-		getXiyuetaColumnIdToName=""
-	end if:rs.close
-end function
-'获得参数栏目搜索到id列表20220604   如1,2,3,4
-function getXiyuetaColumnSearchIdList(keyword)
-  dim rs:Set rs = CreateObject("Adodb.RecordSet")
-  dim idlist
-  rs.open "select * from ["& db_PREFIX &"xiyuetaclass] where columnname like'%"& keyword &"%'",conn,1,1
-  while not rs.eof
-    if idlist<>"" then idlist=idlist&","
-    idlist=idlist & rs("id")
-  rs.movenext:wend:rs.close
-  getXiyuetaColumnSearchIdList=idlist
+function getSubColumSort(a,b)
+dim c:Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+c.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not c.eof then
+if b <>"" then
+b=ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59) & b
+else
+b=b & ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(9500)&ChrW(9472) 
+end if
+if c(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) <>-1 then
+call getSubColumSort(c(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)),b)
+end if
+end if:c.close
+getSubColumSort=b
 end function
 
 
-'获得栏目id 20220510  大类>小类
-function getXiyuetaClassId(columnName)
-    dim splstr,s,parentid,sql
-    if instr(columnName,">")>0 then
-        splstr=split(columnName,">")
-        for each s in splstr
-            sql="Select * from " & db_PREFIX & "xiyuetaclass where columnName='" & s & "'"
-            if parentid<>"" then sql = sql & " AND parentid="&parentid
-            rsx.open sql, conn, 1, 1 
-            if not rsx.EOF then
-                parentid = rsx("id")        
-                ' call echo("parentid1",parentid)
-            end if : rsx.close 
-        next
-        ' call echo("parentid",parentid)
-        if parentid="" then parentid=-1
-        getXiyuetaClassId=parentid
-        exit function
-    end if
+function columnSubInput(a,b,c)
+dim d:Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim e,f,g,h
+if b <>"" then h=ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(110)&ChrW(111)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(40)& b &ChrW(41)
+d.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(40)&a&ChrW(41) & h &ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99),conn,1,1
+while not d.eof  
+g=""
+if c <>"" then
+if c=d(ChrW(105)&ChrW(100)) then g=ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)
+end if
+e=e & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)& d(ChrW(105)&ChrW(100)) &ChrW(34)& g &ChrW(62)& getSubColumSort(d(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)),"")  & d(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62)    
+e=e & columnSubInput(d(ChrW(105)&ChrW(100)),IIF(b=-2,-3,b),c)  
+d.movenext:wend:d.close
+columnSubInput=e
+end function
+function getAdminIdToName(a)
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
+a = a & ""
+if a="" then 
+getAdminIdToName=ChrW(40)&ChrW(73)&ChrW(68)&ChrW(20026)&ChrW(31354)&ChrW(41)
+exit function
+end if
 
-    getXiyuetaClassId = "-1" 
-    rsx.open "Select * from " & db_PREFIX & "xiyuetaclass where columnName='" & columnName & "'", conn, 1, 1 
-    if not rsx.EOF then
-        getXiyuetaClassId = rsx("id")        
-    end if : rsx.close 
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not b.eof then
+dim c
+c=split(adminLevelList,ChrW(44))
+getAdminIdToName=b(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(40)& c(b(ChrW(108)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(108)))&ChrW(41)
+
+end if:b.close 
 end function
 
-
-
-
-'html转换成js
-function getHtmlToJsInput(byVal c)
-    c = replace("" & c, "\", "\\") 
-    c = replace(c, "/", "\/") 
-    c = replace(c, "'", "\'") 
-    c = replace(c, """", "\""") 
-    getHtmlToJsInput=c
+function xiyuetaColumnSubInput(a,b,c)
+xiyuetaColumnSubInput=handleXiyuetaColumnSubInput(a,b,focusValue,ChrW(105)&ChrW(100))
 end function
-'获得服务器上版本'
+
+function handleXiyuetaColumnSubInput(a,b,c,d)
+dim e:Set e = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim f,g,h,i,j
+c=c&""
+e.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&a & i &ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99),conn,1,1
+while not e.eof  
+h=""
+if c <>"" then
+if d=ChrW(116)&ChrW(120)&ChrW(116) then
+if c=cstr(e(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))) then h=ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)
+else
+if c=cstr(e(ChrW(105)&ChrW(100))) then h=ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)      
+end if
+end if
+
+j=""
+if b=true then
+j=getXiyuetaSubColumSort(e(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)),"")
+end if
+f=f & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)& iif(d=ChrW(116)&ChrW(120)&ChrW(116),e(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)),e(ChrW(105)&ChrW(100))) &ChrW(34)& h &ChrW(62)& j & e(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62)    
+f=f & handleXiyuetaColumnSubInput(e(ChrW(105)&ChrW(100)),true,c,d)
+e.movenext:wend:e.close
+handleXiyuetaColumnSubInput=f
+end function
+
+function getXiyuetaSubColumSort(a,b)
+dim c:Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+c.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not c.eof then
+if b <>"" then
+b=ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59) & b
+else
+b=b & ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(9500)&ChrW(9472) 
+end if
+if c(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) <>-1 then
+call getXiyuetaSubColumSort(c(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)),b)
+end if
+end if:c.close
+getXiyuetaSubColumSort=b
+end function
+
+function getXiyuetaColumnSubInputList(a,b,c)
+getXiyuetaColumnSubInputList=handleGetXiyuetaColumnSubInputList(a,b,c,"",ChrW(105)&ChrW(100))
+end function
+
+function getXiyuetaColumnSubInputListTxt(a,b,c)
+getXiyuetaColumnSubInputListTxt=handleGetXiyuetaColumnSubInputList(a,b,c,"",ChrW(116)&ChrW(120)&ChrW(116))
+end function
+
+function handleGetXiyuetaColumnSubInputList(a,b,c,d,e)
+dim f
+if c="" then c=-2
+dim g:Set g = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+f=ChrW(60)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)& b &ChrW(34)&ChrW(62)
+f=f & d
+g.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(45)&ChrW(49)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)& a &ChrW(39),conn,1,1
+if not g.eof then
+
+f=f & handleXiyuetaColumnSubInput(g(ChrW(105)&ChrW(100)),false,c,e) 
+end if:g.close
+f=f & ChrW(60)&ChrW(47)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(62)
+handleGetXiyuetaColumnSubInputList=f
+end function
+
+function getColumnCheckBoxList(a,b,c)
+dim d,e,f
+e=-2
+c=ChrW(32)& c &ChrW(44)
+dim g:Set g = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116)) 
+g.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(45)&ChrW(49)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)& a &ChrW(39),conn,1
+if not g.eof then
+e=g(ChrW(105)&ChrW(100))
+end if:g.close
+
+g.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&e,conn,1,1
+while not g.eof
+f=""
+if instr(c,ChrW(32) & g(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(44))>0 then f=ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100)
+
+d=d & ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(98)&ChrW(111)&ChrW(120)&ChrW(34)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(45)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(61)&ChrW(34)&b&ChrW(34)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&b&ChrW(34)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)& g(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)) &ChrW(39)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)& g(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)) &ChrW(34)& f &ChrW(62)
+g.movenext:wend:g.close
+getColumnCheckBoxList=d
+end function
+
+function getColumnRadioList(a,b,c) 
+getColumnRadioList=handleColumnRadioList(a,b,c,ChrW(105)&ChrW(100))
+end function
+
+function getColumnRadioListTxt(a,b,c) 
+getColumnRadioListTxt=handleColumnRadioList(a,b,c,ChrW(116)&ChrW(120)&ChrW(116))
+end function
+
+function handleColumnRadioList(a,b,c,d)
+dim e,f,g,h
+c=c&""
+f=-2
+dim i:Set i = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116)) 
+i.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(45)&ChrW(49)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)& a &ChrW(39),conn,1
+if not i.eof then
+f=i(ChrW(105)&ChrW(100))
+end if:i.close
+i.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&f,conn,1,1
+while not i.eof
+g=""
+h=cstr(IIF(d=ChrW(116)&ChrW(120)&ChrW(116),i(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)),i(ChrW(105)&ChrW(100))) & "")
+if cstr(c) = h then g=ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100)
+
+e=e & ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(114)&ChrW(97)&ChrW(100)&ChrW(105)&ChrW(111)&ChrW(34)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&b&ChrW(34)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)& h &ChrW(39)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)& i(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)) &ChrW(34)& g &ChrW(62)
+i.movenext:wend:i.close
+handleColumnRadioList=e
+end function
+
+function getXiyuetaColumnIdToName(a) 
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+a=a &""
+if a="" then getXiyuetaColumnIdToName="": exit function
+
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not b.eof then
+getXiyuetaColumnIdToName=b(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+else
+getXiyuetaColumnIdToName=""
+end if:b.close
+end function
+
+function getXiyuetaColumnSearchIdList(a)
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim c
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(107)&ChrW(101)&ChrW(39)&ChrW(37)& a &ChrW(37)&ChrW(39),conn,1,1
+while not b.eof
+if c <>"" then c=c&ChrW(44)
+c=c & b(ChrW(105)&ChrW(100))
+b.movenext:wend:b.close
+getXiyuetaColumnSearchIdList=c
+end function
+
+function getXiyuetaClassId(a)
+dim b,c,d,e
+if instr(a,ChrW(62))>0 then
+b=split(a,ChrW(62))
+for each c in b
+e=ChrW(83)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & c & ChrW(39)
+if d <>"" then e = e & ChrW(32)&ChrW(65)&ChrW(78)&ChrW(68)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&d
+rsx.open e, conn, 1, 1 
+if not rsx.EOF then
+d = rsx(ChrW(105)&ChrW(100))        
+
+end if : rsx.close 
+next
+
+if d="" then d=-1
+getXiyuetaClassId=d
+exit function
+end if
+getXiyuetaClassId = ChrW(45)&ChrW(49) 
+rsx.open ChrW(83)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & a & ChrW(39), conn, 1, 1 
+if not rsx.EOF then
+getXiyuetaClassId = rsx(ChrW(105)&ChrW(100))        
+end if : rsx.close 
+end function
+
+function getHtmlToJsInput(byVal a)
+a = replace("" & a, ChrW(92), ChrW(92)&ChrW(92)) 
+a = replace(a, ChrW(47), ChrW(92)&ChrW(47)) 
+a = replace(a, ChrW(39), ChrW(92)&ChrW(39)) 
+a = replace(a, ChrW(34), ChrW(92)&ChrW(34)) 
+getHtmlToJsInput=a
+end function
+
 function getServerVersion() 
-	doevents
-	dim n
-	call openconn()
-	rs.open "select * from ["& db_PREFIX &"website]",conn,1,3
-	if not rs.eof then
-		n=dateDiff("d", rs("versiontime"), now()) 
-		if n<>0 then
-			getServerVersion=getHttpUrl("http://xiyueta.com/server/?url="&escape(getthisurl()) &"&v="&version,"")
-			rs("versiontime")=now()
-			rs.update
-		else
-			getServerVersion="<!--" & n & "-->"
-		end if
-	end if:rs.close 
+doevents
+dim a
+call openconn()
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(93),conn,1,3
+if not rs.eof then
+a=dateDiff(ChrW(100), rs(ChrW(118)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)), now()) 
+if a <>0 then
+getServerVersion=getHttpUrl(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(47)&ChrW(63)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(61)&escape(getthisurl()) &ChrW(38)&ChrW(118)&ChrW(61)&version,"")
+rs(ChrW(118)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101))=now()
+rs.update
+else
+getServerVersion=ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45) & a & ChrW(45)&ChrW(45)&ChrW(62)
+end if
+end if:rs.close 
 end function 
 
-
-'处理电话号码20220808'
-function handleTelHide(tel)
-	dim tempTel
-	tempTel=tel
-	if len(tempTel)>4 then
-		tempTel=mid(tempTel,len(tempTel)-4) & "****"
-	end if
-	handleTelHide=tempTel
+function handleTelHide(a)
+dim b
+b=a
+if len(b)>4 then
+b=mid(b,len(b)-4) & ChrW(42)&ChrW(42)&ChrW(42)&ChrW(42)
+end if
+handleTelHide=b
 end function
 
-
-'资格证到期提醒天数 20220901'
-function handleExpirydate(profession,timelist)
-	dim splstr,splTime,splxx,did,s,c,nLen
-	profession=profession & ""
-	timelist="," & timelist & "|"
-	splstr=split(profession,", ")
-	for each did in splstr
-		if did<>"" then
-			nLen=instr(timelist,","& did &"|")
-			if nLen>0 then
-				s=mid(timelist,nLen+len(","& did &"|"))
-				splxx=split(s,"|")
-				c=c & did & "("&splxx(0)&"-"& splxx(1) &")"
-			end if
-		end if
-	next
-	handleExpirydate=c
+function handleExpirydate(a,b)
+dim c,d,e,f,g,h,i
+a=a & ""
+b=ChrW(44) & b & ChrW(124)
+c=split(a,ChrW(44)&ChrW(32))
+for each f in c
+if f <>"" then
+i=instr(b,ChrW(44)& f &ChrW(124))
+if i>0 then
+g=mid(b,i+len(ChrW(44)& f &ChrW(124)))
+e=split(g,ChrW(124))
+h=h & f & ChrW(40)&e(0)&ChrW(45)& e(1) &ChrW(41)
+end if
+end if
+next
+handleExpirydate=h
 end function
 
-'安全B证截止时间 20220901'
-function handleBcertificatedate(safetyclass,timelist)
-	dim splstr,splTime,splxx,did,s,c,nLen
-	safetyclass=safetyclass & ""
-	timelist="," & timelist & "|"
-	splstr=split(safetyclass,", ")
-	for each did in splstr
-		if did<>"" then
-			nLen=instr(timelist,","& did &"|")
-			if nLen>0 then
-				s=mid(timelist,nLen+len(","& did &"|"))
-				splxx=split(s,"|")
-				c=c & did & "("&splxx(2) &")"
-			end if
-		end if
-	next
-	handleBcertificatedate=c
+function handleBcertificatedate(a,b)
+dim c,d,e,f,g,h,i
+a=a & ""
+b=ChrW(44) & b & ChrW(124)
+c=split(a,ChrW(44)&ChrW(32))
+for each f in c
+if f <>"" then
+i=instr(b,ChrW(44)& f &ChrW(124))
+if i>0 then
+g=mid(b,i+len(ChrW(44)& f &ChrW(124)))
+e=split(g,ChrW(124))
+h=h & f & ChrW(40)&e(2) &ChrW(41)
+end if
+end if
+next
+handleBcertificatedate=h
 end function
 
-'显示大类里指定位置的时间 20220905'
-function getTimeList(didList,timelist,focus)
-	dim splstr,splTime,splxx,did,s,c,nLen
-	didList=didList & ""
-	timelist="," & timelist & "|"
-	splstr=split(didList,", ")
-	for each did in splstr
-		if did<>"" then
-			nLen=instr(timelist,","& did &"|")
-			if nLen>0 then
-				s=mid(timelist,nLen+len(","& did &"|"))
-				splxx=split(s,"|")
-				c=c & did & "("&splxx(focus) &")"
-			end if
-		end if
-	next
-	getTimeList=c
+function getTimeList(a,b,c)
+dim d,e,f,g,h,i,j
+a=a & ""
+b=ChrW(44) & b & ChrW(124)
+d=split(a,ChrW(44)&ChrW(32))
+for each g in d
+if g <>"" then
+j=instr(b,ChrW(44)& g &ChrW(124))
+if j>0 then
+h=mid(b,j+len(ChrW(44)& g &ChrW(124)))
+f=split(h,ChrW(124))
+i=i & g & ChrW(40)&f(c) &ChrW(41)
+end if
+end if
+next
+getTimeList=i
 end function
 
-
-
-'获得字段的中文标题20230315' 修改20230412
-function getFieldCnName(byval fieldName,byval fieldAlt)
-  dim configNameList,splstr,splxx,s 
-  fieldName=phptrim(lcase(fieldName))
-  fieldAlt=phptrim(fieldAlt)
-  if fieldAlt<>"" then  
-    getFieldAlt=fieldAlt
-    exit function
-  end if
-  configNameList="userid|用户ID,title|标题,ip|IP地址,createtime|创建时间,updatetime|修改时间,isthrough|审核,bodycontent|备注,id|ID,ntype|证书类型,education|学历,address|常住地,tel|联系电话,socialsecurity|社保,profession|专业,onregistered|非注册类证书,safetyclass|安全类,guestname|姓名,idcard|身份证号,sex|性别,registrationtype|注册类型,issuetime|资格证签发时间,expirydate|证书有效截止时间,continuingeducation|注册专业近三年内继续教育情况,receiptprice|收证价格,referralfee|介绍费(元),contractperiod|收证价格,certificatepurpose|证书用途,inputselect|录入,adminid|添加者,performance|业绩,nstate|审核状态,appendix|附件,servicecharge|业务办理费,redheaderfile|是否带红头文件,payment|公司付款,personalpayment|个人付款,signingdate|合同截止日期,companyname|企业名称,companycontact|企业联络人,companytel|企业联络人电话,companyaddress|企业注册地,securityexam|安全类考试,certificatestatus|证书状态,viewidlist|已查看用户,classname|分类名称,certificatereminderday|资格证到期提醒天数,signingdatereminderday|签合同到期提醒天数,bcertificatedate|安全B证截止时间,bcertificatereminderday|安全B证截止时间到期提醒天数,companysocialsecurity|公司是否交社保,auditadminid|审核者,outadminid|出库者,reviewtime|评审时间,jobtitle|职称,timelist|多个时间组合,invoicetype|发票类型,denomination|开票面额,invoicecount|开票张数,ispayment|是否付款,issigncontract|是否签合同,isbilling|是否开票,company|公司名称,companyadminid|公司信息添加者,selectdenomination|开票面额,cumulativeamount|初始累计金额,billingcompany|开票企业,invoiceamount|开票金额,newcompanyid|新公司ID,companycontractperiod|公司签约年限,companyselectcontractperiod|签约年限选择,certificatepricexval|出证价格X值,certificateprice|出证价格,stype|类型,nvalue|设置值,username|用户账号,weburl|网址,tickettime|ticket时间,age|年龄,name|名称,"
-  splstr=split(configNameList,",")
-  for each s in splstr
-    if instr(s,"|")>0 then
-      splxx=split(s,"|")
-      if splxx(0)=fieldName then
-        getFieldAlt=phptrim(splxx(1))
-        exit function
-      end if
-    end if
-  next
+function getFieldCnName(byval a,byval b)
+dim c,d,e,f 
+a=phptrim(lcase(a))
+b=phptrim(b)
+if b <>"" then  
+getFieldAlt=b
+exit function
+end if
+c=ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(29992)&ChrW(25143)&ChrW(73)&ChrW(68)&ChrW(44)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(124)&ChrW(26631)&ChrW(39064)&ChrW(44)&ChrW(105)&ChrW(112)&ChrW(124)&ChrW(73)&ChrW(80)&ChrW(22320)&ChrW(22336)&ChrW(44)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(21019)&ChrW(24314)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(20462)&ChrW(25913)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(124)&ChrW(23457)&ChrW(26680)&ChrW(44)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(22791)&ChrW(27880)&ChrW(44)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(73)&ChrW(68)&ChrW(44)&ChrW(110)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(124)&ChrW(35777)&ChrW(20070)&ChrW(31867)&ChrW(22411)&ChrW(44)&ChrW(101)&ChrW(100)&ChrW(117)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(23398)&ChrW(21382)&ChrW(44)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(124)&ChrW(24120)&ChrW(20303)&ChrW(22320)&ChrW(44)&ChrW(116)&ChrW(101)&ChrW(108)&ChrW(124)&ChrW(32852)&ChrW(31995)&ChrW(30005)&ChrW(35805)&ChrW(44)&ChrW(115)&ChrW(111)&ChrW(99)&ChrW(105)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(121)&ChrW(124)&ChrW(31038)&ChrW(20445)&ChrW(44)&ChrW(112)&ChrW(114)&ChrW(111)&ChrW(102)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(19987)&ChrW(19994)&ChrW(44)&ChrW(111)&ChrW(110)&ChrW(114)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(124)&ChrW(38750)&ChrW(27880)&ChrW(20876)&ChrW(31867)&ChrW(35777)&ChrW(20070)&ChrW(44)&ChrW(115)&ChrW(97)&ChrW(102)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(124)&ChrW(23433)&ChrW(20840)&ChrW(31867)&ChrW(44)&ChrW(103)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(22995)&ChrW(21517)&ChrW(44)&ChrW(105)&ChrW(100)&ChrW(99)&ChrW(97)&ChrW(114)&ChrW(100)&ChrW(124)&ChrW(36523)&ChrW(20221)&ChrW(35777)&ChrW(21495)&ChrW(44)&ChrW(115)&ChrW(101)&ChrW(120)&ChrW(124)&ChrW(24615)&ChrW(21035)&ChrW(44)&ChrW(114)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(124)&ChrW(27880)&ChrW(20876)&ChrW(31867)&ChrW(22411)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(115)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(36164)&ChrW(26684)&ChrW(35777)&ChrW(31614)&ChrW(21457)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(101)&ChrW(120)&ChrW(112)&ChrW(105)&ChrW(114)&ChrW(121)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(124)&ChrW(35777)&ChrW(20070)&ChrW(26377)&ChrW(25928)&ChrW(25130)&ChrW(27490)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(101)&ChrW(100)&ChrW(117)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(27880)&ChrW(20876)&ChrW(19987)&ChrW(19994)&ChrW(36817)&ChrW(19977)&ChrW(24180)&ChrW(20869)&ChrW(32487)&ChrW(32493)&ChrW(25945)&ChrW(32946)&ChrW(24773)&ChrW(20917)&ChrW(44)&ChrW(114)&ChrW(101)&ChrW(99)&ChrW(101)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(124)&ChrW(25910)&ChrW(35777)&ChrW(20215)&ChrW(26684)&ChrW(44)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(101)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(108)&ChrW(102)&ChrW(101)&ChrW(101)&ChrW(124)&ChrW(20171)&ChrW(32461)&ChrW(36153)&ChrW(40)&ChrW(20803)&ChrW(41)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(111)&ChrW(100)&ChrW(124)&ChrW(25910)&ChrW(35777)&ChrW(20215)&ChrW(26684)&ChrW(44)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(112)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(124)&ChrW(35777)&ChrW(20070)&ChrW(29992)&ChrW(36884)&ChrW(44)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(124)&ChrW(24405)&ChrW(20837)&ChrW(44)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(28155)&ChrW(21152)&ChrW(32773)&ChrW(44)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(97)&ChrW(110)&ChrW(99)&ChrW(101)&ChrW(124)&ChrW(19994)&ChrW(32489)&ChrW(44)&ChrW(110)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(124)&ChrW(23457)&ChrW(26680)&ChrW(29366)&ChrW(24577)&ChrW(44)&ChrW(97)&ChrW(112)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(105)&ChrW(120)&ChrW(124)&ChrW(38468)&ChrW(20214)&ChrW(44)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(124)&ChrW(19994)&ChrW(21153)&ChrW(21150)&ChrW(29702)&ChrW(36153)&ChrW(44)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(124)&ChrW(26159)&ChrW(21542)&ChrW(24102)&ChrW(32418)&ChrW(22836)&ChrW(25991)&ChrW(20214)&ChrW(44)&ChrW(112)&ChrW(97)&ChrW(121)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(20844)&ChrW(21496)&ChrW(20184)&ChrW(27454)&ChrW(44)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(108)&ChrW(112)&ChrW(97)&ChrW(121)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(20010)&ChrW(20154)&ChrW(20184)&ChrW(27454)&ChrW(44)&ChrW(115)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(124)&ChrW(21512)&ChrW(21516)&ChrW(25130)&ChrW(27490)&ChrW(26085)&ChrW(26399)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(20225)&ChrW(19994)&ChrW(21517)&ChrW(31216)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(124)&ChrW(20225)&ChrW(19994)&ChrW(32852)&ChrW(32476)&ChrW(20154)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(116)&ChrW(101)&ChrW(108)&ChrW(124)&ChrW(20225)&ChrW(19994)&ChrW(32852)&ChrW(32476)&ChrW(20154)&ChrW(30005)&ChrW(35805)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(124)&ChrW(20225)&ChrW(19994)&ChrW(27880)&ChrW(20876)&ChrW(22320)&ChrW(44)&ChrW(115)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(121)&ChrW(101)&ChrW(120)&ChrW(97)&ChrW(109)&ChrW(124)&ChrW(23433)&ChrW(20840)&ChrW(31867)&ChrW(32771)&ChrW(35797)&ChrW(44)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(124)&ChrW(35777)&ChrW(20070)&ChrW(29366)&ChrW(24577)&ChrW(44)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(124)&ChrW(24050)&ChrW(26597)&ChrW(30475)&ChrW(29992)&ChrW(25143)&ChrW(44)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(20998)&ChrW(31867)&ChrW(21517)&ChrW(31216)&ChrW(44)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(100)&ChrW(97)&ChrW(121)&ChrW(124)&ChrW(36164)&ChrW(26684)&ChrW(35777)&ChrW(21040)&ChrW(26399)&ChrW(25552)&ChrW(37266)&ChrW(22825)&ChrW(25968)&ChrW(44)&ChrW(115)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(100)&ChrW(97)&ChrW(121)&ChrW(124)&ChrW(31614)&ChrW(21512)&ChrW(21516)&ChrW(21040)&ChrW(26399)&ChrW(25552)&ChrW(37266)&ChrW(22825)&ChrW(25968)&ChrW(44)&ChrW(98)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(124)&ChrW(23433)&ChrW(20840)&ChrW(66)&ChrW(35777)&ChrW(25130)&ChrW(27490)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(98)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(100)&ChrW(97)&ChrW(121)&ChrW(124)&ChrW(23433)&ChrW(20840)&ChrW(66)&ChrW(35777)&ChrW(25130)&ChrW(27490)&ChrW(26102)&ChrW(38388)&ChrW(21040)&ChrW(26399)&ChrW(25552)&ChrW(37266)&ChrW(22825)&ChrW(25968)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(115)&ChrW(111)&ChrW(99)&ChrW(105)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(121)&ChrW(124)&ChrW(20844)&ChrW(21496)&ChrW(26159)&ChrW(21542)&ChrW(20132)&ChrW(31038)&ChrW(20445)&ChrW(44)&ChrW(97)&ChrW(117)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(23457)&ChrW(26680)&ChrW(32773)&ChrW(44)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(20986)&ChrW(24211)&ChrW(32773)&ChrW(44)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(35780)&ChrW(23457)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(106)&ChrW(111)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(124)&ChrW(32844)&ChrW(31216)&ChrW(44)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(124)&ChrW(22810)&ChrW(20010)&ChrW(26102)&ChrW(38388)&ChrW(32452)&ChrW(21512)&ChrW(44)&ChrW(105)&ChrW(110)&ChrW(118)&ChrW(111)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(124)&ChrW(21457)&ChrW(31080)&ChrW(31867)&ChrW(22411)&ChrW(44)&ChrW(100)&ChrW(101)&ChrW(110)&ChrW(111)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(24320)&ChrW(31080)&ChrW(38754)&ChrW(39069)&ChrW(44)&ChrW(105)&ChrW(110)&ChrW(118)&ChrW(111)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(24320)&ChrW(31080)&ChrW(24352)&ChrW(25968)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(121)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(26159)&ChrW(21542)&ChrW(20184)&ChrW(27454)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(115)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(124)&ChrW(26159)&ChrW(21542)&ChrW(31614)&ChrW(21512)&ChrW(21516)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(124)&ChrW(26159)&ChrW(21542)&ChrW(24320)&ChrW(31080)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(124)&ChrW(20844)&ChrW(21496)&ChrW(21517)&ChrW(31216)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(20844)&ChrW(21496)&ChrW(20449)&ChrW(24687)&ChrW(28155)&ChrW(21152)&ChrW(32773)&ChrW(44)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(100)&ChrW(101)&ChrW(110)&ChrW(111)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(24320)&ChrW(31080)&ChrW(38754)&ChrW(39069)&ChrW(44)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(117)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(118)&ChrW(101)&ChrW(97)&ChrW(109)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(21021)&ChrW(22987)&ChrW(32047)&ChrW(35745)&ChrW(37329)&ChrW(39069)&ChrW(44)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(124)&ChrW(24320)&ChrW(31080)&ChrW(20225)&ChrW(19994)&ChrW(44)&ChrW(105)&ChrW(110)&ChrW(118)&ChrW(111)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(97)&ChrW(109)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(24320)&ChrW(31080)&ChrW(37329)&ChrW(39069)&ChrW(44)&ChrW(110)&ChrW(101)&ChrW(119)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(26032)&ChrW(20844)&ChrW(21496)&ChrW(73)&ChrW(68)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(111)&ChrW(100)&ChrW(124)&ChrW(20844)&ChrW(21496)&ChrW(31614)&ChrW(32422)&ChrW(24180)&ChrW(38480)&ChrW(44)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(111)&ChrW(100)&ChrW(124)&ChrW(31614)&ChrW(32422)&ChrW(24180)&ChrW(38480)&ChrW(36873)&ChrW(25321)&ChrW(44)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(120)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(124)&ChrW(20986)&ChrW(35777)&ChrW(20215)&ChrW(26684)&ChrW(88)&ChrW(20540)&ChrW(44)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(124)&ChrW(20986)&ChrW(35777)&ChrW(20215)&ChrW(26684)&ChrW(44)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(124)&ChrW(31867)&ChrW(22411)&ChrW(44)&ChrW(110)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(124)&ChrW(35774)&ChrW(32622)&ChrW(20540)&ChrW(44)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(29992)&ChrW(25143)&ChrW(36134)&ChrW(21495)&ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(124)&ChrW(32593)&ChrW(22336)&ChrW(44)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(116)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(116)&ChrW(26102)&ChrW(38388)&ChrW(44)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(124)&ChrW(24180)&ChrW(40836)&ChrW(44)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(21517)&ChrW(31216)&ChrW(44)
+d=split(c,ChrW(44))
+for each f in d
+if instr(f,ChrW(124))>0 then
+e=split(f,ChrW(124))
+if e(0)=a then
+getFieldAlt=phptrim(e(1))
+exit function
+end if
+end if
+next
 end function
 
- 
-
-
-'获得题目子栏目树状 20230407  如  ├─栏目名称
-function getTiMoSubColumSort(parentid,subStr)
-	dim rs:Set rs = CreateObject("Adodb.RecordSet")
-	rs.open "select * from ["& db_PREFIX &"timoclass] where id="&parentid,conn,1,1
-	if not rs.eof then
-		if subStr<>"" then
-			subStr="&nbsp;&nbsp;" & subStr
-		else
-			subStr=subStr & "&nbsp;&nbsp;├─" 
-		end if
-		if rs("parentid")<>-1 then
-			call getTiMoSubColumSort(rs("parentid"),subStr)
-		end if
-	end if:rs.close
-	getTiMoSubColumSort=subStr
-end function
-'显示题目栏目列表成input方式 20210331 如 <option> ├─栏目名称</opton>
-function tiMoColumnSubInput(parentid,focusid,focusParentid)
-  dim rs:Set rs = CreateObject("Adodb.RecordSet")
-  dim c,s,sel,addsql
-  if focusid<>"" then addSql=" and id<>"& focusid
-  rs.open "select * from ["& db_PREFIX &"timoclass] where parentid="&parentid & addsql &" order by sortrank asc",conn,1,1
-  while not rs.EOF  
-  	sel=""
-  	if focusParentid<>"" then
-  		if focusParentid=rs("id") then sel=" selected"
-  	end if
-
-    c=c & "<option value="""& rs("id") &""""& sel &">"& getTiMoSubColumSort(rs("parentid"),"")  & rs("columnName")&"</option>"    
-    c=c & tiMoColumnSubInput(rs("id"),IIF(focusid=-2,-3,focusid),focusParentid)  
-  rs.movenext:wend:rs.close
-  tiMoColumnSubInput=c
-end function
-'获得题目目录树20230407
-function getTiMoSubTree(parentid)
-    dim c,s
-    dim rs:Set rs = CreateObject("Adodb.RecordSet")
-    rs.open"select * from ["& db_PREFIX &"timoclass] where id="&parentid,conn,1,1
-    if not rs.eof then
-	    c=rs("columnname")
-	    if rs("parentid")<>-1 then
-	        s=getTiMoSubTree(rs("parentid"))
-	        if s<>"" then c=s&">>" & c
-	    end if
-	end if:rs.close
-
-    getTiMoSubTree=c
+function getTiMoSubColumSort(a,b)
+dim c:Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+c.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(116)&ChrW(105)&ChrW(109)&ChrW(111)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not c.eof then
+if b <>"" then
+b=ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59) & b
+else
+b=b & ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(9500)&ChrW(9472) 
+end if
+if c(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) <>-1 then
+call getTiMoSubColumSort(c(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)),b)
+end if
+end if:c.close
+getTiMoSubColumSort=b
 end function
 
-
-
-
-
-'获得在线修改select值'   getOnLineSelectValue("stype-你好_0-不好_1-其它_2",1)
-function getOnLineSelectValue(sType,sFocus)
-	dim splA,i,s2,splB
-	splA=split(sType,"-")
-	sFocus=sFocus &"" '转字符类型'
-	for i=1 to ubound(splA)
-		if splA(i)<>"" then
-    		s2=splA(i) & "_" & splA(i)
-    		splB=split(s2,"_") 
-    		if splB(1)=sFocus then
-    			getOnLineSelectValue=splB(0)
-    			exit function
-    		end if
-    	end if
-	next
+function tiMoColumnSubInput(a,b,c)
+dim d:Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+dim e,f,g,h
+if b <>"" then h=ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(60)&ChrW(62)& b
+d.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(116)&ChrW(105)&ChrW(109)&ChrW(111)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&a & h &ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99),conn,1,1
+while not d.eof  
+g=""
+if c <>"" then
+if c=d(ChrW(105)&ChrW(100)) then g=ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)
+end if
+e=e & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)& d(ChrW(105)&ChrW(100)) &ChrW(34)& g &ChrW(62)& getTiMoSubColumSort(d(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)),"")  & d(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62)    
+e=e & tiMoColumnSubInput(d(ChrW(105)&ChrW(100)),IIF(b=-2,-3,b),c)  
+d.movenext:wend:d.close
+tiMoColumnSubInput=e
 end function
-'显示在线修改select值'   如   showOnLineSelectHtml("stype-你好_0-不好_1-其它_2",1)
-function showOnLineSelectHtml(sType,sFocus)
-	dim splA,i,s2,splB,c,sel
-	splA=split(sType,"-")
-	sFocus=sFocus &"" '转字符类型'
 
-    c="<select name="""& splA(0) &""" id="""& splA(0) &""">" 
-	for i=1 to ubound(splA)
-		if splA(i)<>"" then
-    		s2=splA(i) & "_" & splA(i)
-    		splB=split(s2,"_") 
-    		sel=""
-    		if splB(1)=sFocus then
-    			sel=" selected"
-    		end if
-    		c=c & "<option value="""& splB(1) &""""& sel &">"& splB(0) &"</option>" & vbcrlf
-    	end if
-	next
-    c=c & "</select>"
-	showOnLineSelectHtml=c
+function getTiMoSubTree(a)
+dim b,c
+dim d:Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+d.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(116)&ChrW(105)&ChrW(109)&ChrW(111)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not d.eof then
+b=d(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+if d(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) <>-1 then
+c=getTiMoSubTree(d(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
+if c <>"" then b=c&ChrW(62)&ChrW(62) & b
+end if
+end if:d.close
+getTiMoSubTree=b
+end function
+
+function getOnLineSelectValue(a,b)
+dim c,d,e,f,g
+c=split(a,ChrW(45))
+b=b &""
+for d=1 to ubound(c)
+if c(d) <>"" then
+e=c(d) & ChrW(95) & c(d)
+f=split(e,ChrW(95)) 
+
+if instr(ChrW(44)&b&ChrW(44), ChrW(44)&f(1)&ChrW(44))>0 then
+if g <>"" then g=g &ChrW(32)&ChrW(44)&ChrW(32)
+g=g & f(0)
+
+
+end if
+end if
+next
+getOnLineSelectValue=g
+end function
+
+function showOnLineSelectHtml(a,b)
+a=handleConfigFuHao(a)
+dim c,d,e,f,g,h
+c=split(a,ChrW(45))
+b=b &""
+g=ChrW(60)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)& c(0) &ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)& c(0) &ChrW(34)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(45)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(61)&ChrW(34)& c(0) &ChrW(34)&ChrW(62) 
+for d=1 to ubound(c)
+if c(d) <>"" then
+e=c(d) & ChrW(95) & c(d)
+f=split(e,ChrW(95)) 
+h=""
+if unHandleConfigFuHao(f(1))=b then
+h=ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)
+end if
+g=g & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)& f(1) &ChrW(34)& h &ChrW(62)& f(0) &ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62) & vbcrlf
+end if
+next
+g=g & ChrW(60)&ChrW(47)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(62)
+g=unHandleConfigFuHao(g)
+showOnLineSelectHtml=g
+end function 
+function useTpl2022(a,b) 
+
+dim c,d,e,f,g,h,i,j
+dim k,l,m
+if b="" then
+call die( ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(27169)&ChrW(26495)&ChrW(20026)&ChrW(31354)&ChrW(33)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
+end if
+c=a & ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47) & b
+d=getDirFileNameList(c,ChrW(97)&ChrW(115)&ChrW(112))
+call createfolder(a & ChrW(47)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107))
+f=a & ChrW(47)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(47) & format_Time(now(),6)
+call createfolder(f)
+e=split(d,vbcrlf)
+for each g in e
+if g <>"" then
+h = c & ChrW(47) &g
+i=a & ChrW(47) & g
+j=f & ChrW(47) & g
+
+
+call moveFile(i,j)
+d=readfile(h,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+d=replace(d,ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(73)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(117)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47),ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(73)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(117)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47) & b & ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47))
+
+call writetofile(i,d,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+end if 
+next
+
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)&db_PREFIX&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(93),conn,1,3
+if not rs.eof then
+rs(ChrW(116)&ChrW(112)&ChrW(108)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=b
+rs.update
+end if:rs.close
+useTpl2022=ChrW(79)&ChrW(75)&ChrW(61) & handlepath(c) & ChrW(32)&ChrW(45)&ChrW(62)&ChrW(32) & ubound(e)
+end function
+
+function handleConfigFuHao(a)
+a=replace(a,ChrW(92)&ChrW(44),ChrW(91)&ChrW(29305)&ChrW(21035)&ChrW(32)&ChrW(109)&ChrW(97)&ChrW(111)&ChrW(104)&ChrW(97)&ChrW(32)&ChrW(29305)&ChrW(21035)&ChrW(93))
+a=replace(a,ChrW(92)&ChrW(95),ChrW(91)&ChrW(29305)&ChrW(21035)&ChrW(32)&ChrW(120)&ChrW(105)&ChrW(97)&ChrW(104)&ChrW(117)&ChrW(97)&ChrW(120)&ChrW(105)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(29305)&ChrW(21035)&ChrW(93))
+a=replace(a,ChrW(92)&ChrW(45),ChrW(91)&ChrW(29305)&ChrW(21035)&ChrW(32)&ChrW(115)&ChrW(104)&ChrW(117)&ChrW(120)&ChrW(105)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(29305)&ChrW(21035)&ChrW(93))
+handleConfigFuHao=a
+end function
+
+function unHandleConfigFuHao(a)
+a=replace(a,ChrW(91)&ChrW(29305)&ChrW(21035)&ChrW(32)&ChrW(109)&ChrW(97)&ChrW(111)&ChrW(104)&ChrW(97)&ChrW(32)&ChrW(29305)&ChrW(21035)&ChrW(93),ChrW(44))
+a=replace(a,ChrW(91)&ChrW(29305)&ChrW(21035)&ChrW(32)&ChrW(120)&ChrW(105)&ChrW(97)&ChrW(104)&ChrW(117)&ChrW(97)&ChrW(120)&ChrW(105)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(29305)&ChrW(21035)&ChrW(93),ChrW(95))
+a=replace(a,ChrW(91)&ChrW(29305)&ChrW(21035)&ChrW(32)&ChrW(115)&ChrW(104)&ChrW(117)&ChrW(120)&ChrW(105)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(29305)&ChrW(21035)&ChrW(93),ChrW(45))
+unHandleConfigFuHao=a
+end function
+
+function TS_showTableSelect(a,b,c)
+dim d,e,f,g,h,i,j
+d=split(b,ChrW(45))
+c=c &""
+h=ChrW(60)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)& a &ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)& a &ChrW(34)&ChrW(62) 
+dim k:Set k = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
+j=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX & d(1) &ChrW(93)
+k.open j,conn,1,1
+for e=1 to 30
+if k.eof then exit for
+i=""
+if cstr(k(ChrW(105)&ChrW(100)))=c then
+i=ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)
+end if
+h=h & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)& k(ChrW(105)&ChrW(100)) &ChrW(34)& i &ChrW(62)& k(d(2)) &ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62) & vbcrlf
+k.movenext:next:k.close
+h=h & ChrW(60)&ChrW(47)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(62)
+TS_showTableSelect=h
 end function 
 
+function getUserInfo(a)
+a=a&""
+if a="" then 
+getUserInfo=""
+exit function
+end if
 
-'显示表里列表显示指定字段值20230424'   如   TS_showTableSelect("showTableSelect-xiyueta-title",xiyuetaid)
-function TS_showTableSelect(fieldName,sType,sFocus)
-	dim splA,i,s2,splB,c,sel,sql
-	splA=split(sType,"-")
-	sFocus=sFocus &"" '转字符类型'
-
-    c="<select name="""& fieldName &""" id="""& fieldName &""">" 
-
-  	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
-  	sql="select * from ["& db_PREFIX & splA(1) &"]"
-  	rs.open sql,conn,1,1
-	for i=1 to 30
-		if rs.eof then exit for
-		sel=""
-		if cstr(rs("id"))=sFocus then
-			sel=" selected"
-		end if
-		c=c & "<option value="""& rs("id") &""""& sel &">"& rs(splA(2)) &"</option>" & vbcrlf
-	rs.movenext:next:rs.close
-    c=c & "</select>"
-	TS_showTableSelect=c
-end function 
-'获得会员信息 如 user1(张三)'   20230423    如 getUserInfo(2)
-function getUserInfo(userid)
-  userid=userid&""
-  if userid="" then 
-  	getUserInfo=""
-  	exit function
-  end if
-  ' call echo(userid,typename(userid)):doevents
-  dim rs:Set rs = CreateObject("Adodb.RecordSet") 
-  rs.open "select * from ["& db_PREFIX &"member] where id="&userid,conn,1,1
-  if not rs.eof then
-  	getUserInfo=rs("username") & "("& rs("nickname") &")"
-  end if:rs.close
+dim b:Set b = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116)) 
+b.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+if not b.eof then
+getUserInfo=b(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(40)& b(ChrW(110)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) &ChrW(41)
+end if:b.close
 end function
-'获得会员里图片20230425' 如 TS_getTableMemberPicImg("getuserpicimg-userid-80",rs("userid")) 
-function TS_getTableMemberPicImg(sType,userid) 
-  dim splxx,nHeight
-  nHeight=80
-  userid=userid&"" 
-  if userid="" then 
-  	TS_getTableMemberPicImg=""
-  	exit function
-  end if  
-  splxx=split(sType,"-")
-  if ubound(splxx)>=2 then
-  		nHeight=splxx(2)
-  end if
-  dim rs:Set rs = CreateObject("Adodb.RecordSet") 
-  rs.open "select * from ["& db_PREFIX &"member] where id="&userid,conn,1,1
-  if not rs.eof then
-  	TS_getTableMemberPicImg="<img src='"& rs("pic") &"' height='"& nHeight &"'>"
-  end if:rs.close
+
+function TS_getTableMemberPicImg(a,b) 
+dim c,d
+d=80
+b=b&"" 
+if b="" then 
+TS_getTableMemberPicImg=""
+exit function
+end if  
+c=split(a,ChrW(45))
+if ubound(c) >=2 then
+d=c(2)
+end if
+dim e:Set e = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116)) 
+e.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b,conn,1,1
+if not e.eof then
+TS_getTableMemberPicImg=ChrW(60)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(39)& e(ChrW(112)&ChrW(105)&ChrW(99)) &ChrW(39)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)& d &ChrW(39)&ChrW(62)
+end if:e.close
 end function
-'图片地址转显示html图片-80  为图片宽高 srctohtmlimg-80-60
-function TS_srctohtmlimg(sType,pic)
-	dim splA,width,height
-	splA=split(sType&"--","-") 
-	width=splA(1)
-	height=splA(2)
-	if width="" then width="80"
-	if height="" then height="80"
-  	TS_srctohtmlimg="<img src='"& pic &"' style='max-width:"& width &"px;max-height:"& height &"px'>"
+
+function TS_srctohtmlimg(a,b)
+dim c,d,e
+c=split(a&ChrW(45)&ChrW(45),ChrW(45)) 
+d=c(1)
+e=c(2)
+if d="" then d=ChrW(56)&ChrW(48)
+if e="" then e=ChrW(56)&ChrW(48)
+TS_srctohtmlimg=ChrW(60)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(39)& b &ChrW(39)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(109)&ChrW(97)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(58)& d &ChrW(112)&ChrW(120)&ChrW(59)&ChrW(109)&ChrW(97)&ChrW(120)&ChrW(45)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)& e &ChrW(112)&ChrW(120)&ChrW(39)&ChrW(62)
 end function 
 
+function TS_getTableCount(a,b)
+dim c,d,e,f,g
+b=b&""
+c=split(a,ChrW(45)) 
+if ubound(c) >=2 then
+if b <>"" then 
+f=getFieldAlt(db_PREFIX & c(1),c(2))
 
- 
-'特殊处理 20230424'  如 TS_getTableCount("getTableCount-xiyuetaarticle-xiyuetaid-isthrough1",rs("userid"))
-function TS_getTableCount(sType,id)
-	dim splA,splxx,addSql,sFieldType,sFindField
-	id=id&""
-	splA=split(sType,"-") 
-	if ubound(splA)>=2 then
+if f=ChrW(86)&ChrW(97)&ChrW(114)&ChrW(67)&ChrW(104)&ChrW(97)&ChrW(114) or f=ChrW(84)&ChrW(101)&ChrW(120)&ChrW(116) then 
+e=ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&c(2) & ChrW(61)&ChrW(39)& b & ChrW(39)
+else
+e=ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&c(2) & ChrW(61)&b
+end if
+end if
+if ubound(c) >=3 then
+if c(3)=ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(49) then
+if e="" then 
+e=ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)
+else
+e=e & ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)
+end if
+e=e & ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(49)
+end if
+end if
+dim h:Set h = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
 
-		if id<>"" then 
-			sFieldType=getFieldAlt(db_PREFIX & splA(1),splA(2))   '这种不是特殊好，暂时用着'
-			' call echo("sFieldType",sFieldType):doevents
-			if sFieldType="VarChar" or sFieldType="Text" then 
-					addSql=" where "&splA(2) & "='"& id & "'"
-			else
-				addSql=" where "&splA(2) & "="&id
-			end if
-		end if
-		if ubound(splA)>=3 then
-			if splA(3)="isthrough1" then
-				if addSql="" then 
-					addSql=" where "
-				else
-					addSql=addSql & " and "
-				end if
-				addSql=addSql & " isthrough=1"
-			end if
-		end if
-	  	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
-	  	' call echo(id,"select count(*) from " & db_PREFIX & splA(1) & addSql)
-      	TS_getTableCount="共有" & conn.execute("select count(*) from " & db_PREFIX & splA(1) & addSql)(0) &"条"
-	end if
+TS_getTableCount=ChrW(20849)&ChrW(26377) & conn.execute(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(40)&ChrW(42)&ChrW(41)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & c(1) & e)(0) &ChrW(26465)
+end if
 end function
 
-'获得表里对应id里的字段值 20230424'  如 TS_getTableFieldValue("getTableFieldValue-xiyueta-title",rs("id")) 
-function TS_getTableFieldValue(sType,id)
-	dim splA,sql
-	id=id&""
-	splA=split(sType,"-") 
-	if ubound(splA)>=2 then 
-	  	dim rs:Set rs = CreateObject("Adodb.RecordSet")   
-	  	sql="select * from ["& db_PREFIX & splA(1) &"] where id="&id
-		rs.open sql,conn,1,1
-		' call echo("sql",sql)
-		if not rs.eof then
-			TS_getTableFieldValue=rs(splA(2))  
-		end if:rs.close
-	end if
+function TS_getTableFieldValue(a,b)
+dim c,d
+b=b&""
+c=split(a,ChrW(45)) 
+if ubound(c) >=2 then 
+dim e:Set e = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
+d=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX & c(1) &ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b
+e.open d,conn,1,1
+
+if not e.eof then
+TS_getTableFieldValue=e(c(2))  
+end if:e.close
+end if
 end function
 
 
-'TS_handleAllAction("handleAllAction-showrenshu",rs)
-'处理全部动作20230425'
-function TS_handleAllAction(sType,rs)
-	dim splA,sAction
-	  	dim rsx:Set rsx = CreateObject("Adodb.RecordSet")   
-	splA=split(sType,"-") 
-	sAction=splA(1)
-	if sAction="showrenshu" then  '显示大人小孩子数'
-		TS_handleAllAction=rs("adultnum") & "大" & rs("chindnum") & "小"
-	elseif sAction="changpenweizhi" then  '帐篷位置'
-		TS_handleAllAction=rs("order_seatrow") &"行" & rs("order_seatcol")&"列"
-	elseif sAction="tuguanguser" then
-	  	rsx.open"select * from ["& db_PREFIX &"member] where id="&rs("userid"),conn,1,1
-	  	if not rsx.eof then
-			TS_handleAllAction=rsx("wxopenid")
-		end if:rsx.close
-	elseif sAction="gethuodengtitle" then '获得活动标题'  
-	  	rsx.open"select * from ["& db_PREFIX &"studyclass] where id="&rs("studyclassid"),conn,1,1
-	  	if not rsx.eof then
-			TS_handleAllAction=rsx("title")   
-		end if:rsx.close
-	elseif sAction="getwebsiteinfo" then '获得活动标题'   
-		if rs("webid")<>"" then
-		  	rsx.open"select * from ["& db_PREFIX &"web] where id="&rs("webid"),conn,1,1
-		  	if not rsx.eof then
-				TS_handleAllAction=rsx("website") & "(" & rsx("version") & ")积分 " & rsx("money")
-			end if:rsx.close
-		else
-			TS_handleAllAction="webid为空，注意"
-		end if
-	end if
+function TS_handleAllAction(a,b)
+dim c,d,e
+dim f:Set f = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
+c=split(a,ChrW(45)) 
+d=c(1)
+if d=ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(115)&ChrW(104)&ChrW(117) then
+TS_handleAllAction=b(ChrW(97)&ChrW(100)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(110)&ChrW(117)&ChrW(109)) & ChrW(22823) & b(ChrW(99)&ChrW(104)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(110)&ChrW(117)&ChrW(109)) & ChrW(23567)
+elseif d=ChrW(99)&ChrW(104)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(122)&ChrW(104)&ChrW(105) then
+TS_handleAllAction=b(ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(114)&ChrW(111)&ChrW(119)) &ChrW(34892) & b(ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(108))&ChrW(21015)
+elseif d=ChrW(116)&ChrW(117)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114) then
+f.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)),conn,1,1
+if not f.eof then
+TS_handleAllAction=f(ChrW(119)&ChrW(120)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(105)&ChrW(100))
+end if:f.close
+elseif d=ChrW(103)&ChrW(101)&ChrW(116)&ChrW(104)&ChrW(117)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(110)&ChrW(103)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101) then
+f.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(115)&ChrW(116)&ChrW(117)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b(ChrW(115)&ChrW(116)&ChrW(117)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(105)&ChrW(100)),conn,1,1
+if not f.eof then
+TS_handleAllAction=f(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))   
+end if:f.close
+elseif d=ChrW(103)&ChrW(101)&ChrW(116)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111) then
+if b(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(105)&ChrW(100)) <>"" then
+f.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(119)&ChrW(101)&ChrW(98)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(105)&ChrW(100)),conn,1,1
+if not f.eof then
+TS_handleAllAction=f(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)) & ChrW(40) & f(ChrW(118)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)) & ChrW(41)&ChrW(31215)&ChrW(20998)&ChrW(32) & f(ChrW(109)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(121))
+end if:f.close
+else
+TS_handleAllAction=ChrW(119)&ChrW(101)&ChrW(98)&ChrW(105)&ChrW(100)&ChrW(20026)&ChrW(31354)&ChrW(65292)&ChrW(27880)&ChrW(24847)
+end if
+elseif d=ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111) then
+TS_handleAllAction=getUserInfo(b(ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(100)))
+elseif d=ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101) then
+f.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(105)&ChrW(100)),conn,1,1
+if not f.eof then
+TS_handleAllAction=f(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(40) & f(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(41)
+end if:f.close 
+elseif d=ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103) then
+f.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(95)&ChrW(105)&ChrW(100)),conn,1,1
+if not f.eof then
+TS_handleAllAction=f(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(40) & f(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(41)
+end if:f.close 
+end if
 end function
 
-'获得文章标题名20230516'
-function TS_getArticleTitle(sType,articleid)
-  	dim rsx:Set rsx = CreateObject("Adodb.RecordSet")   
-  	rsx.open"select * from ["& db_PREFIX &"articledetail] where id="&articleid,conn,1,1
-  	if not rsx.eof then
-		TS_getArticleTitle=rsx("title")   
-	end if:rsx.close
+function TS_getArticleTitle(a,b)
+dim c:Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
+c.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(97)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&b,conn,1,1
+if not c.eof then
+TS_getArticleTitle=c(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))   
+end if:c.close
 end function
 
-
-
-function useTpl2022(dir,tpl) 
-  ' call  eerr("tpl",tpl)
-  dim tplFolderPath,content,splstr,backFolder,fileName,filePath,toFilePath,backFilePath
-  dim cssFolder,cssFilePath,toCssFilePath
-  if tpl="" then
-    call die( "{""info"": ""模板为空!"",""status"": ""n""}")
-  end if
-  tplFolderPath=dir & "/tpl/" & tpl
-  content=getDirFileNameList(tplFolderPath,"asp")
-  call createfolder(dir & "/back")  '备份目录'
-  backFolder=dir & "/back/" & format_Time(now(),6)  '备份目录'
-  call createfolder(backFolder)  '备份目录'
-  splstr=split(content,vbcrlf)
-  for each fileName in splstr
-    if fileName<>"" then
-      filePath = tplFolderPath & "/" &fileName
-      toFilePath=dir & "/" & fileName'left(fileName,len(fileName)-4)
-      backFilePath=backFolder & "/" & fileName'left(fileName,len(fileName)-4)
-      ' call echo(filePath,toFilePath)
-      ' call echo(backFilePath,backFilePath)
-      call moveFile(toFilePath,backFilePath) '移到备份区'
-      content=readfile(filePath,"utf-8")
-      content=replace(content,"<!--#Include file = ""tpl/","<!--#Include file = ""tpl/" & tpl & "/tpl/")
-      ' call copyFile(filePath,toFilePath)  '复制一份'
-      call writetofile(toFilePath,content,"utf-8")
-    end if 
-  next
-    '更新当前使用模板名称'
-    rs.open"select * from ["&db_PREFIX&"website]",conn,1,3
-    if not rs.eof then
-        rs("tplname")=tpl
-        rs.update
-    end if:rs.close
-    useTpl2022="OK=" & handlepath(tplFolderPath) & " -> " & ubound(splstr)
+function checkEnLanguage()
+checkEnLanguage=false
+if instr(languageList,ChrW(101)&ChrW(110))>0 then  
+checkEnLanguage=true
+end if
 end function
- 
+
+function getColumEnToCn(a)
+dim b,c,d
+b=split(WEBCOLUMNTYPE,ChrW(44))
+for each c in b
+if instr(c,ChrW(124))>0 then
+d=split(c,ChrW(124))
+if d(1)=a then
+getColumEnToCn=d(0)
+exit function
+end if    
+end if
+next
+end function
 %>

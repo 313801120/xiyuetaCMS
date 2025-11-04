@@ -1,499 +1,453 @@
-﻿<%  
- 
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><%  
 
-'调用function2文件函数
 function callFunction2()
-    dim sType 
-    sType = request("stype") 
-    if sType = "runScanWebUrl" then
-        call runScanWebUrl()          '运行扫描网址
-    elseif sType = "scanCheckDomain" then
-        call scanCheckDomain()        '检测域名有效
-    elseif sType = "bantchImportDomain" then
-        call bantchImportDomain()     '批量导入域名
-    elseif sType = "scanDomainHomePage" then
-        call scanDomainHomePage()     '扫描域名首页
-    elseif sType = "scanDomainHomePageSize" then
-        call scanDomainHomePageSize() '扫描域名首页大小与标题
-    elseif sType = "isthroughTrue" then
-        call isthroughTrue()          '让审核全部为真
-    elseif sType = "printOKWebSite" then
-        call printOKWebSite()         '打印有效网址
-    elseif sType = "printAspServerWebSite" then
-        call printAspServerWebSite()  '打印asp类型网站
-    elseif sType = "clearAllData" then
-        call fun2_clearAllData()      '清除全部数据
-    elseif sType = "function2test" then
-        call function2test()          '测试
-    else 
-		call eerr("function2页里没有动作", request("stype"))
-    end if 
+dim a 
+a = request(ChrW(115)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)) 
+if a = ChrW(114)&ChrW(117)&ChrW(110)&ChrW(83)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(85)&ChrW(114)&ChrW(108) then
+call runScanWebUrl()
+elseif a = ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(67)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110) then
+call scanCheckDomain()
+elseif a = ChrW(98)&ChrW(97)&ChrW(110)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(73)&ChrW(109)&ChrW(112)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110) then
+call bantchImportDomain()
+elseif a = ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101) then
+call scanDomainHomePage()
+elseif a = ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101) then
+call scanDomainHomePageSize()
+elseif a = ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(84)&ChrW(114)&ChrW(117)&ChrW(101) then
+call isthroughTrue()
+elseif a = ChrW(112)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(79)&ChrW(75)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(105)&ChrW(116)&ChrW(101) then
+call printOKWebSite()
+elseif a = ChrW(112)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(105)&ChrW(116)&ChrW(101) then
+call printAspServerWebSite()
+elseif a = ChrW(99)&ChrW(108)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97) then
+call fun2_clearAllData()
+elseif a = ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(50)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116) then
+call function2test()
+else 
+call eerr(ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(50)&ChrW(39029)&ChrW(37324)&ChrW(27809)&ChrW(26377)&ChrW(21160)&ChrW(20316), request(ChrW(115)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)))
+end if 
 end function
 
-'测试
 function function2test()
-    Call openconn() 		
-	'【@是jsp显示@】try{							
-    rs.Open "select * from " & db_PREFIX & "webdomain where isdomain=true", conn, 1, 1
-	call echo("共",rs.recordcount)
-    While Not rs.EOF
-		call echo(rs("isdomain"),rs("website"))
-	rs.movenext:wend:rs.close
-	'【@是jsp显示@】}catch(Exception e){}
+Call openconn()     
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), conn, 1, 1
+call echo(ChrW(20849),rs.recordcount)
+While Not rs.EOF
+call echo(rs(ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)),rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)))
+rs.movenext:wend:rs.close
+
 end function
-'清除全部数据
+
 function fun2_clearAllData()
-    Call openconn() 
-    conn.Execute("delete from " & db_PREFIX & "webdomain") 
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK</a>") 
-end function
-'打印有效网址
-function printOKWebSite()	
-    Call openconn()
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "webdomain where isdomain=true", conn, 1, 1 
-	call echo("共",rs.recordcount)
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK</a>") 
-    While Not rs.EOF
-		'call echo(rs("isdomain"),rs("website"))
-		call rw(rs("website") & "<br>")
-	rs.movenext:wend:rs.close
-	'【@是jsp显示@】}catch(Exception e){}
-end function
-'打印asp类型网站
-function printAspServerWebSite()	
-    Call openconn()
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "webdomain where isasp=true and (isaspx=false and isphp=false)", conn, 1, 1 
-	call echo("共",rs.recordcount)
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK</a>") 
-    While Not rs.EOF
-		'call echo(rs("isdomain"),rs("website"))
-		call rw(rs("website") & "<br>")
-	rs.movenext:wend:rs.close
-	'【@是jsp显示@】}catch(Exception e){}
+Call openconn() 
+conn.Execute(ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)) 
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
 end function
 
-'让审核全部为真
+function printOKWebSite()  
+Call openconn()
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), conn, 1, 1 
+call echo(ChrW(20849),rs.recordcount)
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+While Not rs.EOF
+
+call rw(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)) & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62))
+rs.movenext:wend:rs.close
+
+end function
+
+function printAspServerWebSite()  
+Call openconn()
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(40)&ChrW(105)&ChrW(115)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120)&ChrW(61)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(61)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(41), conn, 1, 1 
+call echo(ChrW(20849),rs.recordcount)
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+While Not rs.EOF
+
+call rw(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)) & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62))
+rs.movenext:wend:rs.close
+
+end function
+
 function isthroughTrue()
-    Call openconn() 
-    conn.Execute("update " & db_PREFIX & "webdomain set isthrough=true") 
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK</a>") 
+Call openconn() 
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)) 
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
 end function
 
-'扫描首页大小
 Function scanDomainHomePageSize()
-    Dim url, nSetTime, isdomain, htmlDir, txtFilePath,homePageList,nThis,nCount
-	dim splstr,s,c,website,nState,longWebSize,content,startTime,webtitle,webkeywords,webdescription
-	  
-	if request("nThis")="" then
-		nThis=0
-	else
-		nThis=request("nThis")
-	end if
-	
-    nSetTime = 3 
-    Call openconn() 
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "webdomain where website<>'' and websize=0 and isdomain=true", conn, 1, 1 
-	
-	if request("nCount")="" then
-		nCount=rs.recordcount
-	else
-		nCount=request("nCount")
-	end if
-    While Not rs.EOF
-		nThis=nThis+1 
-        Call echo(nThis & "/" & nCount, rs("website")) 
-        doevents 
-        htmlDir = "/../网站UrlScan/域名首页大小/"
-        Call createDirFolder(htmlDir) 
-        txtFilePath = htmlDir & "/" & setFileName(rs("website")) & ".txt"
-        If checkFile(txtFilePath) = True Then 
-            Call echo("类型", "本地") 
-			nSetTime=1
-        Else
-			website=getwebsite(rs("website"))
-			if website="" then
-				call eerr("域名为空",website)
-			end if
-		 	content=getHttpPage(website,rs("charset"))
-	        '【PHP】$content=toGB2312Char($content);                                            //给PHP用，转成gb2312字符
-			if content="" then
-				content=" "
-			end if
-			
-            Call createFile(txtFilePath, content)
-            Call echo("类型", "网络") 
-        End If 
-		content=readFile(txtFilePath,"")
-		webtitle=getHtmlValue(content,"webtitle")
-		webkeywords=getHtmlValue(content,"webkeywords")
-		webdescription=getHtmlValue(content,"webdescription")
-		
-		
-		longWebSize=getfsize(txtFilePath)
-		call echo("webtitle",webtitle)
-        '这样写是给转PHP时方便
-        conn.Execute("update " & db_PREFIX & "webdomain  set webtitle='"& ADSql(webtitle) &"',webkeywords='"& webkeywords &"',webdescription='"& webdescription &"',websize="& longWebSize &",isthrough=false,updatetime='" & Now() & "'  where id=" & rs("id") & "")
+Dim a, b, c, d, e,f,g,h
+dim i,j,k,l,m,n,o,p,q,r,s
+if request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))="" then
+g=0
+else
+g=request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))
+end if
+b = 3 
+Call openconn() 
 
-		
-		if request("startTime")="" then
-			startTime=now()
-		else
-			startTime=request("startTime")
-		end if
-		
-		call rw(VBRunTimer(startTime) & "<hr>")
-        url = getUrlAddToParam(getThisUrl(), "?nThis="& nThis &"&nCount="& nCount &"&startTime="& startTime &"&N=" & getRnd(11), "replace") 
- 
-        Call rw(jsTiming(url, nSetTime)) 
-        Response.End() 
-    rs.MoveNext : Wend : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){}
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK，共("& nThis &")条</a>") 
-End Function 
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(60)&ChrW(62)&ChrW(39)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61)&ChrW(48)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), conn, 1, 1 
+if request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))="" then
+h=rs.recordcount
+else
+h=request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))
+end if
+While Not rs.EOF
+g=g+1 
+Call echo(g & ChrW(47) & h, rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))) 
+doevents 
+d = ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(32593)&ChrW(31449)&ChrW(85)&ChrW(114)&ChrW(108)&ChrW(83)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(47)&ChrW(22495)&ChrW(21517)&ChrW(39318)&ChrW(39029)&ChrW(22823)&ChrW(23567)&ChrW(47)
+Call createDirFolder(d) 
+e = d & ChrW(47) & setFileName(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))) & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116)
+If checkFile(e) = True Then 
+Call echo(ChrW(31867)&ChrW(22411), ChrW(26412)&ChrW(22320)) 
+b=1
+Else
+l=getwebsite(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)))
+if l="" then
+call eerr(ChrW(22495)&ChrW(21517)&ChrW(20026)&ChrW(31354),l)
+end if
+o=getHttpPage(l,rs(ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)))
 
-'扫描域名首页
+if o="" then
+o=ChrW(32)
+end if
+Call createFile(e, o)
+Call echo(ChrW(31867)&ChrW(22411), ChrW(32593)&ChrW(32476)) 
+End if 
+o=readFile(e,"")
+q=getHtmlValue(o,ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+r=getHtmlValue(o,ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115))
+s=getHtmlValue(o,ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
+n=getfsize(e)
+call echo(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101),q)
+
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)& ADSql(q) &ChrW(39)&ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115)&ChrW(61)&ChrW(39)& r &ChrW(39)&ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(39)& s &ChrW(39)&ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61)& n &ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(44)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & Now() & ChrW(39)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100)) & "")
+if request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))="" then
+p=now()
+else
+p=request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))
+end if
+call rw(VBRunTimer(p) & ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62))
+a = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(61)& g &ChrW(38)&ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(61)& h &ChrW(38)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)& p &ChrW(38)&ChrW(78)&ChrW(61) & getRnd(11), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+Call rw(jsTiming(a, b)) 
+Response.End() 
+rs.MoveNext : Wend : rs.Close 
+
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(65292)&ChrW(20849)&ChrW(40)& g &ChrW(41)&ChrW(26465)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+End function 
+
 Function scanDomainHomePage()
-    Dim url, nSetTime, isdomain, htmlDir, txtFilePath,homePageList,nThis,nCount
-	dim splstr,s,c,website,nState,startTime
-	dim nIsAsp,nIsAspx,nIsPhp,nIsJsp,c2
-	nIsAsp=0:nIsAspx=0:nIsPhp=0:nIsJsp=0
- 
-	if request("nThis")="" then
-		nThis=0
-	else
-		nThis=request("nThis")
-	end if
-	
-    nSetTime = 3 
-    Call openconn() 
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "webdomain where website<>'' and homepagelist='' and isdomain=true", conn, 1, 1 
-	
-	if request("nCount")="" then
-		nCount=rs.recordcount
-	else
-		nCount=request("nCount")
-	end if
-    While Not rs.EOF
-		nThis=nThis+1 
-        Call echo(nThis & "/" & nCount, rs("website")) 
-        doevents 
-        htmlDir = "/../网站UrlScan/域名首页/"
-        Call createDirFolder(htmlDir) 
-        txtFilePath = htmlDir & "/" & setFileName(rs("website")) & ".txt"
-        If checkFile(txtFilePath) = True Then
-            c = phptrim(readFile(txtFilePath,""))
-			nIsAsp=cint(getstrcut(c,"isAsp=",vbcrlf,1))
-			nIsAspx=cint(getstrcut(c,"isAspx=",vbcrlf,1))
-			nIsPhp=cint(getstrcut(c,"isPhp=",vbcrlf,1))
-			nIsJsp=cint(getstrcut(c,"isJsp=",vbcrlf,1))
-            Call echo("类型", "本地") 
-			nSetTime=1
-        Else
-			website=getwebsite(rs("website"))
-			if website="" then
-				call eerr("域名为空",website)
-			end if
-			splstr=split("index.asp|index.aspx|index.php|index.jsp|index.htm|index.html|default.asp|default.aspx|default.jsp|default.htm|default.html","|")
-			c2=""
-			homePageList=""
-			for each s in splstr
-				url=website & s
-				nState=getHttpUrlState(url)
-				call echo(url,nState & "   ("& getHttpUrlStateAbout(nState) &")")
-				doevents
-				if (s="index.asp" or s="default.asp") and (nState=200 or nState=302) then
-					nIsAsp=1
-				elseif (s="index.aspx" or s="default.aspx") and (nState=200 or nState=302) then
-					nIsAspx=1
-				elseif (s="index.php" or s="default.php") and (nState=200 or nState=302) then
-					nIsPhp=1
-				elseif (s="index.jsp" or s="default.jsp") and (nState=200 or nState=302) then
-					nIsJsp=1
-				end if
-				if nState=200 or nState=302 then
-					homePageList=homePageList & s & "|"
-				end if
-				c2=c2 & s & "=" & nState & vbcrlf
-			next
-			c= "isAsp=" & nIsAsp & vbcrlf
-			c= c & "isAspx=" & nIsAspx & vbcrlf
-			c= c & "isPhp=" & nIsPhp & vbcrlf
-			c= c & "isJsp=" & nIsJsp & vbcrlf & c2
-			
-			if homePageList="" then
-				homePageList="无"
-			end if
-			
-            Call createFile(txtFilePath, c) 
-            Call echo("类型", "网络") 
-        End If 
-        '这样写是给转PHP时方便
-        conn.Execute("update " & db_PREFIX & "webdomain  set isasp="& nIsAsp &",isaspx="& nIsAspx &",isphp="& nIsPhp &",isjsp="& nIsJsp &",isthrough=false,homepagelist='"& homePageList &"',updatetime='" & Now() & "'  where id=" & rs("id") & "") 
+Dim a, b, c, d, e,f,g,h
+dim i,j,k,l,m,n
+dim o,p,q,r,s
+o=0:p=0:q=0:r=0
+if request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))="" then
+g=0
+else
+g=request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))
+end if
+b = 3 
+Call openconn() 
 
-		if request("startTime")="" then
-			startTime=now()
-		else
-			startTime=request("startTime")		
-		end if
-		
-		call rw(VBRunTimer(startTime) & "<hr>")
-        url = getUrlAddToParam(getThisUrl(), "?nThis="& nThis &"&nCount="& nCount &"&startTime="& startTime &"&N=" & getRnd(11), "replace") 
- 
-        Call rw(jsTiming(url, nSetTime)) 
-        Response.End() 
-    rs.MoveNext : Wend : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){}
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK，共("& nThis &")条</a>") 
-End Function 
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(60)&ChrW(62)&ChrW(39)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), conn, 1, 1 
+if request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))="" then
+h=rs.recordcount
+else
+h=request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))
+end if
+While Not rs.EOF
+g=g+1 
+Call echo(g & ChrW(47) & h, rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))) 
+doevents 
+d = ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(32593)&ChrW(31449)&ChrW(85)&ChrW(114)&ChrW(108)&ChrW(83)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(47)&ChrW(22495)&ChrW(21517)&ChrW(39318)&ChrW(39029)&ChrW(47)
+Call createDirFolder(d) 
+e = d & ChrW(47) & setFileName(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))) & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116)
+If checkFile(e) = True Then
+k = phptrim(readFile(e,""))
+o=cint(getstrcut(k,ChrW(105)&ChrW(115)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(61),vbcrlf,1))
+p=cint(getstrcut(k,ChrW(105)&ChrW(115)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(120)&ChrW(61),vbcrlf,1))
+q=cint(getstrcut(k,ChrW(105)&ChrW(115)&ChrW(80)&ChrW(104)&ChrW(112)&ChrW(61),vbcrlf,1))
+r=cint(getstrcut(k,ChrW(105)&ChrW(115)&ChrW(74)&ChrW(115)&ChrW(112)&ChrW(61),vbcrlf,1))
+Call echo(ChrW(31867)&ChrW(22411), ChrW(26412)&ChrW(22320)) 
+b=1
+Else
+l=getwebsite(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)))
+if l="" then
+call eerr(ChrW(22495)&ChrW(21517)&ChrW(20026)&ChrW(31354),l)
+end if
+i=split(ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(124)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120)&ChrW(124)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(124)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(106)&ChrW(115)&ChrW(112)&ChrW(124)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(124)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(124)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120)&ChrW(124)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(106)&ChrW(115)&ChrW(112)&ChrW(124)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(124)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108),ChrW(124))
+s=""
+f=""
+for each j in i
+a=l & j
+m=getHttpUrlState(a)
+call echo(a,m & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(40)& getHttpUrlStateAbout(m) &ChrW(41))
+doevents
+if (j=ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112) or j=ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)) and (m=200 or m=302) then
+o=1
+elseif (j=ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120) or j=ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120)) and (m=200 or m=302) then
+p=1
+elseif (j=ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(112)&ChrW(104)&ChrW(112) or j=ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(112)&ChrW(104)&ChrW(112)) and (m=200 or m=302) then
+q=1
+elseif (j=ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(106)&ChrW(115)&ChrW(112) or j=ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(106)&ChrW(115)&ChrW(112)) and (m=200 or m=302) then
+r=1
+end if
+if m=200 or m=302 then
+f=f & j & ChrW(124)
+end if
+s=s & j & ChrW(61) & m & vbcrlf
+next
+k= ChrW(105)&ChrW(115)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(61) & o & vbcrlf
+k= k & ChrW(105)&ChrW(115)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(120)&ChrW(61) & p & vbcrlf
+k= k & ChrW(105)&ChrW(115)&ChrW(80)&ChrW(104)&ChrW(112)&ChrW(61) & q & vbcrlf
+k= k & ChrW(105)&ChrW(115)&ChrW(74)&ChrW(115)&ChrW(112)&ChrW(61) & r & vbcrlf & s
+if f="" then
+f=ChrW(26080)
+end if
+Call createFile(e, k) 
+Call echo(ChrW(31867)&ChrW(22411), ChrW(32593)&ChrW(32476)) 
+End if 
 
-'批量导入域名
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(61)& o &ChrW(44)&ChrW(105)&ChrW(115)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120)&ChrW(61)& p &ChrW(44)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(61)& q &ChrW(44)&ChrW(105)&ChrW(115)&ChrW(106)&ChrW(115)&ChrW(112)&ChrW(61)& r &ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(44)&ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(61)&ChrW(39)& f &ChrW(39)&ChrW(44)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & Now() & ChrW(39)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100)) & "") 
+if request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))="" then
+n=now()
+else
+n=request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))    
+end if
+call rw(VBRunTimer(n) & ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62))
+a = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(61)& g &ChrW(38)&ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(61)& h &ChrW(38)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)& n &ChrW(38)&ChrW(78)&ChrW(61) & getRnd(11), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+Call rw(jsTiming(a, b)) 
+Response.End() 
+rs.MoveNext : Wend : rs.Close 
+
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(65292)&ChrW(20849)&ChrW(40)& g &ChrW(41)&ChrW(26465)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+End function 
+
 Function bantchImportDomain()
-    Dim content, splStr, url, webSite, nOK 
-    content = LCase(Request.Form("bodycontent")) 
-    splStr = Split(content, vbCrLf) 
-    nOK = 0 
-    Call openconn() 
-    For Each url In splStr
-        webSite = getwebsite(url) 
-        If webSite <> "" Then
-			'【@是jsp显示@】try{
-            rs.Open "select * from " & db_PREFIX & "webdomain where website='" & webSite & "'", conn, 1, 1 
-            If rs.EOF Then
-                conn.Execute("insert into " & db_PREFIX & "webdomain(website,isthrough,isdomain) values('" & webSite & "',true,false)") 
-                Call echo("添加成功", webSite) 
-                nOK = nOK + 1 
-            Else
-                Call echo("website", webSite) 
-            End If : rs.Close 
-			'【@是jsp显示@】}catch(Exception e){}
-        End If 
-    Next 
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK 共(" & nOK & ")条</a>") 
-End Function 
+Dim a, b, c, d, e 
+a = LCase(Request.Form(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))) 
+b = Split(a, vbCrLf) 
+e = 0 
+Call openconn() 
+For each c In b
+d = getwebsite(c) 
+If d <> "" Then
 
-'检测域名有效
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(61)&ChrW(39) & d & ChrW(39), conn, 1, 1 
+If rs.EOF Then
+conn.Execute(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(40)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39) & d & ChrW(39)&ChrW(44)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)&ChrW(44)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(41)) 
+Call echo(ChrW(28155)&ChrW(21152)&ChrW(25104)&ChrW(21151), d) 
+e = e + 1 
+Else
+Call echo(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101), d) 
+End if : rs.Close 
+
+End if 
+Next 
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(32)&ChrW(20849)&ChrW(40) & e & ChrW(41)&ChrW(26465)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+End function 
+
 Function scanCheckDomain()
-    Dim url, nSetTime, nIsDomain, htmlDir, txtFilePath, nThis,nCount,startTime
-    nSetTime = 3 
-	if request("nThis")="" then
-		nThis=0
-	else
-		nThis=request("nThis")
-	end if
-    Call openconn()
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "webdomain where isthrough=true", conn, 1, 1 
-	
-	if request("nCount")="" then
-		nCount=rs.recordcount
-	else
-		nCount=request("nCount")
-	end if
-    While Not rs.EOF
-		nThis=nThis+1
-        Call echo(nThis & "/" & nCount, rs("website")) 
-        doevents 
-        htmlDir = "/../网站UrlScan/域名/"
-        Call createDirFolder(htmlDir) 
-        txtFilePath = htmlDir & "/" & setFileName(rs("website")) & ".txt"
-        If checkFile(txtFilePath) = True Then
-            nIsDomain = cint(phptrim(readFile(txtFilePath,"")))
-            Call echo("类型", "本地") 
-			nSetTime=1
-        Else
-            nIsDomain = IIF(checkDomainName(rs("website")), 1, 0) 
-            Call createFile(txtFilePath, nIsDomain & " ") 			'防止PHP版写入不进去 0 这个内容
-            Call echo("类型", "网络" & txtFilePath & "("& checkFile(txtFilePath) &")=" & nIsDomain) 
-        End If 
-        '这样写是给转PHP时方便
-        conn.Execute("update " & db_PREFIX & "webdomain  set isthrough=false,isdomain=" & nIsDomain & ",updatetime='" & Now() & "'  where id=" & rs("id") & "") 
+Dim a, b, c, d, e, f,g,h
+b = 3 
+if request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))="" then
+f=0
+else
+f=request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))
+end if
+Call openconn()
 
-		if request("startTime")="" then
-			startTime=now()
-		else
-			startTime=request("startTime")
-		end if
-		
-		call rw(VBRunTimer(startTime) & "<hr>")
-        url = getUrlAddToParam(getThisUrl(), "?nThis="& nThis &"&nCount="& nCount &"&startTime="& startTime &"&N=" & getRnd(11), "replace") 
-		
-        Call rw(jsTiming(url, nSetTime)) 
-        Response.End() 
-    rs.MoveNext : Wend : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){}
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebDomain&addsql=order by id desc&lableTitle=网站域名'>OK，共("& nThis &")条</a>") 
-End Function 
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), conn, 1, 1 
+if request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))="" then
+g=rs.recordcount
+else
+g=request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))
+end if
+While Not rs.EOF
+f=f+1
+Call echo(f & ChrW(47) & g, rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))) 
+doevents 
+d = ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(32593)&ChrW(31449)&ChrW(85)&ChrW(114)&ChrW(108)&ChrW(83)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(47)&ChrW(22495)&ChrW(21517)&ChrW(47)
+Call createDirFolder(d) 
+e = d & ChrW(47) & setFileName(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))) & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116)
+If checkFile(e) = True Then
+c = cint(phptrim(readFile(e,"")))
+Call echo(ChrW(31867)&ChrW(22411), ChrW(26412)&ChrW(22320)) 
+b=1
+Else
+c = IIF(checkDomainName(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101))), 1, 0) 
+Call createFile(e, c & ChrW(32))
+Call echo(ChrW(31867)&ChrW(22411), ChrW(32593)&ChrW(32476) & e & ChrW(40)& checkFile(e) &ChrW(41)&ChrW(61) & c) 
+End if 
 
-'扫描网址
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(61) & c & ChrW(44)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & Now() & ChrW(39)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100)) & "") 
+if request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))="" then
+h=now()
+else
+h=request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))
+end if
+call rw(VBRunTimer(h) & ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62))
+a = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(61)& f &ChrW(38)&ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(61)& g &ChrW(38)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)& h &ChrW(38)&ChrW(78)&ChrW(61) & getRnd(11), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+Call rw(jsTiming(a, b)) 
+Response.End() 
+rs.MoveNext : Wend : rs.Close 
+
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(22495)&ChrW(21517)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(65292)&ChrW(20849)&ChrW(40)& f &ChrW(41)&ChrW(26465)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+End function 
+
 Function runScanWebUrl()
-    Dim nSetTime, setCharSet, httpUrl, url, selectWeb ,nThis,nCount,startTime
-    setCharSet = "gb2312"                                                           'gb2312
-    'http://www.dfz9.com/
-    'http://www.maiside.net/
-    'http://sharembweb.com/
-    'http://www.ufoer.com/
-    httpUrl = "http://sharembweb.com/" 
-    'selectWeb="ufoer"
-    If selectWeb = "ufoer" Then
-        httpUrl = "http://www.ufoer.com/" 
-        setCharSet = "utf-8" 
-    End If
-	 
-	if request("nThis")="" then
-		nThis=0
-	else
-		nThis=request("nThis")
-	end if
-	
-    Call openconn() 
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "weburlscan", conn, 1, 1 	
-	if request("nCount")="" then
-		nCount=rs.recordcount
-	else
-		nCount=request("nCount")
-	end if
-    If rs.EOF Then
-        conn.Execute("insert into " & db_PREFIX & "weburlscan(httpurl,title,isthrough,charset) values('" & httpUrl & "','home',true,'" & setCharSet & "')") 
-    End If : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){} 
-    '循环
-	'【@是jsp显示@】try{
-    rsx.Open "select * from " & db_PREFIX & "weburlscan where isThrough=true", conn, 1, 1 
-    If Not rsx.EOF Then
-		nThis=nThis+1
-        Call echo(nThis,  rsx("httpurl"))  
-        doevents 
-        nSetTime = scanUrl(rsx("httpurl"), rsx("title"), rsx("charset")) 
-        '这样写是给转PHP时方便
-        conn.Execute("update " & db_PREFIX & "weburlscan  set isthrough=false  where id=" & rsx("id") & "") 
-
-		
-		if request("startTime")="" then
-			startTime=now()
-		else
-			startTime=request("startTime")
-		end if
-		
-		call VBRunTimer(startTime)
-        url = getUrlAddToParam(getThisUrl(), "?nThis="& nThis &"&nCount="& nCount &"&startTime="& startTime &"&N=" & getRnd(11), "replace") 
-
-        Call rw(jsTiming(url, nSetTime)) 
-        Response.End()
-    End If : rsx.Close  
-	'【@是jsp显示@】}catch(Exception e){}
-    Call echo("操作完成", "<a href='?act=dispalyManageHandle&actionType=WebUrlScan&addsql=order by id desc&lableTitle=网址扫描'>OK，共("& nThis &")条</a>") 
-    '输入报告
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "weburlscan where webstate=404", conn, 1, 1 
-    While Not rs.EOF
-        Call echo("<a href='" & rs("httpurl") & "' target='_blank'>" & rs("httpurl") & "</a>", "<a href='" & rs("tohttpurl") & "' target='_blank'>" & rs("tohttpurl") & "</a>") 
-    rs.MoveNext : Wend : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){}
-End Function 
-'扫描网址
-Function scanUrl(httpUrl, toTitle, codeset)
-    Dim splStr, i, s, content, PubAHrefList, PubATitleList, splUrl, spltitle, title, url, htmlDir, htmlFilePath, nOK, arrayData, nWebState, u, iniDir, iniFilePath ,longWebSize
-    Dim nSetTime, startTime, longOpenSpeed, isLocal, nIsThrough
-    htmlDir = "/../网站UrlScan/" & setFileName(getwebsite(httpUrl)) 
-    Call createDirFolder(htmlDir) 
-    htmlFilePath = htmlDir & "/" & setFileName(httpUrl) & ".html" 
-    iniDir = htmlDir & "/conifg" 
-    Call createfolder(iniDir) 
-    iniFilePath = iniDir & "/" & setFileName(httpUrl) & ".txt" 
-
-    'httpurl="http://maiside.net/"
-
-    nWebState = 0 
-    nSetTime = 1 
-    longOpenSpeed = 0 
-    If checkFile(htmlFilePath) = False Then
-        startTime = Now() 
-        Call echo("codeset", codeset) 
-        arrayData = handleXmlGet(httpUrl, codeset) 
-        content = arrayData(0) 
-        '【PHP】$content=toGB2312Char($content);                                            //给PHP用，转成gb2312字符
-
-        nWebState = cint(arrayData(1)) 
-        longOpenSpeed = DateDiff("s", startTime, Now()) 
-        'content=gethttpurl(httpurl,codeset)
-        'call createfile(htmlFilePath,content)
-        Call writeToFile(htmlFilePath, content, codeset) 
-        Call createFile(iniFilePath, nWebState & vbCrLf & longOpenSpeed) 
-        nSetTime = 3 
-        isLocal = false
-    Else
-        'content=readFile(htmlFilePath,"")
-        content = readFile(htmlFilePath, codeset) 
-		 '【PHP】$content=toGB2312Char($content);                                            //给PHP用，转成gb2312字符
-        splStr = Split(readFile(iniFilePath,""), vbCrLf) 
-        nWebState = CInt(splStr(0)) 
-        longOpenSpeed = CInt(splStr(0)) 
-        isLocal = true 
-    End If 
-	longWebSize=getFSize(htmlFilePath)
-    Call echo("isLocal", isLocal) 
-	'【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "weburlscan where httpurl='" & httpUrl & "'", conn, 1, 1 
-    If rs.EOF Then
-        conn.Execute("insert into " & db_PREFIX & "weburlscan(httpurl,title,charset) values('" & httpUrl & "','" & toTitle & "','" & codeset & "')") 
-    End If : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){} 
-    conn.Execute("update " & db_PREFIX & "weburlscan  set webstate=" & nWebState & ",websize=" & longWebSize & ",openspeed=" & longOpenSpeed & ",charset='" & codeset & "'  where httpurl='" & httpUrl & "'") 
-
-	'strLen(content)  不用这个，不精准
-
-    s = getContentAHref("", content, PubAHrefList, PubATitleList) 
-    s = handleScanUrlList(httpUrl, s) 
-
-    'call echo("httpurl",httpurl)
-    'call echo("s",s)
-    'call echo("PubATitleList",PubATitleList)
-    nOK = 0 
-    splUrl = Split(PubAHrefList, vbCrLf) 
-    spltitle = Split(PubATitleList, vbCrLf) 
-    For i = 1 To UBound(splUrl)
-        title = spltitle(i) 
-        url = splUrl(i) 
-        '去掉#号后台的字符20160506
-        If InStr(url, "#") > 0 Then
-            url = Mid(url, 1, InStr(url, "#") - 1) 
-        End If 
-        If url = "" Then
-            If title <> "" Then
-                Call echo("网址为空", title) 
-            End If 
-        Else
-            url = handleScanUrlList(httpUrl, url) 
-            url = handleWithWebSiteList(httpUrl, url) 
-            If url <> "" Then
-				'【@是jsp显示@】try{
-                rs.Open "select * from " & db_PREFIX & "weburlscan where httpurl='" & url & "'", conn, 1, 1 
-                If rs.EOF Then
-                    u = LCase(url)
-                    If InStr(u, "tools/downfile.asp") > 0 Or InStr(u, "/url.asp?") > 0 Or InStr(u, "/aspweb.asp?") > 0 Or InStr(u, "/phpweb.php?") > 0 Or u = "http://www.maiside.net/qq/" Or InStr(u, "mailto:") > 0 Or InStr(u, "tel:") > 0 Or InStr(u, ".html?replytocom") > 0 Then'.html?replytocom  王通网站
-                        nIsThrough = 0 
-                    Else
-                        nIsThrough = 1 '不用true 因为写入数据会有问题
-                    End If 
-                    conn.Execute("insert into " & db_PREFIX & "weburlscan(tohttpurl,totitle,httpurl,title,isthrough,charset) values('" & httpUrl & "','" & toTitle & "','" & url & "','" & Left(title, 255) & "'," & nIsThrough & ",'" & codeset & "')") 
-                    nOK = nOK + 1 
-                    Call echo(i, url) 
-                Else
-                    Call echo(title, url) 
-                End If : rs.Close 
-				'【@是jsp显示@】}catch(Exception e){} 
-            End If 
-        End If 
-    Next
-	
-    scanUrl = nSetTime 
-End Function 
+Dim a, b, c, d, e ,f,g,h
+b = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)
 
 
+
+
+c = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(115)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47) 
+
+If e = ChrW(117)&ChrW(102)&ChrW(111)&ChrW(101)&ChrW(114) Then
+c = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)&ChrW(117)&ChrW(102)&ChrW(111)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47) 
+b = ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) 
+End if
+if request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))="" then
+f=0
+else
+f=request(ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115))
+end if
+Call openconn() 
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110), conn, 1, 1   
+if request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))="" then
+g=rs.recordcount
+else
+g=request(ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116))
+end if
+If rs.EOF Then
+conn.Execute(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(40)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(44)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(44)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39) & c & ChrW(39)&ChrW(44)&ChrW(39)&ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(39)&ChrW(44)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)&ChrW(44)&ChrW(39) & b & ChrW(39)&ChrW(41)) 
+End if : rs.Close 
+
+
+
+rsx.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(84)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), conn, 1, 1 
+If Not rsx.EOF Then
+f=f+1
+Call echo(f,  rsx(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)))  
+doevents 
+a = scanUrl(rsx(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)), rsx(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)), rsx(ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116))) 
+
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & rsx(ChrW(105)&ChrW(100)) & "") 
+if request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))="" then
+h=now()
+else
+h=request(ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101))
+end if
+call VBRunTimer(h)
+d = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(110)&ChrW(84)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(61)& f &ChrW(38)&ChrW(110)&ChrW(67)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(61)& g &ChrW(38)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)& h &ChrW(38)&ChrW(78)&ChrW(61) & getRnd(11), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+Call rw(jsTiming(d, a)) 
+Response.End()
+End if : rsx.Close  
+
+Call echo(ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(85)&ChrW(114)&ChrW(108)&ChrW(83)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(22336)&ChrW(25195)&ChrW(25551)&ChrW(39)&ChrW(62)&ChrW(79)&ChrW(75)&ChrW(65292)&ChrW(20849)&ChrW(40)& f &ChrW(41)&ChrW(26465)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(61)&ChrW(52)&ChrW(48)&ChrW(52), conn, 1, 1 
+While Not rs.EOF
+Call echo(ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & rs(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)) & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62) & rs(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)) & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & rs(ChrW(116)&ChrW(111)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)) & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62) & rs(ChrW(116)&ChrW(111)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)) & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+rs.MoveNext : Wend : rs.Close 
+
+End function 
+
+Function scanUrl(a, b, c)
+Dim d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u ,v
+Dim w, x, y, z, a1
+n = ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(32593)&ChrW(31449)&ChrW(85)&ChrW(114)&ChrW(108)&ChrW(83)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(47) & setFileName(getwebsite(a)) 
+Call createDirFolder(n) 
+o = n & ChrW(47) & setFileName(a) & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+t = n & ChrW(47)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(105)&ChrW(102)&ChrW(103) 
+Call createfolder(t) 
+u = t & ChrW(47) & setFileName(a) & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
+
+r = 0 
+w = 1 
+y = 0 
+If checkFile(o) = False Then
+x = Now() 
+Call echo(ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(101)&ChrW(116), c) 
+q = handleXmlGet(a, c) 
+g = q(0) 
+
+r = cint(q(1)) 
+y = DateDiff(ChrW(115), x, Now()) 
+
+
+Call writeToFile(o, g, c) 
+Call createFile(u, r & vbCrLf & y) 
+w = 3 
+z = false
+Else
+
+g = readFile(o, c) 
+
+d = Split(readFile(u,""), vbCrLf) 
+r = CInt(d(0)) 
+y = CInt(d(0)) 
+z = true 
+End if 
+v=getFSize(o)
+Call echo(ChrW(105)&ChrW(115)&ChrW(76)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(108), z) 
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(61)&ChrW(39) & a & ChrW(39), conn, 1, 1 
+If rs.EOF Then
+conn.Execute(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(40)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(44)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(44)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39) & a & ChrW(39)&ChrW(44)&ChrW(39) & b & ChrW(39)&ChrW(44)&ChrW(39) & c & ChrW(39)&ChrW(41)) 
+End if : rs.Close 
+
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(61) & r & ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61) & v & ChrW(44)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(115)&ChrW(112)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(61) & y & ChrW(44)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39) & c & ChrW(39)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(61)&ChrW(39) & a & ChrW(39)) 
+
+f = getContentAHref("", g, h, i) 
+f = handleScanUrlList(a, f) 
+
+
+
+p = 0 
+j = Split(h, vbCrLf) 
+k = Split(i, vbCrLf) 
+For e = 1 To UBound(j)
+l = k(e) 
+m = j(e) 
+
+If InStr(m, ChrW(35)) > 0 Then
+m = Mid(m, 1, InStr(m, ChrW(35)) - 1) 
+End if 
+If m = "" Then
+If l <> "" Then
+Call echo(ChrW(32593)&ChrW(22336)&ChrW(20026)&ChrW(31354), l) 
+End if 
+Else
+m = handleScanUrlList(a, m) 
+m = handleWithWebSiteList(a, m) 
+If m <> "" Then
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(61)&ChrW(39) & m & ChrW(39), conn, 1, 1 
+If rs.EOF Then
+s = LCase(m)
+If InStr(s, ChrW(116)&ChrW(111)&ChrW(111)&ChrW(108)&ChrW(115)&ChrW(47)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)) > 0 Or InStr(s, ChrW(47)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)) > 0 Or InStr(s, ChrW(47)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)) > 0 Or InStr(s, ChrW(47)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(46)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(63)) > 0 Or s = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(115)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(47)&ChrW(113)&ChrW(113)&ChrW(47) Or InStr(s, ChrW(109)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(116)&ChrW(111)&ChrW(58)) > 0 Or InStr(s, ChrW(116)&ChrW(101)&ChrW(108)&ChrW(58)) > 0 Or InStr(s, ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(63)&ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(121)&ChrW(116)&ChrW(111)&ChrW(99)&ChrW(111)&ChrW(109)) > 0 Then
+a1 = 0 
+Else
+a1 = 1
+End if 
+conn.Execute(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(110)&ChrW(40)&ChrW(116)&ChrW(111)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(44)&ChrW(116)&ChrW(111)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(44)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(44)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(44)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39) & a & ChrW(39)&ChrW(44)&ChrW(39) & b & ChrW(39)&ChrW(44)&ChrW(39) & m & ChrW(39)&ChrW(44)&ChrW(39) & Left(l, 255) & ChrW(39)&ChrW(44) & a1 & ChrW(44)&ChrW(39) & c & ChrW(39)&ChrW(41)) 
+p = p + 1 
+Call echo(e, m) 
+Else
+Call echo(l, m) 
+End if : rs.Close 
+
+End if 
+End if 
+Next
+scanUrl = w 
+End function 
 %>                  
-

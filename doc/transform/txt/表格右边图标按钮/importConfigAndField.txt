@@ -1,0 +1,107 @@
+    // 直接显示上传文件弹窗
+                            layer.open({
+                                type: 1,
+                                title: '导入配置和字段数据',
+                                area: ['500px', '350px'],
+                                content: '<div style="padding: 20px;">' +
+                                    '<div class="layui-form-item">' +
+                                    '<label class="layui-form-label">选择文件：</label>' +
+                                    '<div class="layui-input-block">' +
+                                    '<button type="button" class="layui-btn layui-btn-normal" id="upload-databaseippath">' +
+                                    '<i class="layui-icon layui-icon-upload"></i> 选择txt文件' +
+                                    '</button>' +
+                                    '<div id="upload-progress" style="margin-top: 10px; display: none;">' +
+                                    '<div class="layui-progress" lay-showpercent="true">' +
+                                    '<div class="layui-progress-bar" lay-percent="0%"></div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div id="upload-status" style="margin-top: 15px; padding: 10px; background: #f8f8f8; border-radius: 4px; min-height: 40px; color: #666; font-size: 13px; line-height: 1.4;"></div>' +
+                                    '<div id="import-tip" style="margin-top: 10px; color: #999; font-size: 12px; text-align: center; display: none;">' +
+                                    '<i class="layui-icon layui-icon-tips"></i> 可以继续选择其他文件进行导入' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>',
+                                success: function(layero, index) {
+                                    // 初始化上传组件
+                                    layui.upload.render({
+                                        elem: '#upload-databaseippath',
+                                        url: '/api/upload/upload_txt.asp',
+                                        accept: 'file',
+                                        exts: 'txt',
+                                        size: 10485760,
+                                        before: function(obj) {
+                                            // 上传前显示进度条
+                                            $('#upload-progress').show();
+                                            $('#upload-status').text('正在上传文件...');
+                                            layer.msg('开始上传文件', {icon: 16, time: 1000});
+                                        },
+                                        progress: function(n, elem, e) {
+                                            // 更新进度条
+                                            var percent = Math.floor(n);
+                                            $('.layui-progress-bar').attr('lay-percent', percent + '%');
+                                            layui.element.progress('upload-progress', percent);
+                                        },
+                                        done: function(res) {
+                                            $('#upload-progress').hide();
+                                            if(res.code != 0) {
+                                                layer.msg('上传失败：' + res.msg, {icon: 2});
+                                                $('#upload-status').html('<span style="color: #ff5722;">上传失败：' + res.msg + '</span>');
+                                            } else {
+                                                var txtSrc = '';
+                                                if(typeof(res.data[0]) != "undefined") {
+                                                    txtSrc = res.data[0].src;
+                                                } else {
+                                                    txtSrc = res.data.src;
+                                                }
+                                                
+                                                layer.msg('文件上传成功！', {icon: 1});
+                                                $('#upload-status').html('<span style="color: #5fb878;">文件上传成功！</span>');
+                                                
+                                                // 处理上传成功后的逻辑
+                                                if(txtSrc) {
+                                                    console.log('上传的文件路径：', txtSrc);
+                                                    
+                                                    // 发送文件路径到服务器处理
+                                                    layer.msg('开始处理文件内容...', {icon: 16});
+                                                    
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        cache: true,
+                                                        dataType: "json",
+                                                        url: "?act=importConfigAndField",
+                                                        data: { 
+                                                            "txt": txtSrc,
+                                                            "layout_page_id": "<%=request("layout_page_id")%>"
+                                                        },
+                                                        success: function(data) {
+                                                            if(data.status === "y") {
+                                                                // 显示成功信息，不关闭弹窗
+                                                                $('#upload-status').html('<span style="color: #5fb878; font-weight: bold;">✓ ' + data.info + '</span>');
+                                                                $('#import-tip').show(); // 显示继续导入提示
+                                                                layer.msg('文件处理完成！', {icon: 1, time: 2000});
+                                                                // 刷新表格
+                                                                table.reload('testReload');
+                                                            } else {
+                                                                $('#upload-status').html('<span style="color: #ff5722; font-weight: bold;">✗ 处理失败：' + data.info + '</span>');
+                                                                $('#import-tip').hide(); // 隐藏继续导入提示
+                                                                layer.msg('文件处理失败：' + data.info, {icon: 2});
+                                                            }
+                                                        },
+                                                        error: function() {
+                                                            $('#upload-status').html('<span style="color: #ff5722; font-weight: bold;">✗ 处理失败，请重试</span>');
+                                                            $('#import-tip').hide(); // 隐藏继续导入提示
+                                                            layer.msg('文件处理失败，请重试', {icon: 2});
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        },
+                                        error: function() {
+                                            $('#upload-progress').hide();
+                                            layer.msg('上传失败，请重试', {icon: 2});
+                                            $('#upload-status').html('<span style="color: #ff5722;">上传失败，请重试</span>');
+                                        }
+                                    });
+                                }
+                            })

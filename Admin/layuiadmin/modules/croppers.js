@@ -17,7 +17,7 @@ layui.config({
         "            </label>\n" +
         "            <input class=\"layui-upload-file\" id=\"cropper_avatarImgUpload\" type=\"file\" value=\"选择图片\" name=\"file\">\n" +
         "        </div>\n" +
-        "        <div class=\"layui-form-mid layui-word-aux\">头像的尺寸限定150x150px,大小在50kb以内</div>\n" +
+        "        <div class=\"layui-form-mid layui-word-aux\">头像的尺寸限定150x150px,大小在50kb以内(<font color=red>可直接粘贴图片</font>)</div>\n" +
         "    </div>\n" +
         "    <div class=\"layui-row layui-col-space15\">\n" +
         "        <div class=\"layui-col-xs9\">\n" +
@@ -64,7 +64,7 @@ layui.config({
                 area = e.area,
                 url = e.url,
                 done = e.done;
-
+  
             var content = $('.showImgEdit')
                 ,image = $(".showImgEdit .readyimg img")
                 ,preview = '.showImgEdit .img-preview'
@@ -142,12 +142,91 @@ layui.config({
                     var f=this.files[0];
                     r.readAsDataURL(f);
                     r.onload=function (e) {
+                        // console.log('this.result',this.result)
                         image.cropper('destroy').attr('src', this.result).cropper(options);
-                    };
+                    }; 
                 });
             });
         }
 
     };
+
+
+
+
+
+    var imgInputObj;//图片的input对象
+    //获得粘贴板内容
+    document.body.addEventListener('paste', function (event) {  
+        
+      imgInputObj=$(this);
+      uploadclipboardDataImage(event);
+    })
+
+    // let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
+
+    //上传粘贴板里的图片
+    function uploadclipboardDataImage(event){ 
+        if (!event || !event.clipboardData) return;
+        let pText = event.clipboardData.getData('text/plain');
+        if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
+            // showCVText(pText);
+        } else if (event.clipboardData.items) {//没有文本内容，判断这个数组，文件可能在这个数组里
+            let blob = null, items = event.clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].kind === 'file') {//类型 是 文件
+                    blob = items[i].getAsFile();
+                    if (items[i].type.indexOf("image") !== -1) {//文件类型是图像
+                        
+                        showImage(blob);
+                        // alert("图片")
+                    } else if (items[i].type.indexOf("text") !== -1) {//文件类型是文本
+                        // showText(blob);
+                    }
+                } 
+            }
+        } else {
+            alert("粘了个寂寞");
+        }
+    }
+ 
+
+
+    //显示复制过来的图片20240524
+    function showImage(blob) {
+        getContext(blob).then(res => { //图片数据能直接被img识别
+           // console.log("res",res)
+
+                var content = $('.showImgEdit')
+                ,image = $(".showImgEdit .readyimg img")
+                ,preview = '.showImgEdit .img-preview'
+                ,file = $(".showImgEdit input[name='file']")
+                , options = {aspectRatio: 1,preview: preview,viewMode:1};
+                 image.cropper('destroy').attr('src', res).cropper(options);
+
+        })
+    }
+
+ 
+    /**
+     * 把字节转为web识别的base64格式数据
+     * @param blob
+     * @returns {Promise<unknown>}
+     */
+    function getContext(blob) {
+        return new Promise((resolve) => {
+            if (blob == null) resolve();
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                // console.log(event)
+                resolve(event.target.result);
+            }
+            reader.readAsDataURL(blob);
+        });
+    }
+
+
+
+
     exports('croppers', obj);
 });

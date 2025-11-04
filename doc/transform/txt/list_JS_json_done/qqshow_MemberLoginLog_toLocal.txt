@@ -1,0 +1,4 @@
+            $.each(res.data, function (i, obj) {  
+                addMemberLoginLog(i,obj);//添加更新会员登录信息
+            
+            })

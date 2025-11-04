@@ -1,0 +1,26 @@
+                            // 添加确认弹窗
+                            layer.confirm('确定要导出字段名和标签吗？', {
+                                icon: 3,
+                                title: '确认导出'
+                            }, function(index) {
+                                layer.close(index); // 关闭确认弹窗 
+                                NProgress.start(); // 开始显示进度条  
+                                $.ajax({
+                                    type: "POST",
+                                    cache: true,
+                                    dataType: "json",
+                                    url: "?act=daochuFieldAndTitle&layout_database_table_id=<%=request("layout_database_table_id")%>",
+                                    data: {  }, 
+                                    success: function(data) {  
+                                        NProgress.done(); // 进度条完成  
+                                        switch (data.status) {
+                                            case "y":                                              
+                                                layer.msg(data.info);
+                                                break;
+                                            case "n":                                    
+                                                layer.msg(data.info);
+                                                break;
+                                        }
+                                    }
+                                });
+                            });  

@@ -1,0 +1,497 @@
+'导入表及字段到布局页里及布局配置里 20250810  202251013 1
+function importTableToLayouPage() 
+    dim leftQuote,rightQuote,cHelp,fieldtitle,rsField,listitemwidth,sTip,addNewUrl,sSortrank
+    Set rsField = CreateObject("Adodb.RecordSet")
+    leftQuote="["
+    rightQuote="]"
+
+    dim fieldConfigContent,sConfig
+    fieldConfigContent=readfile("\doc\transform\txt\config/字段名和标题列表.txt","utf-8")
+    fieldConfigContent=vbcrlf & fieldConfigContent & vbcrlf
+	
+    dim thisConn:Set thisConn = CreateObject("Adodb.Connection")
+    dim sql,fieldList,splstr,s,nOK,sortrank,i,title,idIndexName,parentid,startTimeField,endTimeField
+    nOK=0
+    sortrank=0   
+    sql="select * from "&thisAddPrefix("layout_database_table")&" where id="&id
+    rs.open sql,conn,1,1
+    if not rs.eof then
+        if phptrim(rs("parentFieldName"))<>"" then
+            addNewUrl="url:showwin('添加{winTitle}','listform.asp?"&phptrim(rs("parentFieldName"))&"='+obj.data['id'])"
+        end if
+        '使用自己后台里添加的'
+        if phptrim(rs("fieldListConfig"))<>"" then
+            fieldConfigContent=vbcrlf & phptrim(rs("fieldListConfig")) & vbcrlf
+            sTip=" 字段列表配置为自定义"
+        end if
+        idIndexName=rs("idIndexName")
+        if idIndexName="" then idIndexName="id"  
+        sql="select * from "&thisAddPrefix("layout_database")&" where id="&rs("layout_database_id")
+        rsx.open sql,conn,1,1
+        if not rsx.eof then  
+            if rsx("databaseType")="sqlserver" or rsx("databaseType")="mysql" then
+                cHelp="服务器IP：" & rsx("databaseIPPath") & "<br>"
+                cHelp=cHelp&"数据库类型：" & rsx("databaseType") & "<br>"
+                cHelp=cHelp&"数据库名：" & rsx("databaseName") & "<br>"
+            end if  
+            sql="select * from "&thisAddPrefix("layout_page")&" where databaseIPPath='"& rsx("databaseIPPath") &"' and databaseName='"&rsx("databaseName")&"' and pageTableName='"&rs("tablename")&"'"
+            rss.open sql,conn,1,3
+            if rss.eof then
+                rss.addnew
+                rss("databaseType")=rsx("databaseType")    '数据库类型也要导入进去'
+                rss("databaseIPPath")=rsx("databaseIPPath")
+                rss("databaseName")=rsx("databaseName")
+                rss("databaseUser")=rsx("databaseUser")
+                rss("databasePass")=rsx("databasePass")
+                rss("pageName")=rs("tablename")
+                rss("pageTableName")=rs("tablename")
+                rss("pageFolder")="temp2025_"&rs("tablename")
+                rss("idIndexName")=idIndexName '索引'
+                rss("isShowUpDownPage")=1
+                rss("isBatchDelete")=1
+                rss("isShowSearch")=1
+                rss("isShowAddButton")=1
+                rss("isShowPrint")=1
+                rss("isShowoPerate")=1
+                rss("isthrough")=1       '审核为真'
+                rss("addedittip")="已经存在!"
+                rss("isDblClickViewPage")=3
+                rss("npagesize")=10
+                rss("formViewMaoHao")="："
+                rss("listOrderBy")=" order by "&idIndexName&" Desc"
+                rss("helpcontent")=cHelp
+                rss.update
+                nOK=1
+            elseif rss("helpcontent")="" and cHelp<>"" then  '帮助提示内容为空，则追加上'
+                rss("helpcontent")=cHelp
+                rss.update
+            end if:rss.close  
+            rss.open sql,conn,1,1  '重新打开'
+
+            if rss("databaseType")="mysql" then
+                leftQuote="`"
+                rightQuote="`"
+            end if
+ 
+            sql="select * from "&thisAddPrefix("layout_database_field")&" where layout_database_table_id="&rs("id") & " and isthrough=1 order by sortrank asc"
+            rst.open sql,conn,1,1
+            for i=1 to rst.recordcount  
+                fieldtitle=""
+                sql="select * from "&thisAddPrefix("layout_field")&" where id="&rst("layout_field_id")
+                rsField.open sql,conn,1,1
+                if not rsField.eof then
+                    fieldtitle=rsField("fieldtitle")
+                    ' call eerr("fieldName",fieldName)
+
+
+
+                    sql="select * from "&thisAddPrefix("layout_page_config")&" where layout_page_id="&rss("id") & " and layout_field_id=" & rst("layout_field_id")
+                    rsd.open sql,conn,1,3
+                    if rsd.eof then
+                        rsd.addnew
+                        rsd("layout_page_id")=rss("id")
+                        rsd("layout_field_id")=rst("layout_field_id")
+                        rsd("isthrough")=1
+                        rsd("islist")=1
+
+                        '不为索引id则可在线修改'
+                        if lcase(idIndexName)<>lcase(rst("fieldname")) then
+                            rsd("isonlineedit")=1
+                            rsd("isaddedit")=1
+                        else
+                            rsd("isonlineedit")=0
+                            rsd("isaddedit")=0
+                        end if
+                        rsd("isview")=1
+                        rsd("sortrank")=rst("sortrank")
+                        rsd("viewsortrank")=rst("sortrank")
+                        rsd("editsortrank")=rst("sortrank")
+                        '对应字段的配置'
+                        sConfig=getStrCut(fieldConfigContent, vbcrlf & lcase(rsField("fieldName"))&"=", vbcrlf,3)&","
+                        listitemwidth=getStrCut(sConfig, ",listitemwidth=", ",",0)'列表项宽'
+						 
+                        ' call eerr("listitemwidth",listitemwidth)
+                        if listitemwidth<>"" then
+                            rsd("listitemwidth")=listitemwidth
+                        elseif fieldtitle<>"" then 
+                            listitemwidth=strLength(fieldtitle)*15+10
+                            if listitemwidth<70 then listitemwidth=70
+                            rsd("listitemwidth")="min"&listitemwidth   '最小宽度
+                        end if
+
+
+                        sSortrank=getStrCut(sConfig, ",sortrank=", ",",0)'排序'
+                        if sSortrank<>"" then rsd("sortrank")=sSortrank
+                        s=getStrCut(sConfig, ",viewsortrank=", ",",0)'查看排序'
+                        if s="" then s=sSortrank '为空使用排序的'
+                        if s<>"" then rsd("viewsortrank")=s
+                        s=getStrCut(sConfig, ",editsortrank=", ",",0)'编辑排序'
+                        if s="" then s=sSortrank '为空使用排序的'
+                        if s<>"" then rsd("editsortrank")=s
+
+
+                        s=getStrCut(sConfig, ",isthrough=", ",",0)'审核'
+                        if s<>"" then rsd("isthrough")=s
+                        s=getStrCut(sConfig, ",islist=", ",",0)'列表页显示'
+                        if s<>"" then rsd("islist")=s
+                        s=getStrCut(sConfig, ",isaddedit=", ",",0)'编辑页显示'
+                        if s<>"" then rsd("isaddedit")=s
+                        s=getStrCut(sConfig, ",isview=", ",",0)'查看页显示'
+                        if s<>"" then rsd("isview")=s
+                        s=getStrCut(sConfig, ",isonlineedit=", ",",0)'是否在线修改'
+                        if s<>"" then rsd("isonlineedit")=s
+                        s=getStrCut(sConfig, ",isenglish=", ",",0)'英文版'
+                        if s<>"" then rsd("isenglish")=s
+                        s=getStrCut(sConfig, ",inputonlycheck=", ",",0)'唯一检测'
+                        if s<>"" then rsd("inputonlycheck")=s
+                        s=getStrCut(sConfig, ",isinputcheck=", ",",0)'表单验证'
+                        if s<>"" then rsd("isinputcheck")=s
+                        s=getStrCut(sConfig, ",isinputtwocolumn=", ",",0)'一行两列'
+                        if s<>"" then rsd("isinputtwocolumn")=s
+                        s=getStrCut(sConfig, ",islistheadsort=", ",",0)'列表头排序'
+                        if s<>"" then rsd("islistheadsort")=s
+                        s=getStrCut(sConfig, ",islistpagejsondata=", ",",0)'json数据'
+                        if s<>"" then rsd("islistpagejsondata")=s
+                        s=getStrCut(sConfig, ",iseditpageitemwrapaddid=", ",",0)'编辑项包裹'
+                        if s<>"" then rsd("iseditpageitemwrapaddid")=s
+                        s=getStrCut(sConfig, ",iseditpageitemaddlayfilter=", ",",0)'编辑项过滤器'
+                        if s<>"" then rsd("iseditpageitemaddlayfilter")=s
+                        s=getStrCut(sConfig, ",isaddpageview=", ",",0)'编辑页显不能改'
+                        if s<>"" then rsd("isaddpageview")=s
+                        s=getStrCut(sConfig, ",iseditpageinputhtml=", ",",0)'编辑页只显input'
+                        if s<>"" then rsd("iseditpageinputhtml")=s
+                        s=getStrCut(sConfig, ",iseditpagehide=", ",",0)'编辑页不显input'
+                        if s<>"" then rsd("iseditpagehide")=s
+                        s=getStrCut(sConfig, ",islistpagetemplet=", ",",0)'列表项H5显示'
+                        if s<>"" then rsd("islistpagetemplet")=s
+                        s=getStrCut(sConfig, ",iseditpageitemwraphide=", ",",0)'编辑项包裹隐藏'
+                        if s<>"" then rsd("iseditpageitemwraphide")=s
+
+
+						 
+                        s=getStrCut(sConfig, ",noterighttext=", ",",0)'文本注释'
+                        if s<>"" then rsd("noterighttext")=decDHJH(s)
+                        s=getStrCut(sConfig, ",noteleftico=", ",",0)'图标注释'
+                        if s<>"" then rsd("noteleftico")=decDHJH(s)
+                        s=getStrCut(sConfig, ",defaultvalue=", ",",0)'默认值'
+                        if s<>"" then rsd("defaultvalue")=decDHJH(s)
+                        s=getStrCut(sConfig, ",adminlevel=", ",",0)'管理权限'
+                        if s<>"" then rsd("adminlevel")=decDHJH(s)
+                        s=getStrCut(sConfig, ",addtoinput=", ",",0)'追加字段后'
+                        if s<>"" then rsd("addtoinput")=decDHJH(s)
+                        s=getStrCut(sConfig, ",iseditsafe=", ",",0)'编辑安全'
+                        if s<>"" then rsd("iseditsafe")=decDHJH(s)
+                        s=getStrCut(sConfig, ",addnewvalue=", ",",0)'添加系统值'
+                        if s<>"" then rsd("addnewvalue")=decDHJH(s)
+                        s=getStrCut(sConfig, ",updatevalue=", ",",0)'更新系统值'
+                        if s<>"" then rsd("updatevalue")=decDHJH(s)
+                        s=getStrCut(sConfig, ",listpagerunaction=", ",",0)'列表页运行动作'
+                        if s<>"" then rsd("listpagerunaction")=decDHJH(s)
+                        s=getStrCut(sConfig, ",editpagerunaction=", ",",0)'编辑页运行动作'
+                        if s<>"" then rsd("editpagerunaction")=decDHJH(s)
+                        s=getStrCut(sConfig, ",viewpagerunaction=", ",",0)'查看页运行动作'
+                        if s<>"" then rsd("viewpagerunaction")=decDHJH(s)
+
+                            
+                        s=getStrCut(sConfig, ",isshowclick=", ",",0)'显点击'
+                        if s<>"" then rsd("isshowclick")=decDHJH(s)
+                        s=getStrCut(sConfig, ",clickurl=", ",",0)'点击网址'
+                        if s<>"" then rsd("clickurl")=decDHJH(s)
+                        s=getStrCut(sConfig, ",listpagenoteico=", ",",0)'表头项图标'
+                        if s<>"" then rsd("listpagenoteico")=decDHJH(s)
+                        s=getStrCut(sConfig, ",listpagenote=", ",",0)'列头项注释'
+                        if s<>"" then rsd("listpagenote")=decDHJH(s)
+                        s=getStrCut(sConfig, ",listpagefieldnoteico=", ",",0)'列项图标'
+                        if s<>"" then rsd("listpagefieldnoteico")=decDHJH(s)
+                        s=getStrCut(sConfig, ",listpagefieldnote=", ",",0)'列项注释'
+                        if s<>"" then rsd("listpagefieldnote")=decDHJH(s)
+							
+		 
+				
+				
+				
+						
+                        rsd.update
+                        'call echo("添加成功",rss("id"))
+                    end if:rsd.close
+
+                    '添加搜索字段'
+                    if rst("isFieldSelct")=1 then  
+                        sortrank=sortrank+10 
+                        title="≡ 选择搜索字段 ≡（"&rs("tablename")&"）>>"&rst("fieldname") 
+                        call subAddLayout_listPage_form("search",rss("id"),title,sortrank)
+     
+                        call subAddLayout_listPage_form("searchInput",rss("id"),"搜索关键词",200)
+                        call subAddLayout_listPage_form("submit",rss("id"),"搜索",300)
+                    end if 
+
+                    '添加排序'
+                    if rst("isSortSelct")=1 then 
+                        sortrank=sortrank+10 
+                        title="≡ 选择排序 ≡（"&rs("tablename")&"）>>order by "&leftQuote&rst("fieldname")&rightQuote
+                        call subAddLayout_listPage_form("order",rss("id"),title,sortrank)
+                        sortrank=sortrank+10 
+                        title="≡ 选择排序 ≡（"&rs("tablename")&"）>>order by "&leftQuote&rst("fieldname")&rightQuote& " desc"
+                        call subAddLayout_listPage_form("order",rss("id"),title,sortrank) 
+                    end if
+
+
+
+
+                    '开始时间'
+                    if rst("isStartTime")=1 and startTimeField="" then  
+                        startTimeField=rst("fieldname")
+                        title="开始时间[,]date_min|"&rst("fieldname")&"|>="
+                        call subAddLayout_listPage_form("time",rss("id"),title,1) 
+
+                    end if
+                    '结束时间'
+                    if rst("isStartTime")=1 and endTimeField="" then  
+                        if startTimeField<>"" then
+                            title="-"
+                            call subAddLayout_listPage_form("line",rss("id"),title,2) 
+                        end if
+
+                        endTimeField=rst("fieldname")
+                        title="结束时间[,]date_max|"&rst("fieldname")&"|<="
+                        call subAddLayout_listPage_form("time",rss("id"),title,3) 
+
+                    end if
+                end if:rsField.close
+
+            rst.movenext:next:rst.close
+        end if:rsx.close
+
+
+        call add_layout_table_button("batchdel",rss("id"),"批量删除","red","delete",10)
+        call add_layout_table_button("batchCopy",rss("id"),"批量复制","blue","add-1",20)
+        call add_layout_table_button("add",rss("id"),"添加新的","normal","add-circle",30) 
+
+        '右边菜单'
+        call add_layout_table_toolbar("filter",rss("id"),-1,"过滤器","",10)
+        call add_layout_table_toolbar("LAYTABLE_DRDC",rss("id"),-1,"导入导出（"&rs("tablename")&"）","export",20)  
+        sql="select * from "&thisAddPrefix("layout_table_toolbar")&" where layout_page_id="&rss("id")&" and title='"&"导入导出（"&rs("tablename")&"）"&"'"
+        rsx.open sql,conn,1,1
+        if not rsx.eof then
+            parentid=rsx("id") 
+            call add_layout_table_toolbar("daochu",rss("id"),parentid,"导出","",10) 
+            call add_layout_table_toolbar("daochu_excel",rss("id"),parentid,"导出excel","",20) 
+            call add_layout_table_toolbar("daochu_csv",rss("id"),parentid,"导出csv","",30) 
+            call add_layout_table_toolbar("line",rss("id"),parentid,"-","",40) 
+            call add_layout_table_toolbar("customize>>databaseToInstall",rss("id"),parentid,"导出install用","",50) 
+            call add_layout_table_toolbar("customize>>databaseToAccess",rss("id"),parentid,"导出access用","",60) 
+            call add_layout_table_toolbar("customize>>databaseToSqlServer",rss("id"),parentid,"导出sqlserver用","",70) 
+            call add_layout_table_toolbar("customize>>databaseToMysql",rss("id"),parentid,"导出mysql用","",80) 
+
+            call add_layout_table_toolbar("line",rss("id"),parentid,"--","",90) 
+            call add_layout_table_toolbar("daoru",rss("id"),parentid,"导入","",100) 
+
+        end if:rsx.close
+        call add_layout_table_toolbar("LAYTABLE_TIPS",rss("id"),-1,"提示帮助","help",110)
+
+        '列表顶操作'
+        call add_layout_table_action("edit",rss("id"),-1,"编辑","blue","edit",10,"")
+        call add_layout_table_action("del",rss("id"),-1,"删除","red","delete",20,"")
+        call add_layout_table_action("more",rss("id"),-1,"更多（"&rs("tablename")&"）","normal","",30,"")
+        sql="select * from "&thisAddPrefix("layout_table_action")&" where layout_page_id="&rss("id")&" and title='"&"更多（"&rs("tablename")&"）"&"'"
+        rsx.open sql,conn,1,1  
+        if not rsx.eof then
+            parentid=rsx("id") 
+			
+            if addNewUrl<>"" then
+                call add_layout_table_action("customize",rss("id"),parentid,"添加","normal","",1,addNewUrl)
+            end if 
+			
+            call add_layout_table_action("edit",rss("id"),parentid,"编辑","normal","",10,"")
+            call add_layout_table_action("editorno",rss("id"),parentid,"编辑(无编辑器)","normal",".asp",20,"")
+            call add_layout_table_action("del",rss("id"),parentid,"删除","normal","",30,"")
+            call add_layout_table_action("copyRow",rss("id"),parentid,"复制","normal","",40,"")
+            call add_layout_table_action("clickviewdetail",rss("id"),parentid,"详细","normal","",50,"")
+        end if:rsx.close
+
+
+
+    end if:rs.close
+    importTableToLayouPage=IIF(nOK=1,"导入成功!"&sTip,"已经存在!")
+end function
+'解密等于号和逗号
+function decDHJH(s)
+	decDHJH=replace(replace(s,"[[{等于号}]]","=") ,"[[{逗号}]]", ",")
+end function 
+'列表顶操作'20250904
+function add_layout_table_action(action,layout_page_id,parentid,title,bgColor,noteIco,sortrank,customizeaction)
+    dim sql,splA,buttontitle
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    sql="select * from ["& db_PREFIX &"layout_table_action] where parentid="&parentid&" and layout_page_id="&layout_page_id&" and title='"&title&"'"
+    rs.open sql,conn,1,3
+    if rs.eof then
+        rs.addnew
+        rs("parentid")=parentid
+        rs("layout_page_id")=layout_page_id
+        rs("title")=title
+        splA=split(title&"（","（")
+        buttontitle=splA(0)
+        rs("buttontitle")=buttontitle
+        rs("saction")=action
+        rs("bgColor")=bgColor  
+        rs("noteIco")=noteIco  
+        rs("sortrank")=sortrank 
+        rs("customizeaction")=customizeaction '自定义动作值'
+        rs("itemWidth")=52 
+        rs("isthrough")=1   
+        rs.update
+    end if:rs.close
+end function
+
+'添加表格右上图标'20250904 20250923
+function add_layout_table_toolbar(action,layout_page_id,parentid,title,noteIco,sortrank)
+    dim sql,isDebug,splA,buttontitle,splxx
+    isDebug=false
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    if isDebug then call echo("layout_page_id",layout_page_id) 
+    sql="select * from ["& db_PREFIX &"layout_table_toolbar] where parentid="&parentid&" and layout_page_id="&layout_page_id&" and title='"&title&"'"
+    rs.open sql,conn,1,3
+    splxx=split(action&">>",">>")
+    if rs.eof then
+        rs.addnew
+        rs("parentid")=parentid
+        rs("layout_page_id")=layout_page_id
+        rs("title")=title
+        splA=split(title&"（","（")
+        buttontitle=splA(0)
+        rs("buttontitle")=buttontitle
+        rs("saction")=splxx(0)
+        rs("customizeaction")=splxx(1) '自定义动作内容'
+        rs("noteIco")=noteIco  
+        rs("sortrank")=sortrank 
+        rs("isthrough")=1   
+        rs.update
+    end if:rs.close
+end function
+
+'添加列表页里的左边的按钮'20250904
+function add_layout_table_button(action,layout_page_id,title,bgcolor,noteIco,sortrank)
+    dim sql,isDebug
+    isDebug=false
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    if isDebug then call echo("layout_page_id",layout_page_id) 
+    sql="select * from ["& db_PREFIX &"layout_table_button] where layout_page_id="&layout_page_id&" and title='"&title&"'"
+    rs.open sql,conn,1,3
+    if rs.eof then
+        rs.addnew
+        rs("layout_page_id")=layout_page_id
+        rs("title")=title
+        rs("buttontitle")=title
+        rs("saction")=action
+        rs("bgcolor")=bgcolor 
+        rs("noteIco")=noteIco 
+        rs("sortrank")=sortrank 
+        rs("isthrough")=1   
+        rs.update
+    end if:rs.close
+end function
+
+'title="≡ 选择搜索字段 ≡（"&rs("tablename")&"）>>"&rst("fieldname") 
+'按菜单添加列表页里表单' 如  aa>>bb    20250904-2
+function subAddLayout_listPage_form(action,layout_page_id,title,sortrank)   
+    dim sql,parentid,splxx,s,nCount,isDebug,splA,buttontitle,splB,splStr
+    isDebug=false
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    if isDebug then call echo("layout_page_id",layout_page_id)
+    nCount=0
+    splStr=split(title,">>")
+    for each s in splStr
+        s=phptrim(s)
+        if s<>"" then
+            splA=split(s&"[,]","[,]")
+            s=splA(0)
+            splB=split(splA(1)&"||","|")
+
+            if parentid="" then
+            ' call echo(action,s):doevents
+                sql="select * from ["& db_PREFIX &"layout_listPage_form] where layout_page_id="&layout_page_id&" and parentid=-1 and title='"&s&"'"
+                rs.open sql,conn,1,3
+                if rs.eof then
+                    rs.addnew
+                    rs("layout_page_id")=layout_page_id
+                    rs("parentid")=-1
+                    rs("title")=s
+                    splxx=split(s&"（","（")
+                    buttontitle=splxx(0)
+                    rs("buttontitle")=buttontitle
+                    rs("isthrough")=1  
+                    rs("sortrank")=sortrank 
+                    if action="search" then   '搜索字段'
+                        rs("saction")="fieldType"
+                        rs("inputname")="searchType" 
+                    elseif action="order" then   '排序选择
+                        rs("saction")="orderSelect"
+                        rs("inputname")="dataOrderyBy" 
+                    elseif action="searchInput" then   '搜索input框'
+                        rs("saction")="searchInput"
+                        rs("inputname")="key"
+                        rs("fieldname")="key"
+                    elseif action="submit" then    '提交button按钮'
+                        rs("saction")="submit"
+                        rs("inputname")="submit" 
+                    elseif action="time" then    '时间
+                        rs("saction")="date"
+                        rs("inputname")=splB(0)
+                        rs("fieldname")=splB(1)
+                        rs("datebjtype")=splB(2)
+                    elseif action="line" then    '分割线'
+                        rs("saction")="line"
+                        rs("inputname")=splB(0) 
+                    end if
+                    rs.update:rs.close
+                    nCount=nCount+1
+                    rs.open sql,conn,1,1
+                    if not rs.eof then
+                        parentid=rs("id")
+                    end if
+                else
+                    parentid=rs("id")
+                end if:rs.close
+
+                if isDebug then call echo("s",s):doevents
+            else
+                sql="select * from ["& db_PREFIX &"layout_listPage_form] where parentid="&parentid&" and title='"&s&"'"
+                rs.open sql,conn,1,3
+                if rs.eof then
+                    rs.addnew
+                    rs("layout_page_id")=layout_page_id
+                    rs("parentid")=parentid
+                    rs("title")=s
+                    rs("buttontitle")=s
+                    rs("isthrough")=1
+                    if action="search" then
+                        rs("defaultvalue")=s   '子类默认值'
+                        rs("saction")="defaultValue"
+                    elseif action="order" then
+                        rs("defaultvalue")=s 
+                        '处理标题显示值处理'
+                        s=mid(s,10)
+                        if right(s,5)=" desc" then
+                            s=mid(s,1,len(s)-5) &"倒排序"
+                        elseif right(s,4)=" asc" then
+                            s=mid(s,1,len(s)-4) &"正排序"
+                        else
+                            s=s&"正排序"
+                        end if 
+                        ' rs("title")=s
+                        rs("buttontitle")=s
+                        rs("saction")="defaultValue"
+                    end if
+                    rs("sortrank")=sortrank  
+                    rs.update
+                    nCount=nCount+1
+                end if:rs.close
+
+                if isDebug then call echo("s",s):doevents
+            end if
+        end if
+    next
+
+    subAddLayout_listPage_form=nCount
+    if isDebug then call echoRedB(title,nCount)
+end function

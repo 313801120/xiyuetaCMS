@@ -1,0 +1,3 @@
+function test_view(rs,s)
+	test_view="<font color=blue><i>"&s&"</i></font>"
+end function

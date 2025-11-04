@@ -1,10 +1,10 @@
-﻿<% 
-'颜色20152027
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
-'获得随机颜色20152027
+
 Function getRandColor()
-    Dim splStr  
-    splStr = Split("#990000,#999900,#333366,#663300,#669966,#FF6600,#CC33CC,#993366,#FF0099,#669900,#336699,#99CCCC,#CC3366,#FF9900,#9933FF,#669900,#6699FF,#333366,#99CC66,#996600,#000033,#003300,#330000,#660000,#000099,#330099,#6600FF,#990000,#CC0000,#FF0000,#990066,#FF0066,#CC00CC", ",") 
-    getRandColor = splStr(phpRand(0, UBound(splStr))) 
-End Function 
+Dim a  
+a = Split(ChrW(35)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(51)&ChrW(51)&ChrW(51)&ChrW(51)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(51)&ChrW(51)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(57)&ChrW(57)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(54)&ChrW(54)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(67)&ChrW(67)&ChrW(51)&ChrW(51)&ChrW(67)&ChrW(67)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(51)&ChrW(51)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(48)&ChrW(48)&ChrW(57)&ChrW(57)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(51)&ChrW(51)&ChrW(54)&ChrW(54)&ChrW(57)&ChrW(57)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(67)&ChrW(67)&ChrW(67)&ChrW(67)&ChrW(44)&ChrW(35)&ChrW(67)&ChrW(67)&ChrW(51)&ChrW(51)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(51)&ChrW(51)&ChrW(70)&ChrW(70)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(57)&ChrW(57)&ChrW(70)&ChrW(70)&ChrW(44)&ChrW(35)&ChrW(51)&ChrW(51)&ChrW(51)&ChrW(51)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(67)&ChrW(67)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(54)&ChrW(54)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(51)&ChrW(51)&ChrW(44)&ChrW(35)&ChrW(48)&ChrW(48)&ChrW(51)&ChrW(51)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(51)&ChrW(51)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(57)&ChrW(57)&ChrW(44)&ChrW(35)&ChrW(51)&ChrW(51)&ChrW(48)&ChrW(48)&ChrW(57)&ChrW(57)&ChrW(44)&ChrW(35)&ChrW(54)&ChrW(54)&ChrW(48)&ChrW(48)&ChrW(70)&ChrW(70)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(67)&ChrW(67)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(44)&ChrW(35)&ChrW(57)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(48)&ChrW(48)&ChrW(54)&ChrW(54)&ChrW(44)&ChrW(35)&ChrW(67)&ChrW(67)&ChrW(48)&ChrW(48)&ChrW(67)&ChrW(67), ChrW(44)) 
+getRandColor = a(phpRand(0, UBound(a))) 
+End function 
 %> 

@@ -1,0 +1,11 @@
+'会员类型显示对应的颜色'20250925
+function qqshow_showUserType(rs,userType) 
+    if userType="机器人" then
+        userType="<font color=red>"&userType&"</font>"
+    elseif userType="普通会员" then
+        userType="<font color=green><b>"&userType&"</b></font>" 
+    else
+        userType="<font color=#000>"&userType&"</font>"
+    end if
+    qqshow_showUserType=userType
+end function

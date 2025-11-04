@@ -1,0 +1,1 @@
+                          openTabsPage("app/"+data.pagefolder + "/list.asp", data.pagefolder)

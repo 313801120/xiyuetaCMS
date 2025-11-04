@@ -1,0 +1,63 @@
+    // 处理提交删除，提示，一种是输入密码，一种为确认
+    var handleSubmitDelIdList=function(idList,obj){
+        if('<%=delver%>'=='yes'){
+          layer.prompt({
+              formType: 1,
+              title: '敏感操作，请验证密码'
+          }, function(value, index) {
+              layer.close(index); 
+              submitDelIdList(idList, obj, value)   //删除'
+          });
+
+        }else{
+            layer.confirm('确定要删除吗？', function(index) {
+                layer.close(index); 
+                submitDelIdList(idList,null)   //删除'
+            });
+        }
+    }
+    //提交删除  submitDelIdList(id,obj,pwd)   '删除'
+    var submitDelIdList = function(idList,obj,pwd){
+        NProgress.start(); // 开始显示进度条  
+        $.ajax({
+            type: "POST",
+            cache: true,
+            dataType: "json",
+            url: "?act=del",
+            data: { "id": idList,"pwd":pwd }, 
+            success: function(data) {  
+                NProgress.done(); // 进度条完成  
+                switch (data.status) {
+                    case "y":
+                        if(obj){
+                            obj.del();   
+                        }else{
+                            table.reload('testReload');
+                        }                                                
+                        layer.msg(data.info,{icon: 1});
+                        break;
+                    case "n":                                    
+                        layer.msg(data.info,{icon: 2});
+                        break;
+                }
+            }
+        });
+    }
+    //批量删除
+    var batchDelSelected=function(){
+        //testReload为table渲染时改变的 id: 'testReload'
+        var checkStatus = table.checkStatus('testReload')
+        ,checkData = checkStatus.data; //得到选中的数据
+
+        if(checkData.length === 0){
+           return layer.msg('请选择数据');
+        }
+        var idlist='';
+        for(var i=0;i<checkData.length;i++){
+            if(idlist!='')idlist+=',';
+            idlist+=checkData[i].id;
+        }              
+
+        handleSubmitDelIdList(idlist,null)   //删除'
+          
+    }

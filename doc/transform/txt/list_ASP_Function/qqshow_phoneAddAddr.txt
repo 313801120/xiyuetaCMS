@@ -1,0 +1,4 @@
+'手机号加上手机地址'20250925
+function qqshow_phoneAddAddr(rs,phone)
+	qqshow_phoneAddAddr=phone & "(" & mobileToAddr2025(phone,"all") & ")"
+end function

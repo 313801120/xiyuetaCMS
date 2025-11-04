@@ -1,0 +1,14 @@
+                          // 使用通用导出函数
+                          showExportModal({
+                            confirmText: '确定要导出布局页及相关配置吗？',
+                            confirmTitle: '确认导出',
+                            action: 'layoutPageExportAllConfig',
+                            exportTitle: '导出布局页及相关配置',
+                            filePrefix: 'layout_config_',
+                            fileExtension: '.txt',
+                            successTitle: '配置已成功导出，您可以复制以下内容：',
+                            copyBtnText: '复制全部',
+                            downloadBtnText: '下载文件',
+                            closeBtnText: '关闭',
+                            itemId: data.id
+                          }); 

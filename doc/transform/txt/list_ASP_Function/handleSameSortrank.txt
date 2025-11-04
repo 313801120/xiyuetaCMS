@@ -1,0 +1,15 @@
+'处理三页统一排序
+function handleSameSortrank()    
+    rs.open"select * from ["&db_PREFIX& tableName & "] where layout_page_id="&request("layout_page_id") ,conn,1,3
+    while not rs.eof
+        ' call echo("sortrank",rs("sortrank"))
+        ' call echo("editSortrank",rs("editSortrank"))
+        ' call echo("viewSortrank",rs("viewSortrank"))
+        ' call hr()
+        rs("viewSortrank")=rs("sortrank")
+        rs("editSortrank")=rs("sortrank")
+        rs.update
+    rs.movenext:wend:rs.close
+ 
+	call die("{""info"": ""操作完成！"",""status"": ""y""}")
+end function

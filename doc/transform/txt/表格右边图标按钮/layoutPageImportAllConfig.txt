@@ -1,0 +1,55 @@
+                            // 弹出输入框让用户粘贴导入内容 220251028  改20251029 1
+                            layer.prompt({
+                              formType: 2,
+                              area: ['800px', '500px'],
+                              title: '导入布局页及相关配置',
+                              btn: ['确定导入', '取消'],
+                              success: function(layero, index) {
+                                  var textarea = layero.find('textarea');
+                                  textarea.css('font-family', 'Consolas, Monaco, Courier New, monospace');
+                                  textarea.css('font-size', '12px');
+                              },
+                              yes: function(index, layero) {
+                                  var content = layero.find('textarea').val();
+                                  if (!content) {
+                                      layer.msg('请输入要导入的内容');
+                                      return;
+                                  }
+                                  
+                                  layer.close(index); // 先关闭输入框
+                                  NProgress.start();
+                                  
+                                  // 显示处理中提示
+                                  var processingLayer = layer.msg('正在处理中，请等待...', {
+                                      icon: 16,
+                                      time: 0,
+                                      shade: [0.3, '#000']
+                                  });
+                                  
+                                  $.ajax({
+                                      type: "POST",
+                                      cache: false,
+                                      dataType: "json",
+                                      url: "?act=layoutPageImportAllConfig",
+                                      data: { "content": content },
+                                      success: function(data) {
+                                          layer.close(processingLayer);
+                                          NProgress.done();
+                                          switch (data.status) {
+                                              case "y":
+                                                  layer.msg(data.info, {icon: 1, time: 5000});
+                                                  table.reload('testReload');
+                                                  break;
+                                              case "n":
+                                                  layer.msg(data.info, {icon: 2});
+                                                  break;
+                                          }
+                                      },
+                                      error: function() {
+                                          layer.close(processingLayer);
+                                          NProgress.done();
+                                          layer.msg('导入失败，请重试', {icon: 2});
+                                      }
+                                  });
+                              }
+                          });

@@ -1,0 +1,107 @@
+'生成文章html' 20251016
+function batchCreateArticleHtml(idList,nCreateHtmlOKCount)  
+    dim url,htmlFile,i,pageUrl,sql,addSql,pageHtmlFile,nLen,defaultLanguage,splxx,languageList,nMax 
+    if idList<>"" then
+        addSql=" where isthrough=1 and ishtml=1"  '生成html要为真'
+        if idList<>"*" then  '为*生成全部文章'
+            addSql=addSql & " and id in("&idList&")"
+        end if
+
+        dim rs:Set rs = CreateObject("Adodb.RecordSet")
+        rs.open"select languageList from " & db_PREFIX & "website order by sortrank desc,sortrank asc",conn,1,1
+        if not rs.eof then 
+            languageList=rs("languageList") 
+            call echo("需要生成的版本有",rs("languageList"))
+            splxx=split(rs("languageList")&"|cn|","|")
+            defaultLanguage=splxx(1)  '默认语言'
+            call echo("默认语言为",defaultLanguage)
+        end if:rs.close
+        'and updatetime > createHtmltime 不要这个判断，在搜索里有搜索未生成选项可查看到未生成html文章的'
+        addSql=addSql&" ORDER BY updatetime DESC"  '生成html要正排序，更新要倒排序，让没生成在前，更新在前'
+        sql="select * from ["& db_PREFIX &"articledetail]"&addSql
+        call echo("sql",sql):doevents
+
+        rs.open sql,conn,1,1
+        nMax=rs.recordcount
+        if nMax>9999 then nMax=9999
+        for i=1 to nMax
+            if rs.eof then exit for           
+            call echoBlueB("生成文章",i&"/"&nMax)
+            if phptrim(rs("filename"))<>"" then
+                htmlFile="/"&phptrim(rs("filename")) 
+            else
+                htmlFile="/detail_" & rs("id") &  ".html"
+            end if
+            url="detail.asp?id="&rs("id") & "&ishtml=1"
+            url=webDoMain() & "/" &url
+            if rs("isthrough") then     '审核为假'
+                if instr(languageList,"|cn|")>0 then
+                    nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                    call createWebHtml("cn",url,htmlFile,rs,defaultLanguage) 
+                    doevents
+                end if                
+
+                if instr(languageList,"|en|")>0 then    
+                    nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'                
+                    call createWebHtml("en",url,htmlFile,rs,defaultLanguage) 
+                    doevents
+                end if    
+
+                if instr(languageList,"|ft|")>0 then  
+                    nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                    call createWebHtml("ft",url,htmlFile,rs,defaultLanguage) 
+                    doevents
+                end if  
+                
+                '更新时间'
+                conn.execute("update " & db_PREFIX & "articledetail set createHtmltime='"&now()&"' where id="&rs("id"))
+            end if
+        rs.movenext:next:rs.close
+    end if
+    batchCreateArticleHtml=nCreateHtmlOKCount
+end function
+'创建网页html'
+function createWebHtml(language,url,byval htmlFile,rs,defaultLanguage)
+    dim newHtmlFile,newUrl,viewUrl,sType,content
+    if language="en" then
+        sType="英文版"
+    elseif language="ft" then
+        sType="繁体版"
+    elseif language="cn" then
+        sType="中文版"
+    end if
+  
+    call echoRedB("提示","生成"&sType&"文章【"&rs("title")&"】成功！")
+    if language<>defaultLanguage then
+        call createFolder("/"&language&"/")  '创建对英言版本目录'
+        newHtmlFile="/" & language & htmlFile  '加个判断'
+    else
+        newHtmlFile= htmlFile  '加个判断'
+    end if
+    newUrl=url
+    newUrl=newUrl&IIF(instr(newUrl,"?")=false,"?","&")
+    if language<>defaultLanguage then  '不为默认语言则加上语言参数'
+        newUrl=newUrl&"language="&language
+    end if
+    viewUrl=replace(newUrl,"ishtml=1&","")
+    viewUrl=replace(viewUrl,"?ishtml=1","")
+    call echo(""&sType&"正常访问","<a href='"&viewUrl&"' target='_blank'>"&viewUrl&"</a>")
+    call echo(""&sType&"采集访问","<a href='"&newUrl&"' target='_blank'>"&newUrl&"</a>")
+    call echo(""&sType&"生成后地址","<a href='"&newHtmlFile&"' target='_blank'>"&newHtmlFile&"</a>")
+
+    '添加到html文件表里'
+    dim rsx:Set rsx = CreateObject("Adodb.RecordSet") 
+    rsx.open "select * from ["& db_PREFIX &"htmlFile] where htmlFilePath='"&newHtmlFile&"'",conn,1,3
+    if rsx.eof then rsx.addnew
+    rsx("sType")="文章"
+    rsx("htmlFilePath")=newHtmlFile
+    rsx("status")=1  '状态为1 生成html'
+    rsx("updatetime")=now() '更新时间'
+    rsx.update:rsx.close 
+
+    content=gethttpurl(newUrl,"utf-8")
+    call writetofile(newHtmlFile,content,"utf-8")  
+    call hr()   
+    createWebHtml=content
+end function
+ 

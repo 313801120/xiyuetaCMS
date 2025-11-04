@@ -1,1755 +1,1498 @@
-﻿<% 
-'后台操作核心程序 添加 删除 修改 列表
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
-'调用function文件函数
+
 Function callFunction()
-    Dim sType 
-    sType = Request("stype") 
-    If sType = "updateWebsiteStat" Then
-        updateWebsiteStat()                                                             '更新网站统计
-    ElseIf sType = "clearWebsiteStat" Then
-        call clearWebsiteStat()                                                         '清空网站统计
-    ElseIf sType = "updateTodayWebStat" Then
-        call updateTodayWebStat()                                                       '更新网站今天统计
-    ElseIf sType = "websiteDetail" Then
-        call websiteDetail()                                                            '详细网站统计
-    ElseIf sType = "displayAccessDomain" Then
-        call displayAccessDomain()                                                      '显示访问域名
-    ElseIf sType = "delTemplate" Then
-        call delTemplate()                                                              '删除模板
-    Else
-        call eerr("function1页里没有动作", Request("stype")) 
-    End If 
-End Function
- 
+Dim a 
+a = Request(ChrW(115)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)) 
+If a = ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(83)&ChrW(116)&ChrW(97)&ChrW(116) Then
+updateWebsiteStat()
+ElseIf a = ChrW(99)&ChrW(108)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(83)&ChrW(116)&ChrW(97)&ChrW(116) Then
+call clearWebsiteStat()
+ElseIf a = ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(111)&ChrW(100)&ChrW(97)&ChrW(121)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(116)&ChrW(97)&ChrW(116) Then
+call updateTodayWebStat()
+ElseIf a = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108) Then
+call websiteDetail()
+ElseIf a = ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110) Then
+call displayAccessDomain()
+ElseIf a = ChrW(100)&ChrW(101)&ChrW(108)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101) Then
+call delTemplate()
+Else
+call eerr(ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(49)&ChrW(39029)&ChrW(37324)&ChrW(27809)&ChrW(26377)&ChrW(21160)&ChrW(20316), Request(ChrW(115)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))) 
+End if 
+End function
 
-'显示访问域名
 Function displayAccessDomain()
-    Dim visitWebSite, visitWebSiteList, urlList, nOK 
-    call handlePower("显示访问域名") 
-    call openconn() 
-    nOK = 0 
-    '【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "websitestat", conn, 1, 1 
-    While Not rs.EOF
-        visitWebSite = LCase(getWebSite(rs("visiturl"))) 
-        'call echo("visitWebSite",visitWebSite)
-        If InStr(vbCrLf & visitWebSiteList & vbCrLf, vbCrLf & visitWebSite & vbCrLf) = 0 Then
-            If visitWebSite <> LCase(getWebSite(webDoMain())) Then
-                visitWebSiteList = visitWebSiteList & visitWebSite & vbCrLf 
-                nOK = nOK + 1 
-                urlList = urlList & nOK & "、<a href='" & rs("visiturl") & "' target='_blank'>" & rs("visiturl") & "</a><br>" 
-            End If 
-        End If 
-    rs.MoveNext : Wend : rs.Close 
-    '【@是jsp显示@】}catch(Exception e){}
-    call echo("显示访问域名", "操作完成 <a href='javascript:history.go(-1)'>点击返回</a>") 
-    call rwend(visitWebSiteList & "<br><hr><br>" & urlList) 
-End Function
- 
-'获得处理后表列表 20160313
+Dim a, b, c, d 
+call handlePower(ChrW(26174)&ChrW(31034)&ChrW(35775)&ChrW(38382)&ChrW(22495)&ChrW(21517)) 
+call openconn() 
+d = 0 
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116), conn, 1, 1 
+While Not rs.EOF
+a = LCase(getWebSite(rs(ChrW(118)&ChrW(105)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(108)))) 
+
+If InStr(vbCrLf & b & vbCrLf, vbCrLf & a & vbCrLf) = 0 Then
+If a <> LCase(getWebSite(webDoMain())) Then
+b = b & a & vbCrLf 
+d = d + 1 
+c = c & d & ChrW(12289)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & rs(ChrW(118)&ChrW(105)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(108)) & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62) & rs(ChrW(118)&ChrW(105)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(108)) & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62) 
+End if 
+End if 
+rs.MoveNext : Wend : rs.Close 
+
+call echo(ChrW(26174)&ChrW(31034)&ChrW(35775)&ChrW(38382)&ChrW(22495)&ChrW(21517), ChrW(25805)&ChrW(20316)&ChrW(23436)&ChrW(25104)&ChrW(32)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(121)&ChrW(46)&ChrW(103)&ChrW(111)&ChrW(40)&ChrW(45)&ChrW(49)&ChrW(41)&ChrW(39)&ChrW(62)&ChrW(28857)&ChrW(20987)&ChrW(36820)&ChrW(22238)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+call rwend(b & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62) & c) 
+End function
+
 Function getHandleTableList()
-    Dim s, lableStr
-    lableStr = "表列表[" & Request("mdbpath") & "]" 
-    If WEB_CACHEContent = "" Then
-        WEB_CACHEContent = readFile(WEB_CACHEFile, "") 
-    End If 
-    s = getConfigContentBlock(WEB_CACHEContent, "#" & lableStr & "#") 
-    If s = "" Then
-        s = LCase(getTableList()) 
-        s = "|" & Replace(s, vbCrLf, "|") & "|" 
-        WEB_CACHEContent = setConfigFileBlock(WEB_CACHEFile, s, "#" & lableStr & "#") 
-        If isCacheTip = True Then
-            call echo("缓冲", lableStr) 
-        End If 
-    End If 
-    getHandleTableList = s 
-End Function
- 
-
-'获得处理的字段列表   getHandleFieldList("ArticleDetail","字段列表")
-Function getHandleFieldList(tableName, sType)
-    Dim s 
-    If WEB_CACHEContent = "" Then
-        WEB_CACHEContent = readFile(WEB_CACHEFile, "") 
-    End If 
-    s = getConfigContentBlock(WEB_CACHEContent, "#" & tableName & sType & "#") 
-
-    If s = "" Then
-        If sType = "字段配置列表" Then
-            s = LCase(getFieldConfigList(tableName)) 
-        Else
-            s = LCase(getFieldList(tableName)) 
-        End If 
-        WEB_CACHEContent = setConfigFileBlock(WEB_CACHEFile, s, "#" & tableName & sType & "#") 
-        If isCacheTip = True Then
-            call echo("缓冲", tableName & sType) 
-        End If 
-    End If 
-    getHandleFieldList = s 
-End Function
- 
-'读模板内容 20160310
-Function getTemplateContent(templateFileName)
-    call loadWebConfig() 
-    '读模板
-    Dim templateFile, customTemplateFile, c 
-    customTemplateFile = ROOT_PATH & "template/" & db_PREFIX & "/" & templateFileName 
-    '为手机端
-    If checkMobile() = True Or Request("m") = "mobile" Then
-        templateFile = ROOT_PATH & "/Template/mobile/" & templateFileName 
-    End If 
-    '判断手机端文件是否存在20160330
-    If checkFile(templateFile) = False Then
-        If checkFile(customTemplateFile) = True Then
-            templateFile = customTemplateFile 
-        Else
-            templateFile = ROOT_PATH & templateFileName 
-        End If 
-    End If 
-    c = readFile(templateFile, "") 
-    c = replaceLableContent(c) 
-    getTemplateContent = c 
-End Function
- 
-'替换标签内容
-Function replaceLableContent(content)
-    Dim s, c, splStr, list 
-    content = Replace(content, "{$webVersion$}", webVersion)                        '网站版本
-    content = Replace(content, "{$Web_Title$}", cfg_webTitle)                       '网站标题
-    content = Replace(content, "{$EDITORTYPE$}", EDITORTYPE)                        'ASP与PHP
-    content = Replace(content, "{$adminDir$}", adminDir)                            '后台目录
-    content = Replace(content, "{$incDir$}", incDir)                                '后台目录
-
-
-    content = Replace(content, "[$adminId$]", getsession("adminId"))           '管理员ID
-    content = Replace(content, "{$adminusername$}", getsession("adminusername"))    '管理账号名称
-    content = Replace(content, "{$EDITORTYPE$}", EDITORTYPE)                        '程序类型
-    content = Replace(content, "{$WEB_VIEWURL$}", WEB_VIEWURL)                      '前台
-    content = Replace(content, "{$webVersion$}", webVersion)                        '版本
-    content = Replace(content, "{$WebsiteStat$}", getConfigFileBlock(WEB_CACHEFile, "#访客信息#")) '最近访客信息
-
-
-    content = Replace(content, "{$databaseType$}", databaseType)                    '数据为类型
-    content = Replace(content, "{$DB_PREFIX$}", db_PREFIX)                          '表前缀
-    content = Replace(content, "{$adminflags$}", IIF(getsession("adminflags") = "|*|", "超级管理员", "普通管理员")) '管理员类型
-    content = Replace(content, "{$SERVER_SOFTWARE$}", Request.ServerVariables("SERVER_SOFTWARE")) '服务器版本
-    content = Replace(content, "{$SERVER_NAME$}", Request.ServerVariables("SERVER_NAME")) '服务器网址
-    content = Replace(content, "{$LOCAL_ADDR$}", Request.ServerVariables("LOCAL_ADDR")) '服务器IP
-    content = Replace(content, "{$SERVER_PORT$}", Request.ServerVariables("SERVER_PORT")) '服务器端口
-    content = replaceValueParam(content, "mdbpath", Request("mdbpath")) 
-    content = replaceValueParam(content, "webDir", webDir) 
-    content = replaceValueParam(content, "EDITORTYPE", EDITORTYPE)                  'ASP与PHP
-
-    '20160628
-    If InStr(content, "{$backupDatabaseSelectHtml$}") > 0 Then
-        c = getDirTxtNameList(adminDir & "/Data/BackUpDateBases/") 
-        splStr = Split(c, vbCrLf) 
-        For Each s In splStr
-            list = list & "<option value=""" & s & """>" & s & "</option>" & vbCrLf 
-        Next 
-        content = Replace(content, "{$backupDatabaseSelectHtml$}", list) 
-    End If 
-
-    '20160614
-    If EDITORTYPE = "php" Then
-        content = Replace(content, "{$EDITORTYPE_PHP$}", "php")                         '给phpinc/用
-    End If 
-    content = Replace(content, "{$EDITORTYPE_PHP$}", "")                            '给phpinc/用
-
-    replaceLableContent = content 
-End Function
- 
-
-'文章列表旗
-Function displayFlags(flags)
-    Dim c 
-    '头条[h]
-    If InStr("|" & flags & "|", "|h|") > 0 Then
-        c = c & "头 " 
-    End If 
-    '推荐[c]
-    If InStr("|" & flags & "|", "|c|") > 0 Then
-        c = c & "推 " 
-    End If 
-    '幻灯[f]
-    If InStr("|" & flags & "|", "|f|") > 0 Then
-        c = c & "幻 " 
-    End If 
-    '特荐[a]
-    If InStr("|" & flags & "|", "|a|") > 0 Then
-        c = c & "特 " 
-    End If 
-    '滚动[s]
-    If InStr("|" & flags & "|", "|s|") > 0 Then
-        c = c & "滚 " 
-    End If 
-    '加粗[b]
-    If InStr("|" & flags & "|", "|b|") > 0 Then
-        c = c & "粗 " 
-    End If 
-    If c <> "" Then c = "[<font color=""red"">" & c & "</font>]" 
-
-    displayFlags = c 
-End Function
- 
-
-
-'栏目类别循环配置        showColumnList(parentid, "webcolumn", ,"",0, defaultStr,3,"")   nCount为深度值   thisPId为交点的id
-Function showColumnList(ByVal parentid, ByVal tableName, showFieldName, ByVal thisPId, nCount, ByVal action)
-    Dim i, s, c, selectcolumnname, selStr, url, isFocus, sql, addSql, listLableStr, topnav, nRecordCount 
-    Dim thisColumnName, sNavheaderStr, sNavfooterStr, focusRootColumeId 
-    Dim titleFieldName                                                              '标题字段名称
-    titleFieldName = "title" 
-    If InStr("|webcolumn|bbscolumn|caicolumn|", "|" & LCase(tableName) & "|") > 0 Then
-        titleFieldName = "columnname" 
-    End If 
-
-    parentid = Trim(parentid) 
-    listLableStr = "list" 
-
-    topnav = getStrCut(action, "[topnav]", "[/topnav]", 2) 
-    focusRootColumeId = getStrCut(action, "[rootcolumeid]", "[/rootcolumeid]", 2) 
-    thisColumnName = getColumnName(parentid) 
-    'call echo(parentid,topnav)
-
-    If parentid <> topnav Then
-        '深度20180116
-        If InStr(action, "[small" & nCount & "-list") > 0 Then
-            listLableStr = "small" & nCount & "-list" 
-        ElseIf InStr(action, "[small-list") > 0 Then
-            listLableStr = "small-list" 
-        End If 
-    End If 
-    'call echo("listLableStr",listLableStr)
-    Dim rs : Set rs = CreateObject("Adodb.RecordSet")
-        '【@是.netc显示@】OleDbDataReader rs=null;                //要不会出错的
-        Dim fieldNameList, splFieldName, nK, fieldName, replaceStr, startStr, endStr, nTop, nModI, title 
-        Dim subHeaderStr, subFooterStr, subHeaderStartStr, subHeaderEndStr, subFooterStartStr, subFooterEndStr 
-
-
-        fieldNameList = getHandleFieldList(db_PREFIX & tableName, "字段列表") 
-        splFieldName = Split(fieldNameList, ",") 
-        sql = "select * from " & db_PREFIX & tableName & " where parentid=" & parentid 
-        'call echo("sql1111111111111",tableName)
-        '处理追加SQL
-        startStr = "[sql-" & nCount & "]" : endStr = "[/sql-" & nCount & "]" 
-        If InStr(action, startStr) = False And InStr(action, endStr) = 0 Then
-            startStr = "[sql]" : endStr = "[/sql]" 
-        End If 
-        addSql = getStrCut(action, startStr, endStr, 2) 
-        If addSql <> "" Then
-            sql = getWhereAnd(sql, addSql) 
-        End If 
-        'call echo(sql,addSql)
-        sql = sql & " order by sortrank asc" 
-        '【@是jsp显示@】try{
-        rs.Open sql, conn, 1, 1 
-        '【PHP】删除rs
-        nRecordCount = rs.RecordCount 
-        '【@是jsp显示@】rs = Conn.executeQuery(handleSqlTop(sql));
-        For i = 1 To nRecordCount
-            If Not rs.EOF Then
-                '【PHP】$rs=mysql_fetch_array($rsObj);                                            //给PHP用，因为在 asptophp转换不完善  特殊
-                startStr = "" : endStr = "" 
-                selStr = "" 
-                isFocus = False 
-                '改进
-                If CStr(rs("id")) = CStr(thisPId) Or(focusRootColumeId <> "" And CStr(rs("id")) = CStr(focusRootColumeId)) Then
-                    selStr = " selected " 
-                    isFocus = True 
-                End If 
-                '网址判断
-                If isFocus = True Then
-                    startStr = "[" & listLableStr & "-focus]" : endStr = "[/" & listLableStr & "-focus]" 
-                Else
-
-                    startStr = "[" & listLableStr & "-" & thisColumnName & "]" : endStr = "[/" & listLableStr & "-" & thisColumnName & "]" 
-
-                    If InStr(action, startStr) = 0 And InStr(action, endStr) = 0 Then
-                        startStr = "[" & listLableStr & "-" & i & "]" : endStr = "[/" & listLableStr & "-" & i & "]" 
-                    Else
-                    'call echo(rs("columnname"),startStr)
-                    End If 
-                End If 
-
-                '在最后时排序当前交点20160202
-                If i = nTop And isFocus = False Then
-                    startStr = "[" & listLableStr & "-end]" : endStr = "[/" & listLableStr & "-end]" 
-                End If 
-                '例[list-mod2]  [/list-mod2]    20150112
-                For nModI = 6 To 2 Step - 1
-                    If InStr(action, startStr) = False And i Mod nModI = 0 Then
-                        startStr = "[" & listLableStr & "-mod" & nModI & "]" : endStr = "[/" & listLableStr & "-mod" & nModI & "]" 
-                        If InStr(action, startStr) > 0 Then
-                            Exit For 
-                        End If 
-                    End If 
-                Next 
-
-                '没有则用默认
-                If InStr(action, startStr) = 0 And InStr(action, endStr) = 0 Then
-                    startStr = "[" & listLableStr & "]" : endStr = "[/" & listLableStr & "]" 
-                End If 
-                'call rwend(action)
-                'call echo(startStr,endStr)
-                If InStr(action, startStr) > 0 And InStr(action, endStr) > 0 Then
-                    s = strCut(action, startStr, endStr, 2) 
-
-                    s = replaceValueParam(s, "id", rs("id")) 
-                    s = replaceValueParam(s, "selected", selStr) 
-                    selectcolumnname = rs(showFieldName) : title = selectcolumnname 
-                    If nCount >= 1 Then
-                        selectcolumnname = copystr("&nbsp;&nbsp;", nCount) & "├─" & selectcolumnname 
-                    End If 
-                    s = replaceValueParam(s, "selectcolumnname", selectcolumnname) 
-                    s = replaceValueParam(s, "title", title) 
-
-
-                    For nK = 0 To UBound(splFieldName)
-                        If splFieldName(nK) <> "" Then
-                            fieldName = splFieldName(nK) 
-                            replaceStr = rs(fieldName) & "" 
-
-                            s = replaceValueParam(s, fieldName, replaceStr) 
-                        End If 
-                    Next 
-
-                    'url = WEB_VIEWURL & "?act=nav&columnName=" & rs(showFieldName)             '以栏目名称显示列表
-                    url = WEB_VIEWURL & "?act=nav&id=" & rs("id")                               '以栏目ID显示列表
-                    url = handleWebUrl(url)                                                         '加上测试gl style参数20180316
-
-
-
-
-                    '自定义网址
-                    If Trim(rs("customaurl")) <> "" Then
-                        url = Trim(rs("customaurl")) 
-                    End If 
-                    s = Replace(s, "[$viewWeb$]", url) 
-                    s = replaceValueParam(s, "url", url) 
-                    s = replaceValueParam(s, "i", i)                                                '循环编号
-                    s = replaceValueParam(s, "编号", i)                                               '循环编号
-
-                    '网站栏目没有page位置处理 追加于20160716 home
-                    url = WEB_ADMINURL & "?act=addEditHandle&actionType=WebColumn&lableTitle=网站栏目&nPageSize=10&page=&id=" & rs("id") & "&n=" & getRnd(11) 
-                    s = handleDisplayOnlineEditDialog(url, s, "", "div|li|span")                    '处理是否添加在线修改管理器
-
-
-                    If EDITORTYPE = "php" Then
-                        s = Replace(s, "[$phpArray$]", "[]") 
-                    Else
-                        s = Replace(s, "[$phpArray$]", "") 
-                    End If 
-
-                    's=copystr("",nCount) & rs("columnname") & "<hr>"
-                    If rs("parentid") = "-1" And InStr(action, "[navheader]") > 0 Then
-                        sNavheaderStr = getStrCut(action, "[navheader]", "[/navheader]", 2) 
-                        sNavfooterStr = getStrCut(action, "[navfooter]", "[/navfooter]", 2) 
-                        If isFocus = True Then
-                            If InStr(action, "[navheader-focus]") > 0 Then
-                                sNavheaderStr = getStrCut(action, "[navheader-focus]", "[/navheader-focus]", 2) 
-                            End If 
-                            If InStr(action, "[navfooter-focus]") > 0 Then
-                                sNavfooterStr = getStrCut(action, "[navfooter-focus]", "[/navfooter-focus]", 2) 
-                            End If 
-                        End If 
-                    End If 
-
-                    If EDITORTYPE <> "jsp" Then
-                        c = c & sNavheaderStr & s & vbCrLf 
-                        s = showColumnList(rs("id"), tableName, showFieldName, thisPId, nCount + 1, action) & sNavfooterStr 
-                    End If 
-
-
-                    subHeaderStartStr = "[subheader-" & rs(titleFieldName) & "]" : subHeaderEndStr = "[/subheader-" & rs(titleFieldName) & "]" 
-                    If InStr(action, subHeaderStartStr) = 0 And InStr(action, subHeaderEndStr) = 0 Then
-                        subHeaderStartStr = "[subheader]" : subHeaderEndStr = "[/subheader]" 
-                    End If 
-
-
-                    subFooterStartStr = "[subfooter-" & rs(titleFieldName) & "]" : subFooterEndStr = "[/subfooter-" & rs(titleFieldName) & "]" 
-                    If InStr(action, subFooterStartStr) = 0 And InStr(action, subFooterStartStr) = 0 Then
-                        subFooterStartStr = "[subfooter]" : subFooterEndStr = "[/subfooter]" 
-                    End If 
-                    '在最后20180308
-                    If i = nRecordCount Then
-                        subFooterStartStr = "[subfooter-end]" : subFooterEndStr = "[/subfooter-end]" 
-                        If InStr(action, subFooterStartStr) = 0 And InStr(action, subFooterStartStr) = 0 Then
-                            subFooterStartStr = "[subfooter]" : subFooterEndStr = "[/subfooter]" 
-                        End If 
-                    End If 
-                    subHeaderStr = getStrCut(action, subHeaderStartStr, subHeaderEndStr, 2) 
-                    subFooterStr = getStrCut(action, subFooterStartStr, subFooterEndStr, 2) 
-                    'call echo(rs("columnname"),"哈哈")
-
-                    If s <> "" Then s = vbCrLf & subHeaderStr & s & subFooterStr 
-                    c = c & s 
-                End If 
-            End If 
-        rs.MoveNext : Next : rs.Close 
-        '【@是jsp显示@】}catch(Exception e){}
-        showColumnList = c 
-End Function
-
-'msg1  辅助
-Function getMsg1(msgStr, url)
-    Dim content 
-    content = readFile(ROOT_PATH & "msg.html", "") 
-    msgStr = msgStr & "<br>" & jsTiming(url, 5) 
-    content = Replace(content, "[$msgStr$]", msgStr) 
-    content = Replace(content, "[$url$]", url) 
-
-
-    content = replaceL(content, "提示信息") 
-    content = replaceL(content, "如果您的浏览器没有自动跳转，请点击这里") 
-    content = replaceL(content, "倒计时") 
-
-
-    getMsg1 = content 
-End Function
- 
-
-'检测权力
-Function checkPower(powerName)
-    Dim sql 
-    checkPower = False 
-    If getsession("adminId") <> "" Then
-        call openconn()                                                                 '打开数据库 要不然在php报错，晕
-        '这个做会很慢，测试时用
-        sql = "select * from " & db_PREFIX & "admin where id=" & getsession("adminId") 
-
-        '【@是jsp显示@】try{
-        rss.Open sql, conn, 1, 1 
-        If Not rss.EOF Then
-            call setsession("adminflags", rss("flags")) 
-        End If : rss.Close 
-        '【@是jsp显示@】}catch(Exception e){}
-
-        If InStr("|" & getsession("adminflags") & "|", "|" & powerName & "|") > 0 Or InStr("|" & getsession("adminflags") & "|", "|*|") > 0 Then
-            checkPower = True 
-        Else
-            checkPower = False 
-        End If 
-    Else
-        checkPower = True 
-    End If 
-End Function
- 
-'处理后台管理权限
-Function handlePower(powerName)
-    If checkPower(powerName) = False Then
-        call eerr("提示", "你没有【" & powerName & "】权限，<a href='javascript:history.go(-1);'>点击返回</a>") 
-    End If 
-End Function
- 
-'显示管理列表
-Function dispalyManage(actionName, lableTitle, ByVal nPageSize, addSql)
-    call handlePower("显示" & lableTitle)                                             '管理权限处理
-    call loadWebConfig() 
-    Dim content, i, s, c, fieldNameList, sql, action, htmlurl
-    Dim nX, url, nCount, nPage 
-    Dim idInputName 
-
-    Dim tableName, j, splxx 
-    Dim fieldName                                                                   '字段名称
-    Dim splFieldName                                                                '分割字段
-    Dim searchfield, keyWord                                                        '搜索字段，搜索关键词
-    Dim parentid                                                                    '栏目id
-
-    Dim replaceStr                                                                  '替换字符
-    tableName = LCase(actionName)                                                   '表名称
-
-    Dim columnTalbeName : columnTalbeName = "webColumn"                             '类表名称
-    If InStr(LCase("|bbsdetail|"), LCase(tableName)) > 0 Then
-        columnTalbeName = "bbsColumn"                                                   '类表名称
-    ElseIf InStr(LCase("|caidetail|"), LCase(tableName)) > 0 Then
-        columnTalbeName = "caiColumn" 
-    End If 
-
-    searchfield = Request("searchfield")                                            '获得搜索字段值
-    keyWord = Request("keyword")                                                    '获得搜索关键词值
-    If Request.Form("parentid") <> "" Then
-        parentid = Request.Form("parentid") 
-    Else
-        parentid = Request.QueryString("parentid") 
-    End If 
-
-    Dim id 
-    Dim focusid                                                                     '是判断传过来的id是否在当前列表中是交点20160715 home
-    id = rq("id") 
-    focusid = rq("focusid") 
-
-    fieldNameList = getHandleFieldList(db_PREFIX & tableName, "字段列表") 
-
-    fieldNameList = specialStrReplace(fieldNameList)                                '特殊字符处理
-    splFieldName = Split(fieldNameList, ",")                                        '字段分割成数组
-
-    '追加于20170702
-    Dim customTemplatePath, templatePath 
-    templatePath = "manage_" & tableName & ".html" 
-    If Request("template") <> "" Then
-        customTemplatePath = "manage_" & Request("template") & ".html" 
-        If checkFile(customTemplatePath) = True Then
-            templatePath = customTemplatePath 
-        End If 
-    End If 
-    '读模板
-    content = getTemplateContent(templatePath) 
-
-    action = getStrCut(content, "[list]", "[/list]", 2) 
-    '网站栏目单独处理      栏目不一样20160301
-    If actionName = "WebColumn" Or actionName = "BBSColumn" Or actionName = "CaiColumn" Then
-        action = getStrCut(content, "[action]", "[/action]", 1) 
-        content = Replace(content, action, showColumnList("-1", actionName, "columnname", "", 0, action)) 
-
-
-    ElseIf actionName = "ListMenu" Then
-        action = getStrCut(content, "[action]", "[/action]", 1) 
-        content = Replace(content, action, showColumnList("-1", "listmenu", "title", "", 0, action)) 
-    Else
-        If keyWord <> "" And searchfield <> "" Then
-            If Left(keyWord, 2) = "==" Then
-                keyWord = Mid(keyWord, 3) 
-                If searchfield <> "id" And InStr(getHandleFieldList(db_PREFIX & tableName, "字段配置列表"), "," & searchfield & "|numb|") = False Then
-                    keyWord = "'" & keyWord & "'" 
-                End If 
-
-                addSql = getWhereAnd(" where " & searchfield & " = " & keyWord & " ", addSql) 
-            Else
-                addSql = getWhereAnd(" where " & searchfield & " like '%" & keyWord & "%' ", addSql) 
-            End If 
-        End If 
-        If parentid <> "" Then
-            addSql = getWhereAnd(" where parentid=" & parentid & " ", addSql) 
-        End If 
-        'call echo(tableName,addsql)
-        sql = getWhereAnd("select * from " & db_PREFIX & tableName, addSql)             '改进于20180128
-        '检测SQL
-        If checksql(sql) = False Then
-            call errorLog("出错提示5：<br>action=" & action & "<hr>sql=" & sql & "<br>") 
-            Exit Function 
-        End If 
-        '【@是jsp显示@】try{
-        rs.Open sql, conn, 1, 1 
-        '【PHP】删除rs
-        nCount = rs.RecordCount 
-        s = handleNumber(Request("page")) 
-        If s = "" Then
-            nPage = 0 
-        Else
-            nPage = CInt(s) 
-        End If 
-        content = Replace(content, "[$pageInfo$]", webPageControl(nCount, nPageSize, CStr(nPage), url, "")) 
-        content = Replace(content, "[$accessSql$]", sql) 
-
-        If EDITORTYPE = "asp" Then
-            nX = getRsPageNumber(rs, nCount, nPageSize, nPage)                              '【@不是asp屏蔽@】
-
-        ElseIf EDITORTYPE = "aspx" Then
-
-            '【@是.netc显示@】int  nCountPage = getCountPage(nCount, nPageSize);
-            '【@是.netc显示@】if(nPage<=1){
-            '【@是.netc显示@】    nX=nPageSize;
-            '【@是.netc显示@】    if(nX>nCount){
-            '【@是.netc显示@】        nX=nCount;
-            '【@是.netc显示@】    }
-            '【@是.netc显示@】}else{
-            '【@是.netc显示@】    for(int nI2=0;nI2<nPageSize*(nPage-1);nI2++){
-            '【@是.netc显示@】        rs.Read();
-            '【@是.netc显示@】    }
-            '【@是.netc显示@】    if(nPage<nCountPage){
-            '【@是.netc显示@】        nX=nPageSize;
-            '【@是.netc显示@】    }else{
-            '【@是.netc显示@】        nX=nCount-nPageSize*(nPage-1);
-            '【@是.netc显示@】    }
-        '【@是.netc显示@】}
-        ElseIf EDITORTYPE = "jsp" Then
-
-            '【@是jsp显示@】int  nCountPage = getCountPage(nCount, nPageSize);
-            '【@是jsp显示@】rs = Conn.executeQuery(sql);
-            '【@是jsp显示@】if(nPage<=1){
-            '【@是jsp显示@】    nX=nPageSize;
-            '【@是jsp显示@】    if(nX>nCount){
-            '【@是jsp显示@】        nX=nCount;
-            '【@是jsp显示@】    }
-            '【@是jsp显示@】}else{
-            '【@是jsp显示@】    for(int nI2=0;nI2<nPageSize*(nPage-1);nI2++){
-            '【@是jsp显示@】        rs.next();
-            '【@是jsp显示@】    }
-            '【@是jsp显示@】    if(nPage<nCountPage){
-            '【@是jsp显示@】        nX=nPageSize;
-            '【@是jsp显示@】    }else{
-            '【@是jsp显示@】        nX=nCount-nPageSize*(nPage-1);
-            '【@是jsp显示@】    }
-            '【@是jsp显示@】}
-
-        Else
-            If nPage <> 0 Then                                                              '【@是.netc屏蔽@】'【@是jsp屏蔽@】
-                nPage = nPage - 1                                                               '【@是.netc屏蔽@】'【@是jsp屏蔽@】
-            End If                                                                          '【@是.netc屏蔽@】'【@是jsp屏蔽@】
-            sql = "select * from " & db_PREFIX & "" & tableName & " " & addSql & " limit " & nPageSize * nPage & "," & nPageSize '【@是.netc屏蔽@】'【@是jsp屏蔽@】
-            rs.Open sql, conn, 1, 1                                                         '【@是.netc屏蔽@】'【@是jsp屏蔽@】
-            '【PHP】删除rs
-            nX = rs.RecordCount                                                             '【@是.netc屏蔽@】'【@是jsp屏蔽@】
-        End If 
-        '待屏蔽
-        content = replaceValueParam(content, "print_sql", sql)                          '打印出SQL
-
-        For i = 1 To nX
-            '【PHP】$rs=mysql_fetch_array($rsObj);                                            //给PHP用，因为在 asptophp转换不完善  特殊
-            '【@是.netc显示@】rs.Read();
-            '【@是jsp显示@】rs.next();
-            s = Replace(action, "[$id$]", rs("id")) 
-            For j = 0 To UBound(splFieldName)
-                If splFieldName(j) <> "" Then
-                    splxx = Split(splFieldName(j) & "|||", "|") 
-                    fieldName = splxx(0) 
-                    replaceStr = rs(fieldName) & "" 
-                    '对文章旗处理
-                    If fieldName = "flags" Then
-                        replaceStr = displayFlags(replaceStr) 
-                    End If 
-                    'call echo("fieldname",fieldname)
-                    's = Replace(s, "[$" & fieldName & "$]", replaceStr)
-                    s = replaceValueParam(s, fieldName, replaceStr) 
-
-                End If 
-            Next 
-
-            idInputName = "id" 
-            s = Replace(s, "[$selectid$]", "<input type='checkbox' name='" & idInputName & "' id='" & idInputName & "' value='" & rs("id") & "' >") 
-            s = Replace(s, "[$phpArray$]", "") 
-            url = "【NO】" 
-            If actionName = "ArticleDetail" Then
-                url = WEB_VIEWURL & "?act=detail&id=" & rs("id")
-				htmlurl= rs("fileName")
-            ElseIf actionName = "OnePage" Then
-                url = WEB_VIEWURL & "?act=onepage&id=" & rs("id") 
-            '给评论加预览=文章  20160129
-            ElseIf actionName = "TableComment" Then
-                url = WEB_VIEWURL & "?act=detail&id=" & rs("itemid") 
-            End If 
-            '必需有自定义字段
-            If InStr(fieldNameList, "customaurl") > 0 Then
-                '自定义网址
-                If Trim(rs("customaurl")) <> "" Then
-                    url = Trim(rs("customaurl")) 
-                End If 
-            End If 
-            s = Replace(s, "[$viewWeb$]", url) 
-            s = Replace(s, "[$viewHtmlWeb$]", htmlurl) 
-			
-            s = replaceValueParam(s, "cfg_websiteurl", cfg_webSiteUrl) 
-            'call echo(focusid & "/" & rs("id"),IIF(focusid=cstr(rs("id")),"true","false"))
-            s = replaceValueParam(s, "focusid", focusid) 
-
-            c = c & s 
-
-        rs.MoveNext : Next : rs.Close 
-        '【@是jsp显示@】}catch(Exception e){}
-        content = Replace(content, "[list]" & action & "[/list]", c) 
-        '表单提交处理，parentid(栏目ID) searchfield(搜索字段) keyword(关键词) addsql(排序)
-        url = "?page=[id]&addsql=" & Request("addsql") & "&keyword=" & Request("keyword") & "&searchfield=" & Request("searchfield") & "&parentid=" & Request("parentid") 
-        url = getUrlAddToParam(getUrl(), url, "replace") 
-        'call echo("url",url)
-        content = Replace(content, "[list]" & action & "[/list]", c) 
-
-    End If 
-
-    If InStr(content, "[$input_parentid$]") > 0 Then
-        action = "[list]<option value=""[$id$]""[$selected$]>[$selectcolumnname$]</option>[/list]" 
-        c = "<select name=""parentid"" id=""parentid""><option value="""">≡ 选择栏目 ≡</option>" & showColumnList("-1", columnTalbeName, "columnname", parentid, 0, action) & vbCrLf & "</select>" 
-        content = Replace(content, "[$input_parentid$]", c)                        '上级栏目
-    End If 
-
-    content = replaceValueParam(content, "searchfield", Request("searchfield"))     '搜索字段
-    content = replaceValueParam(content, "keyword", Request("keyword"))             '搜索关键词
-    content = replaceValueParam(content, "nPageSize", Request("nPageSize"))         '每页显示条数
-    content = replaceValueParam(content, "addsql", Request("addsql"))               '追加sql值条数
-    content = replaceValueParam(content, "tableName", tableName)                    '表名称
-    content = replaceValueParam(content, "actionType", Request("actionType"))       '动作类型
-    content = replaceValueParam(content, "lableTitle", Request("lableTitle"))       '动作标题
-    content = replaceValueParam(content, "id", id)                                  'id
-    content = replaceValueParam(content, "page", Request("page"))                   '页
-
-    content = replaceValueParam(content, "parentid", Request("parentid"))           '栏目id
-    content = replaceValueParam(content, "focusid", focusid) 
-
-
-    url = getUrlAddToParam(getThisUrl(), "?parentid=&keyword=&searchfield=&page=", "delete") 
-
-    content = replaceValueParam(content, "position", "系统管理 > <a href='" & url & "'>" & lableTitle & "列表</a>") 'position位置
-
-
-    content = Replace(content, "{$EDITORTYPE$}", EDITORTYPE)                        'asp与phh
-    content = Replace(content, "{$WEB_VIEWURL$}", WEB_VIEWURL)                      '前端浏览网址
-    content = Replace(content, "{$Web_Title$}", cfg_webTitle) 
-    content = replaceValueParam(content, "EDITORTYPE", EDITORTYPE)                  'ASP与PHP
-
-    content = content & stat2016(True) 
-
-    content = handleDisplayLanguage(content, "handleDisplayLanguage")               '语言处理
-
-    call rw(content) 
-End Function
- 
-
-'添加修改界面
-Function addEditDisplay(actionName, lableTitle, ByVal fieldNameList)
-    Dim content, addOrEdit, splxx, i, j, s, c, tableName, url, aStr 
-    Dim fieldName                                                                   '字段名称
-    Dim splFieldName                                                                '分割字段
-    Dim fieldSetType                                                                '字段设置类型
-    Dim fieldValue                                                                  '字段值
-    Dim sql                                                                         'sql语句
-    Dim defaultList                                                                 '默认列表
-    Dim flagsInputName                                                              '旗input名称给ArticleDetail用
-    Dim titlecolor                                                                  '标题颜色
-    Dim flags                                                                       '旗
-    Dim splStr, fieldConfig, defaultFieldValue, postUrl 
-    Dim subTableName, subFileName                                                   '子列表的表名称，子列表字段名称
-    Dim templateListStr, listStr, listS, listC 
-
-    Dim idname : idname = Request("idname") 
-    If idname = "" Then
-        idname = "id" 
-    End If 
-
-    Dim id 
-    id = rq("id") 
-    addOrEdit = "添加" 
-    If id <> "" Then
-        addOrEdit = "修改" 
-        If id = "99999" And actionName = "Admin" Then
-            call eerr("提示", "非正常登录不能修改<a href='?act=dispalyManageHandle&actionType=Admin&lableTitle=后台管理员'>进入后台管理员列表</a>") 
-        End If 
-    End If 
-
-    If InStr(",Admin,", "," & actionName & ",") > 0 And id = getsession("adminId") & "" Then
-        call handlePower("修改自身")                                                        '管理权限处理
-    Else
-        call handlePower("显示" & lableTitle)                                             '管理权限处理
-    End If 
-
-
-
-    fieldNameList = "," & specialStrReplace(fieldNameList) & ","                    '特殊字符处理 自定义字段列表
-    tableName = LCase(actionName)                                                   '表名称
-    Dim systemFieldList                                                             '表字段列表
-    systemFieldList = getHandleFieldList(db_PREFIX & tableName, "字段配置列表") 
-    splStr = Split(systemFieldList, ",") 
-
-
-    '追加于20170702
-    Dim customTemplatePath, templatePath 
-    templatePath = "addEdit_" & tableName & ".html" 
-    If Request("template") <> "" Then
-        customTemplatePath = "addEdit_" & Request("template") & ".html" 
-        If checkFile(customTemplatePath) = True Then
-            templatePath = customTemplatePath 
-        End If 
-    End If 
-    '读模板
-    content = getTemplateContent(templatePath) 
-
-
-    '关闭编辑器
-    If InStr(cfg_flags, "|iscloseeditor|") > 0 Then
-        s = getStrCut(content, "<!--#editor start#-->", "<!--#editor end#-->", 1) 
-        If s <> "" Then
-            content = Replace(content, s, "") 
-        End If 
-    End If 
-
-    'id=*  是给网站配置使用的，因为它没有管理列表，直接进入修改界面
-    If id = "*" Then
-        sql = "select * from " & db_PREFIX & "" & tableName 
-    Else
-        sql = "select * from " & db_PREFIX & "" & tableName & " where " & idname & "=" & id 
-    End If 
-
-
-    If InStr(",Admin,", "," & actionName & ",") > 0 Then
-        '当修改超级管理员的时间，判断他是否有超级管理员权限
-        If flags = "|*|" Then
-            call handlePower("*")                                                           '管理权限处理
-        End If 
-        '对模板处理
-        templateListStr = getStrCut(content, "<!--template_list-->", "<!--/template_list-->", 2) 
-        listStr = getStrCut(templateListStr, "<!--list-->", "<!--/list-->", 2) 
-        If listStr <> "" Then
-            '【@是jsp显示@】try{
-            rsx.Open "select * from " & db_PREFIX & "ListMenu where parentId<>-1 order by sortrank asc", conn, 1, 1 
-            While Not rsx.EOF
-                'call echo("",rsx("title"))
-                listS = getStrCut(content, "<!--list" & rsx("title") & "-->", "<!--/list" & rsx("title") & "-->", 2) 
-                If listS = "" Then
-                    listS = listStr 
-                End If 
-                listS = Replace(listS, "[$title$]", rsx("title")) 
-                listS = Replace(listS, "[$id$]", rsx("id")) 
-                listC = listC & listS & vbCrLf 
-            rsx.MoveNext : Wend : rsx.Close 
-        '【@是jsp显示@】}catch(Exception e){}
-        End If 
-        If templateListStr <> "" Then
-            content = Replace(content, "<!--template_list-->" & templateListStr & "<!--/template_list-->", listC) 
-        End If 
-
-
-
-        '超级管理员
-        If CStr(getsession("adminId")) = CStr(id) And getsession("adminflags") = "|*|" And id <> "" Then
-            s = getStrCut(content, "<!--普通管理员-->", "<!--普通管理员end-->", 1) 
-            content = Replace(content, s, "<input name='flags' type='hidden' value='*' />") 
-
-
-            s = getStrCut(content, "<!--用户权限-->", "<!--用户权限end-->", 1) 
-            content = Replace(content, s, "") 
-
-            s = getStrCut(content, "<!--超级管理员-->", "<!--超级管理员end-->", 1) 
-            content = Replace(content, s, "") 
-
-            '普通管理员权限选择列表
-        ElseIf(id <> "" Or addOrEdit = "添加") And getsession("adminflags") = "|*|" Then
-            s = getStrCut(content, "<!--超级管理员-->", "<!--超级管理员end-->", 1) 
-            content = Replace(content, s, "") 
-            s = getStrCut(content, "<!--用户权限-->", "<!--用户权限end-->", 1) 
-            content = Replace(content, s, "") 
-        End If 
-    End If 
-
-
-
-    '【@是jsp显示@】try{
-    If id <> "" Then
-        rs.Open sql, conn, 1, 1 
-        If Not rs.EOF Then
-            id = rs(idname)                                                                 'id
-        End If 
-        '标题颜色
-        If InStr(systemFieldList, ",titlecolor|") > 0 Then
-            titlecolor = rs("titlecolor") 
-        End If 
-        '旗
-        If InStr(systemFieldList, ",flags|") > 0 Then
-            flags = rs("flags") 
-        End If 
-    End If 
-    For Each fieldConfig In splStr
-        If fieldConfig <> "" Then
-            splxx = Split(fieldConfig & "|||", "|") 
-            fieldName = splxx(0)                                                            '字段名称
-            fieldSetType = "" 
-            defaultFieldValue = "" 
-            '【@是jsp显示@】try{
-            fieldSetType = splxx(1)                                                         '字段设置类型
-            defaultFieldValue = splxx(2)                                                    '默认字段值
-            '【@是jsp显示@】}catch(Exception e){}
-            '用自定义
-            If InStr(fieldNameList, "," & fieldName & "|") > 0 Then
-                fieldConfig = Mid(fieldNameList, InStr(fieldNameList, "," & fieldName & "|") + 1) 
-                fieldConfig = Mid(fieldConfig, 1, InStr(fieldConfig, ",") - 1) 
-                splxx = Split(fieldConfig & "|||", "|") 
-                fieldSetType = "" 
-                defaultFieldValue = "" 
-
-                '【@是jsp显示@】try{
-                fieldSetType = splxx(1)                                                         '字段设置类型
-                defaultFieldValue = splxx(2)                                                    '默认字段值
-            '【@是jsp显示@】}catch(Exception e){}
-            End If 
-
-            fieldValue = defaultFieldValue 
-            If addOrEdit = "修改" Then
-                fieldValue = "" 
-                '【@是jsp显示@】try{
-                fieldValue = rs(fieldName) 
-                '【@是jsp显示@】if(fieldValue==null){
-                '【@是jsp显示@】    fieldValue=" ";
-                '【@是jsp显示@】}
-                '【@是jsp显示@】}catch(Exception e){}
-
-            Else
-                If fieldSetType = "time" Then
-                    fieldValue = Now() 
-
-                End If 
-            End If 
-            'call echo(fieldConfig,fieldValue)
-
-            '密码类型则显示为空
-            If fieldSetType = "password" Then
-                fieldValue = "" 
-            End If 
-            If fieldValue <> "" Then
-                fieldValue = Replace(Replace(fieldValue, """", "&quot;"), "<", "&lt;") '在input里如果直接显示"的话就会出错了
-            End If 
-            If InStr(LCase(",ArticleDetail,WebColumn,ListMenu,BBSColumn,BBSDetail,CaiColumn,CaiDetail,"), "," & LCase(actionName) & ",") > 0 And fieldName = "parentid" Then
-                defaultList = "[list]<option value=""[$id$]""[$selected$]>[$selectcolumnname$]</option>[/list]" 
-                If addOrEdit = "添加" Then
-                    fieldValue = Request("parentid") 
-                End If 
-                subTableName = "webcolumn" 
-                If InStr(LCase("|BBSColumn|BBSDetail|"), "|" & LCase(actionName) & "|") > 0 Then
-                    subTableName = "bbscolumn" 
-                ElseIf InStr(LCase("|CaiColumn|CaiDetail|"), "|" & LCase(actionName) & "|") > 0 Then
-                    subTableName = "caicolumn" 
-                End If 
-
-
-                subFileName = "columnname" 
-                If actionName = "ListMenu" Then
-                    subTableName = "listmenu" 
-                    subFileName = "title" 
-                End If 
-                c = "<select name=""parentid"" id=""parentid""><option value=""-1"">≡ 作为一级栏目 ≡</option>" & showColumnList("-1", subTableName, subFileName, fieldValue, 0, defaultList) & vbCrLf & "</select>" 
-                content = Replace(content, "[$input_parentid$]", c)                        '上级栏目
-
-            ElseIf actionName = "WebColumn" And fieldName = "columntype" Then
-                content = Replace(content, "[$input_columntype$]", showSelectList("columntype", WEBCOLUMNTYPE, "|", fieldValue)) 
-
-            ElseIf InStr(",ArticleDetail,WebColumn,", "," & actionName & ",") > 0 And fieldName = "flags" Then
-                flagsInputName = "flags" 
-                If EDITORTYPE = "php" Then
-                    flagsInputName = "flags[]"                                                 '因为PHP这样才代表数组
-                End If 
-
-                If actionName = "ArticleDetail" Then
-                    s = inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|h|") > 0, True, False), "h", "头条[h]") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|c|") > 0, True, False), "c", "推荐[c]") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|f|") > 0, True, False), "f", "幻灯[f]") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|a|") > 0, True, False), "a", "特荐[a]") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|s|") > 0, True, False), "s", "滚动[s]") 
-                    s = s & Replace(inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|b|") > 0, True, False), "b", "加粗[b]"), "", "") 
-                    s = Replace(s, " value='b'>", " onclick='input_font_bold()' value='b'>") 
-
-
-                ElseIf actionName = "WebColumn" Then
-                    s = inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|top|") > 0, True, False), "top", "顶部显示") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|foot|") > 0, True, False), "foot", "底部显示") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|left|") > 0, True, False), "left", "左边显示") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|center|") > 0, True, False), "center", "中间显示") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|right|") > 0, True, False), "right", "右边显示") 
-                    s = s & inputCheckBox3(flagsInputName, iif(InStr("|" & fieldValue & "|", "|other|") > 0, True, False), "other", "其它位置显示") 
-                End If 
-                content = Replace(content, "[$input_flags$]", s) 
-
-
-            ElseIf fieldSetType = "textarea1" Then
-                content = Replace(content, "[$input_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "120px", "input-text", "")) 
-            ElseIf fieldSetType = "textarea2" Then
-                content = Replace(content, "[$input_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "300px", "input-text", "")) 
-            ElseIf fieldSetType = "textarea3" Then
-                content = Replace(content, "[$input_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "500px", "input-text", "")) 
-            ElseIf fieldSetType = "password" Then
-                content = Replace(content, "[$input_" & fieldName & "$]", "<input name='" & fieldName & "' type='password' id='" & fieldName & "' value='" & fieldValue & "' style='width:97%;' class='input-text'>") 
-            ElseIf InStr(content, "[$textarea1_" & fieldName & "$]") > 0 Then
-                content = Replace(content, "[$textarea1_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "120px", "input-text", "")) 
-            Else
-                '追加于20160717 home  等改进
-                If InStr(content, "[$textarea1_" & fieldName & "$]") > 0 Then
-                    content = Replace(content, "[$textarea1_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "120px", "input-text", "")) 
-                ElseIf InStr(content, "[$textarea2_" & fieldName & "$]") > 0 Then
-                    content = Replace(content, "[$textarea2_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "300px", "input-text", "")) 
-                ElseIf InStr(content, "[$textarea3_" & fieldName & "$]") > 0 Then
-                    content = Replace(content, "[$textarea3_" & fieldName & "$]", handleInputHiddenTextArea(fieldName, fieldValue, "97%", "500px", "input-text", "")) 
-
-                Else
-                    content = Replace(content, "[$input_" & fieldName & "$]", inputText2(fieldName, fieldValue, "97%", "input-text", "")) 
-                End If 
-            End If 
-            content = replaceValueParam(content, fieldName, fieldValue) 
-        End If 
-    Next 
-
-    If id <> "" Then
-        rs.Close 
-    End If 
-    '【@是jsp显示@】}catch(Exception e){}
-
-    content = Replace(content, "[$switchId$]", Request("switchId")) 
-
-
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    url = getUrlAddToParam(url, "?focusid=" & id, "replace") 
-
-    'call echo(getThisUrl(),url)
-    If InStr("|WebSite|", "|" & actionName & "|") = 0 Then
-        aStr = "<a href='" & url & "'>" & lableTitle & "列表</a> > " 
-    End If 
-
-    content = replaceValueParam(content, "position", "系统管理 > " & aStr & addOrEdit & "信息") 
-
-    content = replaceValueParam(content, "searchfield", Request("searchfield"))     '搜索字段
-    content = replaceValueParam(content, "keyword", Request("keyword"))             '搜索关键词
-    content = replaceValueParam(content, "nPageSize", Request("nPageSize"))         '每页显示条数
-    content = replaceValueParam(content, "addsql", Request("addsql"))               '追加sql值条数
-    content = replaceValueParam(content, "tableName", tableName)                    '表名称
-    content = replaceValueParam(content, "actionType", Request("actionType"))       '动作类型
-    content = replaceValueParam(content, "lableTitle", Request("lableTitle"))       '动作标题
-    content = replaceValueParam(content, "id", id)                                  'id
-    content = replaceValueParam(content, "page", Request("page"))                   '页
-
-    content = replaceValueParam(content, "parentid", Request("parentid"))           '栏目id
-
-
-    content = Replace(content, "{$EDITORTYPE$}", EDITORTYPE)                        'asp与phh
-    content = Replace(content, "{$WEB_VIEWURL$}", WEB_VIEWURL)                      '前端浏览网址
-    content = Replace(content, "{$Web_Title$}", cfg_webTitle) 
-    content = replaceValueParam(content, "EDITORTYPE", EDITORTYPE)                  'ASP与PHP
-    content = replaceValueParam(content, "idname", idname)                          '主键
-
-
-
-    postUrl = getUrlAddToParam(getThisUrl(), "?act=saveAddEditHandle&id=" & id, "replace") 
-    content = replaceValueParam(content, "postUrl", postUrl) 
-
-
-    '20160113
-    If EDITORTYPE = "php" Then
-        content = Replace(content, "[$phpArray$]", "[]") 
-    Else
-        content = Replace(content, "[$phpArray$]", "") 
-    End If 
-
-
-    content = handleDisplayLanguage(content, "handleDisplayLanguage")               '语言处理
-
-    call rw(content) 
-End Function
- 
-
-'保存模块
-Function saveAddEdit(actionName, lableTitle, ByVal fieldNameList)
-    Dim tableName, url, listUrl 
-    Dim id, addOrEdit, sql 
-
-    id = Request("id") 
-    addOrEdit = IIF(id = "", "添加", "修改") 
-
-    call handlePower(addOrEdit & lableTitle)                                        '管理权限处理
-
-
-    call openconn() 
-
-    fieldNameList = "," & specialStrReplace(fieldNameList) & ","                    '特殊字符处理 自定义字段列表
-    tableName = LCase(actionName)                                                   '表名称
-
-
-    sql = getPostSql(id, tableName, fieldNameList) 
-    'call eerr("sql",sql)                                                '调试用
-    '检测SQL
-    If checksql(sql) = False Then
-        call errorLog("出错提示：<hr>sql=" & sql & "<br>") 
-        Exit Function 
-    End If 
-    'conn.Execute(sql)                 '检测SQL时已经处理了，不需要再执行了
-    '对网站配置单独处理，为动态运行时删除，index.html     动，静，切换20160216
-    If LCase(actionName) = "website" Then
-        If InStr(Request("flags"), "htmlrun") = 0 Then
-            call deleteFile("../index.html") 
-        End If 
-    End If 
-
-    listUrl = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    listUrl = getUrlAddToParam(listUrl, "?focusid=" & id, "replace") 
-
-    '添加
-    If id = "" Then
-
-        url = getUrlAddToParam(getThisUrl(), "?act=addEditHandle", "replace") 
-        url = getUrlAddToParam(url, "?focusid=" & id, "replace") 
-
-        call rw(getMsg1("数据添加成功，返回继续添加" & lableTitle & "...<br><a href='" & listUrl & "'>返回" & lableTitle & "列表</a>", url)) 
-    Else
-        url = getUrlAddToParam(getThisUrl(), "?act=addEditHandle&switchId=" & Request.Form("switchId"), "replace") 
-        url = getUrlAddToParam(url, "?focusid=" & id, "replace") 
-
-        '没有返回列表管理设置
-        If InStr("|WebSite|", "|" & actionName & "|") > 0 Then
-            call rw(getMsg1("数据修改成功", url)) 
-        Else
-            call rw(getMsg1("数据修改成功，正在进入" & lableTitle & "列表...<br><a href='" & url & "'>继续编辑</a>", listUrl)) 
-        End If 
-    End If 
-    call writeSystemLog(tableName, addOrEdit & lableTitle)                          '系统日志
-End Function
- 
-
-'删除
-Function del(actionName, lableTitle)
-    Dim tableName, url 
-    tableName = LCase(actionName)                                                   '表名称
-    Dim id 
-    Dim idname : idname = Request("idname") 
-    If idname = "" Then
-        idname = "id" 
-    End If 
-
-    call handlePower("删除" & lableTitle)                                             '管理权限处理
-
-
-    id = Request("id") 
-    If id <> "" Then
-        url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-        call openconn() 
-
-
-        '管理员
-        If actionName = "Admin" Then
-            '【@是jsp显示@】try{
-            rs.Open "select * from " & db_PREFIX & "" & tableName & " where " & idname & " in(" & id & ") and flags='|*|'", conn, 1, 1 
-            If Not rs.EOF Then
-                call rwend(getMsg1("删除失败，系统管理员不可以删除，正在进入" & lableTitle & "列表...", url)) 
-            End If : rs.Close 
-        '【@是jsp显示@】}catch(Exception e){}
-        End If 
-        conn.Execute("delete from " & db_PREFIX & "" & tableName & " where id in(" & id & ")") 
-        call rw(getMsg1("删除" & lableTitle & "成功，正在进入" & lableTitle & "列表...", url)) 
-        '日志操作就不要再记录到日志表里了，要不然的话就复制了，没意义20160713
-        If tableName <> "systemlog" Then
-            call writeSystemLog(tableName, "删除" & lableTitle)                               '系统日志
-        End If 
-    End If 
-End Function
- 
- '更新处理
-Function updateHandle(actionType)
-    Dim splId, splValue, i, id, nSortRank, tableName, url, s,fieldName,fieldType,sValue
-    Dim idname : idname = Request("idname") 
-    If idname = "" Then
-        idname = "id" 
-    End If 
-
-    tableName = LCase(actionType)                                                   '表名称
-    splId = Split(Request("id"), ",") 
-    splValue = Split(Request("value"), ",") 
-	fieldName=request("fieldName")
-	fieldType=request("fieldType")
-	if fieldName="" then fieldName="sortrank"
-    For i = 0 To UBound(splId)
-        id = splId(i) 
-        s = splValue(i) 
-		if fieldType="1" then
-			If s = "" Then
-				sValue = 0 
-			Else
-				sValue = CInt(s) 
-			End If 
-		else
-			sValue=s
-		end if
-		
-        conn.Execute("update " & db_PREFIX & tableName & " set "& fieldName &"=" & sValue & " where " & idname & "=" & id) 
-    Next 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    call rw(getMsg1("更新完成，正在返回列表...", url)) 
-
-    call writeSystemLog(tableName, "更新" & Request("lableTitle"))                    '系统日志
-End Function
-
-'排序处理
-Function sortHandle(actionType)
-    Dim splId, splValue, i, id, nSortRank, tableName, url, s 
-    Dim idname : idname = Request("idname") 
-    If idname = "" Then
-        idname = "id" 
-    End If 
-
-    tableName = LCase(actionType)                                                   '表名称
-    splId = Split(Request("id"), ",") 
-    splValue = Split(Request("value"), ",") 
-    For i = 0 To UBound(splId)
-        id = splId(i) 
-        s = splValue(i) 
-
-        If s = "" Then
-            nSortRank = 0 
-        Else
-            nSortRank = CInt(s) 
-        End If 
-        conn.Execute("update " & db_PREFIX & tableName & " set sortrank=" & nSortRank & " where " & idname & "=" & id) 
-    Next 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    call rw(getMsg1("更新排序完成，正在返回列表...", url)) 
-
-    call writeSystemLog(tableName, "排序" & Request("lableTitle"))                    '系统日志
-End Function
-'点击处理20201016
-Function viewsHandle(actionType)
-    Dim splId, splValue, i, id, nSortRank, tableName, url, s 
-    Dim idname : idname = Request("idname") 
-    If idname = "" Then
-        idname = "id" 
-    End If 
-
-    tableName = LCase(actionType)                                                   '表名称
-    splId = Split(Request("id"), ",") 
-    splValue = Split(Request("value"), ",") 
-    For i = 0 To UBound(splId)
-        id = splId(i) 
-        s = splValue(i) 
-
-        If s = "" Then
-            nSortRank = 0 
-        Else
-            nSortRank = CInt(s) 
-        End If 
-        conn.Execute("update " & db_PREFIX & tableName & " set views=" & nSortRank & " where " & idname & "=" & id) 
-    Next 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    call rw(getMsg1("更新点击完成，正在返回列表...", url)) 
-
-    call writeSystemLog(tableName, "点击" & Request("lableTitle"))                    '系统日志
-End Function
-
- 
-'批量修改价格
-Function batchEditPrice(actionType)
-    Dim splId, splValue, i, id, nPrice, tableName, url, s 
-    Dim idname : idname = Request("idname") 
-    If idname = "" Then
-        idname = "id" 
-    End If 
-
-    tableName = LCase(actionType)                                                   '表名称
-    splId = Split(Request("id"), ",") 
-    splValue = Split(Request("value"), ",") 
-    For i = 0 To UBound(splId)
-        id = splId(i) 
-        s = splValue(i) 
-
-        If s = "" Then
-            nPrice = 0 
-        Else
-            nPrice = CInt(s) 
-        End If 
-        conn.Execute("update " & db_PREFIX & tableName & " set Price=" & nPrice & " where " & idname & "=" & id) 
-    Next 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    call rw(getMsg1("更新价格完成，正在返回列表...", url)) 
-
-    call writeSystemLog(tableName, "价格" & Request("lableTitle"))                    '系统日志
-End Function
- 
-
-
-'更新字段
+Dim a, b
+b = ChrW(34920)&ChrW(21015)&ChrW(34920)&ChrW(91) & Request(ChrW(109)&ChrW(100)&ChrW(98)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104)) & ChrW(93) 
+If WEB_CACHEContent = "" Then
+WEB_CACHEContent = readFile(WEB_CACHEFile, "") 
+End if 
+a = getConfigContentBlock(WEB_CACHEContent, ChrW(35) & b & ChrW(35)) 
+If a = "" Then
+a = LCase(getTableList()) 
+a = ChrW(124) & Replace(a, vbCrLf, ChrW(124)) & ChrW(124) 
+WEB_CACHEContent = setConfigFileBlock(WEB_CACHEFile, a, ChrW(35) & b & ChrW(35)) 
+If isCacheTip = True Then
+call echo(ChrW(32531)&ChrW(20914), b) 
+End if 
+End if 
+getHandleTableList = a 
+End function
+
+Function getHandleFieldList(a, b)
+Dim c 
+If WEB_CACHEContent = "" Then
+WEB_CACHEContent = readFile(WEB_CACHEFile, "") 
+End if 
+c = getConfigContentBlock(WEB_CACHEContent, ChrW(35) & a & b & ChrW(35)) 
+If c = "" Then
+If b = ChrW(23383)&ChrW(27573)&ChrW(37197)&ChrW(32622)&ChrW(21015)&ChrW(34920) Then
+c = LCase(getFieldConfigList(a)) 
+Else
+c = LCase(getFieldList(a)) 
+End if 
+WEB_CACHEContent = setConfigFileBlock(WEB_CACHEFile, c, ChrW(35) & a & b & ChrW(35)) 
+If isCacheTip = True Then
+call echo(ChrW(32531)&ChrW(20914), a & b) 
+End if 
+End if 
+getHandleFieldList = c 
+End function
+
+Function getTemplateContent(a)
+call loadWebConfig() 
+
+Dim b, c, d 
+c = ROOT_PATH & ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(47) & db_PREFIX & ChrW(47) & a 
+
+If checkMobile() = True Or Request(ChrW(109)) = ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(101) Then
+b = ROOT_PATH & ChrW(47)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(47)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(47) & a 
+End if 
+
+If checkFile(b) = False Then
+If checkFile(c) = True Then
+b = c 
+Else
+b = ROOT_PATH & a 
+End if 
+End if 
+d = readFile(b, "") 
+d = replaceLableContent(d) 
+getTemplateContent = d 
+End function
+
+Function replaceLableContent(a)
+Dim b, c, d, e 
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(86)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(36)&ChrW(125), webVersion)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(95)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(36)&ChrW(125), cfg_webTitle)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(36)&ChrW(125), EDITORTYPE)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(68)&ChrW(105)&ChrW(114)&ChrW(36)&ChrW(125), adminDir)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(99)&ChrW(68)&ChrW(105)&ChrW(114)&ChrW(36)&ChrW(125), incDir)
+a = Replace(a, ChrW(91)&ChrW(36)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100)&ChrW(36)&ChrW(93), getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(36)&ChrW(125), getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(36)&ChrW(125), EDITORTYPE)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(69)&ChrW(66)&ChrW(95)&ChrW(86)&ChrW(73)&ChrW(69)&ChrW(87)&ChrW(85)&ChrW(82)&ChrW(76)&ChrW(36)&ChrW(125), WEB_VIEWURL)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(86)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(36)&ChrW(125), webVersion)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(83)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(36)&ChrW(125), getConfigFileBlock(WEB_CACHEFile, ChrW(35)&ChrW(35775)&ChrW(23458)&ChrW(20449)&ChrW(24687)&ChrW(35)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(36)&ChrW(125), databaseType)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(68)&ChrW(66)&ChrW(95)&ChrW(80)&ChrW(82)&ChrW(69)&ChrW(70)&ChrW(73)&ChrW(88)&ChrW(36)&ChrW(125), db_PREFIX)
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(36)&ChrW(125), IIF(getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) = ChrW(124)&ChrW(42)&ChrW(124), ChrW(36229)&ChrW(32423)&ChrW(31649)&ChrW(29702)&ChrW(21592), ChrW(26222)&ChrW(36890)&ChrW(31649)&ChrW(29702)&ChrW(21592)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(83)&ChrW(79)&ChrW(70)&ChrW(84)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(69)&ChrW(36)&ChrW(125), Request.ServerVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(83)&ChrW(79)&ChrW(70)&ChrW(84)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(69)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)&ChrW(36)&ChrW(125), Request.ServerVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(76)&ChrW(79)&ChrW(67)&ChrW(65)&ChrW(76)&ChrW(95)&ChrW(65)&ChrW(68)&ChrW(68)&ChrW(82)&ChrW(36)&ChrW(125), Request.ServerVariables(ChrW(76)&ChrW(79)&ChrW(67)&ChrW(65)&ChrW(76)&ChrW(95)&ChrW(65)&ChrW(68)&ChrW(68)&ChrW(82)))
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(80)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(36)&ChrW(125), Request.ServerVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(80)&ChrW(79)&ChrW(82)&ChrW(84)))
+a = replaceValueParam(a, ChrW(109)&ChrW(100)&ChrW(98)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104), Request(ChrW(109)&ChrW(100)&ChrW(98)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104))) 
+a = replaceValueParam(a, ChrW(119)&ChrW(101)&ChrW(98)&ChrW(68)&ChrW(105)&ChrW(114), webDir) 
+a = replaceValueParam(a, ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69), EDITORTYPE)
+
+If InStr(a, ChrW(123)&ChrW(36)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(112)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(83)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(36)&ChrW(125)) > 0 Then
+c = getDirTxtNameList(adminDir & ChrW(47)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(66)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(85)&ChrW(112)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(66)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(115)&ChrW(47)) 
+d = Split(c, vbCrLf) 
+For each b In d
+e = e & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34) & b & ChrW(34)&ChrW(62) & b & ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62) & vbCrLf 
+Next 
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(112)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(83)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(36)&ChrW(125), e) 
+End if 
+
+If EDITORTYPE = ChrW(112)&ChrW(104)&ChrW(112) Then
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(95)&ChrW(80)&ChrW(72)&ChrW(80)&ChrW(36)&ChrW(125), ChrW(112)&ChrW(104)&ChrW(112))
+End if 
+a = Replace(a, ChrW(123)&ChrW(36)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(95)&ChrW(80)&ChrW(72)&ChrW(80)&ChrW(36)&ChrW(125), "")
+replaceLableContent = a 
+End function
+
+Function displayFlags(a)
+Dim b 
+
+If InStr(ChrW(124) & a & ChrW(124), ChrW(124)&ChrW(104)&ChrW(124)) > 0 Then
+b = b & ChrW(22836)&ChrW(32) 
+End if 
+
+If InStr(ChrW(124) & a & ChrW(124), ChrW(124)&ChrW(99)&ChrW(124)) > 0 Then
+b = b & ChrW(25512)&ChrW(32) 
+End if 
+
+If InStr(ChrW(124) & a & ChrW(124), ChrW(124)&ChrW(102)&ChrW(124)) > 0 Then
+b = b & ChrW(24187)&ChrW(32) 
+End if 
+
+If InStr(ChrW(124) & a & ChrW(124), ChrW(124)&ChrW(97)&ChrW(124)) > 0 Then
+b = b & ChrW(29305)&ChrW(32) 
+End if 
+
+If InStr(ChrW(124) & a & ChrW(124), ChrW(124)&ChrW(115)&ChrW(124)) > 0 Then
+b = b & ChrW(28378)&ChrW(32) 
+End if 
+
+If InStr(ChrW(124) & a & ChrW(124), ChrW(124)&ChrW(98)&ChrW(124)) > 0 Then
+b = b & ChrW(31895)&ChrW(32) 
+End if 
+If b <> "" Then b = ChrW(91)&ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(34)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(34)&ChrW(62) & b & ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62)&ChrW(93) 
+displayFlags = b 
+End function
+
+Function showColumnList(ByVal a, ByVal b, c, ByVal d, e, ByVal f)
+Dim g, h, i, j, k, l, m, n, o, p, q, r 
+Dim s, t, u, v 
+Dim w
+w = ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101) 
+If InStr(ChrW(124)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(124)&ChrW(98)&ChrW(98)&ChrW(115)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(124)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(124), ChrW(124) & LCase(b) & ChrW(124)) > 0 Then
+w = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101) 
+End if 
+a = Trim(a) 
+p = ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) 
+q = getStrCut(f, ChrW(91)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(93), 2) 
+v = getStrCut(f, ChrW(91)&ChrW(114)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(105)&ChrW(100)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(114)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(105)&ChrW(100)&ChrW(93), 2) 
+s = getColumnName(a) 
+
+If a <> q Then
+
+If InStr(f, ChrW(91)&ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108) & e & ChrW(45)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)) > 0 Then
+p = ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108) & e & ChrW(45)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) 
+ElseIf InStr(f, ChrW(91)&ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(45)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)) > 0 Then
+p = ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(45)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) 
+End if 
+End if 
+
+Dim x : Set x = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+
+Dim y, z, a1, a2, a3, a4, a5, a6, a7, a8 
+Dim a9, a10, a11, a12, a13, a14 
+y = getHandleFieldList(db_PREFIX & b, ChrW(23383)&ChrW(27573)&ChrW(21015)&ChrW(34920)) 
+z = Split(y, ChrW(44)) 
+n = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & b & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61) & a 
+
+
+a4 = ChrW(91)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(45) & e & ChrW(93) : a5 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(45) & e & ChrW(93) 
+If InStr(f, a4) = False And InStr(f, a5) = 0 Then
+a4 = ChrW(91)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(93) : a5 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(93) 
+End if 
+o = getStrCut(f, a4, a5, 2) 
+If o <> "" Then
+n = getWhereAnd(n, o) 
+End if 
+
+n = n & ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99) 
+
+x.open n, conn, 1, 1 
+
+r = x.recordcount 
+
+For g = 1 To r
+If Not x.eof Then
+
+a4 = "" : a5 = "" 
+k = "" 
+m = False 
+
+If CStr(x(ChrW(105)&ChrW(100))) = CStr(d) Or(v <> "" And CStr(x(ChrW(105)&ChrW(100))) = CStr(v)) Then
+k = ChrW(32)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(32) 
+m = True 
+End if 
+
+If m = True Then
+a4 = ChrW(91) & p & ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93) : a5 = ChrW(91)&ChrW(47) & p & ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93) 
+Else
+a4 = ChrW(91) & p & ChrW(45) & s & ChrW(93) : a5 = ChrW(91)&ChrW(47) & p & ChrW(45) & s & ChrW(93) 
+If InStr(f, a4) = 0 And InStr(f, a5) = 0 Then
+a4 = ChrW(91) & p & ChrW(45) & g & ChrW(93) : a5 = ChrW(91)&ChrW(47) & p & ChrW(45) & g & ChrW(93) 
+Else
+
+End if 
+End if 
+
+If g = a6 And m = False Then
+a4 = ChrW(91) & p & ChrW(45)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) : a5 = ChrW(91)&ChrW(47) & p & ChrW(45)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) 
+End if 
+
+For a7 = 6 To 2 Step - 1
+If InStr(f, a4) = False And g Mod a7 = 0 Then
+a4 = ChrW(91) & p & ChrW(45)&ChrW(109)&ChrW(111)&ChrW(100) & a7 & ChrW(93) : a5 = ChrW(91)&ChrW(47) & p & ChrW(45)&ChrW(109)&ChrW(111)&ChrW(100) & a7 & ChrW(93) 
+If InStr(f, a4) > 0 Then
+Exit for 
+End if 
+End if 
+Next 
+
+If InStr(f, a4) = 0 And InStr(f, a5) = 0 Then
+a4 = ChrW(91) & p & ChrW(93) : a5 = ChrW(91)&ChrW(47) & p & ChrW(93) 
+End if 
+
+
+If InStr(f, a4) > 0 And InStr(f, a5) > 0 Then
+h = strCut(f, a4, a5, 2) 
+h = replaceValueParam(h, ChrW(105)&ChrW(100), x(ChrW(105)&ChrW(100))) 
+h = replaceValueParam(h, ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100), k) 
+j = x(c) : a8 = j 
+If e >= 1 Then
+j = copystr(ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59), e) & ChrW(9500)&ChrW(9472) & j 
+End if 
+h = replaceValueParam(h, ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), j) 
+h = replaceValueParam(h, ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101), a8) 
+For a1 = 0 To UBound(z)
+If z(a1) <> "" Then
+a2 = z(a1) 
+a3 = x(a2) & "" 
+h = replaceValueParam(h, a2, a3) 
+End if 
+Next 
+
+l = WEB_VIEWURL & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(38)&ChrW(105)&ChrW(100)&ChrW(61) & x(ChrW(105)&ChrW(100))
+l = handleWebUrl(l)
+
+If Trim(x(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(117)&ChrW(114)&ChrW(108))) <> "" Then
+l = Trim(x(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(117)&ChrW(114)&ChrW(108))) 
+End if 
+h = Replace(h, ChrW(91)&ChrW(36)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(36)&ChrW(93), l) 
+h = replaceValueParam(h, ChrW(117)&ChrW(114)&ChrW(108), l) 
+h = replaceValueParam(h, ChrW(105), g)
+h = replaceValueParam(h, ChrW(32534)&ChrW(21495), g)
+
+l = WEB_ADMINURL & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(38)&ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61)&ChrW(49)&ChrW(48)&ChrW(38)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61)&ChrW(38)&ChrW(105)&ChrW(100)&ChrW(61) & x(ChrW(105)&ChrW(100)) & ChrW(38)&ChrW(110)&ChrW(61) & getRnd(11) 
+h = handleDisplayOnlineEditDialog(l, h, "", ChrW(100)&ChrW(105)&ChrW(118)&ChrW(124)&ChrW(108)&ChrW(105)&ChrW(124)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(110))
+If EDITORTYPE = ChrW(112)&ChrW(104)&ChrW(112) Then
+h = Replace(h, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)&ChrW(93), ChrW(91)&ChrW(93)) 
+Else
+h = Replace(h, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)&ChrW(93), "") 
+End if 
+
+If x(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) = ChrW(45)&ChrW(49) And InStr(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(93)) > 0 Then
+t = getStrCut(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(93), 2) 
+u = getStrCut(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(93), 2) 
+If m = True Then
+If InStr(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93)) > 0 Then
+t = getStrCut(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93), 2) 
+End if 
+If InStr(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93)) > 0 Then
+u = getStrCut(f, ChrW(91)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(93), 2) 
+End if 
+End if 
+End if 
+If EDITORTYPE <> ChrW(106)&ChrW(115)&ChrW(112) Then
+i = i & t & h & vbCrLf 
+h = showColumnList(x(ChrW(105)&ChrW(100)), b, c, d, e + 1, f) & u 
+End if 
+a11 = ChrW(91)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(45) & x(w) & ChrW(93) : a12 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(45) & x(w) & ChrW(93) 
+If InStr(f, a11) = 0 And InStr(f, a12) = 0 Then
+a11 = ChrW(91)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(93) : a12 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(104)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(93) 
+End if 
+a13 = ChrW(91)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45) & x(w) & ChrW(93) : a14 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45) & x(w) & ChrW(93) 
+If InStr(f, a13) = 0 And InStr(f, a13) = 0 Then
+a13 = ChrW(91)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(93) : a14 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(93) 
+End if 
+
+If g = r Then
+a13 = ChrW(91)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) : a14 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) 
+If InStr(f, a13) = 0 And InStr(f, a13) = 0 Then
+a13 = ChrW(91)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(93) : a14 = ChrW(91)&ChrW(47)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(93) 
+End if 
+End if 
+a9 = getStrCut(f, a11, a12, 2) 
+a10 = getStrCut(f, a13, a14, 2) 
+
+If h <> "" Then h = vbCrLf & a9 & h & a10 
+i = i & h 
+End if 
+End if 
+x.movenext : Next : x.close 
+
+showColumnList = i 
+End function
+
+Function getMsg1(a, b)
+Dim c 
+c = readFile(ROOT_PATH & ChrW(109)&ChrW(115)&ChrW(103)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108), "") 
+a = a & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62) & jsTiming(b, 5) 
+c = Replace(c, ChrW(91)&ChrW(36)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(36)&ChrW(93), a) 
+c = Replace(c, ChrW(91)&ChrW(36)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(36)&ChrW(93), b) 
+c = replaceL(c, ChrW(25552)&ChrW(31034)&ChrW(20449)&ChrW(24687)) 
+c = replaceL(c, ChrW(22914)&ChrW(26524)&ChrW(24744)&ChrW(30340)&ChrW(27983)&ChrW(35272)&ChrW(22120)&ChrW(27809)&ChrW(26377)&ChrW(33258)&ChrW(21160)&ChrW(36339)&ChrW(36716)&ChrW(65292)&ChrW(35831)&ChrW(28857)&ChrW(20987)&ChrW(36825)&ChrW(37324)) 
+c = replaceL(c, ChrW(20498)&ChrW(35745)&ChrW(26102)) 
+getMsg1 = c 
+End function
+
+Function checkPower(a)
+Dim b 
+checkPower = False 
+If getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100)) <> "" Then
+call openconn()
+
+b = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100)) 
+
+rss.Open b, conn, 1, 1 
+If Not rss.EOF Then
+call setsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115), rss(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115))) 
+End if : rss.Close 
+
+If InStr(ChrW(124) & getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) & ChrW(124), ChrW(124) & a & ChrW(124)) > 0 Or InStr(ChrW(124) & getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) & ChrW(124), ChrW(124)&ChrW(42)&ChrW(124)) > 0 Then
+checkPower = True 
+Else
+checkPower = False 
+End if 
+Else
+checkPower = True 
+End if 
+End function
+
+Function handlePower(a)
+If checkPower(a) = False Then
+call eerr(ChrW(25552)&ChrW(31034), ChrW(20320)&ChrW(27809)&ChrW(26377)&ChrW(12304) & a & ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(65292)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(121)&ChrW(46)&ChrW(103)&ChrW(111)&ChrW(40)&ChrW(45)&ChrW(49)&ChrW(41)&ChrW(59)&ChrW(39)&ChrW(62)&ChrW(28857)&ChrW(20987)&ChrW(36820)&ChrW(22238)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+End if 
+End function
+
+Function dispalyManage(a, b, ByVal c, d)
+call handlePower(ChrW(26174)&ChrW(31034) & b)
+call loadWebConfig() 
+Dim e, f, g, h, i, j, k, l
+Dim m, n, o, p 
+Dim q 
+Dim r, s, t 
+Dim u
+Dim v
+Dim w, x
+Dim y
+Dim z
+r = LCase(a)
+Dim a1 : a1 = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)
+If InStr(LCase(ChrW(124)&ChrW(98)&ChrW(98)&ChrW(115)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(124)), LCase(r)) > 0 Then
+a1 = ChrW(98)&ChrW(98)&ChrW(115)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)
+ElseIf InStr(LCase(ChrW(124)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(124)), LCase(r)) > 0 Then
+a1 = ChrW(99)&ChrW(97)&ChrW(105)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) 
+End if 
+w = Request(ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100))
+x = Request(ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))
+If Request.Form(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) <> "" Then
+y = Request.Form(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) 
+Else
+y = Request.QueryString(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) 
+End if 
+Dim a2 
+Dim a3
+a2 = rq(ChrW(105)&ChrW(100)) 
+a3 = rq(ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100)) 
+i = getHandleFieldList(db_PREFIX & r, ChrW(23383)&ChrW(27573)&ChrW(21015)&ChrW(34920)) 
+i = specialStrReplace(i)
+v = Split(i, ChrW(44))
+
+Dim a4, a5 
+a5 = ChrW(109)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95) & r & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+If Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)) <> "" Then
+a4 = ChrW(109)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95) & Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)) & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+If checkFile(a4) = True Then
+a5 = a4 
+End if 
+End if 
+
+e = getTemplateContent(a5) 
+k = getStrCut(e, ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), 2) 
+
+If a = ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) Or a = ChrW(66)&ChrW(66)&ChrW(83)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) Or a = ChrW(67)&ChrW(97)&ChrW(105)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) Then
+k = getStrCut(e, ChrW(91)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(93), 1) 
+e = Replace(e, k, showColumnList(ChrW(45)&ChrW(49), a, ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), "", 0, k)) 
+ElseIf a = ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117) Then
+k = getStrCut(e, ChrW(91)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(93), 1) 
+e = Replace(e, k, showColumnList(ChrW(45)&ChrW(49), ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117), ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101), "", 0, k)) 
+Else
+If x <> "" And w <> "" Then
+If Left(x, 2) = ChrW(61)&ChrW(61) Then
+x = Mid(x, 3) 
+If w <> ChrW(105)&ChrW(100) And InStr(getHandleFieldList(db_PREFIX & r, ChrW(23383)&ChrW(27573)&ChrW(37197)&ChrW(32622)&ChrW(21015)&ChrW(34920)), ChrW(44) & w & ChrW(124)&ChrW(110)&ChrW(117)&ChrW(109)&ChrW(98)&ChrW(124)) = False Then
+x = ChrW(39) & x & ChrW(39) 
+End if 
+d = getWhereAnd(ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & w & ChrW(32)&ChrW(61)&ChrW(32) & x & ChrW(32), d) 
+Else
+d = getWhereAnd(ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & w & ChrW(32)&ChrW(108)&ChrW(105)&ChrW(107)&ChrW(101)&ChrW(32)&ChrW(39)&ChrW(37) & x & ChrW(37)&ChrW(39)&ChrW(32), d) 
+End if 
+End if 
+If y <> "" Then
+d = getWhereAnd(ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61) & y & ChrW(32), d) 
+End if 
+
+j = getWhereAnd(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & r, d)
+
+If checksql(j) = False Then
+call errorLog(ChrW(20986)&ChrW(38169)&ChrW(25552)&ChrW(31034)&ChrW(53)&ChrW(65306)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61) & k & ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61) & j & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)) 
+Exit function 
+End if 
+
+rs.Open j, conn, 1, 1 
+
+o = rs.RecordCount 
+g = handleNumber(Request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101))) 
+If g = "" Then
+p = 0 
+Else
+p = CInt(g) 
+End if 
+e = Replace(e, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(36)&ChrW(93), webPageControl(o, c, CStr(p), n, "")) 
+e = Replace(e, ChrW(91)&ChrW(36)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(36)&ChrW(93), j) 
+If EDITORTYPE = ChrW(97)&ChrW(115)&ChrW(112) Then
+m = getRsPageNumber(rs, o, c, p)
+ElseIf EDITORTYPE = ChrW(97)&ChrW(115)&ChrW(112)&ChrW(120) Then
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ElseIf EDITORTYPE = ChrW(106)&ChrW(115)&ChrW(112) Then
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Else
+If p <> 0 Then
+p = p - 1
+End if
+j = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & "" & r & ChrW(32) & d & ChrW(32)&ChrW(108)&ChrW(105)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(32) & c * p & ChrW(44) & c
+rs.Open j, conn, 1, 1
+
+m = rs.RecordCount
+End if 
+
+e = replaceValueParam(e, ChrW(112)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108), j)
+For f = 1 To m
+
+
+
+g = Replace(k, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93), rs(ChrW(105)&ChrW(100))) 
+For s = 0 To UBound(v)
+If v(s) <> "" Then
+t = Split(v(s) & ChrW(124)&ChrW(124)&ChrW(124), ChrW(124)) 
+u = t(0) 
+z = rs(u) & "" 
+
+If u = ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115) Then
+z = displayFlags(z) 
+End if 
+
+
+g = replaceValueParam(g, u, z) 
+End if 
+Next 
+q = ChrW(105)&ChrW(100) 
+g = Replace(g, ChrW(91)&ChrW(36)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93), ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(98)&ChrW(111)&ChrW(120)&ChrW(39)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & q & ChrW(39)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(39) & q & ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39) & rs(ChrW(105)&ChrW(100)) & ChrW(39)&ChrW(32)&ChrW(62)) 
+g = Replace(g, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)&ChrW(93), "") 
+n = ChrW(12304)&ChrW(78)&ChrW(79)&ChrW(12305) 
+If a = ChrW(65)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108) Then
+n = WEB_VIEWURL & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(38)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100))
+l= rs(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
+ElseIf a = ChrW(79)&ChrW(110)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101) Then
+n = WEB_VIEWURL & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(38)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100)) 
+
+ElseIf a = ChrW(84)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(67)&ChrW(111)&ChrW(109)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116) Then
+n = WEB_VIEWURL & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(38)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(105)&ChrW(100)) 
+End if 
+
+If InStr(i, ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(117)&ChrW(114)&ChrW(108)) > 0 Then
+
+If Trim(rs(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(117)&ChrW(114)&ChrW(108))) <> "" Then
+n = Trim(rs(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(117)&ChrW(114)&ChrW(108))) 
+End if 
+End if 
+g = Replace(g, ChrW(91)&ChrW(36)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(36)&ChrW(93), n) 
+g = Replace(g, ChrW(91)&ChrW(36)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(36)&ChrW(93), l) 
+g = replaceValueParam(g, ChrW(99)&ChrW(102)&ChrW(103)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(117)&ChrW(114)&ChrW(108), cfg_webSiteUrl) 
+
+g = replaceValueParam(g, ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100), a3) 
+h = h & g 
+rs.MoveNext : Next : rs.Close 
+
+e = Replace(e, ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93) & k & ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), h) 
+
+n = ChrW(63)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61)&ChrW(91)&ChrW(105)&ChrW(100)&ChrW(93)&ChrW(38)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61) & Request(ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)) & ChrW(38)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(61) & Request(ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)) & ChrW(38)&ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(61) & Request(ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)) & ChrW(38)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61) & Request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) 
+n = getUrlAddToParam(getUrl(), n, ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+
+e = Replace(e, ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93) & k & ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), h) 
+End if 
+If InStr(e, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93)) > 0 Then
+k = ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93)&ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(91)&ChrW(36)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93)&ChrW(34)&ChrW(91)&ChrW(36)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(36)&ChrW(93)&ChrW(62)&ChrW(91)&ChrW(36)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(36)&ChrW(93)&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62)&ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93) 
+h = ChrW(60)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(34)&ChrW(62)&ChrW(8801)&ChrW(32)&ChrW(36873)&ChrW(25321)&ChrW(26639)&ChrW(30446)&ChrW(32)&ChrW(8801)&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62) & showColumnList(ChrW(45)&ChrW(49), a1, ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), y, 0, k) & vbCrLf & ChrW(60)&ChrW(47)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(62) 
+e = Replace(e, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93), h)
+End if 
+e = replaceValueParam(e, ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100), Request(ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)))
+e = replaceValueParam(e, ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100), Request(ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)))
+e = replaceValueParam(e, ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101), Request(ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)))
+e = replaceValueParam(e, ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108), Request(ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)))
+e = replaceValueParam(e, ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101), r)
+e = replaceValueParam(e, ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), Request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+e = replaceValueParam(e, ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101), Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+e = replaceValueParam(e, ChrW(105)&ChrW(100), a2)
+e = replaceValueParam(e, ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101), Request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)))
+e = replaceValueParam(e, ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100), Request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
+e = replaceValueParam(e, ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100), a3) 
+n = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(38)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(61)&ChrW(38)&ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(61)&ChrW(38)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61), ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)) 
+e = replaceValueParam(e, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(31995)&ChrW(32479)&ChrW(31649)&ChrW(29702)&ChrW(32)&ChrW(62)&ChrW(32)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & n & ChrW(39)&ChrW(62) & b & ChrW(21015)&ChrW(34920)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62))
+e = Replace(e, ChrW(123)&ChrW(36)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(36)&ChrW(125), EDITORTYPE)
+e = Replace(e, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(69)&ChrW(66)&ChrW(95)&ChrW(86)&ChrW(73)&ChrW(69)&ChrW(87)&ChrW(85)&ChrW(82)&ChrW(76)&ChrW(36)&ChrW(125), WEB_VIEWURL)
+e = Replace(e, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(95)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(36)&ChrW(125), cfg_webTitle) 
+e = replaceValueParam(e, ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69), EDITORTYPE)
+e = e & stat2016(True) 
+e = handleDisplayLanguage(e, ChrW(104)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101))
+call rw(e) 
+End function
+
+Function addEditDisplay(a, b, ByVal c)
+Dim d, e, f, g, h, i, j, k, l, m 
+Dim n
+Dim o
+Dim p
+Dim q
+Dim r
+Dim s
+Dim t
+Dim u
+Dim v
+Dim w, x, y, z 
+Dim a1, a2
+Dim a3, a4, a5, a6 
+Dim a7 : a7 = Request(ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If a7 = "" Then
+a7 = ChrW(105)&ChrW(100) 
+End if 
+Dim a8 
+a8 = rq(ChrW(105)&ChrW(100)) 
+e = ChrW(28155)&ChrW(21152) 
+If a8 <> "" Then
+e = ChrW(20462)&ChrW(25913) 
+If a8 = ChrW(57)&ChrW(57)&ChrW(57)&ChrW(57)&ChrW(57) And a = ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110) Then
+call eerr(ChrW(25552)&ChrW(31034), ChrW(38750)&ChrW(27491)&ChrW(24120)&ChrW(30331)&ChrW(24405)&ChrW(19981)&ChrW(33021)&ChrW(20462)&ChrW(25913)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(21518)&ChrW(21488)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(39)&ChrW(62)&ChrW(36827)&ChrW(20837)&ChrW(21518)&ChrW(21488)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(21015)&ChrW(34920)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+End if 
+End if 
+If InStr(ChrW(44)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(44), ChrW(44) & a & ChrW(44)) > 0 And a8 = getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100)) & "" Then
+call handlePower(ChrW(20462)&ChrW(25913)&ChrW(33258)&ChrW(36523))
+Else
+call handlePower(ChrW(26174)&ChrW(31034) & b)
+End if 
+c = ChrW(44) & specialStrReplace(c) & ChrW(44)
+k = LCase(a)
+Dim a9
+a9 = getHandleFieldList(db_PREFIX & k, ChrW(23383)&ChrW(27573)&ChrW(37197)&ChrW(32622)&ChrW(21015)&ChrW(34920)) 
+w = Split(a9, ChrW(44)) 
+
+Dim a10, a11 
+a11 = ChrW(97)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(95) & k & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+If Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)) <> "" Then
+a10 = ChrW(97)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(95) & Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)) & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+If checkFile(a10) = True Then
+a11 = a10 
+End if 
+End if 
+
+d = getTemplateContent(a11) 
+
+If InStr(cfg_flags, ChrW(124)&ChrW(105)&ChrW(115)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(124)) > 0 Then
+i = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(35)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(35)&ChrW(45)&ChrW(45)&ChrW(62), 1) 
+If i <> "" Then
+d = Replace(d, i, "") 
+End if 
+End if 
+
+If a8 = ChrW(42) Then
+r = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & "" & k 
+Else
+r = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & "" & k & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & a7 & ChrW(61) & a8 
+End if 
+If InStr(ChrW(44)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(44), ChrW(44) & a & ChrW(44)) > 0 Then
+
+If v = ChrW(124)&ChrW(42)&ChrW(124) Then
+call handlePower(ChrW(42))
+End if 
+
+a3 = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(47)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), 2) 
+a4 = getStrCut(a3, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), 2) 
+If a4 <> "" Then
+
+rsx.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(73)&ChrW(100)&ChrW(60)&ChrW(62)&ChrW(45)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99), conn, 1, 1 
+While Not rsx.EOF
+
+a5 = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) & rsx(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) & rsx(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(45)&ChrW(45)&ChrW(62), 2) 
+If a5 = "" Then
+a5 = a4 
+End if 
+a5 = Replace(a5, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(36)&ChrW(93), rsx(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))) 
+a5 = Replace(a5, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93), rsx(ChrW(105)&ChrW(100))) 
+a6 = a6 & a5 & vbCrLf 
+rsx.MoveNext : Wend : rsx.Close 
+
+End if 
+If a3 <> "" Then
+d = Replace(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62) & a3 & ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(47)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), a6) 
+End if 
+
+If CStr(getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(100))) = CStr(a8) And getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) = ChrW(124)&ChrW(42)&ChrW(124) And a8 <> "" Then
+i = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(26222)&ChrW(36890)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(26222)&ChrW(36890)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 1) 
+d = Replace(d, i, ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(104)&ChrW(105)&ChrW(100)&ChrW(100)&ChrW(101)&ChrW(110)&ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(42)&ChrW(39)&ChrW(32)&ChrW(47)&ChrW(62)) 
+i = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(29992)&ChrW(25143)&ChrW(26435)&ChrW(38480)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(29992)&ChrW(25143)&ChrW(26435)&ChrW(38480)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 1) 
+d = Replace(d, i, "") 
+i = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(36229)&ChrW(32423)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(36229)&ChrW(32423)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 1) 
+d = Replace(d, i, "") 
+
+ElseIf(a8 <> "" Or e = ChrW(28155)&ChrW(21152)) And getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) = ChrW(124)&ChrW(42)&ChrW(124) Then
+i = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(36229)&ChrW(32423)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(36229)&ChrW(32423)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 1) 
+d = Replace(d, i, "") 
+i = getStrCut(d, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(29992)&ChrW(25143)&ChrW(26435)&ChrW(38480)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(29992)&ChrW(25143)&ChrW(26435)&ChrW(38480)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 1) 
+d = Replace(d, i, "") 
+End if 
+End if 
+
+If a8 <> "" Then
+rs.Open r, conn, 1, 1 
+If Not rs.EOF Then
+a8 = rs(a7)
+End if 
+
+If InStr(a9, ChrW(44)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(124)) > 0 Then
+u = rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)) 
+End if 
+
+If InStr(a9, ChrW(44)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(124)) > 0 Then
+v = rs(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) 
+End if 
+End if 
+For each x In w
+If x <> "" Then
+f = Split(x & ChrW(124)&ChrW(124)&ChrW(124), ChrW(124)) 
+n = f(0)
+p = "" 
+y = "" 
+
+p = f(1)
+y = f(2)
+
+
+If InStr(c, ChrW(44) & n & ChrW(124)) > 0 Then
+x = Mid(c, InStr(c, ChrW(44) & n & ChrW(124)) + 1) 
+x = Mid(x, 1, InStr(x, ChrW(44)) - 1) 
+f = Split(x & ChrW(124)&ChrW(124)&ChrW(124), ChrW(124)) 
+p = "" 
+y = "" 
+
+p = f(1)
+y = f(2)
+
+End if 
+q = y 
+If e = ChrW(20462)&ChrW(25913) Then
+q = "" 
+
+q = rs(n) 
+
+
+
+
+Else
+If p = ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101) Then
+q = Now() 
+End if 
+End if 
+
+
+If p = ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100) Then
+q = "" 
+End if 
+If q <> "" Then
+q = Replace(Replace(q, ChrW(34), ChrW(38)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(59)), ChrW(60), ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59))
+End if 
+If InStr(LCase(ChrW(44)&ChrW(65)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(44)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(44)&ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(44)&ChrW(66)&ChrW(66)&ChrW(83)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(44)&ChrW(66)&ChrW(66)&ChrW(83)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(44)&ChrW(67)&ChrW(97)&ChrW(105)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(44)&ChrW(67)&ChrW(97)&ChrW(105)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(44)), ChrW(44) & LCase(a) & ChrW(44)) > 0 And n = ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100) Then
+s = ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93)&ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(91)&ChrW(36)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93)&ChrW(34)&ChrW(91)&ChrW(36)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(36)&ChrW(93)&ChrW(62)&ChrW(91)&ChrW(36)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(36)&ChrW(93)&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62)&ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93) 
+If e = ChrW(28155)&ChrW(21152) Then
+q = Request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) 
+End if 
+a1 = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) 
+If InStr(LCase(ChrW(124)&ChrW(66)&ChrW(66)&ChrW(83)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(124)&ChrW(66)&ChrW(66)&ChrW(83)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(124)), ChrW(124) & LCase(a) & ChrW(124)) > 0 Then
+a1 = ChrW(98)&ChrW(98)&ChrW(115)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) 
+ElseIf InStr(LCase(ChrW(124)&ChrW(67)&ChrW(97)&ChrW(105)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(124)&ChrW(67)&ChrW(97)&ChrW(105)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(124)), ChrW(124) & LCase(a) & ChrW(124)) > 0 Then
+a1 = ChrW(99)&ChrW(97)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) 
+End if 
+a2 = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101) 
+If a = ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117) Then
+a1 = ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117) 
+a2 = ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101) 
+End if 
+j = ChrW(60)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(45)&ChrW(49)&ChrW(34)&ChrW(62)&ChrW(8801)&ChrW(32)&ChrW(20316)&ChrW(20026)&ChrW(19968)&ChrW(32423)&ChrW(26639)&ChrW(30446)&ChrW(32)&ChrW(8801)&ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62) & showColumnList(ChrW(45)&ChrW(49), a1, a2, q, 0, s) & vbCrLf & ChrW(60)&ChrW(47)&ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(62) 
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(36)&ChrW(93), j)
+ElseIf a = ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) And n = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101) Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(36)&ChrW(93), showSelectList(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101), WEBCOLUMNTYPE, ChrW(124), q)) 
+ElseIf InStr(ChrW(44)&ChrW(65)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(44)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(44), ChrW(44) & a & ChrW(44)) > 0 And n = ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115) Then
+t = ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115) 
+If EDITORTYPE = ChrW(112)&ChrW(104)&ChrW(112) Then
+t = ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(91)&ChrW(93)
+End if 
+If a = ChrW(65)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108) Then
+i = inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(104)&ChrW(124)) > 0, True, False), ChrW(104), ChrW(22836)&ChrW(26465)&ChrW(91)&ChrW(104)&ChrW(93)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(99)&ChrW(124)) > 0, True, False), ChrW(99), ChrW(25512)&ChrW(33616)&ChrW(91)&ChrW(99)&ChrW(93)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(102)&ChrW(124)) > 0, True, False), ChrW(102), ChrW(24187)&ChrW(28783)&ChrW(91)&ChrW(102)&ChrW(93)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(97)&ChrW(124)) > 0, True, False), ChrW(97), ChrW(29305)&ChrW(33616)&ChrW(91)&ChrW(97)&ChrW(93)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(115)&ChrW(124)) > 0, True, False), ChrW(115), ChrW(28378)&ChrW(21160)&ChrW(91)&ChrW(115)&ChrW(93)) 
+i = i & Replace(inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(98)&ChrW(124)) > 0, True, False), ChrW(98), ChrW(21152)&ChrW(31895)&ChrW(91)&ChrW(98)&ChrW(93)), "", "") 
+i = Replace(i, ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(39)&ChrW(62), ChrW(32)&ChrW(111)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(61)&ChrW(39)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(40)&ChrW(41)&ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(39)&ChrW(62)) 
+ElseIf a = ChrW(87)&ChrW(101)&ChrW(98)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110) Then
+i = inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(124)) > 0, True, False), ChrW(116)&ChrW(111)&ChrW(112), ChrW(39030)&ChrW(37096)&ChrW(26174)&ChrW(31034)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(124)) > 0, True, False), ChrW(102)&ChrW(111)&ChrW(111)&ChrW(116), ChrW(24213)&ChrW(37096)&ChrW(26174)&ChrW(31034)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(108)&ChrW(101)&ChrW(102)&ChrW(116)&ChrW(124)) > 0, True, False), ChrW(108)&ChrW(101)&ChrW(102)&ChrW(116), ChrW(24038)&ChrW(36793)&ChrW(26174)&ChrW(31034)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(124)) > 0, True, False), ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114), ChrW(20013)&ChrW(38388)&ChrW(26174)&ChrW(31034)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(114)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(124)) > 0, True, False), ChrW(114)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116), ChrW(21491)&ChrW(36793)&ChrW(26174)&ChrW(31034)) 
+i = i & inputCheckBox3(t, iif(InStr(ChrW(124) & q & ChrW(124), ChrW(124)&ChrW(111)&ChrW(116)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(124)) > 0, True, False), ChrW(111)&ChrW(116)&ChrW(104)&ChrW(101)&ChrW(114), ChrW(20854)&ChrW(23427)&ChrW(20301)&ChrW(32622)&ChrW(26174)&ChrW(31034)) 
+End if 
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(36)&ChrW(93), i) 
+ElseIf p = ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(49) Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(49)&ChrW(50)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+ElseIf p = ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(50) Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(51)&ChrW(48)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+ElseIf p = ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(51) Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(53)&ChrW(48)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+ElseIf p = ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100) Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95) & n & ChrW(36)&ChrW(93), ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39) & n & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(39)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(39) & n & ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39) & q & ChrW(39)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(58)&ChrW(57)&ChrW(55)&ChrW(37)&ChrW(59)&ChrW(39)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(39)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(39)&ChrW(62)) 
+ElseIf InStr(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(49)&ChrW(95) & n & ChrW(36)&ChrW(93)) > 0 Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(49)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(49)&ChrW(50)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+Else
+
+If InStr(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(49)&ChrW(95) & n & ChrW(36)&ChrW(93)) > 0 Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(49)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(49)&ChrW(50)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+ElseIf InStr(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(50)&ChrW(95) & n & ChrW(36)&ChrW(93)) > 0 Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(50)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(51)&ChrW(48)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+ElseIf InStr(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(51)&ChrW(95) & n & ChrW(36)&ChrW(93)) > 0 Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(51)&ChrW(95) & n & ChrW(36)&ChrW(93), handleInputHiddenTextArea(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(53)&ChrW(48)&ChrW(48)&ChrW(112)&ChrW(120), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+Else
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(95) & n & ChrW(36)&ChrW(93), inputText2(n, q, ChrW(57)&ChrW(55)&ChrW(37), ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116), "")) 
+End if 
+End if 
+d = replaceValueParam(d, n, q) 
+End if 
+Next 
+If a8 <> "" Then
+rs.Close 
+End if 
+
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(115)&ChrW(119)&ChrW(105)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(73)&ChrW(100)&ChrW(36)&ChrW(93), Request(ChrW(115)&ChrW(119)&ChrW(105)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(73)&ChrW(100))) 
+l = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+l = getUrlAddToParam(l, ChrW(63)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100)&ChrW(61) & a8, ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+
+If InStr(ChrW(124)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(124), ChrW(124) & a & ChrW(124)) = 0 Then
+m = ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & l & ChrW(39)&ChrW(62) & b & ChrW(21015)&ChrW(34920)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)&ChrW(32)&ChrW(62)&ChrW(32) 
+End if 
+d = replaceValueParam(d, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), ChrW(31995)&ChrW(32479)&ChrW(31649)&ChrW(29702)&ChrW(32)&ChrW(62)&ChrW(32) & m & e & ChrW(20449)&ChrW(24687)) 
+d = replaceValueParam(d, ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100), Request(ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)))
+d = replaceValueParam(d, ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100), Request(ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)))
+d = replaceValueParam(d, ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101), Request(ChrW(110)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)))
+d = replaceValueParam(d, ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108), Request(ChrW(97)&ChrW(100)&ChrW(100)&ChrW(115)&ChrW(113)&ChrW(108)))
+d = replaceValueParam(d, ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101), k)
+d = replaceValueParam(d, ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), Request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+d = replaceValueParam(d, ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101), Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+d = replaceValueParam(d, ChrW(105)&ChrW(100), a8)
+d = replaceValueParam(d, ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101), Request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)))
+d = replaceValueParam(d, ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100), Request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
+d = Replace(d, ChrW(123)&ChrW(36)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(36)&ChrW(125), EDITORTYPE)
+d = Replace(d, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(69)&ChrW(66)&ChrW(95)&ChrW(86)&ChrW(73)&ChrW(69)&ChrW(87)&ChrW(85)&ChrW(82)&ChrW(76)&ChrW(36)&ChrW(125), WEB_VIEWURL)
+d = Replace(d, ChrW(123)&ChrW(36)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(95)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(36)&ChrW(125), cfg_webTitle) 
+d = replaceValueParam(d, ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69), EDITORTYPE)
+d = replaceValueParam(d, ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), a7)
+z = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101)&ChrW(65)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(105)&ChrW(100)&ChrW(61) & a8, ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+d = replaceValueParam(d, ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(85)&ChrW(114)&ChrW(108), z) 
+
+If EDITORTYPE = ChrW(112)&ChrW(104)&ChrW(112) Then
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)&ChrW(93), ChrW(91)&ChrW(93)) 
+Else
+d = Replace(d, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(104)&ChrW(112)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)&ChrW(93), "") 
+End if 
+d = handleDisplayLanguage(d, ChrW(104)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101))
+call rw(d) 
+End function
+
+Function saveAddEdit(a, b, ByVal c)
+Dim d, e, f 
+Dim g, h, i 
+g = Request(ChrW(105)&ChrW(100)) 
+h = IIF(g = "", ChrW(28155)&ChrW(21152), ChrW(20462)&ChrW(25913)) 
+call handlePower(h & b)
+call openconn() 
+c = ChrW(44) & specialStrReplace(c) & ChrW(44)
+d = LCase(a)
+i = getPostSql(g, d, c) 
+
+
+If checksql(i) = False Then
+call errorLog(ChrW(20986)&ChrW(38169)&ChrW(25552)&ChrW(31034)&ChrW(65306)&ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61) & i & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)) 
+Exit function 
+End if 
+
+
+If LCase(a) = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101) Then
+If InStr(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)), ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(114)&ChrW(117)&ChrW(110)) = 0 Then
+call deleteFile(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)) 
+End if 
+End if 
+f = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+f = getUrlAddToParam(f, ChrW(63)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100)&ChrW(61) & g, ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+
+If g = "" Then
+e = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+e = getUrlAddToParam(e, ChrW(63)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100)&ChrW(61) & g, ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(25968)&ChrW(25454)&ChrW(28155)&ChrW(21152)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(36820)&ChrW(22238)&ChrW(32487)&ChrW(32493)&ChrW(28155)&ChrW(21152) & b & ChrW(46)&ChrW(46)&ChrW(46)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & f & ChrW(39)&ChrW(62)&ChrW(36820)&ChrW(22238) & b & ChrW(21015)&ChrW(34920)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62), e)) 
+Else
+e = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(38)&ChrW(115)&ChrW(119)&ChrW(105)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(73)&ChrW(100)&ChrW(61) & Request.Form(ChrW(115)&ChrW(119)&ChrW(105)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(73)&ChrW(100)), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+e = getUrlAddToParam(e, ChrW(63)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(105)&ChrW(100)&ChrW(61) & g, ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+
+If InStr(ChrW(124)&ChrW(87)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(124), ChrW(124) & a & ChrW(124)) > 0 Then
+call rw(getMsg1(ChrW(25968)&ChrW(25454)&ChrW(20462)&ChrW(25913)&ChrW(25104)&ChrW(21151), e)) 
+Else
+call rw(getMsg1(ChrW(25968)&ChrW(25454)&ChrW(20462)&ChrW(25913)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837) & b & ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & e & ChrW(39)&ChrW(62)&ChrW(32487)&ChrW(32493)&ChrW(32534)&ChrW(36753)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62), f)) 
+End if 
+End if 
+call writeSystemLog(d, h & b)
+End function
+
+Function del(a, b)
+Dim c, d 
+c = LCase(a)
+Dim e 
+Dim f : f = Request(ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If f = "" Then
+f = ChrW(105)&ChrW(100) 
+End if 
+call handlePower(ChrW(21024)&ChrW(38500) & b)
+e = Request(ChrW(105)&ChrW(100)) 
+If e <> "" Then
+d = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call openconn() 
+
+If a = ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110) Then
+
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & "" & c & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & f & ChrW(32)&ChrW(105)&ChrW(110)&ChrW(40) & e & ChrW(41)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(61)&ChrW(39)&ChrW(124)&ChrW(42)&ChrW(124)&ChrW(39), conn, 1, 1 
+If Not rs.EOF Then
+call rwend(getMsg1(ChrW(21024)&ChrW(38500)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(31995)&ChrW(32479)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(19981)&ChrW(21487)&ChrW(20197)&ChrW(21024)&ChrW(38500)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837) & b & ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), d)) 
+End if : rs.Close 
+
+End if 
+conn.Execute(ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & "" & c & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(40) & e & ChrW(41)) 
+call rw(getMsg1(ChrW(21024)&ChrW(38500) & b & ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837) & b & ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), d)) 
+
+If c <> ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(108)&ChrW(111)&ChrW(103) Then
+call writeSystemLog(c, ChrW(21024)&ChrW(38500) & b)
+End if 
+End if 
+End function
+
+Function updateHandle(a)
+Dim b, c, d, e, f, g, h, i,j,k,l
+Dim m : m = Request(ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If m = "" Then
+m = ChrW(105)&ChrW(100) 
+End if 
+g = LCase(a)
+b = Split(Request(ChrW(105)&ChrW(100)), ChrW(44)) 
+c = Split(Request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)), ChrW(44)) 
+j=request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
+k=request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101))
+if j="" then j=ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)
+For d = 0 To UBound(b)
+e = b(d) 
+i = c(d) 
+if k=ChrW(49) then
+If i = "" Then
+l = 0 
+Else
+l = CInt(i) 
+End if 
+else
+l=i
+end if
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & g & ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)& j &ChrW(61) & l & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & m & ChrW(61) & e) 
+Next 
+h = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(26356)&ChrW(26032)&ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36820)&ChrW(22238)&ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), h)) 
+call writeSystemLog(g, ChrW(26356)&ChrW(26032) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+End function
+
+Function sortHandle(a)
+Dim b, c, d, e, f, g, h, i 
+Dim j : j = Request(ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If j = "" Then
+j = ChrW(105)&ChrW(100) 
+End if 
+g = LCase(a)
+b = Split(Request(ChrW(105)&ChrW(100)), ChrW(44)) 
+c = Split(Request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)), ChrW(44)) 
+For d = 0 To UBound(b)
+e = b(d) 
+i = c(d) 
+If i = "" Then
+f = 0 
+Else
+f = CInt(i) 
+End if 
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & g & ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(61) & f & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & j & ChrW(61) & e) 
+Next 
+h = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(26356)&ChrW(26032)&ChrW(25490)&ChrW(24207)&ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36820)&ChrW(22238)&ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), h)) 
+call writeSystemLog(g, ChrW(25490)&ChrW(24207) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+End function
+
+Function viewsHandle(a)
+Dim b, c, d, e, f, g, h, i 
+Dim j : j = Request(ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If j = "" Then
+j = ChrW(105)&ChrW(100) 
+End if 
+g = LCase(a)
+b = Split(Request(ChrW(105)&ChrW(100)), ChrW(44)) 
+c = Split(Request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)), ChrW(44)) 
+For d = 0 To UBound(b)
+e = b(d) 
+i = c(d) 
+If i = "" Then
+f = 0 
+Else
+f = CInt(i) 
+End if 
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & g & ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(115)&ChrW(61) & f & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & j & ChrW(61) & e) 
+Next 
+h = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(26356)&ChrW(26032)&ChrW(28857)&ChrW(20987)&ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36820)&ChrW(22238)&ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), h)) 
+call writeSystemLog(g, ChrW(28857)&ChrW(20987) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+End function
+
+Function batchEditPrice(a)
+Dim b, c, d, e, f, g, h, i 
+Dim j : j = Request(ChrW(105)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If j = "" Then
+j = ChrW(105)&ChrW(100) 
+End if 
+g = LCase(a)
+b = Split(Request(ChrW(105)&ChrW(100)), ChrW(44)) 
+c = Split(Request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)), ChrW(44)) 
+For d = 0 To UBound(b)
+e = b(d) 
+i = c(d) 
+If i = "" Then
+f = 0 
+Else
+f = CInt(i) 
+End if 
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & g & ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(80)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101)&ChrW(61) & f & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & j & ChrW(61) & e) 
+Next 
+h = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(26356)&ChrW(26032)&ChrW(20215)&ChrW(26684)&ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36820)&ChrW(22238)&ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), h)) 
+call writeSystemLog(g, ChrW(20215)&ChrW(26684) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+End function
+
 Function updateField()
-    Dim tableName, id, fieldName, fieldvalue, fieldNameList, url 
-    tableName = LCase(Request("actionType"))                                        '表名称
-    id = Request("id")                                                              'id
-    fieldName = LCase(Request("fieldname"))                                         '字段名称
-    fieldvalue = Request("fieldvalue")                                              '字段值
+Dim a, b, c, d, e, f 
+a = LCase(Request(ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)))
+b = Request(ChrW(105)&ChrW(100))
+c = LCase(Request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))
+d = Request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101))
+e = getHandleFieldList(db_PREFIX & a, ChrW(23383)&ChrW(27573)&ChrW(21015)&ChrW(34920)) 
 
-    fieldNameList = getHandleFieldList(db_PREFIX & tableName, "字段列表") 
-    'call echo(fieldname,fieldvalue)
-    'call echo("fieldNameList",fieldNameList)
-    If InStr(fieldNameList, "," & fieldName & ",") = 0 Then
-        call eerr("出错提示2", "表(" & tableName & ")不存在字段(" & fieldName & ")") 
-    Else
-        conn.Execute("update " & db_PREFIX & tableName & " set " & fieldName & "=" & fieldvalue & " where id=" & id) 
-    End If 
 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    call rw(getMsg1("操作成功，正在返回列表...", url)) 
+If InStr(e, ChrW(44) & c & ChrW(44)) = 0 Then
+call eerr(ChrW(20986)&ChrW(38169)&ChrW(25552)&ChrW(31034)&ChrW(50), ChrW(34920)&ChrW(40) & a & ChrW(41)&ChrW(19981)&ChrW(23384)&ChrW(22312)&ChrW(23383)&ChrW(27573)&ChrW(40) & c & ChrW(41)) 
+Else
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & a & ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32) & c & ChrW(61) & d & ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61) & b) 
+End if 
+f = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(25805)&ChrW(20316)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36820)&ChrW(22238)&ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), f)) 
+End function
 
-End Function
- 
-
-'保存robots.txt 20160118
 Sub saveRobots()
-    Dim bodycontent, url 
-    call handlePower("修改生成Robots")                                                  '管理权限处理
-    bodycontent = Request("bodycontent") 
-    call createfile(ROOT_PATH & "/../robots.txt", bodycontent) 
-    url = "?act=displayLayout&templateFile=layout_makeRobots.html&lableTitle=生成Robots" 
-    call rw(getMsg1("保存Robots成功，正在进入Robots界面...", url)) 
+Dim a, b 
+call handlePower(ChrW(20462)&ChrW(25913)&ChrW(29983)&ChrW(25104)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115))
+a = Request(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)) 
+call createfile(ROOT_PATH & ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(114)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116), a) 
+b = ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(38)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(109)&ChrW(97)&ChrW(107)&ChrW(101)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(29983)&ChrW(25104)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115) 
+call rw(getMsg1(ChrW(20445)&ChrW(23384)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(30028)&ChrW(38754)&ChrW(46)&ChrW(46)&ChrW(46), b)) 
+call writeSystemLog("", ChrW(20445)&ChrW(23384)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116))
+End sub
 
-    call writeSystemLog("", "保存Robots.txt")                                         '系统日志
-End Sub
- 
-
-'删除全部生成的html文件
 Function deleteAllMakeHtml()
-    Dim filePath 
-    '栏目
-    '【@是jsp显示@】try{
-    rsx.Open "select * from " & db_PREFIX & "webcolumn order by sortrank asc", conn, 1, 1 
-    While Not rsx.EOF
-        If CInt(rsx("nofollow")) = 0 Then
-            filePath = getRsUrl(rsx("fileName"), rsx("customAUrl"), "/nav" & rsx("id")) 
-            If Right(filePath, 1) = "/" Then
-                filePath = filePath & "index.html" 
-            End If 
-            call echo("栏目filePath", "<a href='" & filePath & "' target='_blank'>" & filePath & "</a>") 
-            call deleteFile(filePath) 
-        End If 
-    rsx.MoveNext : Wend : rsx.Close 
-    '文章
-    rsx.Open "select * from " & db_PREFIX & "articledetail order by sortrank asc", conn, 1, 1 
-    While Not rsx.EOF
-        If CInt(rsx("nofollow")) = 0 Then
-            filePath = getRsUrl(rsx("fileName"), rsx("customAUrl"), "/detail/detail" & rsx("id")) 
-            If Right(filePath, 1) = "/" Then
-                filePath = filePath & "index.html" 
-            End If 
-            call echo("文章filePath", "<a href='" & filePath & "' target='_blank'>" & filePath & "</a>") 
-            call deleteFile(filePath) 
-        End If 
-    rsx.MoveNext : Wend : rsx.Close 
-    '单页
-    rsx.Open "select * from " & db_PREFIX & "onepage order by sortrank asc", conn, 1, 1 
-    While Not rsx.EOF
-        If CInt(rsx("nofollow")) = 0 Then
-            filePath = getRsUrl(rsx("fileName"), rsx("customAUrl"), "/page/detail" & rsx("id")) 
-            If Right(filePath, 1) = "/" Then
-                filePath = filePath & "index.html" 
-            End If 
-            call echo("单页filePath", "<a href='" & filePath & "' target='_blank'>" & filePath & "</a>") 
-            call deleteFile(filePath) 
-        End If 
-    rsx.MoveNext : Wend : rsx.Close 
-'【@是jsp显示@】}catch(Exception e){}
-End Function
- 
+Dim a 
 
-'统计2016 stat2016(true)
-Function stat2016(isHide)
-    Dim c 
-    If getcookie("tjB") = "" And getIP() <> "127.0.0.1" Then                        '屏蔽本地，引用之前代码20160122
-        call setCookie("tjB", "1", 3600) 
-        c = c & Chr(60) & Chr(115) & Chr(99) & Chr(114) & Chr(105) & Chr(112) & Chr(116) & Chr(32) & Chr(115) & Chr(114) & Chr(99) & Chr(61) & Chr(34) & Chr(104) & Chr(116) & Chr(116) & Chr(112) & Chr(58) & Chr(47) & Chr(47) & Chr(106) & Chr(115) & Chr(46) & Chr(117) & Chr(115) & Chr(101) & Chr(114) & Chr(115) & Chr(46) & Chr(53) & Chr(49) & Chr(46) & Chr(108) & Chr(97) & Chr(47) & Chr(52) & Chr(53) & Chr(51) & Chr(50) & Chr(57) & Chr(51) & Chr(49) & Chr(46) & Chr(106) & Chr(115) & Chr(34) & Chr(62) & Chr(60) & Chr(47) & Chr(115) & Chr(99) & Chr(114) & Chr(105) & Chr(112) & Chr(116) & Chr(62) 
-        If isHide = True Then
-            c = "<div style=""display:none;"">" & c & "</div>" 
-        End If 
-    End If 
-    stat2016 = c 
-End Function
- 
-'获得官方信息
+
+rsx.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99), conn, 1, 1 
+While Not rsx.EOF
+If CInt(rsx(ChrW(110)&ChrW(111)&ChrW(102)&ChrW(111)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119))) = 0 Then
+a = getRsUrl(rsx(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)), rsx(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(65)&ChrW(85)&ChrW(114)&ChrW(108)), ChrW(47)&ChrW(110)&ChrW(97)&ChrW(118) & rsx(ChrW(105)&ChrW(100))) 
+If Right(a, 1) = ChrW(47) Then
+a = a & ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+End if 
+call echo(ChrW(26639)&ChrW(30446)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & a & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62) & a & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+call deleteFile(a) 
+End if 
+rsx.MoveNext : Wend : rsx.Close 
+
+rsx.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(97)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99), conn, 1, 1 
+While Not rsx.EOF
+If CInt(rsx(ChrW(110)&ChrW(111)&ChrW(102)&ChrW(111)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119))) = 0 Then
+a = getRsUrl(rsx(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)), rsx(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(65)&ChrW(85)&ChrW(114)&ChrW(108)), ChrW(47)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(47)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108) & rsx(ChrW(105)&ChrW(100))) 
+If Right(a, 1) = ChrW(47) Then
+a = a & ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+End if 
+call echo(ChrW(25991)&ChrW(31456)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & a & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62) & a & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+call deleteFile(a) 
+End if 
+rsx.MoveNext : Wend : rsx.Close 
+
+rsx.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(111)&ChrW(110)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99), conn, 1, 1 
+While Not rsx.EOF
+If CInt(rsx(ChrW(110)&ChrW(111)&ChrW(102)&ChrW(111)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119))) = 0 Then
+a = getRsUrl(rsx(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)), rsx(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(65)&ChrW(85)&ChrW(114)&ChrW(108)), ChrW(47)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(47)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108) & rsx(ChrW(105)&ChrW(100))) 
+If Right(a, 1) = ChrW(47) Then
+a = a & ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+End if 
+call echo(ChrW(21333)&ChrW(39029)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104), ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39) & a & ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62) & a & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+call deleteFile(a) 
+End if 
+rsx.MoveNext : Wend : rsx.Close 
+
+End function
+
+Function stat2016(a)
+Dim b 
+If getcookie(ChrW(116)&ChrW(106)&ChrW(66)) = "" And getIP() <> ChrW(49)&ChrW(50)&ChrW(55)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(49) Then
+call setCookie(ChrW(116)&ChrW(106)&ChrW(66), ChrW(49), 3600) 
+b = b & Chr(60) & Chr(115) & Chr(99) & Chr(114) & Chr(105) & Chr(112) & Chr(116) & Chr(32) & Chr(115) & Chr(114) & Chr(99) & Chr(61) & Chr(34) & Chr(104) & Chr(116) & Chr(116) & Chr(112) & Chr(58) & Chr(47) & Chr(47) & Chr(106) & Chr(115) & Chr(46) & Chr(117) & Chr(115) & Chr(101) & Chr(114) & Chr(115) & Chr(46) & Chr(53) & Chr(49) & Chr(46) & Chr(108) & Chr(97) & Chr(47) & Chr(52) & Chr(53) & Chr(51) & Chr(50) & Chr(57) & Chr(51) & Chr(49) & Chr(46) & Chr(106) & Chr(115) & Chr(34) & Chr(62) & Chr(60) & Chr(47) & Chr(115) & Chr(99) & Chr(114) & Chr(105) & Chr(112) & Chr(116) & Chr(62) 
+If a = True Then
+b = ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(58)&ChrW(110)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(59)&ChrW(34)&ChrW(62) & b & ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62) 
+End if 
+End if 
+stat2016 = b 
+End function
+
 Function getOfficialWebsite()
-    Dim s, url  
-    If getcookie("PAAJCMSGW") = "" Then
-        url = Chr(104) & Chr(116) & Chr(116) & Chr(112) & Chr(58) & Chr(47) & Chr(47) & Chr(115) & Chr(104) & Chr(97) & Chr(114) & Chr(101) & Chr(109) & Chr(98) & Chr(119) & Chr(101) & Chr(98) & Chr(46) & Chr(99) & Chr(111) & Chr(109) & Chr(47) & Chr(112) & Chr(97) & Chr(97) & Chr(106) & Chr(99) & Chr(109) & Chr(115) & Chr(47) & Chr(112) & Chr(97) & Chr(97) & Chr(106) & Chr(99) & Chr(109) & Chr(115) & Chr(46) & Chr(97) & Chr(115) & Chr(112) & "?act=version&domain=" & escape(webDoMain()) & "&version=" & escape(webVersion) & "&language=" & language 
+Dim a, b  
+If getcookie(ChrW(80)&ChrW(65)&ChrW(65)&ChrW(74)&ChrW(67)&ChrW(77)&ChrW(83)&ChrW(71)&ChrW(87)) = "" Then
+b = Chr(104) & Chr(116) & Chr(116) & Chr(112) & Chr(58) & Chr(47) & Chr(47) & Chr(115) & Chr(104) & Chr(97) & Chr(114) & Chr(101) & Chr(109) & Chr(98) & Chr(119) & Chr(101) & Chr(98) & Chr(46) & Chr(99) & Chr(111) & Chr(109) & Chr(47) & Chr(112) & Chr(97) & Chr(97) & Chr(106) & Chr(99) & Chr(109) & Chr(115) & Chr(47) & Chr(112) & Chr(97) & Chr(97) & Chr(106) & Chr(99) & Chr(109) & Chr(115) & Chr(46) & Chr(97) & Chr(115) & Chr(112) & ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(38)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(61) & escape(webDoMain()) & ChrW(38)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61) & escape(webVersion) & ChrW(38)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61) & language 
 
-        'url="http://aa/paajcms/paajcms.asp?act=version&domain=" & escape(webDoMain()) & "&version=" & escape(webVersion) & "&language=" & language
-        s = "<script src=""" & url & """></script>" 
+a = ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(34) & b & ChrW(34)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62) 
+Else 
+a = getcookie(ChrW(80)&ChrW(65)&ChrW(65)&ChrW(74)&ChrW(67)&ChrW(77)&ChrW(83)&ChrW(71)&ChrW(87))
+a=ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62)&ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(119)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(117)&ChrW(110)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(97)&ChrW(112)&ChrW(101)&ChrW(40)&ChrW(34)& a &ChrW(34)&ChrW(41)&ChrW(41)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62)
+End if 
+getOfficialWebsite = a 
 
-    Else 
-        s = getcookie("PAAJCMSGW")
-		s="<script>document.write(unescape("""& s &"""))</script>"		'追加于20190421
-    End If 
-    getOfficialWebsite = s 
-'Call clearCookie("PAAJCMSGW")
-End Function
- 
+End function
 
-'更新网站统计 20160203
 Function updateWebsiteStat()
-    Dim content, splStr, splxx, filePath, fileName 
-    Dim url, s, nCount 
-    call handlePower("更新网站统计")                                                      '管理权限处理
-    conn.Execute("delete from " & db_PREFIX & "websitestat")                        '删除全部统计记录
-    content = getDirTxtList(adminDir & "/data/stat/") 
-    splStr = Split(content, vbCrLf) 
-    nCount = 1 
-    For Each filePath In splStr
-        fileName = getFileName(filePath) 
-        If filePath <> "" And Left(fileName, 1) <> "#" Then
-            nCount = nCount + 1 
-            call echo(nCount & "、filePath", filePath) 
-            doevents 
-            content = readFile(filePath, "") 
-            content = Replace(content, Chr(0), "") 
-            call whiteWebStat(content) 
+Dim a, b, c, d, e 
+Dim f, g, h 
+call handlePower(ChrW(26356)&ChrW(26032)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745))
+conn.Execute(ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116))
+a = getDirTxtList(adminDir & ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(47)) 
+b = Split(a, vbCrLf) 
+h = 1 
+For each d In b
+e = getFileName(d) 
+If d <> "" And Left(e, 1) <> ChrW(35) Then
+h = h + 1 
+call echo(h & ChrW(12289)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104), d) 
+doevents 
+a = readFile(d, "") 
+a = Replace(a, Chr(0), "") 
+call whiteWebStat(a) 
+End if 
+Next 
+f = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(26356)&ChrW(26032)&ChrW(20840)&ChrW(37096)&ChrW(32479)&ChrW(35745)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), f)) 
+call writeSystemLog("", ChrW(26356)&ChrW(26032)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745))
+End function
 
-        End If 
-    Next 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-
-    call rw(getMsg1("更新全部统计成功，正在进入" & Request("lableTitle") & "列表...", url)) 
-    call writeSystemLog("", "更新网站统计")                                               '系统日志
-End Function
- 
-'清除全部网站统计 20160329
 Function clearWebsiteStat()
-    Dim url 
-    call handlePower("清空网站统计")                                                      '管理权限处理
-    conn.Execute("delete from " & db_PREFIX & "websitestat") 
+Dim a 
+call handlePower(ChrW(28165)&ChrW(31354)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745))
+conn.Execute(ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)) 
+a = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(28165)&ChrW(31354)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), a)) 
+call writeSystemLog("", ChrW(28165)&ChrW(31354)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745))
+End function
 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-
-    call rw(getMsg1("清空网站统计成功，正在进入" & Request("lableTitle") & "列表...", url)) 
-    call writeSystemLog("", "清空网站统计")                                               '系统日志
-End Function
- 
-'更新今天网站统计
 Function updateTodayWebStat()
-    Dim content, url, dateStr, dateMsg 
-    If Request("date") <> "" Then
-        'dateStr = now() + cint(request("date"))
-        dateStr = sAddTime(Now(), "d", CInt(Request("date"))) 
-        dateMsg = "昨天" 
-    Else
-        dateStr = CStr(Now()) 
-        dateMsg = "今天" 
-    End If 
+Dim a, b, c, d 
+If Request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)) <> "" Then
 
-    call handlePower("更新" & dateMsg & "统计")                                         '管理权限处理
+c = sAddTime(Now(), ChrW(100), CInt(Request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)))) 
+d = ChrW(26152)&ChrW(22825) 
+Else
+c = CStr(Now()) 
+d = ChrW(20170)&ChrW(22825) 
+End if 
+call handlePower(ChrW(26356)&ChrW(26032) & d & ChrW(32479)&ChrW(35745))
 
-    'call echo("datestr",datestr)
-    conn.Execute("delete from " & db_PREFIX & "websitestat where dateclass='" & format_Time(dateStr, 2) & "'") 
-    content = readFile(adminDir & "/data/stat/" & format_Time(dateStr, 2) & ".txt", "") 
-    call whiteWebStat(content) 
-    url = getUrlAddToParam(getThisUrl(), "?act=dispalyManageHandle", "replace") 
-    call rw(getMsg1("更新" & dateMsg & "统计成功，正在进入" & Request("lableTitle") & "列表...", url)) 
-    call writeSystemLog("", "更新网站统计")                                               '系统日志
-End Function
- 
-'写入网站统计信息
-Function whiteWebStat(content)
-    Dim splStr, splxx, filePath, nCount 
-    Dim url, s, visitUrl, viewUrl, viewdatetime, ip, browser, operatingsystem, cookie, screenwh, moreInfo, ipList, dateClass 
-    splxx = Split(content, vbCrLf & "-------------------------------------------------" & vbCrLf) 
-    nCount = 0 
-    For Each s In splxx
-        If InStr(s, "当前：") > 0 Then
-            nCount = nCount + 1 
-            s = vbCrLf & s & vbCrLf 
-            dateClass = ADSql(getFileAttr(filePath, "3")) 
-            visitUrl = ADSql(getStrCut(s, vbCrLf & "来访", vbCrLf, 0)) 
-            viewUrl = ADSql(getStrCut(s, vbCrLf & "当前：", vbCrLf, 0)) 
-            viewdatetime = ADSql(getStrCut(s, vbCrLf & "时间：", vbCrLf, 0)) 
-            ip = ADSql(getStrCut(s, vbCrLf & "IP:", vbCrLf, 0)) 
-            browser = ADSql(getStrCut(s, vbCrLf & "browser: ", vbCrLf, 0)) 
-            operatingsystem = ADSql(getStrCut(s, vbCrLf & "operatingsystem=", vbCrLf, 0)) 
-            cookie = ADSql(getStrCut(s, vbCrLf & "Cookies=", vbCrLf, 0)) 
-            screenwh = ADSql(getStrCut(s, vbCrLf & "Screen=", vbCrLf, 0)) 
-            moreInfo = ADSql(getStrCut(s, vbCrLf & "用户信息=", vbCrLf, 0)) 
-            browser = ADSql(getBrType(moreInfo)) 
-            If InStr(vbCrLf & ipList & vbCrLf, vbCrLf & ip & vbCrLf) = 0 Then
-                ipList = ipList & ip & vbCrLf 
-            End If 
+conn.Execute(ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(39) & format_Time(c, 2) & ChrW(39)) 
+a = readFile(adminDir & ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(47) & format_Time(c, 2) & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116), "") 
+call whiteWebStat(a) 
+b = getUrlAddToParam(getThisUrl(), ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(121)&ChrW(77)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101), ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)) 
+call rw(getMsg1(ChrW(26356)&ChrW(26032) & d & ChrW(32479)&ChrW(35745)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837) & Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(21015)&ChrW(34920)&ChrW(46)&ChrW(46)&ChrW(46), b)) 
+call writeSystemLog("", ChrW(26356)&ChrW(26032)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745))
+End function
 
-            viewdatetime = Replace(viewdatetime, "来访", "00") 
-            If IsDate(viewdatetime) = False Then
-                viewdatetime = "1988/07/12 10:10:10" 
-            End If 
+Function whiteWebStat(a)
+Dim b, c, d, e 
+Dim f, g, h, i, j, k, l, m, n, o, p, q, r 
+c = Split(a, vbCrLf & ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45) & vbCrLf) 
+e = 0 
+For each g In c
+If InStr(g, ChrW(24403)&ChrW(21069)&ChrW(65306)) > 0 Then
+e = e + 1 
+g = vbCrLf & g & vbCrLf 
+r = ADSql(getFileAttr(d, ChrW(51))) 
+h = ADSql(getStrCut(g, vbCrLf & ChrW(26469)&ChrW(35775), vbCrLf, 0)) 
+i = ADSql(getStrCut(g, vbCrLf & ChrW(24403)&ChrW(21069)&ChrW(65306), vbCrLf, 0)) 
+j = ADSql(getStrCut(g, vbCrLf & ChrW(26102)&ChrW(38388)&ChrW(65306), vbCrLf, 0)) 
+k = ADSql(getStrCut(g, vbCrLf & ChrW(73)&ChrW(80)&ChrW(58), vbCrLf, 0)) 
+l = ADSql(getStrCut(g, vbCrLf & ChrW(98)&ChrW(114)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(58)&ChrW(32), vbCrLf, 0)) 
+m = ADSql(getStrCut(g, vbCrLf & ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(61), vbCrLf, 0)) 
+n = ADSql(getStrCut(g, vbCrLf & ChrW(67)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115)&ChrW(61), vbCrLf, 0)) 
+o = ADSql(getStrCut(g, vbCrLf & ChrW(83)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(110)&ChrW(61), vbCrLf, 0)) 
+p = ADSql(getStrCut(g, vbCrLf & ChrW(29992)&ChrW(25143)&ChrW(20449)&ChrW(24687)&ChrW(61), vbCrLf, 0)) 
+l = ADSql(getBrType(p)) 
+If InStr(vbCrLf & q & vbCrLf, vbCrLf & k & vbCrLf) = 0 Then
+q = q & k & vbCrLf 
+End if 
+j = Replace(j, ChrW(26469)&ChrW(35775), ChrW(48)&ChrW(48)) 
+If IsDate(j) = False Then
+j = ChrW(49)&ChrW(57)&ChrW(56)&ChrW(56)&ChrW(47)&ChrW(48)&ChrW(55)&ChrW(47)&ChrW(49)&ChrW(50)&ChrW(32)&ChrW(49)&ChrW(48)&ChrW(58)&ChrW(49)&ChrW(48)&ChrW(58)&ChrW(49)&ChrW(48) 
+End if 
+o = Left(o, 20) 
+If 1 = 2 Then
+call echo(ChrW(32534)&ChrW(21495), e) 
+call echo(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(67)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115), r) 
+call echo(ChrW(118)&ChrW(105)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(85)&ChrW(114)&ChrW(108), h) 
+call echo(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(85)&ChrW(114)&ChrW(108), i) 
+call echo(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101), j) 
+call echo(ChrW(73)&ChrW(80), k) 
+call echo(ChrW(98)&ChrW(114)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(101)&ChrW(114), l) 
+call echo(ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109), m) 
+call echo(ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101), n) 
+call echo(ChrW(115)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(110)&ChrW(119)&ChrW(104), o) 
+call echo(ChrW(109)&ChrW(111)&ChrW(114)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111), p) 
+call hr() 
+End if 
+conn.Execute(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(32)&ChrW(40)&ChrW(118)&ChrW(105)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(44)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(44)&ChrW(98)&ChrW(114)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(44)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(44)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(110)&ChrW(119)&ChrW(104)&ChrW(44)&ChrW(109)&ChrW(111)&ChrW(114)&ChrW(101)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(44)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(44)&ChrW(105)&ChrW(112)&ChrW(44)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39) & h & ChrW(39)&ChrW(44)&ChrW(39) & i & ChrW(39)&ChrW(44)&ChrW(39) & l & ChrW(39)&ChrW(44)&ChrW(39) & m & ChrW(39)&ChrW(44)&ChrW(39) & o & ChrW(39)&ChrW(44)&ChrW(39) & p & ChrW(39)&ChrW(44)&ChrW(39) & j & ChrW(39)&ChrW(44)&ChrW(39) & k & ChrW(39)&ChrW(44)&ChrW(39) & r & ChrW(39)&ChrW(41)) 
+End if 
+Next 
+End function
 
-            screenwh = Left(screenwh, 20) 
-            If 1 = 2 Then
-                call echo("编号", nCount) 
-                call echo("dateClass", dateClass) 
-                call echo("visitUrl", visitUrl) 
-                call echo("viewUrl", viewUrl) 
-                call echo("viewdatetime", viewdatetime) 
-                call echo("IP", ip) 
-                call echo("browser", browser) 
-                call echo("operatingsystem", operatingsystem) 
-                call echo("cookie", cookie) 
-                call echo("screenwh", screenwh) 
-                call echo("moreInfo", moreInfo) 
-                call hr() 
-            End If 
-            conn.Execute("insert into " & db_PREFIX & "websitestat (visiturl,viewurl,browser,operatingsystem,screenwh,moreinfo,viewdatetime,ip,dateclass) values('" & visitUrl & "','" & viewUrl & "','" & browser & "','" & operatingsystem & "','" & screenwh & "','" & moreInfo & "','" & viewdatetime & "','" & ip & "','" & dateClass & "')") 
-        End If 
-    Next 
-End Function
- 
-
-'详细网站统计
 Function websiteDetail()
-    Dim content, splxx, filePath 
-    Dim s, ip, ipList 
-    Dim nIP, nPV, i, timeStr, c 
+Dim a, b, c 
+Dim d, e, f 
+Dim g, h, i, j, k 
+call handlePower(ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745)&ChrW(35814)&ChrW(32454))
+For i = 1 To 30
+j = getHandleDate((i - 1) * - 1)
+c = adminDir & ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(47) & j & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
+a = readFile(c, "") 
+b = Split(a, vbCrLf & ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45) & vbCrLf) 
+g = 0 
+h = 0 
+f = "" 
+For each d In b
+If InStr(d, ChrW(24403)&ChrW(21069)&ChrW(65306)) > 0 Then
+d = vbCrLf & d & vbCrLf 
+e = ADSql(getStrCut(d, vbCrLf & ChrW(73)&ChrW(80)&ChrW(58), vbCrLf, 0)) 
+h = h + 1 
+If InStr(vbCrLf & f & vbCrLf, vbCrLf & e & vbCrLf) = 0 Then
+f = f & e & vbCrLf 
+g = g + 1 
+End if 
+End if 
+Next 
+call echo(j, ChrW(73)&ChrW(80)&ChrW(40) & g & ChrW(41)&ChrW(32)&ChrW(80)&ChrW(86)&ChrW(40) & h & ChrW(41)) 
+If i < 4 Then
+k = k & j & ChrW(32)&ChrW(73)&ChrW(80)&ChrW(40) & g & ChrW(41)&ChrW(32)&ChrW(80)&ChrW(86)&ChrW(40) & h & ChrW(41) & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62) 
+End if 
+Next 
+call setConfigFileBlock(WEB_CACHEFile, k, ChrW(35)&ChrW(35775)&ChrW(23458)&ChrW(20449)&ChrW(24687)&ChrW(35)) 
+call writeSystemLog("", ChrW(35814)&ChrW(32454)&ChrW(32593)&ChrW(31449)&ChrW(32479)&ChrW(35745))
+End function
 
-    call handlePower("网站统计详细")                                                      '管理权限处理
-
-    For i = 1 To 30
-        timeStr = getHandleDate((i - 1) * - 1)                                          'format_Time(Now() - i + 1, 2)
-        filePath = adminDir & "/data/stat/" & timeStr & ".txt" 
-        content = readFile(filePath, "") 
-        splxx = Split(content, vbCrLf & "-------------------------------------------------" & vbCrLf) 
-        nIP = 0 
-        nPV = 0 
-        ipList = "" 
-        For Each s In splxx
-            If InStr(s, "当前：") > 0 Then
-                s = vbCrLf & s & vbCrLf 
-                ip = ADSql(getStrCut(s, vbCrLf & "IP:", vbCrLf, 0)) 
-                nPV = nPV + 1 
-                If InStr(vbCrLf & ipList & vbCrLf, vbCrLf & ip & vbCrLf) = 0 Then
-                    ipList = ipList & ip & vbCrLf 
-                    nIP = nIP + 1 
-                End If 
-            End If 
-        Next 
-        call echo(timeStr, "IP(" & nIP & ") PV(" & nPV & ")") 
-        If i < 4 Then
-            c = c & timeStr & " IP(" & nIP & ") PV(" & nPV & ")" & "<br>" 
-        End If 
-    Next 
-
-    call setConfigFileBlock(WEB_CACHEFile, c, "#访客信息#") 
-    call writeSystemLog("", "详细网站统计")                                               '系统日志
-
-End Function
- 
-
-'显示指定布局
 Sub displayLayout()
-    Dim content, lableTitle, templateFile 
-    lableTitle = Request("lableTitle") 
-    templateFile = Request("templateFile") 
-    call handlePower("显示" & lableTitle)                                             '管理权限处理
+Dim a, b, c 
+b = Request(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) 
+c = Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)) 
+call handlePower(ChrW(26174)&ChrW(31034) & b)
+a = getTemplateContent(Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101))) 
+a = Replace(a, ChrW(91)&ChrW(36)&ChrW(112)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(36)&ChrW(93), b) 
+a = replaceValueParam(a, ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101), b) 
 
-    content = getTemplateContent(Request("templateFile")) 
-    content = Replace(content, "[$position$]", lableTitle) 
-    content = replaceValueParam(content, "lableTitle", lableTitle) 
+If c = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(109)&ChrW(97)&ChrW(107)&ChrW(101)&ChrW(82)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) Then
+a = Replace(a, ChrW(91)&ChrW(36)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(36)&ChrW(93), readFile(ChrW(47)&ChrW(114)&ChrW(111)&ChrW(98)&ChrW(111)&ChrW(116)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116), "")) 
 
+ElseIf c = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(77)&ChrW(97)&ChrW(112)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) Then
+a = replaceValueParam(a, ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(109)&ChrW(97)&ChrW(112)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121), getAdminMap()) 
 
-    'Robots.txt文件创建
-    If templateFile = "layout_makeRobots.html" Then
-        content = Replace(content, "[$bodycontent$]", readFile("/robots.txt", "")) 
-    '后台菜单地图
-    ElseIf templateFile = "layout_adminMap.html" Then
-        content = replaceValueParam(content, "adminmapbody", getAdminMap()) 
-    '管理模板
-    ElseIf templateFile = "layout_manageTemplates.html" Then
-        content = displayTemplatesList(content) 
-    '生成html
-    ElseIf templateFile = "layout_manageMakeHtml.html" Then
-        content = replaceValueParam(content, "columnList", getMakeColumnList()) 
+ElseIf c = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(109)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) Then
+a = displayTemplatesList(a) 
 
+ElseIf c = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(109)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(77)&ChrW(97)&ChrW(107)&ChrW(101)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) Then
+a = replaceValueParam(a, ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116), getMakeColumnList()) 
+End if 
+a = handleDisplayLanguage(a, ChrW(104)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101))
+call rw(a) 
+End sub
 
-    End If 
-
-
-    content = handleDisplayLanguage(content, "handleDisplayLanguage")               '语言处理
-    call rw(content) 
-End Sub
- 
-'获得生成栏目列表
 Function getMakeColumnList()
-    Dim c 
-    '栏目
-    '【@是jsp显示@】try{
-    rsx.Open "select * from " & db_PREFIX & "webcolumn order by sortrank asc", conn, 1, 1 
-    While Not rsx.EOF
-        If CInt(rsx("nofollow")) = 0 Then
-            c = c & "<option value=""" & rsx("id") & """>" & rsx("columnname") & "</option>" & vbCrLf 
-        End If 
-    rsx.MoveNext : Wend : rsx.Close 
-    '【@是jsp显示@】}catch(Exception e){}
-    getMakeColumnList = c 
-End Function
- 
+Dim a 
 
-'获得后台地图
+
+rsx.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99), conn, 1, 1 
+While Not rsx.EOF
+If CInt(rsx(ChrW(110)&ChrW(111)&ChrW(102)&ChrW(111)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119))) = 0 Then
+a = a & ChrW(60)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34) & rsx(ChrW(105)&ChrW(100)) & ChrW(34)&ChrW(62) & rsx(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(60)&ChrW(47)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(62) & vbCrLf 
+End if 
+rsx.MoveNext : Wend : rsx.Close 
+
+getMakeColumnList = a 
+End function
+
 Function getAdminMap()
-    Dim s, c, url, addSql, sql 
-    If getsession("adminflags") <> "|*|" Then
-        addSql = " and isDisplay<>0 " 
-    End If 
-    '【@是jsp显示@】try{
-    rs.Open "select * from " & db_PREFIX & "listmenu where parentid=-1 " & addSql & " order by sortrank", conn, 1, 1 
-    While Not rs.EOF
-        c = c & "<div class=""map-menu fl""><ul>" & vbCrLf 
-        c = c & "<li class=""title"">" & rs("title") & "</li><div>" & vbCrLf 
-        sql = "select * from " & db_PREFIX & "listmenu where parentid=" & rs("id") & " " & addSql & "  order by sortrank" 
-        rsx.Open sql, conn, 1, 1 
-        While Not rsx.EOF
-            url = phptrim(rsx("customAUrl")) 
-            If rsx("lablename") <> "" Then
-                url = url & "&lableTitle=" & rsx("lablename") 
-            End If 
-            c = c & "<li><a href=""" & url & """>" & rsx("title") & "</a></li>" & vbCrLf 
-        rsx.MoveNext : Wend : rsx.Close 
-        c = c & "</div></ul></div>" & vbCrLf 
-    rs.MoveNext : Wend : rs.Close 
-    '【@是jsp显示@】}catch(Exception e){}
-    c = replaceLableContent(c) 
-    getAdminMap = c 
-End Function
- 
+Dim a, b, c, d, e 
+If getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) <> ChrW(124)&ChrW(42)&ChrW(124) Then
+d = ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(60)&ChrW(62)&ChrW(48)&ChrW(32) 
+End if 
 
-'获得后台一级菜单列表
+rs.Open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(45)&ChrW(49)&ChrW(32) & d & ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107), conn, 1, 1 
+While Not rs.EOF
+b = b & ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(109)&ChrW(97)&ChrW(112)&ChrW(45)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(102)&ChrW(108)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(117)&ChrW(108)&ChrW(62) & vbCrLf 
+b = b & ChrW(60)&ChrW(108)&ChrW(105)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(62) & rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(60)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(62)&ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62) & vbCrLf 
+e = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61) & rs(ChrW(105)&ChrW(100)) & ChrW(32) & d & ChrW(32)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107) 
+rsx.Open e, conn, 1, 1 
+While Not rsx.EOF
+c = phptrim(rsx(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(65)&ChrW(85)&ChrW(114)&ChrW(108))) 
+If rsx(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) <> "" Then
+c = c & ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61) & rsx(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+End if 
+b = b & ChrW(60)&ChrW(108)&ChrW(105)&ChrW(62)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(34) & c & ChrW(34)&ChrW(62) & rsx(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(62) & vbCrLf 
+rsx.MoveNext : Wend : rsx.Close 
+b = b & ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(117)&ChrW(108)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62) & vbCrLf 
+rs.MoveNext : Wend : rs.Close 
+
+b = replaceLableContent(b) 
+getAdminMap = b 
+End function
+
 Function getAdminOneMenuList()
-    Dim c, focusStr, addSql, sql 
-    If getsession("adminflags") <> "|*|" Then
-        addSql = " and isDisplay<>0 " 
-    End If 
-    sql = "select * from " & db_PREFIX & "listmenu where parentid=-1 " & addSql & " and isdisplay<>0 order by sortrank" 
-    '检测SQL
-    If checksql(sql) = False Then
-        call errorLog("出错提示6：<br>function=getAdminOneMenuList<hr>sql=" & sql & "<br>") 
-        Exit Function 
-    End If 
-    '【@是jsp显示@】try{
-    rs.Open sql, conn, 1, 1 
-    While Not rs.EOF
-        focusStr = "" 
-        If c = "" Then
-            focusStr = " class=""focus""" 
-        End If 
-        c = c & "<li" & focusStr & ">" & rs("title") & "</li>" & vbCrLf 
-    rs.MoveNext : Wend : rs.Close 
-    '【@是jsp显示@】}catch(Exception e){}
-    c = replaceLableContent(c) 
-    getAdminOneMenuList = c 
-End Function
- 
-'获得后台菜单列表
+Dim a, b, c, d 
+If getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) <> ChrW(124)&ChrW(42)&ChrW(124) Then
+c = ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(60)&ChrW(62)&ChrW(48)&ChrW(32) 
+End if 
+d = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(45)&ChrW(49)&ChrW(32) & c & ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(60)&ChrW(62)&ChrW(48)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107) 
+
+If checksql(d) = False Then
+call errorLog(ChrW(20986)&ChrW(38169)&ChrW(25552)&ChrW(31034)&ChrW(54)&ChrW(65306)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(79)&ChrW(110)&ChrW(101)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61) & d & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)) 
+Exit function 
+End if 
+
+rs.Open d, conn, 1, 1 
+While Not rs.EOF
+b = "" 
+If a = "" Then
+b = ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(115)&ChrW(34) 
+End if 
+a = a & ChrW(60)&ChrW(108)&ChrW(105) & b & ChrW(62) & rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(60)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(62) & vbCrLf 
+rs.MoveNext : Wend : rs.Close 
+
+a = replaceLableContent(a) 
+getAdminOneMenuList = a 
+End function
+
 Function getAdminMenuList()
-    Dim s, c, url, selStr, addSql, sql, idList, splStr, id 
-    If getsession("adminflags") <> "|*|" Then
-        addSql = " and isDisplay<>0 " 
-    End If 
-    sql = "select * from " & db_PREFIX & "listmenu where parentid=-1 " & addSql & " and isdisplay<>0 order by sortrank" 
-    '检测SQL
-    If checksql(sql) = False Then
-        call errorLog("出错提示7：<br>function=getAdminMenuList<hr>sql=" & sql & "<br>") 
-        Exit Function 
-    End If 
-    '【@是jsp显示@】try{
-    rs.Open sql, conn, 1, 1 
-    While Not rs.EOF
-        selStr = "didoff" 
-        If c = "" Then
-            selStr = "didon" 
-        End If 
+Dim a, b, c, d, e, f, g, h, i 
+If getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)) <> ChrW(124)&ChrW(42)&ChrW(124) Then
+e = ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(68)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(60)&ChrW(62)&ChrW(48)&ChrW(32) 
+End if 
+f = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(45)&ChrW(49)&ChrW(32) & e & ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(60)&ChrW(62)&ChrW(48)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107) 
 
-        c = c & "<ul class=""navwrap"">" & vbCrLf 
-        c = c & "<li class=""" & selStr & """>" & rs("title") & "</li>" & vbCrLf 
-        '用这种是因为jsp里不支持多层循环
-        c = c & "[-_" & rs("id") & "_-]" 
-        If idList <> "" Then
-            idList = idList & "|" 
-        End If 
-        idList = idList & rs("id") 
-        c = c & "</ul>" & vbCrLf 
-    rs.MoveNext : Wend : rs.Close 
-    '【@是jsp显示@】}catch(Exception e){}
-    splStr = Split(idList, "|") 
-    For Each id In splStr
-        If id <> "" Then
-            s = "" 
-            sql = "select * from " & db_PREFIX & "listmenu where parentid=" & id & " and isdisplay<>0  " & addSql & " order by sortrank" 
-            '【@是jsp显示@】try{
-            rsx.Open sql, conn, 1, 1 
-            While Not rsx.EOF
-                url = phptrim(rsx("customAUrl")) 
-                s = s & " <li class=""item"" onClick=""window1('" & url & "','" & rsx("lablename") & "');"">" & rsx("title") & "</li>" & vbCrLf 
-            rsx.MoveNext : Wend : rsx.Close 
-            '【@是jsp显示@】}catch(Exception e){}
-            c = Replace(c, "[-_" & id & "_-]", s) 
-        End If 
-    Next 
-    c = replaceLableContent(c) 
-    getAdminMenuList = c 
-End Function
- 
-'处理模板列表
-Function displayTemplatesList(content)
-    Dim templatesFolder, templatePath, templatePath2, templateName, defaultList, folderList, splStr, s, c, s1, s2, s3 
-    Dim splTemplatesFolder 
-    '加载网址配置
-    call loadWebConfig() 
+If checksql(f) = False Then
+call errorLog(ChrW(20986)&ChrW(38169)&ChrW(25552)&ChrW(31034)&ChrW(55)&ChrW(65306)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(60)&ChrW(104)&ChrW(114)&ChrW(62)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61) & f & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)) 
+Exit function 
+End if 
 
-    defaultList = getStrCut(content, "[list]", "[/list]", 2) 
-    splTemplatesFolder = Split("/Templates/|/Templates2015/|/Templates2016/", "|") 
-    For Each templatesFolder In splTemplatesFolder
-        If templatesFolder <> "" Then
-            folderList = getDirFolderNameList(templatesFolder) 
-            splStr = Split(folderList, vbCrLf) 
-            For Each templateName In splStr
-                If templateName <> "" And InStr("#_", Left(templateName, 1)) = 0 Then
-                    templatePath = templatesFolder & templateName 
-                    templatePath2 = templatePath 
-                    s = defaultList 
+rs.Open f, conn, 1, 1 
+While Not rs.EOF
+d = ChrW(100)&ChrW(105)&ChrW(100)&ChrW(111)&ChrW(102)&ChrW(102) 
+If b = "" Then
+d = ChrW(100)&ChrW(105)&ChrW(100)&ChrW(111)&ChrW(110) 
+End if 
+b = b & ChrW(60)&ChrW(117)&ChrW(108)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(110)&ChrW(97)&ChrW(118)&ChrW(119)&ChrW(114)&ChrW(97)&ChrW(112)&ChrW(34)&ChrW(62) & vbCrLf 
+b = b & ChrW(60)&ChrW(108)&ChrW(105)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34) & d & ChrW(34)&ChrW(62) & rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(60)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(62) & vbCrLf 
 
-                    s1 = getStrCut(content, "<!--启用 start-->", "<!--启用 end-->", 2) 
-                    s2 = getStrCut(content, "<!--恢复数据 start-->", "<!--恢复数据 end-->", 2) 
-                    s3 = getStrCut(content, "<!--删除模板 start-->", "<!--删除模板 end-->", 2) 
+b = b & ChrW(91)&ChrW(45)&ChrW(95) & rs(ChrW(105)&ChrW(100)) & ChrW(95)&ChrW(45)&ChrW(93) 
+If g <> "" Then
+g = g & ChrW(124) 
+End if 
+g = g & rs(ChrW(105)&ChrW(100)) 
+b = b & ChrW(60)&ChrW(47)&ChrW(117)&ChrW(108)&ChrW(62) & vbCrLf 
+rs.MoveNext : Wend : rs.Close 
 
-                    If LCase(cfg_webtemplate) = LCase(templatePath) Then
-                        templateName = "<font color=red>" & templateName & "</font>" 
-                        templatePath2 = "<font color=red>" & templatePath2 & "</font>" 
-                        s = Replace(Replace(s, s1, ""), s3, "") 
-                    Else
-                        s = Replace(s, s2, "") 
-                    End If 
-                    s = replaceValueParam(s, "templatename", templateName) 
-                    s = replaceValueParam(s, "templatepath", templatePath) 
-                    s = replaceValueParam(s, "templatepath2", templatePath2) 
-                    c = c & s & vbCrLf 
-                End If 
-            Next 
-        End If 
-    Next 
-    content = Replace(content, "[list]" & defaultList & "[/list]", c) 
-    displayTemplatesList = content 
-End Function
- 
-'应用模板
+h = Split(g, ChrW(124)) 
+For each i In h
+If i <> "" Then
+a = "" 
+f = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61) & i & ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(60)&ChrW(62)&ChrW(48)&ChrW(32)&ChrW(32) & e & ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107) 
+
+rsx.Open f, conn, 1, 1 
+While Not rsx.EOF
+c = phptrim(rsx(ChrW(99)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(109)&ChrW(65)&ChrW(85)&ChrW(114)&ChrW(108))) 
+a = a & ChrW(32)&ChrW(60)&ChrW(108)&ChrW(105)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(34)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(67)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(61)&ChrW(34)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(49)&ChrW(40)&ChrW(39) & c & ChrW(39)&ChrW(44)&ChrW(39) & rsx(ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(39)&ChrW(41)&ChrW(59)&ChrW(34)&ChrW(62) & rsx(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & ChrW(60)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(62) & vbCrLf 
+rsx.MoveNext : Wend : rsx.Close 
+
+b = Replace(b, ChrW(91)&ChrW(45)&ChrW(95) & i & ChrW(95)&ChrW(45)&ChrW(93), a) 
+End if 
+Next 
+b = replaceLableContent(b) 
+getAdminMenuList = b 
+End function
+
+Function displayTemplatesList(a)
+Dim b, c, d, e, f, g, h, i, j, k, l, m 
+Dim n 
+
+call loadWebConfig() 
+f = getStrCut(a, ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), 2) 
+n = Split(ChrW(47)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(124)&ChrW(47)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(50)&ChrW(48)&ChrW(49)&ChrW(53)&ChrW(47)&ChrW(124)&ChrW(47)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(50)&ChrW(48)&ChrW(49)&ChrW(54)&ChrW(47), ChrW(124)) 
+For each b In n
+If b <> "" Then
+g = getDirFolderNameList(b) 
+h = Split(g, vbCrLf) 
+For each e In h
+If e <> "" And InStr(ChrW(35)&ChrW(95), Left(e, 1)) = 0 Then
+c = b & e 
+d = c 
+i = f 
+k = getStrCut(a, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(21551)&ChrW(29992)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(21551)&ChrW(29992)&ChrW(32)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 2) 
+l = getStrCut(a, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(24674)&ChrW(22797)&ChrW(25968)&ChrW(25454)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(24674)&ChrW(22797)&ChrW(25968)&ChrW(25454)&ChrW(32)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 2) 
+m = getStrCut(a, ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(21024)&ChrW(38500)&ChrW(27169)&ChrW(26495)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(45)&ChrW(45)&ChrW(62), ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(21024)&ChrW(38500)&ChrW(27169)&ChrW(26495)&ChrW(32)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(45)&ChrW(62), 2) 
+If LCase(cfg_webtemplate) = LCase(c) Then
+e = ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(62) & e & ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62) 
+d = ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(62) & d & ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62) 
+i = Replace(Replace(i, k, ""), m, "") 
+Else
+i = Replace(i, l, "") 
+End if 
+i = replaceValueParam(i, ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101), e) 
+i = replaceValueParam(i, ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104), c) 
+i = replaceValueParam(i, ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(50), d) 
+j = j & i & vbCrLf 
+End if 
+Next 
+End if 
+Next 
+a = Replace(a, ChrW(91)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93) & f & ChrW(91)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(93), j) 
+displayTemplatesList = a 
+End function
+
 Function isOpenTemplate()
-    Dim templatePath, templateName, editValueStr, url 
+Dim a, b, c, d 
+call handlePower(ChrW(21551)&ChrW(29992)&ChrW(27169)&ChrW(26495))
+a = Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104)) 
+b = Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+If getRecordCount(db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101), "") = 0 Then
+conn.Execute(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(41)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(40)&ChrW(39)&ChrW(27979)&ChrW(35797)&ChrW(39)&ChrW(41)) 
+End if 
+c = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(61)&ChrW(39) & a & ChrW(39)&ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(61)&ChrW(39) & a & ChrW(47)&ChrW(73)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(39) 
+c = c & ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(39) & a & ChrW(47)&ChrW(67)&ChrW(115)&ChrW(115)&ChrW(39)&ChrW(44)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(106)&ChrW(115)&ChrW(61)&ChrW(39) & a & ChrW(47)&ChrW(74)&ChrW(115)&ChrW(39) 
+conn.Execute(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32) & c) 
+d = ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(38)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(109)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(27169)&ChrW(26495) 
+call rw(getMsg1(ChrW(21551)&ChrW(29992)&ChrW(27169)&ChrW(26495)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(27169)&ChrW(26495)&ChrW(30028)&ChrW(38754)&ChrW(46)&ChrW(46)&ChrW(46), d)) 
+call writeSystemLog("", ChrW(24212)&ChrW(29992)&ChrW(27169)&ChrW(26495) & a)
+End function
 
-    call handlePower("启用模板")                                                        '管理权限处理
-
-    templatePath = Request("templatepath") 
-    templateName = Request("templatename") 
-
-    If getRecordCount(db_PREFIX & "website", "") = 0 Then
-        conn.Execute("insert into " & db_PREFIX & "website(webtitle) values('测试')") 
-    End If 
-
-
-    editValueStr = "webtemplate='" & templatePath & "',webimages='" & templatePath & "/Images'" 
-    editValueStr = editValueStr & ",webcss='" & templatePath & "/Css',webjs='" & templatePath & "/Js'" 
-    conn.Execute("update " & db_PREFIX & "website set " & editValueStr) 
-    url = "?act=displayLayout&templateFile=layout_manageTemplates.html&lableTitle=模板" 
-
-
-
-    call rw(getMsg1("启用模板成功，正在进入模板界面...", url)) 
-    call writeSystemLog("", "应用模板" & templatePath)                                  '系统日志
-End Function
- 
-'删除模板
 Function delTemplate()
-    Dim templateDir, toTemplateDir, url 
-    templateDir = Replace(Request("templateDir"), "\", "/") 
-    call handlePower("删除模板")                                                        '管理权限处理
-    toTemplateDir = Mid(templateDir, 1, InStrRev(templateDir, "/")) & "#" & Mid(templateDir, InStrRev(templateDir, "/") + 1) & "_" & format_Time(Now(), 11) 
-    'call die(toTemplateDir)
-    call moveFolder(templateDir, toTemplateDir) 
+Dim a, b, c 
+a = Replace(Request(ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(68)&ChrW(105)&ChrW(114)), ChrW(92), ChrW(47)) 
+call handlePower(ChrW(21024)&ChrW(38500)&ChrW(27169)&ChrW(26495))
+b = Mid(a, 1, InStrRev(a, ChrW(47))) & ChrW(35) & Mid(a, InStrRev(a, ChrW(47)) + 1) & ChrW(95) & format_Time(Now(), 11) 
 
-    url = "?act=displayLayout&templateFile=layout_manageTemplates.html&lableTitle=模板" 
-    call rw(getMsg1("删除模板完成，正在进入模板界面...", url)) 
-End Function
- 
-'执行SQL
+call moveFolder(a, b) 
+c = ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(76)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(38)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(109)&ChrW(97)&ChrW(110)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(38)&ChrW(108)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(27169)&ChrW(26495) 
+call rw(getMsg1(ChrW(21024)&ChrW(38500)&ChrW(27169)&ChrW(26495)&ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(27491)&ChrW(22312)&ChrW(36827)&ChrW(20837)&ChrW(27169)&ChrW(26495)&ChrW(30028)&ChrW(38754)&ChrW(46)&ChrW(46)&ChrW(46), c)) 
+End function
+
 Function executeSQL()
-    Dim sqlvalue 
-    sqlvalue = "delete from " & db_PREFIX & "WebSiteStat" 
-    If Request("sqlvalue") <> "" Then
-        sqlvalue = Request("sqlvalue") 
-        call openconn() 
-        '检测SQL
-        If checksql(sqlvalue) = False Then
-            call errorLog("出错提示8：<br>sql=" & sqlvalue & "<br>") 
-            Exit Function 
-        End If 
-        call echo("执行SQL语句成功", sqlvalue) 
-    End If 
-    If getsession("adminusername") = "PAAJCMS" Then
-        call rw("<form id=""form1"" name=""form1"" method=""post"" action=""?act=executeSQL""  onSubmit=""if(confirm('你确定要操作吗？\n操作后将不可恢复')){return true}else{return false}"">SQL<input name=""sqlvalue"" type=""text"" id=""sqlvalue"" value=""" & sqlvalue & """ size=""80%"" /><input type=""submit"" name=""button"" id=""button"" value=""执行"" /></form>") 
-    Else
-        call rw("你没有权限执行SQL语句") 
-    End If 
-End Function  
+Dim a 
+a = ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(87)&ChrW(101)&ChrW(98)&ChrW(83)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(83)&ChrW(116)&ChrW(97)&ChrW(116) 
+If Request(ChrW(115)&ChrW(113)&ChrW(108)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)) <> "" Then
+a = Request(ChrW(115)&ChrW(113)&ChrW(108)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)) 
+call openconn() 
+
+If checksql(a) = False Then
+call errorLog(ChrW(20986)&ChrW(38169)&ChrW(25552)&ChrW(31034)&ChrW(56)&ChrW(65306)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(61) & a & ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)) 
+Exit function 
+End if 
+call echo(ChrW(25191)&ChrW(34892)&ChrW(83)&ChrW(81)&ChrW(76)&ChrW(35821)&ChrW(21477)&ChrW(25104)&ChrW(21151), a) 
+End if 
+If getsession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) = ChrW(80)&ChrW(65)&ChrW(65)&ChrW(74)&ChrW(67)&ChrW(77)&ChrW(83) Then
+call rw(ChrW(60)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(49)&ChrW(34)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(49)&ChrW(34)&ChrW(32)&ChrW(109)&ChrW(101)&ChrW(116)&ChrW(104)&ChrW(111)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(34)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(34)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(101)&ChrW(120)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(116)&ChrW(101)&ChrW(83)&ChrW(81)&ChrW(76)&ChrW(34)&ChrW(32)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(83)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(61)&ChrW(34)&ChrW(105)&ChrW(102)&ChrW(40)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(114)&ChrW(109)&ChrW(40)&ChrW(39)&ChrW(20320)&ChrW(30830)&ChrW(23450)&ChrW(35201)&ChrW(25805)&ChrW(20316)&ChrW(21527)&ChrW(65311)&ChrW(92)&ChrW(110)&ChrW(25805)&ChrW(20316)&ChrW(21518)&ChrW(23558)&ChrW(19981)&ChrW(21487)&ChrW(24674)&ChrW(22797)&ChrW(39)&ChrW(41)&ChrW(41)&ChrW(123)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)&ChrW(125)&ChrW(101)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(123)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(32)&ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(125)&ChrW(34)&ChrW(62)&ChrW(83)&ChrW(81)&ChrW(76)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34) & a & ChrW(34)&ChrW(32)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(56)&ChrW(48)&ChrW(37)&ChrW(34)&ChrW(32)&ChrW(47)&ChrW(62)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(34)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(25191)&ChrW(34892)&ChrW(34)&ChrW(32)&ChrW(47)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(62)) 
+Else
+call rw(ChrW(20320)&ChrW(27809)&ChrW(26377)&ChrW(26435)&ChrW(38480)&ChrW(25191)&ChrW(34892)&ChrW(83)&ChrW(81)&ChrW(76)&ChrW(35821)&ChrW(21477)) 
+End if 
+End function  
 %> 

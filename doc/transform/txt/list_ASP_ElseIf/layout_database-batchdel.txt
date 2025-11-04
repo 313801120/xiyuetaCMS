@@ -1,0 +1,12 @@
+    '先删除数据库表里对应的字段'
+    dim sql
+    sql = "select * from ["& db_PREFIX &"layout_database_table] where layout_database_id in("&id&")" 
+    rsx.open sql,conn,1,1
+    'call echo("sql",sql)
+    while not rsx.eof 
+        '删除 layout_database_field表对应的记录
+        conn.execute"delete from ["& db_PREFIX & "layout_database_field] where layout_database_table_id="&rsx("id")
+    rsx.movenext:wend:rsx.close 
+
+    '删除 layout_database_table表对应的记录
+    conn.execute"delete from ["& db_PREFIX & "layout_database_table] where layout_database_id in("&id&")" 

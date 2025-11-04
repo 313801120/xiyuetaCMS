@@ -1,0 +1,16 @@
+'获得用户或庄家提示'
+function qqshow_getUserOrZhangJian(rs,userid) 
+    dim zhuangJianIdList,s
+    zhuangJianIdList="1,2,3,6,8,22,10,12,66,88,98,135,418,888,988,998,1911"
+    zhuangJianIdList=zhuangJianIdList&",233,1118,369,828,3434,255,689,711,99,5018,24678,9981,291"   '+机器人'
+    if cstr(userid)="-1" then
+        s=""
+        exit function
+    end if
+    if instr(","& zhuangJianIdList &",",","&userid&",")>0 then
+        s=userid&"(<font color=red><b>庄家</b></font>)"
+    else
+        s=userid&"(<font color=green><b>用户</b></font>)"
+    end if 
+    qqshow_getUserOrZhangJian=s
+end function

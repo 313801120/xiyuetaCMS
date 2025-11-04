@@ -1,0 +1,34 @@
+body {
+    background: #0f1c3c;
+    color: #fff;
+}
+.dashboard-title {
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0,255,255,0.7);
+}
+.data-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.data-card:hover {
+    box-shadow: 0 8px 25px rgba(0,255,255,0.35);
+}
+.data-title {
+    color: #a7e0ff;
+}
+.data-value {
+    color: #00eaff;
+}
+.data-trend {
+    color: #b0e0ff;
+}
+.theme-selector {
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M287,197.3L159.2,69.5c-4.7-4.7-12.3-4.7-17,0L5.4,197.3c-4.7,4.7-4.7,12.3,0,17l17,17c4.7,4.7,12.3,4.7,17,0l110.6-110.6c4.7-4.7,12.3-4.7,17,0l110.6,110.6c4.7,4.7-12.3,4.7,17,0l17-17C291.7,209.5,291.7,202,287,197.3z%22/%3E%3C/svg%3E');
+}
+.theme-selector option {
+    background-color: #343a40;
+    color: #fff;
+} 

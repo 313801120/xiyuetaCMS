@@ -1,0 +1,65 @@
+'复制或批量复制行' 多级复制20250825
+function copyRow()
+    if checkAdminRule("添加" & winTitle)=false then 
+        call die("{""info"": ""没有【添加"&winTitle&"】权限"",""status"": ""n""}")
+    end if
+    dim  field,nOK,splxx,parentid,newParendid,newID,fieldName,setNewValue
+    setNewValue=phptrim(request("fieldValue"))  '替换字段的值'
+    
+    if id="" then
+        call die("{""info"": ""ID为空"",""status"": ""n""}")
+    end if
+    fieldName=phptrim(lcase(request("fieldName")))
+    nOK=0
+    splxx=split(id,",")     '分割id成数组'
+    for each newID in splxx  '循环'
+        sql = "select * from "&thisAddPrefix(tableName)&" where id ="&newID   '查的'
+        rs.open sql,conn,1,1
+        if not rs.eof then
+            for each field in rs.fields
+                if lcase(field.name)<>"id" then
+                    fieldValue=rs(field.name)
+                    if fieldName=lcase(field.name) then   '查找对应字段
+                        if setNewValue<>"" then  '不为空'
+                            fieldValue=request("fieldValue")
+                        end if
+                    end if					
+					if typeName(fieldValue)="Null" then   '如果为Null 则为null值
+						fieldValue="null" 
+					end if
+                    if lcase(field.name)="parentid" then  '为父级'  and setNewValue<>"" 
+                        if rs("parentid")<>-1 then  '父级等于上级则用新的'
+                            if parentid=rs("parentid") then
+                                fieldValue=newParendid
+                            elseif setNewValue<>"" then  '值不为空则是为找一个主分类的,为空就是直接复制这些'
+                                fieldValue="-1"  '为子级调成父级'，因为这子级没有父级
+                            end if
+                        end if
+                    end if
+                    call rsData(field.name,fieldValue)
+                end if
+            next
+            ' rsAddUpdateDebug=true
+            ' call eerr("是否成功",rsAddnew(tableName)) '添加' 
+			if rsAddnew_conn(tableName,conn,db_PREFIX,thisDatabaseType)=false then 
+				call addSystemLog(tableName,"复制ID("&id&")失败，错误SQL：" & insertOrUpdateSql)
+				call die("{""info"": ""复制失败，错误SQ："&jsonCL(insertOrUpdateSql)&""",""status"": ""n""}") 
+			end if
+            nOK=nOK+1
+
+            if rs("parentid")=-1 then  '为父级'
+                parentid=rs("id")    '记录当前上级目录'
+                sql = "select * from "&thisAddPrefix(tableName)&" Order  By  Id  Desc" '查的最后一条'防被替换了
+                rsx.open sql, conn, 1, 1
+                if not rsx.eof then
+                    newParendid=rsx("id")   '新上级id'
+                end if:rsx.close
+            end if
+            '{追加代码1}' 
+        end if:rs.close         
+    next 
+ 
+    call addSystemLog(tableName,"复制ID("&id&")成功，共"&nOK&"条")
+    call die("{""info"": ""多级复制成功，共"&nOK&"条"",""status"": ""y""}")
+
+end function

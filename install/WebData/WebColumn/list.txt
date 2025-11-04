@@ -1,0 +1,484 @@
+﻿【columnname】网站首页
+【columnenname】home
+【columntype】home
+【columnico】?
+【parentid】-1
+【sortrank】1
+【views】0
+【npagesize】10
+【flags】|top|foot|
+【ishtml】1
+【createhtmltime】2025/10/26 9:04:14
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】关于我们
+【columnenname】about Us
+【columntype】text
+【columnico】?
+【parentid】-1
+【sortrank】2
+【views】0
+【bannerimage】/UploadFiles/testpic/ad-aboutus.jpg
+【npagesize】10
+【flags】|top|foot|
+【en_bodycontent】<p>Personal introduction of the author<br />1. Entered the Internet in 2006 and focused on website development for 10 years<br />2. Proficient in ASP/HTML5/CSS3/JS/Jquery/Canvas/Flash/PHP/VB/etc.<br />3. Master DotNet/Android/JSP/nodeJS/python/BootStrop/PS/PR/FTP/linux, etc.<br />4. Be good at simplifying complex things and independently develop a set of PAAJCMS content management system<br />5. Publish [xiyuetaCMS]/[online ASP to PHP]/[online format ASP] [online site imitation] Open source projects<br />6. Engaged in website development in Shanghai, Nanjing and other cities for many years</p>
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:43
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+【bodycontent】<p>作者个人介绍<br />1、2006年进入互联网，专注网站开发10年<br />2、精通ASP/HTML5/CSS3/JS/Jquery/Canvas/Flash/PHP/VB/等<br />3、掌握DotNet/Android/JSP/nodeJS/python/BootStrop/PS/PR/FTP/linux等<br />4、擅长把复杂的事情简单化，独立开发一套PAAJCMS内容管理系统<br />5、发布【xiyuetaCMS】/【在线ASP转PHP】/【在线格式化ASP】【在线仿站】等开源项目<br />6、曾在上海、南京等城市从事网站开发工作多年</p>
+-------------------------------
+【columnname】公司简介
+【columnenname】company
+【columntype】text
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
+【sortrank】1
+【views】0
+【npagesize】10
+【flags】|top|foot|
+【en_bodycontent】XiyuetaCMS content management system, a universal backend permission management framework that keeps up with the trend and is ready to use out of the box. It has multiple versions to choose from and can be used with any combination.
+Product advantages:
+
+Source code controllable
+Detailed source code comments for easy reading
+Code without backdoors, all open source
+Provide rich interfaces that are easy to expand
+
+fully functional
+Contains basic functions commonly used in management systems
+Having numerous original functional modules
+Integrate rich and excellent plugins and pages
+
+Multi-end support
+HTML5 responsive design
+Supports tablets, smartphones, and WeChat browsers
+Supports IE8+and various common browsers
+
+Easy to get started with
+Complete online development documentation
+You can't? I'll teach you
+Provide exclusive VIP technical service group for authorized users
+
+low cost
+Help you save the work of architects, products, designers, and other personnel
+One permanent authorization, lifetime free updates
+Compared with similar products, it has a higher cost-effectiveness
+
+After-sales service guarantee
+Comprehensive after-sales support, 5x8 hour service
+The version is continuously updated to meet the needs of the public
+Always adopt cutting-edge technology【/en_bodycontent】
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:47
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+【bodycontent】xiyuetaCMS内容管理系统,通用型后台权限管理框架，紧随潮流、开箱即用,拥有多种版本选择，随意搭配使用。
+产品优势：
+
+源码可控
+源码注释详细，便于阅读
+代码无后门，统统开源
+提供丰富的接口，易于扩展
+
+功能完善
+包含管理系统常用的基础功能
+拥有众多原创功能模块
+集成丰富的优秀插件及页面
+
+多端支持
+HTML5响应式设计
+支持平板、智能手机、微信浏览器
+支持IE8+，支持各种常见的浏览器
+
+上手容易
+完善的在线开发文档
+你不会？我教你啊
+提供授权用户专属VIP技术服务群
+
+低成本
+帮您省去了架构师、产品、设计等人员的工作
+一次永久授权，终身免费更新
+与同类产品相比性价比更高
+
+售后保障
+完善的售后保障，5x8小时服务
+版本持续更新，满足大众需求
+始终采用前沿技术【/bodycontent】
+-------------------------------
+【columnname】公司风采
+【columnenname】company style
+【columntype】text
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
+【sortrank】2
+【views】0
+【npagesize】10
+【flags】|top|foot|
+【en_bodycontent】test。。。
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:17
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+【bodycontent】测试。。。
+-------------------------------
+【columnname】公司荣誉
+【columnenname】company honor
+【columntype】text
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
+【sortrank】3
+【views】0
+【npagesize】10
+【flags】|top|foot|
+【en_bodycontent】test。。。
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:15
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+【bodycontent】测试。。。
+-------------------------------
+【columnname】公司致辞
+【columnenname】company speech
+【columntype】text
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
+【sortrank】4
+【views】0
+【npagesize】10
+【flags】|top|foot|
+【en_bodycontent】test。。。
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:14
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+【bodycontent】测试。。。
+-------------------------------
+【columnname】新闻资讯
+【columnenname】News
+【columntype】news
+【columnico】?
+【parentid】-1
+【sortrank】3
+【views】0
+【bannerimage】/UploadFiles/testpic/ad-news.jpg
+【npagesize】10
+【flags】|top|foot|
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:11
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】公司新闻
+【columnenname】company news
+【columntype】news
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]新闻资讯
+【sortrank】1
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:05
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】行业新闻
+【columnenname】industry news
+【columntype】news
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]新闻资讯
+【sortrank】2
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:03
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】通知公告
+【columnenname】announcement
+【columntype】news
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]新闻资讯
+【sortrank】3
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:01
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】产品中心
+【columnenname】product Center
+【columntype】product
+【columnico】?
+【parentid】-1
+【sortrank】4
+【views】0
+【bannerimage】/UploadFiles/testpic/ad-products.jpg
+【npagesize】10
+【flags】|top|foot|
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:41
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】响应式模板
+【columnenname】Responsive Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】5
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:11
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】企业模板
+【columnenname】Enterprise Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】10
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:13
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】商务模板
+【columnenname】Business Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】20
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:14
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】博客模板
+【columnenname】Blog Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】30
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:16
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】HTML5模板
+【columnenname】HTML5 Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】40
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:33
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】CSS3模板
+【columnenname】CSS3 Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】50
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:20
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】整站模板
+【columnenname】Whole site template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】60
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:27:45
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】科技模板
+【columnenname】Technology Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】70
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:22
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】简历模板
+【columnenname】Resume Template
+【columntype】product
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
+【sortrank】80
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:24
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】联系我们
+【columnenname】Contact Us
+【columntype】text
+【columnico】?
+【parentid】-1
+【sortrank】5
+【views】0
+【bannerimage】/UploadFiles/testpic/ad-contactus.jpg
+【npagesize】10
+【flags】|top|foot|
+【en_bodycontent】<div>In 2006, he entered the Internet and focused on website development for 10 years. He is proficient in ASP/HTML/CSS/JS/Jquery/PHP/VB/VB.NET, and is good at simplifying complex things.</div>
+<ul>
+<li>Author: xiyueta</li>
+<li>QQ:<a class="ablaue" title="Online communication with 313801120" href="&ldquo;" target="_blank" rel="nofollow noopener">35915100</a></li>
+<li>Author's homepage:<a href="&ldquo;" rel="nofollow"> https://313801120.github.io/xiyueta </a> &nbsp; &nbsp; <a href=" https://xiyueta.js.org/ " rel="nofollow"> https://xiyueta.js.org/ </a></li>
+<li>github：<a href=" https://github.com/313801120/ " target="_blank" rel="nofollow noopener"> https://github.com/313801120/ </a></li>
+<li>gitee：<a href=" https://gitee.com/313801120/xiyueta " target="_blank" rel="nofollow noopener"> https://gitee.com/313801120/xiyueta </a></li>
+<li>npm：<a href=" https://www.npmjs.com/ ~xiyueta" target="_blank" rel="nofollow noopener"> https://www.npmjs.com/ ~xiyueta</a></li>
+<li>Stackoverflow：<a href=" http://stackoverflow.com/users/6438976/sharembweb " target="_blank" rel="nofollow noopener"> http://stackoverflow.com/users/6438976/sharembweb </a></li>
+<li>csdn：<a href=" https://blog.csdn.net/mydd3 " target="_blank" rel="nofollow noopener"> https://blog.csdn.net/mydd3 </a></li>
+</ul>【/en_bodycontent】
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:25
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+【bodycontent】<div>2006年进入互联网，专注网站开发10年，精通ASP/HTML/CSS/JS/Jquery/PHP/VB/VB.NET等,擅长把复杂的事情简单化。</div>
+<ul>
+<li>作者：xiyueta</li>
+<li>QQ：<a class="ablue" title="在线与313801120交流" href="tencent://message/?uin=313801120&amp;Site=作者云祥孙&amp;Menu=yes" rel="nofollow">313801120</a></li>
+<li>邮箱：313801120@qq.com</li>
+<li>QQ交流群：<a href="http://shang.qq.com/wpa/qunwpa?idkey=253822bd485c454811141c731156d2ecd4dba04ecf647ce81dc97d16a563137b" target="_blank" rel="nofollow noopener">35915100</a></li>
+<li>作者主页：<a href="https://www.xiyueta.com/">https://www.xiyueta.com</a></li>
+<li>github主页：<a href="https://313801120.github.io/xiyueta/" rel="nofollow">https://313801120.github.io/xiyueta</a> &nbsp; &nbsp; <a href="https://xiyueta.js.org/" rel="nofollow">https://xiyueta.js.org/</a></li>
+<li>github：<a href="https://github.com/313801120/" target="_blank" rel="nofollow noopener">https://github.com/313801120/</a></li>
+<li>gitee：<a href="https://gitee.com/313801120/xiyueta" target="_blank" rel="nofollow noopener">https://gitee.com/313801120/xiyueta</a></li>
+<li>npm：<a href="https://www.npmjs.com/~xiyueta" target="_blank" rel="nofollow noopener">https://www.npmjs.com/~xiyueta</a></li>
+<li>Stackoverflow：<a href="http://stackoverflow.com/users/6438976/sharembweb" target="_blank" rel="nofollow noopener">http://stackoverflow.com/users/6438976/sharembweb</a></li>
+<li>csdn：<a href="https://blog.csdn.net/mydd3" target="_blank" rel="nofollow noopener">https://blog.csdn.net/mydd3</a></li>
+</ul>【/bodycontent】
+-------------------------------
+【columnname】在线留言
+【columnenname】Online Message
+【columntype】guestbook
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]联系我们
+【sortrank】5
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:28
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】在线反馈
+【columnenname】Online feedback
+【columntype】guestbook
+【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]联系我们
+【sortrank】10
+【views】0
+【npagesize】10
+【flags】top|foot
+【ishtml】1
+【createhtmltime】2025/10/24 13:28:31
+【isthrough】1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】在线留言
+【columnenname】guestbook
+【columntype】guestbook
+【parentid】-1
+【sortrank】10
+【views】0
+【bannerimage】/UploadFiles/testpic/ad-guestbook2.jpg
+【npagesize】10
+【ishtml】0
+【createhtmltime】2025/10/23 9:44:48
+【isthrough】1
+【createtime】2025/8/1 20:09:19
+【updatetime】2025/8/1 20:09:19
+-------------------------------
+【columnname】搜索
+【columnenname】search
+【columntype】search
+【parentid】-1
+【sortrank】100
+【views】0
+【bannerimage】/UploadFiles/testpic/ad-products.jpg
+【npagesize】10
+【ishtml】0
+【createhtmltime】2025/10/23 9:44:48
+【isthrough】1
+【createtime】2025/8/1 20:09:19
+【updatetime】2025/8/1 20:09:19
+-------------------------------
+【columnname】banner
+【columnenname】banner
+【columntype】product
+【parentid】-1
+【sortrank】998
+【views】0
+【npagesize】10
+【flags】|
+【ishtml】0
+【createhtmltime】2025/10/23 9:44:48
+【isthrough】0
+【ip】127.0.0.1
+【createtime】2025/8/1 20:09:18
+【updatetime】2025/8/1 20:09:18
+-------------------------------
+【columnname】常见问题
+【columnenname】frequently asked question
+【columntype】news
+【parentid】-1
+【sortrank】999
+【views】0
+【npagesize】10
+【ishtml】0
+【createhtmltime】2025/10/23 9:44:48
+【isthrough】0
+【createtime】2025/8/1 20:09:19
+【updatetime】2025/8/1 20:09:19
+-------------------------------

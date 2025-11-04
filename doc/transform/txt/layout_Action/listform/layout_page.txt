@@ -1,0 +1,47 @@
+    // 数据库类型选择变化时的处理函数
+    function toggleDatabaseFields(databaseType) {
+      var databaseippathDiv = $('#databaseippath');
+      var databasenameDiv = $('#databasename');
+      var databaseuserDiv = $('#databaseuser');
+      var databasepassDiv = $('#databasepass');
+      
+      // Access相关按钮
+      var uploadBtn = $('#upload-databaseippath');
+      var viewPassBtn = $('#btn-view-pass');
+      var editPassBtn = $('#btn-edit-pass');
+      
+      if (databaseType === 'access') {
+        // Access选择时：显示数据库和数据库密码，隐藏数据库名和数据库账号
+        databaseippathDiv.show();
+        databasenameDiv.hide();
+        databaseuserDiv.hide();
+        databasepassDiv.show();
+        
+        // 显示Access相关按钮
+        uploadBtn.show();
+        viewPassBtn.show();
+        editPassBtn.show();
+      } else if (databaseType === 'mysql' || databaseType === 'sqlserver') {
+        // MySQL和SQL Server选择时：显示所有数据库相关字段，隐藏Access相关按钮
+        databaseippathDiv.show();
+        databasenameDiv.show();
+        databaseuserDiv.show();
+        databasepassDiv.show();
+        
+        // 隐藏Access相关按钮
+        uploadBtn.hide();
+        viewPassBtn.hide();
+        editPassBtn.hide();
+      }
+    }
+
+    // 监听数据库类型选择变化
+    form.on('select(databasetype)', function(data){
+      toggleDatabaseFields(data.value);
+    });
+
+    // 页面加载时初始化显示状态
+    $(document).ready(function() {
+      var currentType = $('#databasetype').val();
+      toggleDatabaseFields(currentType);
+    });

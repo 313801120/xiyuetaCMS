@@ -1,0 +1,4 @@
+'导出databaseToAccess用 20250912
+elseif request("act")="databaseToAccess" then     
+    databaseType=thisDatabaseType '处理等于mysql数据库'    
+    call die("{""info"": """&jsonCL2(databaseToAccess(db_PREFIX,conn,tableName,false))&""",""status"": ""y""}")

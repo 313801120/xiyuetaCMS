@@ -1,0 +1,40 @@
+    var cls=function(){
+        if('<%=delver%>'=='yes'){
+          layer.prompt({
+              formType: 1,
+              title: '敏感操作，请验证密码'
+          }, function(value, index) {
+              layer.close(index); 
+              submitCls(value)   //删除'
+          });
+
+        }else{
+            layer.confirm('确定要删除吗？', function(index) {
+                layer.close(index); 
+                submitCls(null)   //删除'
+            });
+        }
+    }
+    
+    var submitCls = function(pwd){
+        NProgress.start(); // 开始显示进度条  
+        $.ajax({
+            type: "POST",
+            cache: true,
+            dataType: "json",
+            url: "?act=cls",
+            data: { "pwd":pwd }, 
+            success: function(data) {  
+                NProgress.done(); // 进度条完成  
+                switch (data.status) {
+                    case "y":                        
+                        table.reload('testReload');                                                 
+                        layer.msg(data.info,{icon: 1});
+                        break;
+                    case "n":                                    
+                        layer.msg(data.info,{icon: 2});
+                        break;
+                }
+            }
+        });
+    }

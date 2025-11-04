@@ -1,0 +1,38 @@
+    // 修改密码：弹窗输入后提交到服务器
+    $('#btn-edit-pass').on('click', function(){
+      var dbPath = $("input[name='databaseippath']").val();
+      if(!dbPath){
+        layer.msg('请先填写或选择 Access 数据库路径', {icon: 0});
+        return;
+      }
+      layer.prompt({
+        formType: 0,
+        title: '请输入新的 Access 密码'
+      }, function(value, index){
+        layer.close(index);
+        NProgress.start();
+        $.ajax({
+          type: "POST",
+          cache: true,
+          dataType: "json",
+          url: "?act=setAccessPass",
+          data: {  
+            databaseippath: dbPath,
+            newpass: value
+          },
+          success: function(res) {
+            NProgress.done();
+            if (res.status === "y") {        
+              $("input[name='databasepass']").val(value);
+              layer.msg(res.info,{icon: 1});
+            } else {        
+              layer.msg(res.info,{icon: 2});
+            }
+          },
+          error: function() {
+            NProgress.done();
+            layer.msg('请求失败，请重试');
+          }
+        });
+      });
+    });

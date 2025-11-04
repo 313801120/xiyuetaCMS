@@ -1,0 +1,3 @@
+function test_list(rs,s)
+	test_list="<font color=red><b>"&s&"</b></font>"
+end function

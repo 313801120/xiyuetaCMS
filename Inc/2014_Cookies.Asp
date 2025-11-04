@@ -1,56 +1,52 @@
-﻿<% 
-sub setApp(appName, appData)
-    application.lock 
-    application.contents.item(appName) = appData 
-    application.unlock 
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
+sub setApp(a, b)
+application.lock 
+application.contents.item(a) = b 
+application.unlock 
 end sub 
-function getApp(appName)
-    if appName = "" then getApp = "" : exit function 
-    getApp = application.contents.item(appName) 
+function getApp(a)
+if a = "" then getApp = "" : exit function 
+getApp = application.contents.item(a) 
 end function 
-sub removeApp(appName)
-    application.lock 
-    application.contents.remove(appName) 
-    application.unlock 
+sub removeApp(a)
+application.lock 
+application.contents.remove(a) 
+application.unlock 
 end sub 
 
+function setCookie(a, b, c)
+response.cookies(a) = b 
+response.cookies(a).expires =dateAdd(ChrW(115),c, now())
+end function 
 
-'设置cookie(20151120)
-function setCookie(cookieName, cookieValue, nAddMinutes)
-    response.cookies(cookieName) = cookieValue 
-    response.cookies(cookieName).expires =dateAdd("s",nAddMinutes, now())	'now + 0.00001*nAddMinutes    '加多少秒
+function getCookie(byVal a)
+getCookie = request.cookies(a) 
 end function 
-'获得cookie值
-function getCookie(byVal cookieName)
-    getCookie = request.cookies(cookieName) 
+
+function removeCookie(byVal a)
+response.cookies(a) = empty 
+response.cookies(a).expires = now() 
 end function 
-'移除cookie
-function removeCookie(byVal cookieName)
-    response.cookies(cookieName) = empty 
-    response.cookies(cookieName).expires = now() 
+
+function clearCookie(byVal a)
+removeCookie(a) 
 end function 
-'清除cookie
-function clearCookie(byVal cookieName)
-    removeCookie(cookieName) 
+
+function deleteCookie(byVal a)
+removeCookie(a) 
 end function 
-'清除cookie
-function deleteCookie(byVal cookieName)
-    removeCookie(cookieName) 
-end function 
- 
- 
-'session
-'设置Session
-sub setSession(sessionName,sessionValue)
-	Session(sessionName)=sessionValue
+
+
+sub setSession(a,b)
+Session(a)=b
 end sub
-'获得Session
-function getSession(sessionName)
-	getSession=Session(sessionName)
+
+function getSession(a)
+getSession=Session(a)
 end function
-'删除Session
-sub deleteSession(sessionName)
-	Session(sessionName)=""
+
+sub deleteSession(a)
+Session(a)=""
 end sub
 %> 
-  

@@ -1,0 +1,18 @@
+    //批量修改
+    var batchEditSelected=function(fieldName){
+        //testReload为table渲染时改变的 id: 'testReload'
+        var checkStatus = table.checkStatus('testReload')
+        ,checkData = checkStatus.data; //得到选中的数据
+
+        if(checkData.length === 0){
+           return layer.msg('请选择数据');
+        }
+        var idlist='';
+        for(var i=0;i<checkData.length;i++){
+            if(idlist!='')idlist+=',';
+            idlist+=checkData[i].id;
+        }              
+
+        handleEditRow(idlist,fieldName)   //修改'
+          
+    }

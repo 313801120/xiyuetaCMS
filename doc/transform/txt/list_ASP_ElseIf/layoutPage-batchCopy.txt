@@ -1,0 +1,17 @@
+        
+        '对layout_page表特殊处理'20250808
+        dim newTableId
+        sql= "select * from ["& db_PREFIX & tableName & "] order by id desc"
+        rss.open sql,conn,1,1
+        if not rss.eof then 
+            newTableId=rss("id") 
+        end if:rss.close
+        call batchCopyTableData(rs("id"),"layout_page_config","layout_page_id",newTableId)
+        call batchCopyTableData(rs("id"),"layout_action","layout_page_id",newTableId)
+        ' call batchCopyTableData(rs("id"),"layout_search_list","layout_page_id",newTableId)
+        ' call batchCopyTableData(rs("id"),"layout_sortrank_list","layout_page_id",newTableId)
+        
+        call batchCopyTableData(rs("id"),"layout_table_button","layout_page_id",newTableId)
+        call batchCopySubTableData(rs("id"),"layout_table_toolbar","layout_page_id",newTableId)
+        call batchCopySubTableData(rs("id"),"layout_table_action","layout_page_id",newTableId)
+        call batchCopySubTableData(rs("id"),"layout_listPage_form","layout_page_id",newTableId)

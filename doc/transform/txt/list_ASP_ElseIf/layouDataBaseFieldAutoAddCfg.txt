@@ -1,0 +1,3 @@
+'处理字段自动创建配置 20250811
+elseif request("act")="layouDataBaseFieldAutoAddCfg" then    
+    call die("{""info"": """&layouDataBaseFieldAutoAddCfg()&""",""status"": ""y""}")

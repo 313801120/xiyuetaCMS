@@ -1,0 +1,3 @@
+'在线修改
+elseif request("act")="onlineedit" then 
+    call editFieldValue(id,fieldName,fieldValue)

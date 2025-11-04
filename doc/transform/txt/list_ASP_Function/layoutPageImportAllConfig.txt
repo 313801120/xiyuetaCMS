@@ -1,0 +1,43 @@
+'导入布局页及相关配置 20251028
+function layoutPageImportAllConfig(dbPrefix,conn,content)
+    dim c,splxx,tableName,s,resultMsg,nSuccess,nFail,sMsg
+    nSuccess=0
+    nFail=0
+    'resultMsg=""
+    
+    '按照 ====================================== 分割数据
+    splxx=split(content,"======================================")
+    
+    for each s in splxx
+        s=phptrim(s)
+        if s<>"" then
+            '从内容中提取表名，格式为 =====[表名]====
+            tableName=getStrCut(s,"====[","]====",0)
+            if tableName<>"" then
+                '调用导入函数
+                sMsg=nImportTXTData("",s, tableName, "添加")
+                if sMsg<>"" then
+                    '导入成功
+                    nSuccess=nSuccess+1
+                    'resultMsg=resultMsg & "导入["&tableName&"]成功"
+                else
+                    '导入失败
+                    nFail=nFail+1
+                    'resultMsg=resultMsg & "导入["&tableName&"]失败"
+                end if
+                'resultMsg=resultMsg & vbcrlf
+            end if
+        end if
+    next
+    
+    '构建返回信息
+    if nSuccess>0 then
+        layoutPageImportAllConfig="成功导入"&nSuccess&"个表的数据。"
+        if nFail>0 then
+            layoutPageImportAllConfig=layoutPageImportAllConfig & "失败"&nFail&"个表。"
+        end if
+    else
+        layoutPageImportAllConfig="没有数据被导入。"
+    end if
+     
+end function

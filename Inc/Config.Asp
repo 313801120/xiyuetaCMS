@@ -1,4 +1,5 @@
-﻿<% option explicit%> 
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% option explicit%> 
 <!--#Include file = "Common.Asp"-->  
 <!--#Include file = "FSO.Asp"-->  
 <!--#Include file = "AdodbStream.Asp"-->  
@@ -32,173 +33,196 @@
 <!--#Include file = "ip.Asp"-->    
 <!--#Include file = "function.Asp"-->
 <!--#Include file = "PinYin.Asp"-->
+<!--#Include file = "2022_ip.asp"-->
 <!--#Include file = "Class_image.asp"-->
 <!--#Include file = "member.asp"-->
+<!--#Include file = "JSON_2.0.4.asp"-->
+<!--#Include file = "function_system_2024.asp"-->
+<!--#Include file = "2025_mobile.asp"-->
+<!--#Include file = "addUpdateAccessData.asp"-->
 <%  
-server.scriptTimeout = 9999                                                     '超时
-session.timeout = 1440                                                          '最大值为24小时，也就是说你最大可以session.timeout=1440，1441都是不可以
-response.addheader "Content-Type", "text/html; charset=utf-8"
-'禁止缓冲
+server.scriptTimeout = 9999
+session.timeout = 1440
+if request(ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)) <>ChrW(110)&ChrW(111) then
+if request(ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50))=ChrW(49) then
+response.addheader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)  
+elseif request(ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110))=ChrW(49) then
+Response.AddHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)
+else
+response.addheader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)
+end if
+
 response.buffer = true 
 response.expires = 0 
 response.expiresAbsolute = now() - 1 
-response.cacheControl = "no-cache"  
-response.addHeader "Expires", date() 
-response.addHeader "Pragma", "no-cache"   
-response.addHeader "Cache-Control", "private, no-cache, must-revalidate" 
-dim conn, rs, rsx, rss, rst, rsd, tempRs, tempRs2, rsTemp,rs1,rs2,rs3,bbsRs
-dim pubTimer : pubTimer = now()                                                 'Timer()不要用这个(20150728)
- 
-'Note:开发程序原则，能简单，绝对不复杂，能修改html的，绝对不修改asp，能傻瓜式，绝对不要用脑(20160121)
-dim WEBCOLUMNTYPE : WEBCOLUMNTYPE = "首页|home,文本|text,产品|product,新闻|news,视频|video,下载|down,案例|case,留言|guestbook,反馈|feedback,招聘|job,搜索|search" 
-dim adminDir : adminDir = "/admin/"                                               '后台目录
-dim WEB_VIEWURL : WEB_VIEWURL = "/default.asp"                                   '前台显示
-dim WEB_ADMINURL : WEB_ADMINURL = adminDir & "default.asp"                                  '后台显示
-dim EDITORTYPE : EDITORTYPE = "asp"                                             '程序类型，是ASP,或PHP,或jSP,或.NET
+response.cacheControl = ChrW(110)&ChrW(111)&ChrW(45)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)  
+response.addHeader ChrW(69)&ChrW(120)&ChrW(112)&ChrW(105)&ChrW(114)&ChrW(101)&ChrW(115), date() 
+response.addHeader ChrW(80)&ChrW(114)&ChrW(97)&ChrW(103)&ChrW(109)&ChrW(97), ChrW(110)&ChrW(111)&ChrW(45)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)   
+response.addHeader ChrW(67)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(45)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(111)&ChrW(108), ChrW(112)&ChrW(114)&ChrW(105)&ChrW(118)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(44)&ChrW(32)&ChrW(110)&ChrW(111)&ChrW(45)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(44)&ChrW(32)&ChrW(109)&ChrW(117)&ChrW(115)&ChrW(116)&ChrW(45)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101) 
+end if
+
+dim conn, rs, rsx, rss, rst, rsd, tempRs, tempRs2, rsTemp,rs1,rs2,rs3,bbsRs,rsWeb,userRs
+dim pubTimer : pubTimer = now()
+
+dim WEBCOLUMNTYPE : WEBCOLUMNTYPE = ChrW(39318)&ChrW(39029)&ChrW(124)&ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101)&ChrW(44)&ChrW(25991)&ChrW(26412)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(44)&ChrW(20135)&ChrW(21697)&ChrW(124)&ChrW(112)&ChrW(114)&ChrW(111)&ChrW(100)&ChrW(117)&ChrW(99)&ChrW(116)&ChrW(44)&ChrW(26032)&ChrW(38395)&ChrW(124)&ChrW(110)&ChrW(101)&ChrW(119)&ChrW(115)&ChrW(44)&ChrW(35270)&ChrW(39057)&ChrW(124)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)&ChrW(44)&ChrW(19979)&ChrW(36733)&ChrW(124)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110)&ChrW(44)&ChrW(26696)&ChrW(20363)&ChrW(124)&ChrW(99)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(44)&ChrW(30041)&ChrW(35328)&ChrW(124)&ChrW(103)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(98)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(44)&ChrW(21453)&ChrW(39304)&ChrW(124)&ChrW(102)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(44)&ChrW(25307)&ChrW(32856)&ChrW(124)&ChrW(106)&ChrW(111)&ChrW(98)&ChrW(44)&ChrW(25628)&ChrW(32034)&ChrW(124)&ChrW(115)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104) 
+dim adminDir : adminDir = ChrW(47)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(47)
+dim WEB_VIEWURL : WEB_VIEWURL = ChrW(47)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)
+dim WEB_ADMINURL : WEB_ADMINURL = adminDir & ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)
+dim EDITORTYPE : EDITORTYPE = ChrW(97)&ChrW(115)&ChrW(112)
 dim webDir : webDir = "" 
 MDBPath = "/data\data.mdb" 
-dim ipMDBPath:ipMDBPath="/data/ip.dat"                                             'IP数据库
- 
-dim databaseType : databaseType = "access"                                      '数据库类型，Access与SqlServer之分
-dim sqlServerHostIP : sqlServerHostIP = "localhost"                          'SQL主机IP地址（服务器名）在2008版本使用
-dim sqlServerVersion : sqlServerVersion = "2012"                          'SQL版本，有2008，和2012，建议使用2012,翻页用到
-dim sqlServerUsername : sqlServerUsername = "sa"                                'SQL数据库用户名
-dim sqlServerPassword : sqlServerPassword = "sa"                                'SQL数据库用户密码
-dim sqlServerDatabaseName : sqlServerDatabaseName = "webdata"                   'SQL数据库名
-dim sqlServerPort : sqlServerPort = "1433"   '数据库端口号20240114'
-dim db_PREFIX : db_PREFIX = "xy_"                                               '表前缀
-
-dim countTi:countTi=200 '默认显示题数
-dim WEB_CACHEFile : WEB_CACHEFile = "[adminDir]/[EDITORTYPE]cachedata.txt" '缓冲文件
-dim isLoginIPAllow:isLoginIPAllow=false  '是否开启登录后台管理IP限制 20220627
-dim isOnAdminLoginOnlyAddress:isOnAdminLoginOnlyAddress=false  '是否开启登录后台一个账号只能同一IP登录，不可多IP登录 20220923
-dim maxLoginErr:maxLoginErr=5  '登录错误最大次数  ，超过则不可再登录了 0为不设置
-dim isAdminArticleOnPaiZhan:isAdminArticleOnPaiZhan=true  '后台文章添加开启拍照按钮 20230828
-dim version:version="V1.3"       '(20230311升级到1.3)'
-
-dim pubIsDownIPJson:pubIsDownIPJson=false'是否下载IP查询不到时下载ip138数据20221029
-dim pubWebSite:pubWebSite=""   '全部网站域名地址20221115' https://www.xiyueta.com/
-
-
-'获得数组里的现在时间，因为access与sqlserver里获得时间不一致'
-function getAccessDatediff(zdName)
-	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediff=" datediff('d',"& zdName &",now())"
-	else
-		getAccessDatediff=" datediff(day,"& zdName &",GETDATE())"
-	end if	
-end function
-'获得数组里的现在时间，
-function getAccessDatediffTime(zdName,sTime)
-	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffTime=" datediff('d',"& zdName &",#" & sTime &"#)"
-	else
-		getAccessDatediffTime=" datediff(day,"& zdName &",'"& sTime &"')"   '要加上'号，要不然会报错
-	end if	
-end function
-
-
-'秒'
-function getAccessDatediffsecond(zdName)
-    if databaseType = "acc"&"ess" then'防止被替换
-        getAccessDatediffsecond=" datediff('s',"& zdName &",now())" 
-    else
-        getAccessDatediffsecond=" datediff(second,"& zdName &",GETDATE())"
-    end if  
-end function
-
-'时
-function getAccessDatediffHour(zdName)
-    if databaseType = "acc"&"ess" then'防止被替换
-        getAccessDatediffHour=" datediff('h',"& zdName &",now())" 
-    else
-        getAccessDatediffHour=" datediff(hour,"& zdName &",GETDATE())"
-    end if  
-end function
-
-
-
-'周'
-function getAccessDatediffWeek(zdName)
-	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffWeek=" datediff('ww',"& zdName &",now())"
-	else
-		getAccessDatediffWeek=" datediff(week,"& zdName &",GETDATE())"
-	end if	
-end function
-'月'
-function getAccessDatediffMonth(zdName)
-	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffMonth=" datediff('m',"& zdName &",now())"
-	else
-		getAccessDatediffMonth=" datediff(month,"& zdName &",GETDATE())"
-	end if	
-end function
-'年'
-function getAccessDatediffYear(zdName)
-	if databaseType = "acc"&"ess" then'防止被替换
-		getAccessDatediffYear=" datediff('yyyy',"& zdName &",now())"
-	else
-		getAccessDatediffYear=" datediff(year,"& zdName &",GETDATE())"
-	end if	
-end function
-
-'sql语句里Text字段类型相等比较20231121'  如  sqlTextFieldEquation("bodycontent","xiyuetacom")
-function sqlTextFieldEquation(fieldName,sValue)
-    if databaseType = "acc"&"ess" then'防止被替换
-        sqlTextFieldEquation= fieldName & "='"&  sValue &"'"
-    else
-        sqlTextFieldEquation="cast("& fieldName &" as varchar(7999))='"& sValue &"'"
-    end if
-end function
-'sql语句里两个Text字段类型相等比较20231121 ''
-function sqlTowTextFieldEquation(fieldName,fieldNameTow)
-    if databaseType = "acc"&"ess" then'防止被替换
-        sqlTowTextFieldEquation= fieldName & "='"&  fieldNameTow &"'"
-    else
-        sqlTowTextFieldEquation="cast("& fieldName &" as varchar(7999))='"& fieldNameTow &"'"
-    end if
-end function
-
-'处理sql在accces与sqlserver里显示不一样' 20231101
-function sqlAorS(stype)
-    if databaseType = "acc"&"ess" then'防止被替换
-        if instr("|s|h|d|ww|m|yyyy|","|"& stype &"|")>0 then
-            stype="'"& stype &"'"
-        end if
-    else
-        ' call echo("stype",stype)
-        if sType="'s'" or sType="s" then
-            sType="second"
-        elseif sType="'h'" or sType="h" then
-            sType="hour"
-        elseif sType="'d'" or sType="d" then
-            sType="day"
-        elseif sType="'ww'" or sType="ww" then
-            sType="week"
-        elseif sType="'m'" or sType="m" then
-            sType="month"
-        elseif sType="'yyyy'" or sType="yyyy" then
-            sType="year"
-        elseif sType="now()" or sType="now" then
-            sType="GETDATE()"
-        elseif left(sType,1)="#" then
-            sType="'" & mid(sType,2,len(sType)-2) & "'"
-        end if
-        ' call echo("stype",stype):call hr()
-    end if
-    sqlAorS=sType
-end function
-
-'排除指定域名 '
-' if webDoMain()="http://demo.xiyueta.com" then
-
-'指定域名做不同IP显示不同网站'
-if instr(webDoMain(),"xiyueta.com")>0 then
-	'不同IP显示不同内容'
-	MDBPath = "/data/data_" & getIP() &".mdb"
-	if checkFile(MDBPath)=false then
-		call copyFile("/data/data.mdb",MDBPath)
-	end if
+dim ipMDBPath:ipMDBPath=ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(105)&ChrW(112)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)
+dim databaseType : databaseType = "access"
+dim sqlServerHostIP : sqlServerHostIP = "localhost"
+dim sqlServerVersion : sqlServerVersion = "2012"
+dim sqlServerUsername : sqlServerUsername = "sa"
+dim sqlServerPassword : sqlServerPassword = "saPass"
+dim sqlServerDatabaseName : sqlServerDatabaseName = "webdata"
+dim sqlServerPort : sqlServerPort = "1433"
+dim db_PREFIX : db_PREFIX = "xy_"
+dim countTi:countTi=200
+dim WEB_CACHEFile : WEB_CACHEFile = ChrW(91)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(68)&ChrW(105)&ChrW(114)&ChrW(93)&ChrW(47)&ChrW(91)&ChrW(69)&ChrW(68)&ChrW(73)&ChrW(84)&ChrW(79)&ChrW(82)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(93)&ChrW(99)&ChrW(97)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116)
+dim isLoginIPAllow:isLoginIPAllow=false
+dim isOnAdminLoginOnlyAddress:isOnAdminLoginOnlyAddress=false
+dim allowLoginErrors:allowLoginErrors=5
+dim isAdminArticleOnPaiZhan:isAdminArticleOnPaiZhan=true
+dim version:version=ChrW(86)&ChrW(49)&ChrW(46)&ChrW(51)
+dim pubIsDownIPJson:pubIsDownIPJson=false
+dim pubWebSite:pubWebSite=""
+dim languageList
+dim defaultLanguage:defaultLanguage=ChrW(99)&ChrW(110)
+dim leftQuote,rightQuote
+leftQuote=ChrW(91):rightQuote=ChrW(93)
+if databaseType = "my"&ChrW(115)&ChrW(113)&ChrW(108) then
+leftQuote=ChrW(96):rightQuote=ChrW(96)
 end if
+
+function addPrefix(a)  
+addPrefix=leftQuote&db_PREFIX&a&rightQuote
+end function
+
+function getAccessDatediff(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediff=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(100)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)&ChrW(41)
+elseif databaseType = "my"&ChrW(115)&ChrW(113)&ChrW(108) then
+getAccessDatediff=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(67)&ChrW(85)&ChrW(82)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(44)& a &ChrW(41)
+else
+getAccessDatediff=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(100)&ChrW(97)&ChrW(121)&ChrW(44)& a &ChrW(44)&ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+end if  
+end function
+
+function getAccessDatediffTime(a,b)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediffTime=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(100)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(35) & b &ChrW(35)&ChrW(41)
+else
+getAccessDatediffTime=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(100)&ChrW(97)&ChrW(121)&ChrW(44)& a &ChrW(44)&ChrW(39)& b &ChrW(39)&ChrW(41)
+end if  
+end function
+
+function getAccessDatediffsecond(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediffsecond=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(115)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)&ChrW(41) 
+else
+getAccessDatediffsecond=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(115)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(100)&ChrW(44)& a &ChrW(44)&ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+end if  
+end function
+
+function getAccessDatediffHour(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediffHour=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(104)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)&ChrW(41) 
+else
+getAccessDatediffHour=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(104)&ChrW(111)&ChrW(117)&ChrW(114)&ChrW(44)& a &ChrW(44)&ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+end if  
+end function
+
+function getAccessDatediffWeek(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediffWeek=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(119)&ChrW(119)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)&ChrW(41)
+else
+getAccessDatediffWeek=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(119)&ChrW(101)&ChrW(101)&ChrW(107)&ChrW(44)& a &ChrW(44)&ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+end if  
+end function
+
+function getAccessDatediffMonth(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediffMonth=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(109)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)&ChrW(41) 
+elseif databaseType = "my"&ChrW(115)&ChrW(113)&ChrW(108) then
+getAccessDatediffMonth=ChrW(32)&ChrW(84)&ChrW(73)&ChrW(77)&ChrW(69)&ChrW(83)&ChrW(84)&ChrW(65)&ChrW(77)&ChrW(80)&ChrW(68)&ChrW(73)&ChrW(70)&ChrW(70)&ChrW(40)&ChrW(77)&ChrW(79)&ChrW(78)&ChrW(84)&ChrW(72)&ChrW(44)& a &ChrW(44)&ChrW(67)&ChrW(85)&ChrW(82)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+else
+getAccessDatediffMonth=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(109)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(104)&ChrW(44)& a &ChrW(44)&ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+end if  
+end function
+
+function getAccessDatediffYear(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+getAccessDatediffYear=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(39)&ChrW(121)&ChrW(121)&ChrW(121)&ChrW(121)&ChrW(39)&ChrW(44)& a &ChrW(44)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)&ChrW(41)
+elseif databaseType = "my"&ChrW(115)&ChrW(113)&ChrW(108) then
+getAccessDatediffYear=ChrW(32)&ChrW(84)&ChrW(73)&ChrW(77)&ChrW(69)&ChrW(83)&ChrW(84)&ChrW(65)&ChrW(77)&ChrW(80)&ChrW(68)&ChrW(73)&ChrW(70)&ChrW(70)&ChrW(40)&ChrW(89)&ChrW(69)&ChrW(65)&ChrW(82)&ChrW(44)& a &ChrW(44)&ChrW(67)&ChrW(85)&ChrW(82)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+else
+getAccessDatediffYear=ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(102)&ChrW(102)&ChrW(40)&ChrW(121)&ChrW(101)&ChrW(97)&ChrW(114)&ChrW(44)& a &ChrW(44)&ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(41)
+end if  
+end function
+
+function sqlTextFieldEquation(a,b)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+sqlTextFieldEquation= a & ChrW(61)&ChrW(39)&  b &ChrW(39)
+else
+sqlTextFieldEquation=ChrW(99)&ChrW(97)&ChrW(115)&ChrW(116)&ChrW(40)& a &ChrW(32)&ChrW(97)&ChrW(115)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(40)&ChrW(55)&ChrW(57)&ChrW(57)&ChrW(57)&ChrW(41)&ChrW(41)&ChrW(61)&ChrW(39)& b &ChrW(39)
+end if
+end function
+
+function sqlTowTextFieldEquation(a,b)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+sqlTowTextFieldEquation= a & ChrW(61)&ChrW(39)&  b &ChrW(39)
+else
+sqlTowTextFieldEquation=ChrW(99)&ChrW(97)&ChrW(115)&ChrW(116)&ChrW(40)& a &ChrW(32)&ChrW(97)&ChrW(115)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(40)&ChrW(55)&ChrW(57)&ChrW(57)&ChrW(57)&ChrW(41)&ChrW(41)&ChrW(61)&ChrW(39)& b &ChrW(39)
+end if
+end function
+
+function sqlAorS(a)
+if databaseType = "acc"&ChrW(101)&ChrW(115)&ChrW(115) then
+if instr(ChrW(124)&ChrW(115)&ChrW(124)&ChrW(104)&ChrW(124)&ChrW(100)&ChrW(124)&ChrW(119)&ChrW(119)&ChrW(124)&ChrW(109)&ChrW(124)&ChrW(121)&ChrW(121)&ChrW(121)&ChrW(121)&ChrW(124),ChrW(124)& a &ChrW(124))>0 then
+a=ChrW(39)& a &ChrW(39)
+end if
+else
+
+if a=ChrW(39)&ChrW(115)&ChrW(39) or a=ChrW(115) then
+a=ChrW(115)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(100)
+elseif a=ChrW(39)&ChrW(104)&ChrW(39) or a=ChrW(104) then
+a=ChrW(104)&ChrW(111)&ChrW(117)&ChrW(114)
+elseif a=ChrW(39)&ChrW(100)&ChrW(39) or a=ChrW(100) then
+a=ChrW(100)&ChrW(97)&ChrW(121)
+elseif a=ChrW(39)&ChrW(119)&ChrW(119)&ChrW(39) or a=ChrW(119)&ChrW(119) then
+a=ChrW(119)&ChrW(101)&ChrW(101)&ChrW(107)
+elseif a=ChrW(39)&ChrW(109)&ChrW(39) or a=ChrW(109) then
+a=ChrW(109)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(104)
+elseif a=ChrW(39)&ChrW(121)&ChrW(121)&ChrW(121)&ChrW(121)&ChrW(39) or a=ChrW(121)&ChrW(121)&ChrW(121)&ChrW(121) then
+a=ChrW(121)&ChrW(101)&ChrW(97)&ChrW(114)
+elseif a=ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41) or a=ChrW(110)&ChrW(111)&ChrW(119) then
+a=ChrW(71)&ChrW(69)&ChrW(84)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(69)&ChrW(40)&ChrW(41)
+elseif left(a,1)=ChrW(35) then
+a=ChrW(39) & mid(a,2,len(a)-2) & ChrW(39)
+end if
+
+end if
+sqlAorS=a
+end function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %> 

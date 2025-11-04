@@ -1,0 +1,42 @@
+﻿【parentid】-1
+【columnname】好人
+【sortrank】1
+【isthrough】1
+【createtime】2025/7/26 21:02:48
+【updatetime】2025/7/26 21:02:48
+-------------------------------
+【parentid】newclass[==>>]parentid[==>>]id[==>>]columnname[==>>]好人
+【columnname】B1
+【sortrank】2
+【isthrough】1
+【createtime】2025/7/26 21:03:07
+【updatetime】2025/7/26 21:03:07
+-------------------------------
+【parentid】newclass[==>>]parentid[==>>]id[==>>]columnname[==>>]好人
+【columnname】B2
+【sortrank】12
+【isthrough】1
+【createtime】2025/7/26 21:04:06
+【updatetime】2025/7/26 21:04:06
+-------------------------------
+【parentid】newclass[==>>]parentid[==>>]id[==>>]columnname[==>>]好人[-->>]B2
+【columnname】C1
+【sortrank】32
+【isthrough】1
+【createtime】2025/7/26 21:04:24
+【updatetime】2025/7/26 21:04:24
+-------------------------------
+【parentid】newclass[==>>]parentid[==>>]id[==>>]columnname[==>>]好人[-->>]B2
+【columnname】C2
+【sortrank】42
+【isthrough】1
+【createtime】2025/7/26 21:04:29
+【updatetime】2025/7/26 21:04:29
+-------------------------------
+【parentid】newclass[==>>]parentid[==>>]id[==>>]columnname[==>>]好人[-->>]B2
+【columnname】B3
+【sortrank】22
+【isthrough】1
+【createtime】2025/7/26 21:04:12
+【updatetime】2025/7/26 21:04:12
+-------------------------------

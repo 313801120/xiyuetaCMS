@@ -1,0 +1,7 @@
+'导入导出20240817
+elseif request("act")="daochu" then    
+	Dim exportObj : Set exportObj = New exportData
+	call die(exportObj.handleDaoChuData(tableName))  '处理导入导出
+    'call die(handleDaoChuData(tableName))  '处理导入导出 旧使用方法弃用
+
+ 

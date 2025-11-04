@@ -1,527 +1,497 @@
-﻿<% 
-'AdodbStream Adodb.Stream组件操作大全 (20200311-v3)  
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
-'获得二进制指定位置数值
-function midBin(bin,startPostion,nLength)
-	if lenB(bin)<startPostion+nLength-1 then
-		midBin=&HFF									'长度不够刚退出一个转变二进制20171205
-	else
-		midBin=ascB(midB(bin, startPostion, nLength))
-	end if
+
+function midBin(a,b,c)
+if lenB(a)<b+c-1 then
+midBin=&HFF
+else
+midBin=ascB(midB(a, b, c))
+end if
 end function
 
-'二进制处理成   给图片合并用 97|98|99|49|50|51|214|208|185|250
-function bin2Int(bin,nPass)
-	dim g, str, clow 
-	for g = 1 to lenB(bin)
-		clow = midB(bin, g, 1) 
-		if ascB(clow) < 128 then
-			str = str & ascB(clow)+nPass & "|"
-		else
-			g = g + 1 
-			if g <= lenB(bin) then str = str  &  ascB(clow)+nPass & "|" & ascB(midB(bin, g, 1))+nPass & "|"
-		end if 
-	next 
-	if len(str)>0 then
-		str=mid(str,1,len(str)-1)
-	end if
-	bin2Int = str 
-end function 
-'数组转二进制  给图片合并用
-function arrayToBin(buf)
-	dim i,aBuf
-	'不是二进制处理成二进制(20151211)
-	if typeName(buf) <> "Byte()" then
-		reDim aBuf(uBound(buf) \ 2) 
-		for i = 0 to uBound(buf) - 1 step 2
-			aBuf(i \ 2) = chrW(buf(i + 1) * 256 + buf(i)) 
-		next 
-		if i = uBound(buf) then aBuf(i \ 2) = chrW(buf(i)) 
-		aBuf = join(aBuf, "")  
-	else
-		aBuf = buf 
-	end if
-	arrayToBin=aBuf
-end function
-'二进制到内容 给获得图片类型用
-function bin2Str(bin)
-	dim g, str, clow 
-	for g = 1 to lenB(bin)
-		clow = midB(bin, g, 1) 
-		if ascB(clow) < 128 then
-			str = str & chr(ascB(clow)) 
-		else
-			g = g + 1 
-			if g <= lenB(bin) then str = str & chr(ascW(midB(bin, g, 1) & clow)) 
-		end if 
-	next 
-	bin2Str = str 
-end function 
-'二进制到值 给获得图片类型用
-function binVal(bin)
-	dim ret 
-	dim h 
-	ret = 0 
-	for h = lenB(bin) to 1 step - 1
-		ret = ret * 256 + ascB(midB(bin, h, 1)) 
-	next 
-	binVal = ret 
-end function 
-'二进制转值第二种用法 给获得图片类型用
-function binVal2(bin)
-	dim ret, g 
-	ret = 0 
-	for g = 1 to lenB(bin)
-		ret = ret * 256 + ascB(midB(bin, g, 1)) 
-	next 
-	binVal2 = ret 
+function bin2Int(a,b)
+dim c, d, e 
+for c = 1 to lenB(a)
+e = midB(a, c, 1) 
+if ascB(e) < 128 then
+d = d & ascB(e)+b & ChrW(124)
+else
+c = c + 1 
+if c <= lenB(a) then d = d  &  ascB(e)+b & ChrW(124) & ascB(midB(a, c, 1))+b & ChrW(124)
+end if 
+next 
+if len(d)>0 then
+d=mid(d,1,len(d)-1)
+end if
+bin2Int = d 
 end function 
 
+function arrayToBin(a)
+dim b,c
 
-'检测文件编码
-function checkCode(byVal fileName)
-    checkCode = getFileCharset(fileName) 
-end function 
-'获得文件编码   为什么内容里有  结束  两个字就不可以获得编码呢？这种方法不好用呀
-function getFileCharset(byVal fileName)
-  '  on error resume next 
-    dim objStream, bintou 
-    call handlePath(fileName)  
-	getFileCharset = "gb2312"                                                      '获得完整路径
-	if checkFile(fileName)=false then
-		exit function
-	end if
-	'判断是否为空文件
-	If getFSize(fileName) = 0 Then
-		Exit Function
-	End If
-    set objStream = createObject("ADODB.Stream")
-        objStream.type = 1 
-        objStream.mode = 3 
-        objStream.open 
-        objStream.position = 0 
-        call objStream.loadFromFile(fileName) 
-        bintou = objStream.read                                                       '以二进制方式读出二个字符出来(不太太)
-        
-  
-	    if typeName(bintou) = "Null" or typeName(bintou) = "DBNull" then 
-			set objStream=nothing
-			exit function
-		elseIf midBin(bintou, 1, 1) = 239 and midBin(bintou, 2, 1) = 187 and midBin(bintou, 3, 1) = 191 then
-			getFileCharset="utf-8" 
-        elseIf midBin(bintou, 1, 1) = 255 and midBin(bintou, 2, 1) = 254 then
-            getFileCharset = "unicode"  
-        elseIf midBin(bintou, 1, 1) = 254 and midBin(bintou, 2, 1) = 255 then
-            getFileCharset = "unicode big endian"
-		elseif isUTF8(bintou)=true then			'最后再判断是否为没有BOM的UTF文件 
-			getFileCharset="utf-8"  
-        end if
-		
-		
-		
-        objStream.close 
-    set objStream = nothing 
-	'call echo(getFileCharset ,midBin(bintou, 1, 1) & "，" & midBin(bintou, 2, 1))
-    if err then call doError(Err.description, "getFileCharset，获得文件编码 函数出错，FileName=" & fileName) 
-
-end function 
-'新版本20190624
-Function is_valid_utf8(ByRef input) 'ByRef以提高效率
-    Dim s, re
-    set re = CreateObject("VBscript.RegExp")
-    s = "[\xC0-\xDF]([^\x80-\xBF]|$)"
-    s = s & "|[\xE0-\xEF].{0,1}([^\x80-\xBF]|$)"
-    s = s & "|[\xF0-\xF7].{0,2}([^\x80-\xBF]|$)"
-    s = s & "|[\xF8-\xFB].{0,3}([^\x80-\xBF]|$)"
-    s = s & "|[\xFC-\xFD].{0,4}([^\x80-\xBF]|$)"
-    s = s & "|[\xFE-\xFE].{0,5}([^\x80-\xBF]|$)"
-    s = s & "|[\x00-\x7F][\x80-\xBF]"
-    s = s & "|[\xC0-\xDF].[\x80-\xBF]"
-    s = s & "|[\xE0-\xEF]..[\x80-\xBF]"
-    s = s & "|[\xF0-\xF7]...[\x80-\xBF]"
-    s = s & "|[\xF8-\xFB]....[\x80-\xBF]"
-    s = s & "|[\xFC-\xFD].....[\x80-\xBF]"
-    s = s & "|[\xFE-\xFE]......[\x80-\xBF]"
-    s = s & "|^[\x80-\xBF]"
-    re.Pattern = s
-    is_valid_utf8 = (Not re.Test(input))
-End Function
-
-'检测是否为UTF-8文件  超强版 引用于20161006
-Function isUTF8(Bytes)    
-	Dim i,  AscN  , Length,isOK,nLen
-	Length =lenB(Bytes) 
-
-	isUTF8 = True			'默认为真
-	'字符小于三为假
-	If Length < 3 Then
-		isUTF8 = False
-		Exit Function
-	ElseIf ascB(midB(Bytes,1,1)) = &HEF And ascB(midB(Bytes,2,1)) = &HBB And ascB(midB(Bytes,3,1)) = &HBF Then 
-		isUTF8 = True
-		Exit Function
-	End If 
-	nLen=lenB(Bytes)
-	if nLen>18048 then nLen=18048		'只截取1024个字符也OK,待更多测试 20171205 超大超不会出错为2K   对一些文件不行，晕
-	for i = 1 to nLen 
-		isOK = False
-		If i + 1 < Length Then
-			If (ascB(midB(Bytes,i,1)) And &HE0) = &HC0 And (ascB(midB(Bytes,i+1,1)) And &HC0) = &H80 Then
-				isOK = True
-			End If
-		End If
-		If midBin(Bytes,i,1) < 128 Then 
-			AscN = AscN + 1
-		elseIf isOK=true Then 
-				i = i + 1
-		ElseIf i + 2 < Length Then 
-			If (ascB(midB(Bytes, i, 1)) And &HF0) = &HE0 And (ascB(midB(Bytes, i+1, 1)) And &HC0) = &H80 And (ascB(midB(Bytes, i+2, 1)) And &HC0) = &H80 Then
-				i = i + 2
-			Else 
-				isUTF8 = false 
-			End If
-		Else 
-			isUTF8 = false 
-		End If
-	next 
-	'为ascii码则为假
-	If AscN = Length Then
-		isUTF8 = false
-	End If
-	err.clear
-End Function
-
-'超级文件编码获取 待测试
-function checkFileCode(filePath)
-    dim splStr, c, content, toPath, yuanStr, s, nLen 
-    yuanStr = readBinary(filePath,0) 
-
-    'If Len(YuanStr) > 500 Then
-    'YuanStr = Right(YuanStr, Len(YuanStr) - 30)
-    'End If
-    '只提取2500个字符
-    if len(yuanStr) > 2500 then
-        yuanStr = right(yuanStr, 2500) 
-    end if 
-    nLen = len(yuanStr) 
-    toPath = filePath & "_Temp" 
-    splStr = split("GB2312|UTF-8|UNICODE", "|") 
-    for each s in splStr
-        content = readFile(filePath, s) 
-        call writeToFile(toPath, content, s) 
-        c = readBinary(toPath,0) 
-        c = right(c, nLen) 
-        if yuanStr = c then
-            checkFileCode = s 
-            call deleteFile(toPath)                                                         '删除这个临时文件
-            exit for 
-        end if 
-    next 
-    call deleteFile(toPath)                                                         '删除这个临时文件
-end function 
-'自动读文件 20190421
-function autoReadFile(byval fileName)
-	autoReadFile=readFile(fileName,"")
-end function
-'数据流读出内容
-function readFile(byVal fileName, byVal char_Set)
-    'on error resume next
-	char_Set=char_Set & ""
-    if char_Set = "1" or uCase(char_Set) = "GB2312" then
-        char_Set = "GB2312" 
-    elseIf char_Set = "0" or uCase(char_Set) = "UTF-8" then
-        char_Set = "UTF-8" 
-    elseIf char_Set = "2" or uCase(char_Set) = "UNICODE" then
-        char_Set = "UNICODE" 
-    elseIf char_Set = "3" or uCase(char_Set) = "UNICODE BIG ENDIAN" then
-        char_Set = "UNICODE" 
-    else
-        char_Set = checkCode(fileName) 	 
-        if char_Set = "" then exit function 
-    end if 
-    dim str, stm, f, fso 
-    call handlePath(fileName)                                                       '获得完整路径
-    if checkFile(fileName) = false then
-        readFile = "" 
-        exit function 
-    end if 
-    set stm = createObject("ADODB.Stream")
-        stm.type = 2                                                                    '以本模式读取
-        stm.mode = 3 
-        stm.charset = char_Set 
-        stm.open 
-        set fso = createObject("Scripting.FileSystemObject")
-            set f = fso.getFile(fileName)
-                if f.size > 0 then
-                    call stm.loadFromFile(fileName) 
-                end if 
-                str = stm.readText 
-                stm.close 
-            set stm = nothing 
-            readFile = str 
-            if err then call doError(Err.description, "ReadFile，数据流读出内容 函数出错，FileName=" & fileName) 
-        set fso = nothing 
-    set stm = nothing 
-end function 
-'数据流读出内容  (辅助)
-function getStext(fileName)
-    getStext = readFile(fileName, "") 
-end function 
-'以UTF-8方法读文件内容
-function getFTextUTF(fileName)
-    getFTextUTF = readFile(fileName, "utf-8") 
-end function 
-'写入内容
-function writeToFile(byVal fileName, byVal content, byVal char_Set)
-    on error resume next 
-    if char_Set = "1" or uCase(char_Set) = "GB2312" then
-        char_Set = "GB2312" 
-    elseIf char_Set = "0" or uCase(char_Set) = "UTF-8" then
-        char_Set = "UTF-8" 
-    elseIf char_Set = "2" or uCase(char_Set) = "UNICODE" then
-        char_Set = "UNICODE" 
-    else
-        char_Set = checkCode(fileName) 	 
-        if char_Set = "" then exit function 
-    end if 
-    'Call Echo("Char_Set",Char_Set)
-    dim stm 
-    call handlePath(fileName)                                                       '获得完整路径
-    set stm = createObject("ADODB.Stream")
-        stm.type = 2                                                                    '以本模式读取
-        stm.mode = 3 
-        stm.charset = char_Set 
-        stm.open 
-        call stm.writeText(content) 
-        call stm.saveToFile(fileName, 2) 
-        stm.flush 
-        stm.close 
-        writeToFile = fileName & "写入成功" 
-    set stm = nothing 
-    if err then call doError(Err.description, "WriteToFile，数据流写入内容 函数出错，FileName=" & fileName & "，Content字符" & len(content)) 
-end function 
-'创建gb2312文件
-function createFileGBK(byval fileName, byval content)
-    call writeToFile(fileName, content, "gb2312") 
-end function 
-'创建UTF-8文件（20151201）
-function createFileUTF(byval fileName, byval content)
-    call writeToFile(fileName, content, "utf-8") 
-end function 
-'创建累加文件2
-function createAddFile2(filePath, addToStr)
-    dim content 
-    content = readFile(filePath, "gb2312") 
-    content = content & addToStr 
-    call writeToFile(filePath, content, "gb2312") 
-end function 
-'是UTF或GB2312
-'自动获得编码并且判断Html内容是否与读出文件编码一致，一致则退出内容
-function getUGText(byVal path)
-    dim char_Set, fanCharSet, tempCharSet 
-    dim isContent 
-    char_Set = checkCode(path) 
-    isContent = false 
-    '二次处理，防读取错误
-    if char_Set = "utf-8" then
-        fanCharSet = "gb2312" 
-    elseIf char_Set = "gb2312" then
-        fanCharSet = "utf-8" 
-    end if 
-    tempCharSet = fanCharSet 
-    if fanCharSet <> "" then
-        if checkStr(LCase(getUGText), "<meta [^>]*charset *= *" & fanCharSet) = true then
-            getUGText = readFile(path, tempCharSet) 
-            isContent = true 
-        end if 
-    end if 
-    '没有读出内容则用文件自身编码读出内容
-    if isContent = false then
-        getUGText = readFile(path, char_Set) 
-    end if 
+if typeName(a) <> ChrW(66)&ChrW(121)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(41) then
+reDim c(uBound(a) \ 2) 
+for b = 0 to uBound(a) - 1 step 2
+c(b \ 2) = chrW(a(b + 1) * 256 + a(b)) 
+next 
+if b = uBound(a) then c(b \ 2) = chrW(a(b)) 
+c = join(c, "")  
+else
+c = a 
+end if
+arrayToBin=c
 end function
 
-
-'获得文件二进制内容 20150312
-function getFileBinaryContent(filePath)
-    dim stream 
-    call handlePath(filePath)                                                       '获得完整路径
-    set stream = createObject("ADODB.Stream")
-        stream.mode = 3 
-        stream.type = 1 
-        stream.open 
-        call stream.loadFromFile(filePath) 
-        getFileBinaryContent = stream.read 
-        stream.close 
-    set stream = nothing 
-'Response.BinaryWrite Stream.Read            '显示二进制文件内容
+function bin2Str(a)
+dim b, c, d 
+for b = 1 to lenB(a)
+d = midB(a, b, 1) 
+if ascB(d) < 128 then
+c = c & chr(ascB(d)) 
+else
+b = b + 1 
+if b <= lenB(a) then c = c & chr(ascW(midB(a, b, 1) & d)) 
+end if 
+next 
+bin2Str = c 
 end function 
-'读取二进制文件并加密
-function readBinary(filePath, nPass)
-    readBinary=bin2Int(getFileBinaryContent(filePath),nPass)
-end function 
-'解密保存二进制文件
-function decSaveBinary(filePath, content, nPass)
-    dim splStr, buf(), i,id 
-    splStr = split(content, "|") 
-    reDim buf(uBound(splStr))
-	id=0 
-    for i = 0 to uBound(splStr)
-		if splStr(i)<>"" then
-        	id=id+1
-			buf(i) = CByte(CInt(splStr(i)) - nPass)
-		end if 
-    next 
-    call WriteBinary(filePath, buf) 
-end function 
-'保存二进制文件   call writeBinary(filePath,Request.BinaryRead (Request.TotalBytes))
-sub writeBinary(filePath, buf)
-    dim i, aBuf,  bStream 
-    call handlePath(filePath)                                                       '获得完整路径
 
-	aBuf=arrayToBin(buf)
+function binVal(a)
+dim b 
+dim c 
+b = 0 
+for c = lenB(a) to 1 step - 1
+b = b * 256 + ascB(midB(a, c, 1)) 
+next 
+binVal = b 
+end function 
 
-    set bStream = createObject("ADODB.Stream")
-        bStream.type = 1 
-        bStream.open 
-        with createObject("ADODB.Stream")
-            .type = 2 
-            .open 
-            call.writeText(aBuf) 
-            .position = 2 
-            call.copyTo(bStream) 
-            .close 
-        end with 
-        call bStream.saveToFile(filePath, 2) 
-        bStream.close 
-    set bStream = nothing 
+function binVal2(a)
+dim b, c 
+b = 0 
+for c = 1 to lenB(a)
+b = b * 256 + ascB(midB(a, c, 1)) 
+next 
+binVal2 = b 
+end function 
+
+function checkCode(byVal a)
+checkCode = getFileCharset(a) 
+end function 
+
+function getFileCharset(byVal a)
+
+dim b, c 
+call handlePath(a)  
+getFileCharset = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)
+if checkFile(a)=false then
+exit function
+end if
+
+If getFSize(a) = 0 Then
+Exit function
+End if
+set b = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+b.type = 1 
+b.mode = 3 
+b.open 
+b.position = 0 
+call b.loadfromfile(a) 
+c = b.read
+if typeName(c) = ChrW(78)&ChrW(117)&ChrW(108)&ChrW(108) or typeName(c) = ChrW(68)&ChrW(66)&ChrW(78)&ChrW(117)&ChrW(108)&ChrW(108) then 
+set b=nothing
+exit function
+elseIf midBin(c, 1, 1) = 239 and midBin(c, 2, 1) = 187 and midBin(c, 3, 1) = 191 then
+getFileCharset=ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) 
+elseIf midBin(c, 1, 1) = 255 and midBin(c, 2, 1) = 254 then
+getFileCharset = ChrW(117)&ChrW(110)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)  
+elseIf midBin(c, 1, 1) = 254 and midBin(c, 2, 1) = 255 then
+getFileCharset = ChrW(117)&ChrW(110)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(98)&ChrW(105)&ChrW(103)&ChrW(32)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(105)&ChrW(97)&ChrW(110)
+elseif isUTF8(c)=true then
+getFileCharset=ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)  
+end if
+b.close 
+set b = nothing 
+
+if err then call doError(Err.description, ChrW(103)&ChrW(101)&ChrW(116)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(67)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65292)&ChrW(33719)&ChrW(24471)&ChrW(25991)&ChrW(20214)&ChrW(32534)&ChrW(30721)&ChrW(32)&ChrW(20989)&ChrW(25968)&ChrW(20986)&ChrW(38169)&ChrW(65292)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61) & a) 
+end function 
+
+Function is_valid_utf8(ByRef a)
+Dim b, c
+set c = CreateObject(ChrW(86)&ChrW(66)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(103)&ChrW(69)&ChrW(120)&ChrW(112))
+b = ChrW(91)&ChrW(92)&ChrW(120)&ChrW(67)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(68)&ChrW(70)&ChrW(93)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)&ChrW(124)&ChrW(36)&ChrW(41)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(69)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(69)&ChrW(70)&ChrW(93)&ChrW(46)&ChrW(123)&ChrW(48)&ChrW(44)&ChrW(49)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)&ChrW(124)&ChrW(36)&ChrW(41)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(55)&ChrW(93)&ChrW(46)&ChrW(123)&ChrW(48)&ChrW(44)&ChrW(50)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)&ChrW(124)&ChrW(36)&ChrW(41)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(56)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(66)&ChrW(93)&ChrW(46)&ChrW(123)&ChrW(48)&ChrW(44)&ChrW(51)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)&ChrW(124)&ChrW(36)&ChrW(41)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(67)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(68)&ChrW(93)&ChrW(46)&ChrW(123)&ChrW(48)&ChrW(44)&ChrW(52)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)&ChrW(124)&ChrW(36)&ChrW(41)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(69)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(69)&ChrW(93)&ChrW(46)&ChrW(123)&ChrW(48)&ChrW(44)&ChrW(53)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)&ChrW(124)&ChrW(36)&ChrW(41)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(48)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(55)&ChrW(70)&ChrW(93)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(67)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(68)&ChrW(70)&ChrW(93)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(69)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(69)&ChrW(70)&ChrW(93)&ChrW(46)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(55)&ChrW(93)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(56)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(66)&ChrW(93)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(67)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(68)&ChrW(93)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(69)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(70)&ChrW(69)&ChrW(93)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+b = b & ChrW(124)&ChrW(94)&ChrW(91)&ChrW(92)&ChrW(120)&ChrW(56)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(120)&ChrW(66)&ChrW(70)&ChrW(93)
+c.pattern = b
+is_valid_utf8 = (Not c.test(a))
+End function
+
+Function isUTF8(a)    
+Dim b,  c  , d,e,f
+d =lenB(a) 
+isUTF8 = True
+
+If d < 3 Then
+isUTF8 = False
+Exit function
+ElseIf ascB(midB(a,1,1)) = &HEF And ascB(midB(a,2,1)) = &HBB And ascB(midB(a,3,1)) = &HBF Then 
+isUTF8 = True
+Exit function
+End if 
+f=lenB(a)
+if f>18048 then f=18048
+for b = 1 to f 
+e = False
+If b + 1 < d Then
+If (ascB(midB(a,b,1)) And &HE0) = &HC0 And (ascB(midB(a,b+1,1)) And &HC0) = &H80 Then
+e = True
+End if
+End if
+If midBin(a,b,1) < 128 Then 
+c = c + 1
+elseIf e=true Then 
+b = b + 1
+ElseIf b + 2 < d Then 
+If (ascB(midB(a, b, 1)) And &HF0) = &HE0 And (ascB(midB(a, b+1, 1)) And &HC0) = &H80 And (ascB(midB(a, b+2, 1)) And &HC0) = &H80 Then
+b = b + 2
+Else 
+isUTF8 = false 
+End if
+Else 
+isUTF8 = false 
+End if
+next 
+
+If c = d Then
+isUTF8 = false
+End if
+err.clear
+End function
+
+function checkFileCode(a)
+dim b, c, d, e, f, g, h 
+f = readBinary(a,0) 
+
+
+
+
+if len(f) > 2500 then
+f = right(f, 2500) 
+end if 
+h = len(f) 
+e = a & ChrW(95)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112) 
+b = split(ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)&ChrW(124)&ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56)&ChrW(124)&ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69), ChrW(124)) 
+for each g in b
+d = readFile(a, g) 
+call writeToFile(e, d, g) 
+c = readBinary(e,0) 
+c = right(c, h) 
+if f = c then
+checkFileCode = g 
+call deleteFile(e)
+exit for 
+end if 
+next 
+call deleteFile(e)
+end function 
+
+function autoReadFile(byval a)
+autoReadFile=readFile(a,"")
+end function
+
+function readFile(byVal a, byVal b)
+
+b=b & ""
+if b = ChrW(49) or uCase(b) = ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) then
+b = ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+elseIf b = ChrW(48) or uCase(b) = ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56) then
+b = ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56) 
+elseIf b = ChrW(50) or uCase(b) = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69) then
+b = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69) 
+elseIf b = ChrW(51) or uCase(b) = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69)&ChrW(32)&ChrW(66)&ChrW(73)&ChrW(71)&ChrW(32)&ChrW(69)&ChrW(78)&ChrW(68)&ChrW(73)&ChrW(65)&ChrW(78) then
+b = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69) 
+else
+b = checkCode(a)    
+if b = "" then exit function 
+end if 
+dim c, d, e, f 
+call handlePath(a)
+if checkFile(a) = false then
+readFile = "" 
+exit function 
+end if 
+set d = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+d.type = 2
+d.mode = 3 
+d.charset = b 
+d.open 
+set f = createObject(ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(46)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(83)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116))
+set e = f.getfile(a)
+if e.size > 0 then
+call d.loadfromfile(a) 
+end if 
+c = d.readtext 
+d.close 
+set d = nothing 
+readFile = c 
+if err then call doError(Err.description, ChrW(82)&ChrW(101)&ChrW(97)&ChrW(100)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(65292)&ChrW(25968)&ChrW(25454)&ChrW(27969)&ChrW(35835)&ChrW(20986)&ChrW(20869)&ChrW(23481)&ChrW(32)&ChrW(20989)&ChrW(25968)&ChrW(20986)&ChrW(38169)&ChrW(65292)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61) & a) 
+set f = nothing 
+set d = nothing 
+end function 
+
+function getStext(a)
+getStext = readFile(a, "") 
+end function 
+
+function getFTextUTF(a)
+getFTextUTF = readFile(a, ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)) 
+end function 
+
+function writeToFile(byVal a, byVal b, byVal c)
+on error resume next 
+if c = ChrW(49) or uCase(c) = ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) then
+c = ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+elseIf c = ChrW(48) or uCase(c) = ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56) then
+c = ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56) 
+elseIf c = ChrW(50) or uCase(c) = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69) then
+c = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69) 
+else
+c = checkCode(a)    
+if c = "" then exit function 
+end if 
+
+dim d 
+call handlePath(a)
+set d = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+d.type = 2
+d.mode = 3 
+d.charset = c 
+d.open 
+call d.writetext(b) 
+call d.savetofile(a, 2) 
+d.flush 
+d.close 
+writeToFile = a & ChrW(20889)&ChrW(20837)&ChrW(25104)&ChrW(21151) 
+set d = nothing 
+if err then call doError(Err.description, ChrW(87)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(84)&ChrW(111)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(65292)&ChrW(25968)&ChrW(25454)&ChrW(27969)&ChrW(20889)&ChrW(20837)&ChrW(20869)&ChrW(23481)&ChrW(32)&ChrW(20989)&ChrW(25968)&ChrW(20986)&ChrW(38169)&ChrW(65292)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61) & a & ChrW(65292)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(23383)&ChrW(31526) & len(b)) 
+end function 
+
+function createFileGBK(byval a, byval b)
+call writeToFile(a, b, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)) 
+end function 
+
+function createFileUTF(byval a, byval b)
+call writeToFile(a, b, ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)) 
+end function 
+
+function createAddFile2(a, b)
+dim c 
+c = readFile(a, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)) 
+c = c & b 
+call writeToFile(a, c, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)) 
+end function 
+
+
+function getUGText(byVal a)
+dim b, c, d 
+dim e 
+b = checkCode(a) 
+e = false 
+
+if b = ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) then
+c = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+elseIf b = ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) then
+c = ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56) 
+end if 
+d = c 
+if c <> "" then
+if checkStr(LCase(getUGText), ChrW(60)&ChrW(109)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(32)&ChrW(91)&ChrW(94)&ChrW(62)&ChrW(93)&ChrW(42)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(61)&ChrW(32)&ChrW(42) & c) = true then
+getUGText = readFile(a, d) 
+e = true 
+end if 
+end if 
+
+if e = false then
+getUGText = readFile(a, b) 
+end if 
+end function
+
+function getFileBinaryContent(a)
+dim b 
+call handlePath(a)
+set b = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+b.mode = 3 
+b.type = 1 
+b.open 
+call b.loadfromfile(a) 
+getFileBinaryContent = b.read 
+b.close 
+set b = nothing 
+
+end function 
+
+function readBinary(a, b)
+readBinary=bin2Int(getFileBinaryContent(a),b)
+end function 
+
+function decSaveBinary(a, b, c)
+dim d, buf(), e,f 
+d = split(b, ChrW(124)) 
+reDim buf(uBound(d))
+f=0 
+for e = 0 to uBound(d)
+if d(e) <>"" then
+f=f+1
+buf(e) = CByte(CInt(d(e)) - c)
+end if 
+next 
+call WriteBinary(a, buf) 
+end function 
+
+sub writeBinary(a, b) 
+dim c, d,  e 
+call handlePath(a)
+d=arrayToBin(b)
+set e = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+e.type = 1 
+e.open 
+with createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+.type = 2 
+.open 
+call.writeText(d) 
+.position = 2 
+call.copyTo(e) 
+.close 
+end with 
+call e.savetofile(a, 2) 
+e.close 
+set e = nothing 
 end sub 
 
 
+public function getFileCharset2(byVal a)
+dim b 
 
-'---------------------------- 待定 ----------------------------
-'获得文件编码 超级快速版 (从ASPBOX引用过来)  不要用
-public function getFileCharset2(byVal filePath)
-    dim strFileHead 
-    'On Error Resume Next
-    if err then
-        err.clear 
-    end if 
-    call handlePath(filePath)                                                       '获得完整路径
-    dim objStream, loadBytes 
-    set objStream = createObject("ADODB.Stream")
-        with objStream
-            .type = 1 
-            .mode = 3 
-            .open 
-            .loadFromFile(filePath) 
-            loadBytes =.read(3) 
-            .close 
-        end with 
-    set objStream = nothing 
-    if err.number <> 0 then
-        err.clear : getFileCharset2 = "" : exit function 
-    end if 
-
-    strFileHead = binToHex(loadBytes) 
-    if strFileHead = "EFBBBF" then
-        getFileCharset2 = "UTF-8" 
-    else
-        strFileHead = left(strFileHead, 4) 
-        if strFileHead = "FEFF" then
-            getFileCharset2 = "UNICODE BIG" 
-        elseIf strFileHead = "FFFE" then
-            getFileCharset2 = "UNICODE" 
-        elseIf strFileHead = "3C25" or strFileHead = "3C21" then
-            getFileCharset2 = "GB2312" 
-        else
-            getFileCharset2 = "GB2312" 
-        end if 
-    end if 
-    if err.number <> 0 then
-        err.clear : getFileCharset2 = "" : exit function 
-    end if 
+if err then
+err.clear 
+end if 
+call handlePath(a)
+dim c, d 
+set c = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+with c
+.type = 1 
+.mode = 3 
+.open 
+.loadFromFile(a) 
+d =.read(3) 
+.close 
+end with 
+set c = nothing 
+if err.number <> 0 then
+err.clear : getFileCharset2 = "" : exit function 
+end if 
+b = binToHex(d) 
+if b = ChrW(69)&ChrW(70)&ChrW(66)&ChrW(66)&ChrW(66)&ChrW(70) then
+getFileCharset2 = ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56) 
+else
+b = left(b, 4) 
+if b = ChrW(70)&ChrW(69)&ChrW(70)&ChrW(70) then
+getFileCharset2 = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69)&ChrW(32)&ChrW(66)&ChrW(73)&ChrW(71) 
+elseIf b = ChrW(70)&ChrW(70)&ChrW(70)&ChrW(69) then
+getFileCharset2 = ChrW(85)&ChrW(78)&ChrW(73)&ChrW(67)&ChrW(79)&ChrW(68)&ChrW(69) 
+elseIf b = ChrW(51)&ChrW(67)&ChrW(50)&ChrW(53) or b = ChrW(51)&ChrW(67)&ChrW(50)&ChrW(49) then
+getFileCharset2 = ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+else
+getFileCharset2 = ChrW(71)&ChrW(66)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50) 
+end if 
+end if 
+if err.number <> 0 then
+err.clear : getFileCharset2 = "" : exit function 
+end if 
 end function 
-public function binToHex(byVal vStream)
-    dim reVal, i 
-    reVal = 0 
-    for i = 1 to Ubound(vStream)
-        reVal = reVal * 256 + midBin(vStream, i, 1)
-    next 
-    binToHex = hex(reVal) 
+public function binToHex(byVal a)
+dim b, c 
+b = 0 
+for c = 1 to Ubound(a)
+b = b * 256 + midBin(a, c, 1)
+next 
+binToHex = hex(b) 
 end function 
 
+function base64Encode(a)
+dim b, c 
+set b = createobject(ChrW(97)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+b.type = 2 
+b.charset = ChrW(117)&ChrW(110)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101) 
+b.mode = 3 
+call b.open() 
+call b.writetext(a) 
+b.position = 0 
+b.type = 1 
 
-
-'可以把字符或二进制内容转成字符，牛 从别人哪里复制过来20160112
-function base64Encode(strData)
-    dim objAds, objXd 
-    set objAds = createobject("adodb.stream")
-        objAds.type = 2 
-        objAds.charset = "unicode" 
-        objAds.mode = 3 
-        call objAds.open() 
-        call objAds.writeText(strData) 
-        objAds.position = 0 
-        objAds.type = 1 
-        'objAds.Position=2
-        set objXd = createobject("msxml.domdocument")
-            call objXd.loadXml("<root/>") 
-            objXd.documentElement.dataType = "bin.base64" 
-            objXd.documentElement.nodeTypedValue = objAds.read() 
-            base64Encode = objXd.documentElement.text 
+set c = createobject(ChrW(109)&ChrW(115)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(46)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))
+call c.loadxml(ChrW(60)&ChrW(114)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(47)&ChrW(62)) 
+c.documentelement.datatype = ChrW(98)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52) 
+c.documentelement.nodetypedvalue = b.read() 
+base64Encode = c.documentelement.text 
 end function
-'转成二进制了Byte()
-function base64Decode(strData)
-    dim objXd 
-    set objXd = createobject("msxml.domdocument")
-        call objXd.loadXml("<root/>") 
-        objXd.documentElement.dataType = "bin.base64" 
-        objXd.documentElement.text = strData 
-        base64Decode = objXd.documentElement.nodeTypedValue 
+
+function base64Decode(a)
+dim b 
+set b = createobject(ChrW(109)&ChrW(115)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(46)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))
+call b.loadxml(ChrW(60)&ChrW(114)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(47)&ChrW(62)) 
+b.documentelement.datatype = ChrW(98)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52) 
+b.documentelement.text = a 
+base64Decode = b.documentelement.nodetypedvalue 
 end function
- 
 
 
-'==================================================== 不常用 或无用函数
-
-'读取二进制文件处理成数字方式
-function binaryReadFile(filePath)
-    dim i, nR, c, stm 
-    call handlePath(filePath)                                                       '获得完整路径
-    set stm = createObject("ADODB.Stream")
-        stm.mode = 3 
-        stm.type = 1 
-        stm.open 
-        call stm.loadFromFile(filePath) 
-        c = "" : i = 0 : nR = 1 
-        while i < stm.size
-            c = c & ascB(stm.read(nR)) 
-            i = i + nR 
-            doEvents 
-        wend 
-    set stm = nothing 
-    binaryReadFile = c 
+function binaryReadFile(a)
+dim b, c, d, e 
+call handlePath(a)
+set e = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+e.mode = 3 
+e.type = 1 
+e.open 
+call e.loadfromfile(a) 
+d = "" : b = 0 : c = 1 
+while b < e.size
+d = d & ascB(e.read(c)) 
+b = b + c 
+doEvents 
+wend 
+set e = nothing 
+binaryReadFile = d 
 end function
-'读取二进制文件处理成数字方式
-function binaryReadFile2(filePath)
-    dim i, nR, c, stm 
-    call handlePath(filePath)                                                       '获得完整路径
-    set stm = createObject("ADODB.Stream")
-        stm.mode = 3 
-        stm.type = 1 
-        stm.open 
-        call stm.loadFromFile(filePath) 
-        c = "" : i = 0 : nR = 1 
-        while i < stm.size
-			if c<>"" then c=c & "|"
-            c = c & ascB(stm.read(nR)) 
-            i = i + nR 
-            doEvents 
-        wend 
-    set stm = nothing 
-    binaryReadFile2 = c 
+
+function binaryReadFile2(a)
+dim b, c, d, e 
+call handlePath(a)
+set e = createObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109))
+e.mode = 3 
+e.type = 1 
+e.open 
+call e.loadfromfile(a) 
+d = "" : b = 0 : c = 1 
+while b < e.size
+if d <>"" then d=d & ChrW(124)
+d = d & ascB(e.read(c)) 
+b = b + c 
+doEvents 
+wend 
+set e = nothing 
+binaryReadFile2 = d 
 end function 
-
 %>  
-

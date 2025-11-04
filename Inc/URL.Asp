@@ -1,1539 +1,1449 @@
-﻿<% 
-'URL 网址处理 (2013,9,27)   111
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
-'byref PubAHrefList, byref PubATitleList   为为什么要加上byref  是因为在转PHP时需要这个判断，请明它是地址传递 是关联变量
 
-'NOVBNet start 
-'使用手册 
-'call echo("'获得当前网址第一种（getUrl）",getUrl())
-'call echo("'获得当前网址第二种（getThisUrl）",getThisUrl())
-'call echo("'获得当前网址无参数（getThisUrlNoParam）",getThisUrlNoParam())
-'call echo("'获得来访网址（getGoToUrl）",getGoToUrl())
-'call echo("'获得来访网址无参数（getGoToUrlNoParam）",getGoToUrlNoParam()) 
-'call echo("'获得来访网址无文件名称（getGoToUrlNoFileName）",getGoToUrlNoFileName())
-'call echo("'域名（webDoMain）",webDoMain())
-'call echo("'主机（host）",host())
-'call echo("'获得当前网址加参数（getUrlAddToParam）",getUrlAddToParam(getUrl(), "PageSize=20", "replace"))
 
-  
-'获得当前网址第一种（getUrl）：http://127.0.0.1/atemp.asp?act=1
-'获得当前网址第二种（getThisUrl）：http://127.0.0.1/atemp.asp?act=1
-'获得当前网址无参数（getThisUrlNoParam）：http://127.0.0.1/atemp.asp
-'获得来访网址（getGoToUrl）：http://127.0.0.1/5.asp?act=5&aa=aa&bb=bb
-'获得来访网址无参数（getGoToUrlNoParam）：http://127.0.0.1/5.asp
-'获得来访网址无文件名称（getGoToUrlNoFileName）：http://127.0.0.1/
-'域名（webDoMain）：http://127.0.0.1
-'主机（host）：http://127.0.0.1/
-'获得当前网址加参数（GetUrlAddToParam）：http://127.0.0.1/atemp.asp?PageSize=20&act=1
-'getThisUrlFileName()    : 4.asp
-'getThisUrlFileParam()    : 4.asp?act=11
-'getUrlDirName()			/app/1.asp		返回	app
 
-'Url = getUrlAddToParam("http://www.baidu.com/?a=1&b=2&c=3","?a=11&b=22&c=333","")        'http://www.baidu.com/?a=1&b=2&c=3
-'Url = getUrlAddToParam("http://www.baidu.com/?a=1&b=2&c=3","?a=11&b=22&c=333","replace")        'http://www.baidu.com/?a=11&b=22&c=333
 
-'获得URL中目录名称 20171104
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getUrlDirName()
-	dim url,splxx,s,sDirName
-	url=request.serverVariables("script_name")
-	splxx=split(url,"/")
-	for each s in splxx
-		if s <>"" and instr(s,".")=false then
-			sDirName=s
-		end if
-	next
-	getUrlDirName=sDirName
+dim a,b,c,d
+a=request.serverVariables(ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(95)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+b=split(a,ChrW(47))
+for each c in b
+if c <>"" and instr(c,ChrW(46))=false then
+d=c
+end if
+next
+getUrlDirName=d
 end function
 
-'获得当前网后的文件名与参数
 function getThisUrlFileParam()
-    dim url 
-    url = getUrl() 
-    url = mid(url, inStrRev(url, "/") + 1) 
-    getThisUrlFileParam = url 
+dim a 
+a = getUrl() 
+a = mid(a, inStrRev(a, ChrW(47)) + 1) 
+getThisUrlFileParam = a 
 end function 
 
-'获得当前网址无参数
 function getThisUrlNoParam()
-    dim httpType 
-    if LCase(request.serverVariables("HTTPS")) = "off" then
-        httpType = "http://" 
-    else
-        httpType = "https://" 
-    end if 
-    getThisUrlNoParam = httpType & request.serverVariables("HTTP_HOST") & request.serverVariables("SCRIPT_NAME") 
+dim a 
+if LCase(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(83))) = ChrW(111)&ChrW(102)&ChrW(102) then
+a = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) 
+else
+a = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47) 
+end if 
+getThisUrlNoParam = a & request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(72)&ChrW(79)&ChrW(83)&ChrW(84)) & request.serverVariables(ChrW(83)&ChrW(67)&ChrW(82)&ChrW(73)&ChrW(80)&ChrW(84)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)) 
 end function 
 
-'获得传过来网址
 function getGoToUrl()
-    getGoToUrl = request.serverVariables("HTTP_REFERER") 
+getGoToUrl = request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(82)&ChrW(69)&ChrW(70)&ChrW(69)&ChrW(82)&ChrW(69)&ChrW(82)) 
 end function 
 
-'获得传过来网址 无参数
 function getGoToUrlNoParam()
-    dim url 
-    url = getGoToUrl() 
-    if inStr(url, "?") > 0 then
-        url = mid(url, 1, inStr(url, "?") - 1) 
-    end if 
-    getGoToUrlNoParam = url 
+dim a 
+a = getGoToUrl() 
+if inStr(a, ChrW(63)) > 0 then
+a = mid(a, 1, inStr(a, ChrW(63)) - 1) 
+end if 
+getGoToUrlNoParam = a 
 end function 
 
-'获得传过来网址 无文件名称
 function getGoToUrlNoFileName()
-    dim url 
-    url = getGoToUrl() 
-    if right(url, 1) <> "/" then
-        if inStrRev(url, "/") > 0 then
-            url = mid(getGoToUrlNoParam(), 1, inStrRev(getGoToUrlNoParam(), "/")) 
-        end if 
-    end if 
-    if right(url, 1) <> "/" then url = url & "/" 
-    getGoToUrlNoFileName = url 
+dim a 
+a = getGoToUrl() 
+if right(a, 1) <> ChrW(47) then
+if inStrRev(a, ChrW(47)) > 0 then
+a = mid(getGoToUrlNoParam(), 1, inStrRev(getGoToUrlNoParam(), ChrW(47))) 
+end if 
+end if 
+if right(a, 1) <> ChrW(47) then a = a & ChrW(47) 
+getGoToUrlNoFileName = a 
 end function 
-'移除网址文件名部分
-function remoteUrlFileName(byval url)
-    if right(url, 1) <> "/" then
-        if inStrRev(url, "/") > 0 then
-            url = mid(url, 1, inStrRev(url, "/")) 
-        end if 
-    end if 
-    remoteUrlFileName = url 
+
+function remoteUrlFileName(byval a)
+if right(a, 1) <> ChrW(47) then
+if inStrRev(a, ChrW(47)) > 0 then
+a = mid(a, 1, inStrRev(a, ChrW(47))) 
+end if 
+end if 
+remoteUrlFileName = a 
 end function 
-'移除网址参数部分
-function remoteUrlParam(byval url)
-    if right(url, 1) <> "?" then
-        if inStrRev(url, "?") > 0 then
-            url = mid(url, 1, inStrRev(url, "?") - 1) 
-        end if 
-    end if 
-    remoteUrlParam = url 
+
+function remoteUrlParam(byval a)
+if right(a, 1) <> ChrW(63) then
+if inStrRev(a, ChrW(63)) > 0 then
+a = mid(a, 1, inStrRev(a, ChrW(63)) - 1) 
+end if 
+end if 
+remoteUrlParam = a 
 end function 
-'获得网址目录部分
-function getUrlDir(byval url)
-    getUrlDir = getHandleUrlValue(url, "网址目录") 
+
+function getUrlDir(byval a)
+getUrlDir = getHandleUrlValue(a, ChrW(32593)&ChrW(22336)&ChrW(30446)&ChrW(24405)) 
 end function 
- 
-'获取客户端IP地址第二种 
+
 function getIP2() 
-    on error resume next 
-    dim x, y, addr 
-    x = request.serverVariables("HTTP_X_FORWARDED_FOR") 
-    y = request.serverVariables("REMOTE_ADDR") 
-    addr = IIF(isNul(x) or LCase(x) = "unknown", y, x) 
-    if inStr(addr, ".") = 0 then addr = "0.0.0.0" 
-    getIP2 = addr 
+on error resume next 
+dim a, b, c 
+a = request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)) 
+b = request.serverVariables(ChrW(82)&ChrW(69)&ChrW(77)&ChrW(79)&ChrW(84)&ChrW(69)&ChrW(95)&ChrW(65)&ChrW(68)&ChrW(68)&ChrW(82)) 
+c = IIF(isNul(a) or LCase(a) = ChrW(117)&ChrW(110)&ChrW(107)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(110), b, a) 
+if inStr(c, ChrW(46)) = 0 then c = ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48) 
+getIP2 = c 
 end function 
 
-'获取IP地址 别人写得好像很专业一样 很全
 function getIP()
-    on error resume next 
-    dim strIPAddr 
-    if request.serverVariables("HTTP_X_FORWARDED_FOR") = "" or inStr(request.serverVariables("HTTP_X_FORWARDED_FOR"), "unknown") > 0 then
-        strIPAddr = request.serverVariables("REMOTE_ADDR") 
-    elseIf inStr(request.serverVariables("HTTP_X_FORWARDED_FOR"), ",") > 0 then
-        strIPAddr = mid(request.serverVariables("HTTP_X_FORWARDED_FOR"), 1, inStr(request.serverVariables("HTTP_X_FORWARDED_FOR"), ",") - 1) 
-    elseIf inStr(request.serverVariables("HTTP_X_FORWARDED_FOR"), ";") > 0 then
-        strIPAddr = mid(request.serverVariables("HTTP_X_FORWARDED_FOR"), 1, inStr(request.serverVariables("HTTP_X_FORWARDED_FOR"), ";") - 1) 
-    else
-        strIPAddr = request.serverVariables("HTTP_X_FORWARDED_FOR") 
-    end if 
-    getIP = trim(mid(strIPAddr, 1, 30)) 
+on error resume next 
+dim a 
+if request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)) = "" or inStr(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), ChrW(117)&ChrW(110)&ChrW(107)&ChrW(110)&ChrW(111)&ChrW(119)&ChrW(110)) > 0 then
+a = request.serverVariables(ChrW(82)&ChrW(69)&ChrW(77)&ChrW(79)&ChrW(84)&ChrW(69)&ChrW(95)&ChrW(65)&ChrW(68)&ChrW(68)&ChrW(82)) 
+elseIf inStr(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), ChrW(44)) > 0 then
+a = mid(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), 1, inStr(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), ChrW(44)) - 1) 
+elseIf inStr(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), ChrW(59)) > 0 then
+a = mid(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), 1, inStr(request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)), ChrW(59)) - 1) 
+else
+a = request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(68)&ChrW(69)&ChrW(68)&ChrW(95)&ChrW(70)&ChrW(79)&ChrW(82)) 
+end if 
+getIP = trim(mid(a, 1, 30)) 
 end function 
 
-'获得服务器IP
 function getServicerIP()
-    getServicerIP = request.serverVariables("LOCAL_ADDR") 
+getServicerIP = request.serverVariables(ChrW(76)&ChrW(79)&ChrW(67)&ChrW(65)&ChrW(76)&ChrW(95)&ChrW(65)&ChrW(68)&ChrW(68)&ChrW(82)) 
 end function 
- 
 
-'获得服务器IP   辅助
 function getRemoteIP()
-    getRemoteIP = getServicerIP() 
+getRemoteIP = getServicerIP() 
 end function 
 
 
-'NOVBNet end
+function getHandleUrlValue(byval a, byval b)
+b = ChrW(124) & b & ChrW(124) 
+if instr(a, ChrW(58)&ChrW(47)&ChrW(47)) > 0 then
+a = mid(a, instr(a, ChrW(58)&ChrW(47)&ChrW(47)) + 3) 
+end if 
 
-
-'获得处理后url值 20160701
-function getHandleUrlValue(byval url, byval sType)
-    sType = "|" & sType & "|" 
-    if instr(url, "://") > 0 then
-        url = mid(url, instr(url, "://") + 3) 
-    end if 
-    '去掉域名
-    if instr(url, "/") > 0 then
-        url = mid(url, instr(url, "/") + 1) 
-    end if 
-
-    if instr(sType, "|网址目录|") > 0 then
-        if instr(url, "/") > 0 then
-            url = mid(url, 1, instrrev(url, "/") - 1) 
-        end if 
-    else
-        if instr(url, "/") > 0 then
-            url = mid(url, instrrev(url, "/") + 1) 
-        end if 
-        if instr(url, "?") > 0 then
-            url = mid(url, 1, instr(url, "?") - 1) 
-        end if 
-    end if 
-    if instr(sType, "|名称|") > 0 or instr(sType, "|name|") > 0 then
-        if instr(url, ".") > 0 then
-            url = mid(url, 1, instrrev(url, ".") - 1) 
-        end if 
-    end if 
-    getHandleUrlValue = url 
+if instr(a, ChrW(47)) > 0 then
+a = mid(a, instr(a, ChrW(47)) + 1) 
+end if 
+if instr(b, ChrW(124)&ChrW(32593)&ChrW(22336)&ChrW(30446)&ChrW(24405)&ChrW(124)) > 0 then
+if instr(a, ChrW(47)) > 0 then
+a = mid(a, 1, instrrev(a, ChrW(47)) - 1) 
+end if 
+else
+if instr(a, ChrW(47)) > 0 then
+a = mid(a, instrrev(a, ChrW(47)) + 1) 
+end if 
+if instr(a, ChrW(63)) > 0 then
+a = mid(a, 1, instr(a, ChrW(63)) - 1) 
+end if 
+end if 
+if instr(b, ChrW(124)&ChrW(21517)&ChrW(31216)&ChrW(124)) > 0 or instr(b, ChrW(124)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(124)) > 0 then
+if instr(a, ChrW(46)) > 0 then
+a = mid(a, 1, instrrev(a, ChrW(46)) - 1) 
+end if 
+end if 
+getHandleUrlValue = a 
 end function 
 
-'处理网址\转/  '待完善
-function handleHttpUrl(httpurl)
-    dim headStr, url 
-	handleHttpUrl=""
-    if isNul(httpurl) then exit function                                            '为空则退出
-    httpurl = replace(trim(httpurl), "\", "/") 
-    headStr = mid(httpurl, 1, inStr(httpurl, ":") + 2) 
-    httpurl = mid(httpurl, inStr(httpurl, ":") + 3) 
-    httpurl = replace(httpurl, "http://", "【|http|】") 
-    httpurl = replace(httpurl, "https://", "【|https|】") 
-    httpurl = replace(httpurl, "ftp://", "【|ftp|】") 
+function handleHttpUrl(a)
+dim b, c 
+handleHttpUrl=""
+if isNul(a) then exit function
+a = replace(trim(a), ChrW(92), ChrW(47)) 
+b = mid(a, 1, inStr(a, ChrW(58)) + 2) 
+a = mid(a, inStr(a, ChrW(58)) + 3) 
+a = replace(a, ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47), ChrW(12304)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(124)&ChrW(12305)) 
+a = replace(a, ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47), ChrW(12304)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(124)&ChrW(12305)) 
+a = replace(a, ChrW(102)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47), ChrW(12304)&ChrW(124)&ChrW(102)&ChrW(116)&ChrW(112)&ChrW(124)&ChrW(12305)) 
+while inStr(a, ChrW(47)&ChrW(47)) > 0
+a = replace(a, ChrW(47)&ChrW(47), ChrW(47)) 
+wend 
+a = replace(a, ChrW(12304)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(124)&ChrW(12305), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) 
+a = replace(a, ChrW(12304)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(124)&ChrW(12305), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)) 
+a = replace(a, ChrW(12304)&ChrW(124)&ChrW(102)&ChrW(116)&ChrW(112)&ChrW(124)&ChrW(12305), ChrW(102)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) 
+c = b & a 
 
-    while inStr(httpurl, "//") > 0
-        httpurl = replace(httpurl, "//", "/") 
-    wend 
-    httpurl = replace(httpurl, "【|http|】", "http://") 
-    httpurl = replace(httpurl, "【|https|】", "https://") 
-    httpurl = replace(httpurl, "【|ftp|】", "ftp://") 
-
-    url = headStr & httpurl 
-    '/"http://www.qibosoft.com/images/qibosoft/loading.gif/"
-    if left(url, 2) = "/""" then
-        url = mid(url, 3) 
-    end if 
-    if right(url, 2) = "/""" then
-        url = mid(url, 1, len(url) - 2) 
-    end if 
-    handleHttpUrl = url 
+if left(c, 2) = ChrW(47)&ChrW(34) then
+c = mid(c, 3) 
+end if 
+if right(c, 2) = ChrW(47)&ChrW(34) then
+c = mid(c, 1, len(c) - 2) 
+end if 
+handleHttpUrl = c 
 end function 
 
-'处理文件/转\   使用了While判断，再完善
-function handleFileUrl(fileUrl)
-	if isNull(fileUrl) then
-		handleFileUrl=""
-		exit function
-	end if
-    fileUrl = replace(fileUrl, "/", "\") 
-    dim i 
-    for i = 1 to 99
-        fileUrl = replace(fileUrl, "\\", "\") 
-
-        if inStr(fileUrl, "\\") = 0 then
-            exit for 
-        end if 
-    next 
-    handleFileUrl = fileUrl  
+function handleFileUrl(a)
+if isNull(a) then
+handleFileUrl=""
+exit function
+end if
+a = replace(a, ChrW(47), ChrW(92)) 
+dim b 
+for b = 1 to 99
+a = replace(a, ChrW(92)&ChrW(92), ChrW(92)) 
+if inStr(a, ChrW(92)&ChrW(92)) = 0 then
+exit for 
+end if 
+next 
+handleFileUrl = a  
 end function 
 
-'处理网址完善性
-function handleUrlComplete(httpurl)
-    dim lastStr 
-    handleUrlComplete = httpurl 
-    if inStr(httpurl, "?") > 0 then exit function                                   '有?符号则退出
-    '网址最后没有/  判断如果为域名 则在最后加上/退出
-    if right(httpurl, 1) <> "/" then
-        if getWebSite(httpurl)=httpurl & "/" then
-            handleUrlComplete = httpurl & "/" 
-            exit function 
-        end if 
-    end if 
-    lastStr = mid(httpurl, inStrRev(httpurl, "/") + 1) 
-    if lastStr <> "" and inStr(lastStr, ".") = 0 then
-        handleUrlComplete = httpurl & "/" 
-    end if 
+function handleUrlComplete(a)
+dim b 
+handleUrlComplete = a 
+if inStr(a, ChrW(63)) > 0 then exit function
+
+if right(a, 1) <> ChrW(47) then
+if getWebSite(a)=a & ChrW(47) then
+handleUrlComplete = a & ChrW(47) 
+exit function 
+end if 
+end if 
+b = mid(a, inStrRev(a, ChrW(47)) + 1) 
+if b <> "" and inStr(b, ChrW(46)) = 0 then
+handleUrlComplete = a & ChrW(47) 
+end if 
 end function 
 
-'给网址添加域名
-function urlAddHttpUrl(httpurl, url)
-    httpurl = replace(httpurl, "\", "/") 
-    url = handleHttpUrl(url) 
-    if inStr(LCase(url), "http://") = 0 and inStr(LCase(url), "www.") = 0 then
-        if right(httpurl, 1) = "/" and left(url, 1) = "/" then
-            url = httpurl & mid(url, 2) 
-        elseIf right(httpurl, 1) <> "/" and left(url, 1) <> "/" then
-            url = httpurl & "/" & url 
-        else
-            url = httpurl & url 
-        end if 
-    end if 
-    urlAddHttpUrl = url  
+function urlAddHttpUrl(a, b)
+a = replace(a, ChrW(92), ChrW(47)) 
+b = handleHttpUrl(b) 
+if inStr(LCase(b), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 and inStr(LCase(b), ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)) = 0 then
+if right(a, 1) = ChrW(47) and left(b, 1) = ChrW(47) then
+b = a & mid(b, 2) 
+elseIf right(a, 1) <> ChrW(47) and left(b, 1) <> ChrW(47) then
+b = a & ChrW(47) & b 
+else
+b = a & b 
+end if 
+end if 
+urlAddHttpUrl = b  
 end function 
-'获得主机端口号
+
 function getPort()
-    dim port 
-    port = CStr(request.serverVariables("SERVER_PORT")) 
-    if port <> "80" and port <> "8080" and port <> "443" and port<>"" then
-        port = ":" & port 
-    else
-        port = "" 
-    end if 
-    getPort = port 
+dim a 
+a = CStr(request.serverVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(80)&ChrW(79)&ChrW(82)&ChrW(84))) 
+if a <> ChrW(56)&ChrW(48) and a <> ChrW(56)&ChrW(48)&ChrW(56)&ChrW(48) and a <> ChrW(52)&ChrW(52)&ChrW(51) and a <>"" then
+a = ChrW(58) & a 
+else
+a = "" 
+end if 
+getPort = a 
 end function
-
 function getHttpOrHttps()
-    if CStr(request.serverVariables("SERVER_PORT"))  ="443" then
-        getHttpOrHttps = "https://" 
-    else
-        getHttpOrHttps = "http://" 
-    end if 
+if CStr(request.serverVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(80)&ChrW(79)&ChrW(82)&ChrW(84)))  =ChrW(52)&ChrW(52)&ChrW(51) then
+getHttpOrHttps = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47) 
+else
+getHttpOrHttps = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) 
+end if 
 end function
 
-'获得域名
 function webDoMain()
-   webDoMain=getHttpOrHttps() &  request.serverVariables("SERVER_NAME") & getPort()  
+webDoMain=getHttpOrHttps() &  request.serverVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)) & getPort()  
 end function 
 
-'获得当前域名
 function host()
-    host = getHttpOrHttps() & request.serverVariables("HTTP_HOST") & "/" 
-
-
-
+host = getHttpOrHttps() & request.serverVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(72)&ChrW(79)&ChrW(83)&ChrW(84)) & ChrW(47) 
 end function 
 
-'获得当前域名 (辅助)
 function httpHost()
-    httpHost = host() 
+httpHost = host() 
 end function 
 
-'获得当前域名 (辅助)
 function getHost()
-    getHost = host() 
+getHost = host() 
 end function 
 
-'网得当前网址
 function getUrl()
-    getUrl = getThisUrl() 
-'GetUrl = WebDoMain() & Request.ServerVariables("SCRIPT_NAME") & Request.ServerVariables("QUERY_STRING")
+getUrl = getThisUrl() 
+
 end function 
 
-'获得当前带参数网址
 function getThisUrl()
-    dim url 
-    'vbdel start
-    url = request.serverVariables("server_name") 
-    'PHP版上面直接获得端口
-    if inStr(url, ":") = 0 then
-        url = url & getPort() 
-    end if 
-    url = url & request.serverVariables("script_name") 
-    if request.serverVariables("QUERY_STRING") <> "" then url = url & "?" & request.serverVariables("QUERY_STRING") 
-    'vbdel end
-    getThisUrl = getHttpOrHttps() &   url 
+dim a 
+
+a = request.serverVariables(ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+
+if inStr(a, ChrW(58)) = 0 then
+a = a & getPort() 
+end if 
+a = a & request.serverVariables(ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(95)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)) 
+if request.serverVariables(ChrW(81)&ChrW(85)&ChrW(69)&ChrW(82)&ChrW(89)&ChrW(95)&ChrW(83)&ChrW(84)&ChrW(82)&ChrW(73)&ChrW(78)&ChrW(71)) <> "" then a = a & ChrW(63) & request.serverVariables(ChrW(81)&ChrW(85)&ChrW(69)&ChrW(82)&ChrW(89)&ChrW(95)&ChrW(83)&ChrW(84)&ChrW(82)&ChrW(73)&ChrW(78)&ChrW(71)) 
+
+getThisUrl = getHttpOrHttps() &   a 
 end function 
-'获得当前无文件名称网址
+
 function getThisUrlNoFileName()
-    dim url 
-    url = getThisUrl() 
-    if right(url, 1) <> "/" then
-        if inStrRev(url, "/") > 0 then
-            url = mid(url, 1, inStrRev(url, "/")) 
-        end if 
-    end if 
-    getThisUrlNoFileName = url 
+dim a 
+a = getThisUrl() 
+if right(a, 1) <> ChrW(47) then
+if inStrRev(a, ChrW(47)) > 0 then
+a = mid(a, 1, inStrRev(a, ChrW(47))) 
+end if 
+end if 
+getThisUrlNoFileName = a 
 end function 
 
-'获得网址域名名称 http://www.aaa.bb.mywebname.com/   mywebname
-function getWebSiteName(byval url) 
-	dim splstr,s,c,nLen
-	c = ".com.hk|.sh.cn|.com.cn|.net.cn|.org.cn" 
-    c = c & "|.com|.net|.org|.tv|.cc|.info|.cn|.tw|:81|:99|.biz|.mobi|.hk|.us|.la|.gl|.in|.top|.win|.vip|.pw|.me|.wiki|.co|.io|.lu|.im|.love|.xyz|.wang" 
-    splStr = split(c, "|") 
-	url=url & "/"
-    for each s in splStr
-        if s <> "" then
-			s=s & "/"
-			nLen=inStr(url, s)
-            if  nLen> 0 then
-                url = mid(url,1,nLen-1)
-				exit for
-            end if 
-        end if 
-    next
-	nLen=instr(url,"www.")
-	if nLen>0 then
-		url=mid(url,nLen+4)
-	end if
-	nLen=instr(url,"://")
-	if nLen>0 then
-		url=mid(url,nLen+3)
-	end if
-	getWebSiteName=url
-end function
-'获得域名完整域名如  www.xiyueta.com 
-function getWebSiteCleanName(byVal httpurl)
-	dim url,nLen
-	url=getWebSite(httpurl)
-	nLen=instr(url,"://")
-	if nLen>0 then
-		url=mid(url,nLen+3)
-	end if
-	url=replace(url,"/","")
-	url=replace(url,":","-")	'20190415对以Ip为地址的网址处理
-	getWebSiteCleanName=url
+function getWebSiteName(byval a) 
+dim b,c,d,e
+d = ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(46)&ChrW(104)&ChrW(107)&ChrW(124)&ChrW(46)&ChrW(115)&ChrW(104)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(111)&ChrW(114)&ChrW(103)&ChrW(46)&ChrW(99)&ChrW(110) 
+d = d & ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(124)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(124)&ChrW(46)&ChrW(111)&ChrW(114)&ChrW(103)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(118)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(99)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(119)&ChrW(124)&ChrW(58)&ChrW(56)&ChrW(49)&ChrW(124)&ChrW(58)&ChrW(57)&ChrW(57)&ChrW(124)&ChrW(46)&ChrW(98)&ChrW(105)&ChrW(122)&ChrW(124)&ChrW(46)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(124)&ChrW(46)&ChrW(104)&ChrW(107)&ChrW(124)&ChrW(46)&ChrW(117)&ChrW(115)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(124)&ChrW(46)&ChrW(103)&ChrW(108)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(118)&ChrW(105)&ChrW(112)&ChrW(124)&ChrW(46)&ChrW(112)&ChrW(119)&ChrW(124)&ChrW(46)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(105)&ChrW(107)&ChrW(105)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(117)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(109)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(124)&ChrW(46)&ChrW(120)&ChrW(121)&ChrW(122)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(97)&ChrW(110)&ChrW(103) 
+b = split(d, ChrW(124)) 
+a=a & ChrW(47)
+for each c in b
+if c <> "" then
+c=c & ChrW(47)
+e=inStr(a, c)
+if  e> 0 then
+a = mid(a,1,e-1)
+exit for
+end if 
+end if 
+next
+e=instr(a,ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46))
+if e>0 then
+a=mid(a,e+4)
+end if
+e=instr(a,ChrW(58)&ChrW(47)&ChrW(47))
+if e>0 then
+a=mid(a,e+3)
+end if
+getWebSiteName=a
 end function
 
-'分析网址 获得域名
-function getWebSite(byVal httpurl)
-    'On Error Resume Next
-    '新版获得域名方法
-    dim url, tempHttpUrl, is_WebSite, httpHead 
-	getWebSite=""
-	httpurl=replace(replace(replace(httpurl," ",""),vbtab,""),"&#x2f;","/")
-    tempHttpUrl = httpurl 
-    url = trim(LCase(replace(httpurl, "?", "/"))) 
-    url = replace(replace(url, "\", "/"), "http://", "") 
-    if inStr(url, "/") > 0 then url = mid(url, 1, inStr(url, "/") - 1) 
-    url = "http://" & url & "/" 
-    dim splStr, s, c 
-    httpurl = replace(LCase(httpurl), "http://", "") 
-    httpHead = "http://" 
-    '增加了https://这种安全请求方式  20160526
-    if instr(LCase(httpurl), "https://") > 0 then
-        httpurl = replace(LCase(httpurl), "https://", "") 
-        httpHead = "https://" 
-    end if 
-    '删除/后台的值20160526
-    if instr(httpurl, "/") > 0 then
-        httpurl = mid(httpurl, 1, instr(httpurl, "/") - 1) 
-    end if 
-    if inStr(httpurl, "?") > 0 then httpurl = mid(httpurl, 1, inStr(httpurl, "?") - 1) 
-    if left(httpurl, 9) = "localhost" then
-        if inStr(httpurl, "/") > 0 then
-            httpurl = mid(httpurl, 1, inStr(httpurl, "/") - 1) 
-        else
-            httpurl = "localhost" 
-        end if 
-    elseIf left(httpurl, 8) = "192.168." or left(httpurl, 9) = "127.0.0.1" or ubound(split(httpurl,"."))=3 then		'对以IP为地址的也处理20190415
-        httpurl = httpurl & "/" 
-        httpurl =httpHead & mid(httpurl, 1, inStr(httpurl, "/") - 1) & "/" 
-        getWebSite = httpurl : exit function 
-    else
-        splStr = split(httpurl, ".") 
-        if (inStr(httpurl, "www.") > 0 and uBound(splStr) >= 2) or uBound(splStr) >= 1 then
-            if inStr(httpurl, "/") > 0 then
-                s = mid(httpurl, 1, inStr(httpurl, "/") - 1) 
-                if s = getDianNumb(s) then
-                    httpurl = s 
-                end if 
-            end if 
-        else
-            httpurl = ""                                                                    '没有则为空
-        end if 
-    end if 
-    is_WebSite = false                                                              '是域名为假
-    c = ".com.hk|.sh.cn|.com.cn|.net.cn|.org.cn" 
-    c = c & "|.com|.net|.org|.tv|.cc|.info|.cn|.tw|:81|:99|.biz|.mobi|.hk|.us|.la|.gl|.in|.top|.win|.vip|.pw|.me|.wiki|.co|.io|.lu|.im|.love|.xyz|.wang" 
-    splStr = split(c, "|") 
-	httpurl=httpurl & "/"
-    for each s in splStr
-        if s <> "" then
-			s=s & "/"
-            if inStr(httpurl, s) > 0 then
-                httpurl = httpHead & left(httpurl, inStr(httpurl, s) + len(s) - 1) : is_WebSite = true : exit for 
-            end if 
-        end if 
-    next 
-    getWebSite = left(httpurl, 255)                                                 '域名不存在，则只截取255个字符
-    'GetWebSite = ""                        '域名不存在则为空 20150104
-    if getWebSite = "http:///" then getWebSite = ""                                 '没有找到域名
- 
-
-    if is_WebSite = false then
-        getWebSite = "" 
-	elseif instr(getWebSite,",") or instr(getWebSite,"。")>0 then
-        getWebSite = "" 
-    end if 
-
-
-end function 
-'检测是否为网址
-function checkUrl(url)
-    checkUrl = IIF(getWebSite(url) = "", false, true) 
-end function 
-'检测是否为网址
-function checkHttpUrl(url)
-    checkHttpUrl = checkUrl(url) 
-end function 
-'检测是否为网址
-function isUrl(url)
-    isUrl = checkUrl(url) 
-end function 
-'检测是否为网址
-function isHttpUrl(url)
-    isHttpUrl = checkUrl(url)  
-end function 
-
-
-
-
-'批量处理 完整网址 20160929
-function batchFullHttpUrl(httpurl,content)
-	dim splstr,s,c
-	splstr=split(content,vbcrlf) 
-	for each s in splstr 
-		s=fullHttpUrl(httpurl, s) 
-		if c<>"" then
-			c=c & vbcrlf
-		end if
-		c=c & s
-	next
-	batchFullHttpUrl=c
+function getWebSiteCleanName(byVal a)
+dim b,c
+b=getWebSite(a)
+c=instr(b,ChrW(58)&ChrW(47)&ChrW(47))
+if c>0 then
+b=mid(b,c+3)
+end if
+b=replace(b,ChrW(47),"")
+b=replace(b,ChrW(58),ChrW(45))
+getWebSiteCleanName=b
 end function
-'完整网址
-'对这个处理 style="background: url(20130510162636_96168.jpg) no-repeat scroll center top; height: 426px;cursor:pointer; width: 100%; margin:0 auto;" 20160701  更新于20161112
-function fullHttpUrl(byVal httpurl, byVal url)
-    'On Error Resume Next:    err.clear                                                                       '清除错误 要不然会报错
-	fullHttpUrl=""
-    dim rootUrl, thisUrl, splStr, i, s, c, parentUrl, parentParentUrl, parentParentParentUrl, rootWebSite, thisWebSite, isHandle, lCaseUrl 
-    dim styleStart, styleEnd 
-    httpurl = phpTrim(httpurl)                                                      '清除两边空格
-    url = phpTrim(url)                                                              '清除两边空格
-    lCaseUrl = lcase(url) 															'小写追加URL
-    if url = "" then fullHttpUrl = "" : exit function                               '网址为空退出(20150805)
-    if trim(httpurl) = "" then fullHttpUrl = url : exit function                    '主网址为空退出 返回网址
-    httpurl = replace(httpurl, "\", "/")                                            '把网址\转/符号
-    url = replace(url, "\", "/")                                                    '把网址\转/符号
-	 
-    '网址前两个字符为//则退出
-    if left(url, 2) = "//" then
-        fullHttpUrl = "http:" & url 					'加http: 让网址完成
-        exit function 	
-    end if 
-    '处理style样式里背景图片
-    url = hanldeStyleBackgroundUrl(url, styleStart, styleEnd) 
-    rootUrl = getWebSite(httpurl)                                                   '主域名，也就是主网址
-    rootWebSite = rootUrl 														   '主网址
-    thisWebSite = getWebSite(url) 													'追加网址域名
-    if right(rootUrl, 1) = "/" then rootUrl = left(rootUrl, len(rootUrl) - 1) 
-    thisUrl = left(httpurl, inStrRev(httpurl, "/"))                                 '当前网址
-    splStr = split(httpurl, "/") 
-    for i = 0 to uBound(splStr)
-        if i + 1 = uBound(splStr) then parentUrl = c 								'一级
-        if i + 2 = uBound(splStr) then parentParentUrl = c 							'二有
-        if i + 3 = uBound(splStr) then parentParentParentUrl = c 					'三级
-        s = splStr(i) 
-        c = c & s & "/"
-    next  
-    url = trim(url)                                                                 '去除网址左右空格
-	
-	dim fileName
-	fileName=splstr(ubound(splStr))
-	if instr("/" & url,"/?")>0 then
-		if instr(fileName,"?")>0 then
-			fileName=mid(fileName,1,instr(fileName,"?")-1)
-			thisUrl=thisUrl & fileName
-		elseif instr(fileName,".")>0 then
-			thisUrl=thisUrl & fileName
-		end if
-	end if
-	
-    isHandle = false                                                               '操作为假
-    if url <> "" and inStr(left(url, 10), "www.") = 0 and inStr(left(url, 10), "http://") = 0 and inStr(left(url, 10), "https://") = 0 then
-        isHandle = true 
-        if rootWebSite <> thisWebSite then
-            if rootWebSite = replace(thisWebSite, "http://", "http://www.") then
-                isHandle = false 
-                if inStr(LCase(url), "http://") > 0 then
-                    url = "http://www." & right(url, len(url) - 7) 
-                else
-                    url = "http://www." & url 
-                end if 
-            end if 
-        end if 
-    end if 
-    '操作是否为真
-    if isHandle = true then
-        if left(url, 1) = "/" then
-			url=mid(url,2)
-			for i=1 to 9
-				if left(url,3)<>"../" then
-					url="/" & url
-					exit for
-				end if
-				url=mid(url,4)
-			next
-            url = rootUrl & url
-        elseIf left(url, 3) = "../" or left(url, 2) = "./" then
-			if left(url, 2) = "./" then
-				url=mid(url, 3) 
-			end if
-			for i=1 to 9
-				if left(url,3)<>"../" then 
-					exit for
-				end if
-				if len(thisUrl)<>len(getWebSite(httpurl)) then 
-					 thisUrl=mid(thisUrl,1,len(thisUrl)-1)
-					 thisUrl=mid(thisUrl,1,instrrev(thisUrl,"/")) 
-				end if
-				url=mid(url,4)
-			next
-            url = thisUrl & url 
-		else
-            url = thisUrl & url 
-        end if 
-    end if 
-    if inStr(LCase(url), "http://") = 0 and inStr(LCase(url), "https://") = 0 then
-        if inStr(LCase(httpurl), "http://") > 0 and inStr(LCase(url), "http://") = 0 then
-            url = "http://" & url 
-        elseIf inStr(LCase(httpurl), "https://") > 0 and inStr(LCase(url), "https://") = 0 then
-            url = "https://" & url 
-        end if 
-    end if
-    fullHttpUrl = styleStart & url & styleEnd 
-    'if err then call doError(Err.description, "FullHttpUrl 获得域名 完整网址，HttpUrl=" & httpurl & "<hr>Url=" & url )
-end function 
-'处理样式里背景图片20160701
-function hanldeStyleBackgroundUrl(byval url, styleStart, styleEnd)
-    dim lCaseUrl 
-    url = phpTrim(url)                                                              '清除两边空格
-    lCaseUrl = lcase(url) 
-    url = replace(url, "\", "/")                                                    '把网址\转/符号
-    if (instr(url, "background") > 0 or instr(url, "background-image") > 0) and instr(url, "(") > 0 and instr(url, ")") > 0 then
-        styleStart = mid(url, 1, instr(url, "(")) 
-        styleEnd = mid(url, instr(url, ")")) 
-        url = mid(url, len(styleStart) + 1) 
-        url = phptrim(mid(url, 1, instr(url, ")") - 1)) 
-        url = replace(replace(url, "'", ""), """", "") 
-    end if 
-    hanldeStyleBackgroundUrl = url 
-end function 
- 
+
+function getWebSite(byVal a)
 
 
-'网址特殊字符 简洁处理
-function uRLJianJieHandle(byVal url)
-    url = replace(url, "&amp;", "&") 
-    uRLJianJieHandle = url 
+dim b, c, d, e 
+getWebSite=""
+a=replace(replace(replace(a,ChrW(32),""),vbtab,""),ChrW(38)&ChrW(35)&ChrW(120)&ChrW(50)&ChrW(102)&ChrW(59),ChrW(47))
+c = a 
+b = trim(LCase(replace(a, ChrW(63), ChrW(47)))) 
+b = replace(replace(b, ChrW(92), ChrW(47)), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47), "") 
+if inStr(b, ChrW(47)) > 0 then b = mid(b, 1, inStr(b, ChrW(47)) - 1) 
+b = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) & b & ChrW(47) 
+dim f, g, h 
+a = replace(LCase(a), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47), "") 
+e = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) 
+
+if instr(LCase(a), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)) > 0 then
+a = replace(LCase(a), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47), "") 
+e = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47) 
+end if 
+
+if instr(a, ChrW(47)) > 0 then
+a = mid(a, 1, instr(a, ChrW(47)) - 1) 
+end if 
+if inStr(a, ChrW(63)) > 0 then a = mid(a, 1, inStr(a, ChrW(63)) - 1) 
+if left(a, 9) = ChrW(108)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(104)&ChrW(111)&ChrW(115)&ChrW(116) then
+if inStr(a, ChrW(47)) > 0 then
+a = mid(a, 1, inStr(a, ChrW(47)) - 1) 
+else
+a = ChrW(108)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(104)&ChrW(111)&ChrW(115)&ChrW(116) 
+end if 
+elseIf left(a, 8) = ChrW(49)&ChrW(57)&ChrW(50)&ChrW(46)&ChrW(49)&ChrW(54)&ChrW(56)&ChrW(46) or left(a, 9) = ChrW(49)&ChrW(50)&ChrW(55)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(49) or ubound(split(a,ChrW(46)))=3 then
+a = a & ChrW(47) 
+a =e & mid(a, 1, inStr(a, ChrW(47)) - 1) & ChrW(47) 
+getWebSite = a : exit function 
+else
+f = split(a, ChrW(46)) 
+if (inStr(a, ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)) > 0 and uBound(f) >= 2) or uBound(f) >= 1 then
+if inStr(a, ChrW(47)) > 0 then
+g = mid(a, 1, inStr(a, ChrW(47)) - 1) 
+if g = getDianNumb(g) then
+a = g 
+end if 
+end if 
+else
+a = ""
+end if 
+end if 
+d = false
+h = ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(46)&ChrW(104)&ChrW(107)&ChrW(124)&ChrW(46)&ChrW(115)&ChrW(104)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(111)&ChrW(114)&ChrW(103)&ChrW(46)&ChrW(99)&ChrW(110) 
+h = h & ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(124)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(124)&ChrW(46)&ChrW(111)&ChrW(114)&ChrW(103)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(118)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(99)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(119)&ChrW(124)&ChrW(58)&ChrW(56)&ChrW(49)&ChrW(124)&ChrW(58)&ChrW(57)&ChrW(57)&ChrW(124)&ChrW(46)&ChrW(98)&ChrW(105)&ChrW(122)&ChrW(124)&ChrW(46)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(124)&ChrW(46)&ChrW(104)&ChrW(107)&ChrW(124)&ChrW(46)&ChrW(117)&ChrW(115)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(124)&ChrW(46)&ChrW(103)&ChrW(108)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(118)&ChrW(105)&ChrW(112)&ChrW(124)&ChrW(46)&ChrW(112)&ChrW(119)&ChrW(124)&ChrW(46)&ChrW(109)&ChrW(101)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(105)&ChrW(107)&ChrW(105)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(117)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(109)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(124)&ChrW(46)&ChrW(120)&ChrW(121)&ChrW(122)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(97)&ChrW(110)&ChrW(103) 
+f = split(h, ChrW(124)) 
+a=a & ChrW(47)
+for each g in f
+if g <> "" then
+g=g & ChrW(47)
+if inStr(a, g) > 0 then
+a = e & left(a, inStr(a, g) + len(g) - 1) : d = true : exit for 
+end if 
+end if 
+next 
+getWebSite = left(a, 255)
+
+if getWebSite = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(47) then getWebSite = ""
+if d = false then
+getWebSite = "" 
+elseif instr(getWebSite,ChrW(44)) or instr(getWebSite,ChrW(12290))>0 then
+getWebSite = "" 
+end if 
 end function 
 
-'URL加密 待完善中。。。。
-function urlToAsc(url)
-    dim i
-	urlToAsc=""
-    for i = 1 to len(url)
-        urlToAsc = urlToAsc & "%" & hex(ascW(mid(url, i, 1))) 
-    next 
+function removeUrlPort(a)
+dim b
+b=split(a,ChrW(58))
+if ubound(b)=2 then
+a=b(0) & ChrW(58) & b(1) & ChrW(47)
+end if
+removeUrlPort=a
+end function
+
+function checkUrl(a)
+checkUrl = IIF(getWebSite(a) = "", false, true) 
 end function 
 
-
-'获得网站标题
-function getWebTitle(content)
-    getWebTitle = getStrCut(content, "<title>", "</title>", 0) 
+function checkHttpUrl(a)
+checkHttpUrl = checkUrl(a) 
 end function 
 
-'获得容中网址列表 (缺陷是网址全部小写了20150728)
-function getContentAHref(httpurl, content, byref pubAHrefList, byref pubATitleList)
-    dim i, s, tempS, lalType, nLen, lalStr, c 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if s = "<" then
-            tempS = LCase(mid(content, i)) 
-            lalType = LCase(mid(tempS, 1, inStr(tempS, " "))) 
-            if lalType = "<a " then
-                lalStr = mid(tempS, 1, inStr(tempS, "</") + 2) 
-                nLen = len(lalStr) - 1 
-                c = c & handleLink(httpurl, lalStr, "href", "", "url", pubAHrefList, pubATitleList) & vbCrLf 
-                i = i + nLen 
-            end if 
-        end if 
-        doEvents 
-    next 
-    if c <> "" then c = left(c, len(c) - 2) 
-    getContentAHref = c 
+function isUrl(a)
+isUrl = checkUrl(a) 
 end function 
 
-'获得内容中图片列表
-function getContentImgSrc(httpurl, content, byref pubAHrefList, byref pubATitleList)
-    dim i, s, tempS, lalType, nLen, lalStr, c 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if s = "<" then
-            tempS = LCase(mid(content, i)) 
-            lalType = LCase(mid(tempS, 1, inStr(tempS, " "))) 
-            if lalType = "<img " then
-                lalStr = mid(tempS, 1, inStr(tempS, ">")) 
-                nLen = len(lalStr) - 1 
-                'Call Echo(I,LalStr)
-                c = c & handleLink(httpurl, lalStr, "src", "", "url", pubAHrefList, pubATitleList) & vbCrLf 
-                i = i + nLen 
-            end if 
-        end if 
-        doEvents 
-    next 
-    if c <> "" then c = left(c, len(c) - 2) 
-    getContentImgSrc = c 
+function isHttpUrl(a)
+isHttpUrl = checkUrl(a)  
 end function 
 
+function batchFullHttpUrl(a,b)
+dim c,d,e
+c=split(b,vbcrlf) 
+for each d in c 
+d=fullHttpUrl(a, d) 
+if e <>"" then
+e=e & vbcrlf
+end if
+e=e & d
+next
+batchFullHttpUrl=e
+end function
 
-'替换内容里全部Js目录 20150722  call rwend(handleConentUrl("/admin/js/", "<script src='aa/js.js' ><script src=""bb/js.js"" >","",""))
-function replaceContentJsDir(content, dirPath, byref pubAHrefList, byref pubATitleList)
-    dim splStr, s, c 
-    splStr = split(content, vbCrLf) 
-    for each s in splStr
-        if c <> "" then c = c & vbCrLf 
-        if inStr(s, "<script ") > 0 and inStr(s, "</"&"script>") > 0 then
-            s = handleLink(dirPath, s, "src", "", "replaceDir", pubAHrefList, pubATitleList) 
-        end if 
-        c = c & s 
-    next 
-    replaceContentJsDir = c 
+
+function fullHttpUrl(byVal a, byVal b)
+
+fullHttpUrl=""
+dim c, d, e, f, g, h, i, j, k, l, m, n, o 
+dim p, q 
+a = phpTrim(a)
+b = phpTrim(b)
+o = lcase(b)
+if b = "" then fullHttpUrl = "" : exit function
+if trim(a) = "" then fullHttpUrl = b : exit function
+a = replace(a, ChrW(92), ChrW(47))
+b = replace(b, ChrW(92), ChrW(47))
+
+if left(b, 2) = ChrW(47)&ChrW(47) then
+fullHttpUrl = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58) & b
+exit function   
+end if 
+
+b = hanldeStyleBackgroundUrl(b, p, q) 
+c = getWebSite(a)
+l = c
+m = getWebSite(b)
+if right(c, 1) = ChrW(47) then c = left(c, len(c) - 1) 
+d = left(a, inStrRev(a, ChrW(47)))
+e = split(a, ChrW(47)) 
+for f = 0 to uBound(e)
+if f + 1 = uBound(e) then i = h
+if f + 2 = uBound(e) then j = h
+if f + 3 = uBound(e) then k = h
+g = e(f) 
+h = h & g & ChrW(47)
+next  
+b = trim(b)
+dim r
+r=e(ubound(e))
+if instr(ChrW(47) & b,ChrW(47)&ChrW(63))>0 then
+if instr(r,ChrW(63))>0 then
+r=mid(r,1,instr(r,ChrW(63))-1)
+d=d & r
+elseif instr(r,ChrW(46))>0 then
+d=d & r
+end if
+end if
+n = false
+if b <> "" and inStr(left(b, 10), ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)) = 0 and inStr(left(b, 10), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 and inStr(left(b, 10), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 then
+n = true 
+if l <> m then
+if l = replace(m, ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)) then
+n = false 
+if inStr(LCase(b), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) > 0 then
+b = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46) & right(b, len(b) - 7) 
+else
+b = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46) & b 
+end if 
+end if 
+end if 
+end if 
+
+if n = true then
+if left(b, 1) = ChrW(47) then
+b=mid(b,2)
+for f=1 to 9
+if left(b,3) <>ChrW(46)&ChrW(46)&ChrW(47) then
+b=ChrW(47) & b
+exit for
+end if
+b=mid(b,4)
+next
+b = c & b
+elseIf left(b, 3) = ChrW(46)&ChrW(46)&ChrW(47) or left(b, 2) = ChrW(46)&ChrW(47) then
+if left(b, 2) = ChrW(46)&ChrW(47) then
+b=mid(b, 3) 
+end if
+for f=1 to 9
+if left(b,3) <>ChrW(46)&ChrW(46)&ChrW(47) then 
+exit for
+end if
+if len(d) <>len(getWebSite(a)) then 
+d=mid(d,1,len(d)-1)
+d=mid(d,1,instrrev(d,ChrW(47))) 
+end if
+b=mid(b,4)
+next
+b = d & b 
+else
+b = d & b 
+end if 
+end if 
+if inStr(LCase(b), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 and inStr(LCase(b), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 then
+if inStr(LCase(a), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) > 0 and inStr(LCase(b), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 then
+b = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) & b 
+elseIf inStr(LCase(a), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)) > 0 and inStr(LCase(b), ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)) = 0 then
+b = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47) & b 
+end if 
+end if
+fullHttpUrl = p & b & q 
+
 end function 
 
-
-
-'获得网站目录文件夹名称 \Templates\WeiZhanLue\  得到WeiZhanLue
-function getEndUrlHandleName(fileUrl)
-    dim url 
-    url = replace(trim(fileUrl), "\", "/") 
-    if right(url, 1) = "/" then url = mid(url, 1, len(url) - 1) 
-    url = mid(url, inStrRev(url, "/") + 1) 
-    getEndUrlHandleName = url 
+function hanldeStyleBackgroundUrl(byval a, b, c)
+dim d 
+a = phpTrim(a)
+d = lcase(a) 
+a = replace(a, ChrW(92), ChrW(47))
+if (instr(a, ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(103)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(100)) > 0 or instr(a, ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(103)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(45)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)) > 0) and instr(a, ChrW(40)) > 0 and instr(a, ChrW(41)) > 0 then
+b = mid(a, 1, instr(a, ChrW(40))) 
+c = mid(a, instr(a, ChrW(41))) 
+a = mid(a, len(b) + 1) 
+a = phptrim(mid(a, 1, instr(a, ChrW(41)) - 1)) 
+a = replace(replace(a, ChrW(39), ""), ChrW(34), "") 
+end if 
+hanldeStyleBackgroundUrl = a 
 end function 
 
-
-'获得列表中不同域名列表
-function getUrlListInWebSiteList(content)
-    dim url, urlList, splStr 
-    splStr = split(content, vbCrLf) 
-    for each url in splStr
-        url = getWebSite(url) 
-        if url <> "" and inStr(vbCrLf & urlList & vbCrLf, vbCrLf & url & vbCrLf) = 0 then
-            urlList = urlList & url & vbCrLf 
-        end if 
-        doevents 
-    next 
-    getUrlListInWebSiteList = urlList 
+function uRLJianJieHandle(byVal a)
+a = replace(a, ChrW(38)&ChrW(97)&ChrW(109)&ChrW(112)&ChrW(59), ChrW(38)) 
+uRLJianJieHandle = a 
 end function 
 
-'获得当前网址的文件名称
+function urlToAsc(a)
+dim b
+urlToAsc=""
+for b = 1 to len(a)
+urlToAsc = urlToAsc & ChrW(37) & hex(ascW(mid(a, b, 1))) 
+next 
+end function 
+
+function getWebTitle(a)
+getWebTitle = getStrCut(a, ChrW(60)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(62), ChrW(60)&ChrW(47)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(62), 0) 
+end function 
+
+function getContentAHref(a, b, byref c, byref d)
+dim e, f, g, h, i, j, k 
+for e = 1 to len(b)
+f = mid(b, e, 1) 
+if f = ChrW(60) then
+g = LCase(mid(b, e)) 
+h = LCase(mid(g, 1, inStr(g, ChrW(32)))) 
+if h = ChrW(60)&ChrW(97)&ChrW(32) then
+j = mid(g, 1, inStr(g, ChrW(60)&ChrW(47)) + 2) 
+i = len(j) - 1 
+k = k & handleLink(a, j, ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102), "", ChrW(117)&ChrW(114)&ChrW(108), c, d) & vbCrLf 
+e = e + i 
+end if 
+end if 
+doEvents 
+next 
+if k <> "" then k = left(k, len(k) - 2) 
+getContentAHref = k 
+end function 
+
+function getContentImgSrc(a, b, byref c, byref d)
+dim e, f, g, h, i, j, k 
+for e = 1 to len(b)
+f = mid(b, e, 1) 
+if f = ChrW(60) then
+g = LCase(mid(b, e)) 
+h = LCase(mid(g, 1, inStr(g, ChrW(32)))) 
+if h = ChrW(60)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(32) then
+j = mid(g, 1, inStr(g, ChrW(62))) 
+i = len(j) - 1 
+
+k = k & handleLink(a, j, ChrW(115)&ChrW(114)&ChrW(99), "", ChrW(117)&ChrW(114)&ChrW(108), c, d) & vbCrLf 
+e = e + i 
+end if 
+end if 
+doEvents 
+next 
+if k <> "" then k = left(k, len(k) - 2) 
+getContentImgSrc = k 
+end function 
+
+function replaceContentJsDir(a, b, byref c, byref d)
+dim e, f, g 
+e = split(a, vbCrLf) 
+for each f in e
+if g <> "" then g = g & vbCrLf 
+if inStr(f, ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)) > 0 and inStr(f, ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62)) > 0 then
+f = handleLink(b, f, ChrW(115)&ChrW(114)&ChrW(99), "", ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(68)&ChrW(105)&ChrW(114), c, d) 
+end if 
+g = g & f 
+next 
+replaceContentJsDir = g 
+end function 
+
+function getEndUrlHandleName(a)
+dim b 
+b = replace(trim(a), ChrW(92), ChrW(47)) 
+if right(b, 1) = ChrW(47) then b = mid(b, 1, len(b) - 1) 
+b = mid(b, inStrRev(b, ChrW(47)) + 1) 
+getEndUrlHandleName = b 
+end function 
+
+function getUrlListInWebSiteList(a)
+dim b, c, d 
+d = split(a, vbCrLf) 
+for each b in d
+b = getWebSite(b) 
+if b <> "" and inStr(vbCrLf & c & vbCrLf, vbCrLf & b & vbCrLf) = 0 then
+c = c & b & vbCrLf 
+end if 
+doevents 
+next 
+getUrlListInWebSiteList = c 
+end function 
+
 function getThisUrlFileName()
-    dim url 
-    url = request.serverVariables("SCRIPT_NAME") 
-    if left(url, 1) = "/" then url = right(url, len(url) - 1) 
-    getThisUrlFileName = url 
+dim a 
+a = request.serverVariables(ChrW(83)&ChrW(67)&ChrW(82)&ChrW(73)&ChrW(80)&ChrW(84)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)) 
+if left(a, 1) = ChrW(47) then a = right(a, len(a) - 1) 
+getThisUrlFileName = a 
 end function 
 
-'处理网站HTML中Img    写得不是特别的完善好  Content = HandleWebHtmlImg("/aa/bb/",Content)
-function handleWebHtmlImg(rootPath, content, byref pubAHrefList, byref pubATitleList)
-    dim imgList, splStr, imgUrl, sNewImgUrl 
-    dim startStr, endStr 
-    imgList = getContentImgSrc("", content, pubAHrefList, pubATitleList) 
-    splStr = split(imgList, vbCrLf) 
-    for each imgUrl in splStr
-        if imgUrl <> "" then
-            sNewImgUrl = handleHttpUrl(imgUrl) 
-            if inStr(sNewImgUrl, "/") > 0 then
-                sNewImgUrl = mid(sNewImgUrl, inStrRev(sNewImgUrl, "/") + 1) 
-            end if 
-            sNewImgUrl = rootPath & sNewImgUrl 
-            'Call Echo(NewImgUrl,ImgUrl)
-            startStr = "src=""" : endStr = """" 
-            if inStr(content, startStr) > 0 and inStr(content, endStr) > 0 then
-                content = regExp_Replace(content, startStr & imgUrl & endStr, startStr & sNewImgUrl & endStr) 
-            end if 
-            startStr = "src='" : endStr = "'" 
-            if inStr(content, startStr) > 0 and inStr(content, endStr) > 0 then
-                content = regExp_Replace(content, startStr & imgUrl & endStr, startStr & sNewImgUrl & endStr) 
-            end if 
-        end if 
-    next 
-    handleWebHtmlImg = content 
+function handleWebHtmlImg(a, b, byref c, byref d)
+dim e, f, g, h 
+dim i, j 
+e = getContentImgSrc("", b, c, d) 
+f = split(e, vbCrLf) 
+for each g in f
+if g <> "" then
+h = handleHttpUrl(g) 
+if inStr(h, ChrW(47)) > 0 then
+h = mid(h, inStrRev(h, ChrW(47)) + 1) 
+end if 
+h = a & h 
+
+i = ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(34) : j = ChrW(34) 
+if inStr(b, i) > 0 and inStr(b, j) > 0 then
+b = regExp_Replace(b, i & g & j, i & h & j) 
+end if 
+i = ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(39) : j = ChrW(39) 
+if inStr(b, i) > 0 and inStr(b, j) > 0 then
+b = regExp_Replace(b, i & g & j, i & h & j) 
+end if 
+end if 
+next 
+handleWebHtmlImg = b 
 end function  
 
-'处理网站Css中Img    写得不是特别的完善好  Content = HandleWebHtmlImg("/aa/bb/",Content)
-function handleWebCssImg(rootPath, content)
-    dim startStr, endStr, imgList, splStr, c, imgUrl, sNewImgUrl 
-    startStr = "url\(" 
-    endStr = "\)" 
-    imgList = getArray(content, startStr, endStr, false, false) 
-    'Call RwEnd(ImgList)
-    splStr = split(imgList, "$Array$") 
-    for each imgUrl in splStr
-        if imgUrl <> "" then
-            sNewImgUrl = handleHttpUrl(imgUrl) 
-            if inStr(sNewImgUrl, "/") > 0 then
-                sNewImgUrl = mid(sNewImgUrl, inStrRev(sNewImgUrl, "/") + 1) 
-            end if 
-            sNewImgUrl = rootPath & sNewImgUrl 
-            startStr = "url(" 
-            endStr = ")" 
-            if inStr(content, startStr) > 0 and inStr(content, endStr) > 0 then
-                'call echo(StartStr,"StartStr")
-                content = regExp_Replace(content, startStr & imgUrl & endStr, startStr & sNewImgUrl & endStr) 
-            end if 
-        end if 
-    next 
-    handleWebCssImg = content 
+function handleWebCssImg(a, b)
+dim c, d, e, f, g, h, i 
+c = ChrW(117)&ChrW(114)&ChrW(108)&ChrW(92)&ChrW(40) 
+d = ChrW(92)&ChrW(41) 
+e = getArray(b, c, d, false, false) 
+
+f = split(e, ChrW(36)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)) 
+for each h in f
+if h <> "" then
+i = handleHttpUrl(h) 
+if inStr(i, ChrW(47)) > 0 then
+i = mid(i, inStrRev(i, ChrW(47)) + 1) 
+end if 
+i = a & i 
+c = ChrW(117)&ChrW(114)&ChrW(108)&ChrW(40) 
+d = ChrW(41) 
+if inStr(b, c) > 0 and inStr(b, d) > 0 then
+
+b = regExp_Replace(b, c & h & d, c & i & d) 
+end if 
+end if 
+next 
+handleWebCssImg = b 
 end function 
 
-'批量处理网址完整性
-function batchHandleUrlIntegrity(httpurl, urlList)
-    dim splUrl, url, c 
-    splUrl = split(urlList, vbCrLf) 
-    for each url in splUrl
-        if url <> "" then
-            url = fullHttpUrl(httpurl, url) 
-            if inStr(vbCrLf & c & vbCrLf, vbCrLf & url & vbCrLf) = 0 then
-                c = c & url & vbCrLf 
-            end if 
-        end if 
-    next 
-    batchHandleUrlIntegrity = c 
+function batchHandleUrlIntegrity(a, b)
+dim c, d, e 
+c = split(b, vbCrLf) 
+for each d in c
+if d <> "" then
+d = fullHttpUrl(a, d) 
+if inStr(vbCrLf & e & vbCrLf, vbCrLf & d & vbCrLf) = 0 then
+e = e & d & vbCrLf 
+end if 
+end if 
+next 
+batchHandleUrlIntegrity = e 
 end function 
 
-'处理内容中链接图片路径 目录是显示图片
-function replaceContentImagePath(rootFolder, content)
-    dim imageFile, toImageFile, imageList, splxx 
-    rootFolder = handleHttpUrl(rootFolder) 
-    if right(rootFolder, 1) <> "/" then rootFolder = rootFolder & "/" 
-    imageList = getDirFileNameList(rootFolder, "") 
-    splxx = split(imageList, vbCrLf) 
-    for each imageFile in splxx
-        if imageFile <> "" then
-            toImageFile = "file:///" & rootFolder & imageFile 
-            'html中图片路径替换
-            content = replace(content, """" & imageFile & """", """" & toImageFile & """") 
-            content = replace(content, "'" & imageFile & "'", """" & toImageFile & """") 
-            content = replace(content, "=" & imageFile & " ", """" & toImageFile & """") 
-            content = replace(content, "=" & imageFile & ">", """" & toImageFile & """") 
-            'Css中图片路径替换
-            content = replace(content, "(" & imageFile & ")", "(" & toImageFile & ")") 
-            content = replace(content, "(" & imageFile & ";", "(" & toImageFile & ";") 
-        end if 
-    next 
-    replaceContentImagePath = content 
+function replaceContentImagePath(a, b)
+dim c, d, e, f 
+a = handleHttpUrl(a) 
+if right(a, 1) <> ChrW(47) then a = a & ChrW(47) 
+e = getDirFileNameList(a, "") 
+f = split(e, vbCrLf) 
+for each c in f
+if c <> "" then
+d = ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(47) & a & c 
+
+b = replace(b, ChrW(34) & c & ChrW(34), ChrW(34) & d & ChrW(34)) 
+b = replace(b, ChrW(39) & c & ChrW(39), ChrW(34) & d & ChrW(34)) 
+b = replace(b, ChrW(61) & c & ChrW(32), ChrW(34) & d & ChrW(34)) 
+b = replace(b, ChrW(61) & c & ChrW(62), ChrW(34) & d & ChrW(34)) 
+
+b = replace(b, ChrW(40) & c & ChrW(41), ChrW(40) & d & ChrW(41)) 
+b = replace(b, ChrW(40) & c & ChrW(59), ChrW(40) & d & ChrW(59)) 
+end if 
+next 
+replaceContentImagePath = b 
 end function 
 
-'获得Css链接列表 是名称
-function getCssLinkList(byVal content)
-    dim startStr, endStr, splStr, s, c, fileName 
-    startStr = "<link" : endStr = "/>" 
-    content = getArray(content, startStr, endStr, false, false) 
-    splStr = split(content, "$Array$") 
-    for each s in splStr
-        if inStr(LCase(s), "stylesheet") > 0 then
-            fileName = strCut(s, "href=""", """", 2) 
-            call echo(fileName, s) 
-            c = c & fileName & vbCrLf 
-        end if 
-    next 
-    getCssLinkList = c 
+function getCssLinkList(byVal a)
+dim b, c, d, e, f, g 
+b = ChrW(60)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107) : c = ChrW(47)&ChrW(62) 
+a = getArray(a, b, c, false, false) 
+d = split(a, ChrW(36)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(36)) 
+for each e in d
+if inStr(LCase(e), ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(101)&ChrW(101)&ChrW(116)) > 0 then
+g = strCut(e, ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(34), ChrW(34), 2) 
+call echo(g, e) 
+f = f & g & vbCrLf 
+end if 
+next 
+getCssLinkList = f 
 end function 
 
-'获得Html中图片地址列表
-function getHtmlBackGroundUrlList(content)
-    dim i, s, yuanStr, tempS, lalType, nLen, lalStr, c, startStr, endStr 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if s = "<" then
-            yuanStr = mid(content, i) 
-            tempS = LCase(yuanStr) 
-            lalStr = mid(yuanStr, 1, inStr(yuanStr, ">")) 
-            lalType = LCase(mid(tempS, 1, inStr(tempS, " "))) 
-            if inStr(lalStr, "url(") > 0 then
-                startStr = "url(" : endStr = ")" 
-                c = c & strCut(lalStr, startStr, endStr, 2) & vbCrLf 
-                i = i + nLen 
-            end if 
-        end if 
-        doEvents 
-    next 
-    getHtmlBackGroundUrlList = c 
+function getHtmlBackGroundUrlList(a)
+dim b, c, d, e, f, g, h, i, j, k 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if c = ChrW(60) then
+d = mid(a, b) 
+e = LCase(d) 
+h = mid(d, 1, inStr(d, ChrW(62))) 
+f = LCase(mid(e, 1, inStr(e, ChrW(32)))) 
+if inStr(h, ChrW(117)&ChrW(114)&ChrW(108)&ChrW(40)) > 0 then
+j = ChrW(117)&ChrW(114)&ChrW(108)&ChrW(40) : k = ChrW(41) 
+i = i & strCut(h, j, k, 2) & vbCrLf 
+b = b + g 
+end if 
+end if 
+doEvents 
+next 
+getHtmlBackGroundUrlList = i 
 end function 
 
-'获得图片地址列表
-function getImgUrlList(content)
-    dim i, s, yuanStr, tempS, lalType, nLen, lalStr, c 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if s = "<" then
-            yuanStr = mid(content, i) 
-            tempS = LCase(yuanStr) 
-            lalStr = mid(yuanStr, 1, inStr(yuanStr, ">")) 
-            lalType = LCase(mid(tempS, 1, inStr(tempS, " "))) 
-            if lalType = "<img " then
-                c = c & getLinkUrl(lalStr, "src") & vbCrLf 
-                i = i + nLen 
-
-            end if 
-        end if 
-        doEvents 
-    next 
-    getImgUrlList = c 
+function getImgUrlList(a)
+dim b, c, d, e, f, g, h, i 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if c = ChrW(60) then
+d = mid(a, b) 
+e = LCase(d) 
+h = mid(d, 1, inStr(d, ChrW(62))) 
+f = LCase(mid(e, 1, inStr(e, ChrW(32)))) 
+if f = ChrW(60)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(32) then
+i = i & getLinkUrl(h, ChrW(115)&ChrW(114)&ChrW(99)) & vbCrLf 
+b = b + g 
+end if 
+end if 
+doEvents 
+next 
+getImgUrlList = i 
 end function 
 
-'获得img或a地址 如GetLinkUrl(LalStr, "src")
-function getLinkUrl(byVal linkStr, linkType)
-    dim tempLinkStr, startStr, endStr, linkUrl 
-    linkStr = replace(replace(linkStr, "= ", "="), "= ", "=") 
-    linkStr = replace(replace(linkStr, " =", "="), " =", "=") 
-    tempLinkStr = LCase(linkStr) 
-	getLinkUrl=""
-    startStr = linkType & "=""" 
-    endStr = """" 
-    if inStr(tempLinkStr, startStr) > 0 and inStr(tempLinkStr, endStr) > 0 then
-        linkUrl = strCut(tempLinkStr, startStr, endStr, 2) 
-        getLinkUrl = linkUrl 
-    end if 
+function getLinkUrl(byVal a, b)
+dim c, d, e, f 
+a = replace(replace(a, ChrW(61)&ChrW(32), ChrW(61)), ChrW(61)&ChrW(32), ChrW(61)) 
+a = replace(replace(a, ChrW(32)&ChrW(61), ChrW(61)), ChrW(32)&ChrW(61), ChrW(61)) 
+c = LCase(a) 
+getLinkUrl=""
+d = b & ChrW(61)&ChrW(34) 
+e = ChrW(34) 
+if inStr(c, d) > 0 and inStr(c, e) > 0 then
+f = strCut(c, d, e, 2) 
+getLinkUrl = f 
+end if 
 end function 
 
-'是本地网址或远程网址        20141120
-function localUrlOrRemoteUrl(filePath, isUrlOK)
-    dim httpurl 
-    isUrlOK = false 
-    filePath = trim(filePath) 
-    httpurl = replace(filePath, "\", "/") 
-    if left(LCase(httpurl), 7) = "http://" or left(LCase(httpurl), 4) = "www." or left(LCase(httpurl), 4) = "[网址]" then
-        isUrlOK = true 
-    end if 
-    if isUrlOK = false then
-        filePath = setFileName(filePath) 
-    end if 
-    localUrlOrRemoteUrl = filePath 
+function localUrlOrRemoteUrl(a, b)
+dim c 
+b = false 
+a = trim(a) 
+c = replace(a, ChrW(92), ChrW(47)) 
+if left(LCase(c), 7) = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) or left(LCase(c), 4) = ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46) or left(LCase(c), 4) = ChrW(91)&ChrW(32593)&ChrW(22336)&ChrW(93) then
+b = true 
+end if 
+if b = false then
+a = setFileName(a) 
+end if 
+localUrlOrRemoteUrl = a 
 end function 
 
-'检测是否为远程网址
-function checkRemoteUrl(url)
-    dim httpurl 
-    url = trim(url) 
-    httpurl = replace(unSetFileName(url), "\", "/") 
-    checkRemoteUrl = false 
-    if left(LCase(httpurl), 7) = "http://" or left(LCase(httpurl), 4) = "www." or left(LCase(httpurl), 4) = "[网址]" then
-        if left(LCase(httpurl), 4) = "[网址]" then
-            url = mid(url, inStr(url, "[网址]") + 1) 
-        end if 
-        checkRemoteUrl = true 
-    end if 
+function checkRemoteUrl(a)
+dim b 
+a = trim(a) 
+b = replace(unSetFileName(a), ChrW(92), ChrW(47)) 
+checkRemoteUrl = false 
+if left(LCase(b), 7) = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) or left(LCase(b), 4) = ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46) or left(LCase(b), 4) = ChrW(91)&ChrW(32593)&ChrW(22336)&ChrW(93) then
+if left(LCase(b), 4) = ChrW(91)&ChrW(32593)&ChrW(22336)&ChrW(93) then
+a = mid(a, inStr(a, ChrW(91)&ChrW(32593)&ChrW(22336)&ChrW(93)) + 1) 
+end if 
+checkRemoteUrl = true 
+end if 
 end function 
 
 
 
-'函数名称：AsaiLinkAdd   20141217引用别人
-'函数作用：正则自动添加链接
-'例：Response.Write AsaiLinkAdd("http://www.wzl99.com/小孙、小孙http://www.wzl99.com/小孙、小孙http://www.wzl99.com//小孙、小孙http://www.wzl99.com/小孙、小孙http://www.wzl99.com/小孙、小孙www.wzl99.com/小孙、小孙fengying789@126.com小孙、小孙")
-function asaiLinkAdd(str)
-    dim re 
-    str = " " & str 
-    set re = createObject("VBscript.RegExp")                                        '建立正则表达式对象regular expression
-        re.ignoreCase = true                                                            '忽略大小写
-        re.global = true                                                                '搜索匹配字串针对全部文本
-        '查找带协议前缀的链接
-        re.pattern = "(http://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?)" 
-        str = re.replace(str, "<a href='$1' target='_blank'>$1</a>") 
-        '查找不带协议前缀的链接
-        re.pattern = "([^(http:\/\/)])(www\.([\w-]+\.)+[\w]+(\/[\w-]+)*[\/]?([\w-]+\.[\w]+)?(\?[\w]+=[\w]+(&[\w]+=[\w]+)*)?)" 
-        str = re.replace(str, "$1<a href='http://$2' target='_blank'>$2</a>") 
-        '查找邮件链接
-        re.pattern = "(mailto:)?([\w]+@([\w-]+\.)+[\w]+)" 
-        str = re.replace(str, "<a href='mailto:$2'>$1$2</a>") 
-    set re = nothing 
-    asaiLinkAdd = replace(trim(str), " </a>", "") 
-    asaiLinkAdd = replace(trim(str), " ;</a>", "") 
-    asaiLinkAdd = replace(trim(str), " ；</a>", "") 
+function asaiLinkAdd(a)
+dim b 
+a = ChrW(32) & a 
+set b = createObject(ChrW(86)&ChrW(66)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(103)&ChrW(69)&ChrW(120)&ChrW(112))
+b.ignorecase = true
+b.global = true
+
+b.pattern = ChrW(40)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(93)&ChrW(43)&ChrW(92)&ChrW(46)&ChrW(41)&ChrW(43)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(93)&ChrW(43)&ChrW(40)&ChrW(47)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(32)&ChrW(46)&ChrW(47)&ChrW(63)&ChrW(37)&ChrW(38)&ChrW(61)&ChrW(93)&ChrW(42)&ChrW(41)&ChrW(63)&ChrW(41) 
+a = b.replace(a, ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(36)&ChrW(49)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62)&ChrW(36)&ChrW(49)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+
+b.pattern = ChrW(40)&ChrW(91)&ChrW(94)&ChrW(40)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(92)&ChrW(47)&ChrW(92)&ChrW(47)&ChrW(41)&ChrW(93)&ChrW(41)&ChrW(40)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(92)&ChrW(46)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(93)&ChrW(43)&ChrW(92)&ChrW(46)&ChrW(41)&ChrW(43)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(40)&ChrW(92)&ChrW(47)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(93)&ChrW(43)&ChrW(41)&ChrW(42)&ChrW(91)&ChrW(92)&ChrW(47)&ChrW(93)&ChrW(63)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(93)&ChrW(43)&ChrW(92)&ChrW(46)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(41)&ChrW(63)&ChrW(40)&ChrW(92)&ChrW(63)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(61)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(40)&ChrW(38)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(61)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(41)&ChrW(42)&ChrW(41)&ChrW(63)&ChrW(41) 
+a = b.replace(a, ChrW(36)&ChrW(49)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(36)&ChrW(50)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62)&ChrW(36)&ChrW(50)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+
+b.pattern = ChrW(40)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(116)&ChrW(111)&ChrW(58)&ChrW(41)&ChrW(63)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(64)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(45)&ChrW(93)&ChrW(43)&ChrW(92)&ChrW(46)&ChrW(41)&ChrW(43)&ChrW(91)&ChrW(92)&ChrW(119)&ChrW(93)&ChrW(43)&ChrW(41) 
+a = b.replace(a, ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(109)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(116)&ChrW(111)&ChrW(58)&ChrW(36)&ChrW(50)&ChrW(39)&ChrW(62)&ChrW(36)&ChrW(49)&ChrW(36)&ChrW(50)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
+set b = nothing 
+asaiLinkAdd = replace(trim(a), ChrW(32)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62), "") 
+asaiLinkAdd = replace(trim(a), ChrW(32)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62), "") 
+asaiLinkAdd = replace(trim(a), ChrW(32)&ChrW(65307)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62), "") 
 end function 
 
-'函数名称：AsaiLinkDel Asai(浅井)   20141217引用别人
-'函数作用：正则自动去除链接
-'例：Response.Write AsaiLinkDel("<a href='http://www.wzl99.com/' target='_blank'>http://www.wzl99.com/</a>小孙、小孙<a href='http://www.wzl99.com/' target='_blank'>http://www.wzl99.com/</a>小孙、")
-function asaiLinkDel(htmlStr)
-    dim ra 
-    set ra = createObject("VBscript.RegExp")
-        ra.ignoreCase = true 
-        ra.global = true 
-        ra.pattern = "<a[^>]+>(.+?)<\/a>" 
-        asaiLinkDel = ra.replace(htmlStr, "$1") 
+
+
+function asaiLinkDel(a)
+dim b 
+set b = createObject(ChrW(86)&ChrW(66)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(103)&ChrW(69)&ChrW(120)&ChrW(112))
+b.ignorecase = true 
+b.global = true 
+b.pattern = ChrW(60)&ChrW(97)&ChrW(91)&ChrW(94)&ChrW(62)&ChrW(93)&ChrW(43)&ChrW(62)&ChrW(40)&ChrW(46)&ChrW(43)&ChrW(63)&ChrW(41)&ChrW(60)&ChrW(92)&ChrW(47)&ChrW(97)&ChrW(62) 
+asaiLinkDel = b.replace(a, ChrW(36)&ChrW(49)) 
 end function
 
-'判断域名是否合法  暂存
-function iswww(strng)
-    iswww = false 
-    dim regex, match 
-    set regex = createObject("VBscript.RegExp")
-        regex.pattern = "^\w+((-\w+)|(\.\w+))*[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$" 
-        regex.ignoreCase = true 
-        set match = regex.execute(strng)
-            if match.count then iswww = true 
+function iswww(a)
+iswww = false 
+dim b, c 
+set b = createObject(ChrW(86)&ChrW(66)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(103)&ChrW(69)&ChrW(120)&ChrW(112))
+b.pattern = ChrW(94)&ChrW(92)&ChrW(119)&ChrW(43)&ChrW(40)&ChrW(40)&ChrW(45)&ChrW(92)&ChrW(119)&ChrW(43)&ChrW(41)&ChrW(124)&ChrW(40)&ChrW(92)&ChrW(46)&ChrW(92)&ChrW(119)&ChrW(43)&ChrW(41)&ChrW(41)&ChrW(42)&ChrW(91)&ChrW(65)&ChrW(45)&ChrW(90)&ChrW(97)&ChrW(45)&ChrW(122)&ChrW(48)&ChrW(45)&ChrW(57)&ChrW(93)&ChrW(43)&ChrW(40)&ChrW(40)&ChrW(92)&ChrW(46)&ChrW(124)&ChrW(45)&ChrW(41)&ChrW(91)&ChrW(65)&ChrW(45)&ChrW(90)&ChrW(97)&ChrW(45)&ChrW(122)&ChrW(48)&ChrW(45)&ChrW(57)&ChrW(93)&ChrW(43)&ChrW(41)&ChrW(42)&ChrW(92)&ChrW(46)&ChrW(91)&ChrW(65)&ChrW(45)&ChrW(90)&ChrW(97)&ChrW(45)&ChrW(122)&ChrW(93)&ChrW(43)&ChrW(36) 
+b.ignorecase = true 
+set c = b.execute(a)
+if c.count then iswww = true 
 end function
 
 
-'加强于20150220
-'追加网址参数20150121  getUrlAddToParam("aa","&a=b","replace")   addto replace    SType为追加还是替换
-'Url = getUrlAddToParam("http://www.baidu.com/?a=1&b=2&c=3","?a=11&b=22&c=333","")        'http://www.baidu.com/?a=1&b=2&c=3
-'Url = getUrlAddToParam("http://www.baidu.com/?a=1&b=2&c=3","?a=11&b=22&c=333","replace")        'http://www.baidu.com/?a=11&b=22&c=333
-'Url = getUrlAddToParam(GetUrl(),"id=" & Rs("Id"),"replace")
-'Call Echo(Url,getUrlAddToParam(Url,"id=1&aa=1&bb=2","delete"))          批量删除参数
-function getUrlAddToParam(byVal url, byVal addToUrl, sType)
-    dim content, splStr, splxx, s, c, httpurl, urlFileName, webSite 
-    dim urlParam                                                                    '网址参数 是获得网址后台参数值
-    dim paramName                                                                   '参数名称
-    dim paramValue                                                                  '参数值
-    dim paramNameList                                                               '参数名称列表，防止重复
-    dim isHandle                                                                   '处理为真
-
-    addToUrl = handleHttpUrl(addToUrl) 
-
-    '处理网址
-    url = trim(url) 
-    '当前网址最后一个字符为?或&给删除掉 无用
-    if right(url, 1) = "?" or right(url, 1) = "&" then
-        url = trim(mid(url, 1, len(url) - 1)) 
-    end if 
-    '处理追加网址
-    addToUrl = trim(addToUrl) 
-    '追加网址最后一个字符为?或&给删除掉 无用
-    if left(addToUrl, 1) = "?" or left(addToUrl, 1) = "&" then
-        addToUrl = trim(mid(addToUrl, 2)) 
-    end if 
-    '网址为空则返回追加网址 并退出
-    if url = "" then getUrlAddToParam = "?" & addToUrl : exit function 
-
-    httpurl = url 
-    if inStr(url, "?") > 0 then
-        httpurl = mid(url, 1, inStr(url, "?") - 1)                                      '获得当前路径网址
-        webSite = getWebSite(url)                                                       '处理域名
-        urlParam = mid(url, inStr(url, "?") + 1) 
-
-        httpurl = handleHttpUrl(httpurl) 
-        if right(httpurl, 1) <> "/" then
-            urlFileName = mid(httpurl, inStrRev(httpurl, "/") + 1) 
-            httpurl = left(httpurl, len(httpurl) - len(urlFileName)) 
-        'Call Echo(HttpUrl,UrlFileName)
-        end if 
-    end if 
-
-    '类型选择  追加 不是替换
-    if LCase(sType) = "replace" or sType = "替换" then
-        content = addToUrl & "&" & urlParam 
-        'Call echo("Content",Content)
-        if inStr(addToUrl, "?") > 0 then
-            urlFileName = mid(addToUrl, 1, inStr(addToUrl, "?") - 1) 
-        'Call Echo(AddToUrl,UrlFileName)
-        end if 
-    elseIf (LCase(sType) <> "delete" or LCase(sType) <> "del") then
-        content = urlParam & "&" & addToUrl 
-    end if 
-
-    content = replace(content, "?", "&") 
-
-    '处理删除参数 20150210
-    if LCase(sType) = "delete" or LCase(sType) = "del" then
-        splStr = split(LCase(addToUrl), "&") : addToUrl = "&" 
-        for each s in splStr
-            if inStr(s, "=")>0 then
-                s = mid(s, 1, inStr(s, "=") - 1) 
-            end if 
-            if s <> "" then
-                addToUrl = addToUrl & s & "&" 
-            end if 
-        next 
-    'Call Eerr("AddToUrl",AddToUrl)
-    end if 
-
-    'Call Echo("Content",Content)
-    splStr = split(content, "&") 
-    for each s in splStr
-        if inStr(s, "=") > 0 then
-            splxx = split(s, "=") 
-            paramName = splxx(0) 
-			paramValue=""
-			'【@是jsp显示@】try{
-				paramValue = splxx(1) 
-			'【@是jsp显示@】}catch(Exception e){}
-            isHandle = true 
-
-            if LCase(sType) = "delete" or LCase(sType) = "del" then
-                if inStr("&" & addToUrl & "&", "&" & LCase(paramName) & "&") > 0 then
-                    isHandle = false 
-                end if 
-            end if 
-
-            if inStr("|" & paramNameList & "|", "|" & LCase(paramName) & "|") = 0 and isHandle = true then
-                paramNameList = paramNameList & LCase(paramName) & "|" 
-                c = c & IIF(c = "", "?", "&") 
-                c = c & paramName & "=" & paramValue 
-            end if 
-        end if 
-    next 
 
 
 
-    c = urlFileName & c 
-    if getWebSite(c) = "" then
-        if left(addToUrl, 1) = "/" then
-            c = webSite & c 
-        else
-            c = httpurl & c 
-        end if 
 
-    end if 
+function getUrlAddToParam(byVal a, byVal b, c)
+dim d, e, f, g, h, i, j, k 
+dim l
+dim m
+dim n
+dim o
+dim p
+b = handleHttpUrl(b) 
 
-    c = replace(c, "\", "/")                                                        '20160313
-    getUrlAddToParam = c 
+a = trim(a) 
+
+if right(a, 1) = ChrW(63) or right(a, 1) = ChrW(38) then
+a = trim(mid(a, 1, len(a) - 1)) 
+end if 
+
+b = trim(b) 
+
+if left(b, 1) = ChrW(63) or left(b, 1) = ChrW(38) then
+b = trim(mid(b, 2)) 
+end if 
+
+if a = "" then getUrlAddToParam = ChrW(63) & b : exit function 
+i = a 
+if inStr(a, ChrW(63)) > 0 then
+i = mid(a, 1, inStr(a, ChrW(63)) - 1)
+k = getWebSite(a)
+l = mid(a, inStr(a, ChrW(63)) + 1) 
+i = handleHttpUrl(i) 
+if right(i, 1) <> ChrW(47) then
+j = mid(i, inStrRev(i, ChrW(47)) + 1) 
+i = left(i, len(i) - len(j)) 
+
+end if 
+end if 
+
+if LCase(c) = ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101) or c = ChrW(26367)&ChrW(25442) then
+d = b & ChrW(38) & l 
+
+if inStr(b, ChrW(63)) > 0 then
+j = mid(b, 1, inStr(b, ChrW(63)) - 1) 
+
+end if 
+elseIf (LCase(c) <> ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101) or LCase(c) <> ChrW(100)&ChrW(101)&ChrW(108)) then
+d = l & ChrW(38) & b 
+end if 
+d = replace(d, ChrW(63), ChrW(38)) 
+
+if LCase(c) = ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101) or LCase(c) = ChrW(100)&ChrW(101)&ChrW(108) then
+e = split(LCase(b), ChrW(38)) : b = ChrW(38) 
+for each g in e
+if inStr(g, ChrW(61))>0 then
+g = mid(g, 1, inStr(g, ChrW(61)) - 1) 
+end if 
+if g <> "" then
+b = b & g & ChrW(38) 
+end if 
+next 
+
+end if 
+
+e = split(d, ChrW(38)) 
+for each g in e
+if inStr(g, ChrW(61)) > 0 then
+f = split(g, ChrW(61)) 
+m = f(0) 
+n=""
+
+n = f(1) 
+
+p = true 
+if LCase(c) = ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101) or LCase(c) = ChrW(100)&ChrW(101)&ChrW(108) then
+if inStr(ChrW(38) & b & ChrW(38), ChrW(38) & LCase(m) & ChrW(38)) > 0 then
+p = false 
+end if 
+end if 
+if inStr(ChrW(124) & o & ChrW(124), ChrW(124) & LCase(m) & ChrW(124)) = 0 and p = true then
+o = o & LCase(m) & ChrW(124) 
+h = h & IIF(h = "", ChrW(63), ChrW(38)) 
+h = h & m & ChrW(61) & n 
+end if 
+end if 
+next 
+h = j & h 
+if getWebSite(h) = "" then
+if left(b, 1) = ChrW(47) then
+h = k & h 
+else
+h = i & h 
+end if 
+end if 
+h = replace(h, ChrW(92), ChrW(47))
+getUrlAddToParam = h 
+end function 
+
+function groupUrl(a, b)
+dim c, d 
+c = ChrW(47) 
+a = replace(a, IIF(c = ChrW(47), ChrW(92), ChrW(47)), c) 
+b = replace(b, IIF(c = ChrW(47), ChrW(92), ChrW(47)), c) 
+a = phptrim(a) 
+b = phptrim(b) 
+for d = 0 to 99
+if right(a, 1) = c then
+a = mid(a, 1, len(a) - 1) 
+else
+exit for 
+end if 
+next 
+for d = 0 to 99
+if left(b, 1) = c then
+b = mid(b, 2) 
+else
+exit for 
+end if 
+next 
+groupUrl = a & c & b 
+end function 
+
+Function GetCurrentParams()
+Dim a, b
+a = ""
+
+For each b In Request.QueryString
+If b <> ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101) Then
+If a <> "" Then a = a & ChrW(38)
+a = a & b & ChrW(61) & Server.URLEncode(Request.QueryString(b))
+End if
+Next
+If a <> "" Then
+GetCurrentParams = ChrW(63) & a
+Else
+GetCurrentParams = ChrW(63)
+End if
+End function
+
+function handlePostCookiesParame(a, b)
+dim c, d, e, f, g 
+c = split(a, ChrW(38)) 
+for each d in c
+if inStr(d, ChrW(61)) > 0 then
+f = mid(d, 1, inStr(d, ChrW(61))) 
+g = mid(d, inStr(d, ChrW(61)) + 1) 
+if LCase(b) = ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116) or b = "" then
+if e <> "" then 
+e = e & ChrW(38)
+end if
+g = escape(g) 
+elseIf LCase(b) = ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115) or LCase(b) = ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101) then
+if e <> "" then e = e & ChrW(59) 
+g = URLEncoding(g) 
+end if 
+e = e & f & g 
+
+end if 
+next 
+handlePostCookiesParame = e 
+end function 
+
+function remoteHttpUrlParameter(a)
+dim b, c, d, e, f 
+
+if inStr(a, ChrW(63)) = 0 then
+remoteHttpUrlParameter = a 
+exit function 
+end if 
+b = split(a, ChrW(38)) 
+for each c in b
+if inStr(c, ChrW(61)) > 0 then
+e = mid(c, 1, inStr(c, ChrW(61))) 
+f = mid(c, inStr(c, ChrW(61)) + 1) 
+if d <> "" then d = d & ChrW(38) 
+d = d & e 
+end if 
+next 
+remoteHttpUrlParameter = d 
+end function 
+
+
+function checkUrlName(a)
+dim b, c, d 
+a = LCase(a)
+d = LCase(request.serverVariables(ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(95)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))) 
+b = split(a, ChrW(124)) 
+for each c in b
+if c <> "" then
+if inStr(d, c) > 0 then
+checkUrlName = true 
+exit function 
+end if 
+end if 
+next 
+checkUrlName = false 
 end function 
 
 
 
 
-'组合网址 20150706 call echo("",groupUrl("www.baidu.com//","/1.asp"))
-function groupUrl(url1, url2)
-    dim urlType, i 
-    urlType = "/" 
-    url1 = replace(url1, IIF(urlType = "/", "\", "/"), urlType) 
-    url2 = replace(url2, IIF(urlType = "/", "\", "/"), urlType) 
-    url1 = phptrim(url1) 
-    url2 = phptrim(url2) 
-    for i = 0 to 99
-        if right(url1, 1) = urlType then
-            url1 = mid(url1, 1, len(url1) - 1) 
-        else
-            exit for 
-        end if 
-    next 
-    for i = 0 to 99
-        if left(url2, 1) = urlType then
-            url2 = mid(url2, 2) 
-        else
-            exit for 
-        end if 
-    next 
-    groupUrl = url1 & urlType & url2 
+
+
+
+
+
+
+function handleHttpUrlArray(byVal a)
+
+dim b, c, d, e, f, g, h 
+a = handleHttpUrl(a) 
+b = mid(a, 1, inStrRev(a, ChrW(47))) 
+e = mid(a, inStrRev(a, ChrW(47)) + 1) : c = e 
+if inStr(e, ChrW(63)) > 0 then
+c = mid(e, 1, inStr(e, ChrW(63)) - 1) 
+end if 
+d = mid(c, inStrRev(c, ChrW(46)) + 1) 
+f = mid(a, 1, inStr(a, ChrW(58)) - 1) 
+g = getWebSite(a) 
+
+
+if g <> "" then
+h = mid(b, len(g)) 
+else
+call echoYellowB(ChrW(27880)&ChrW(24847)&ChrW(65306)&ChrW(19981)&ChrW(26159)&ChrW(26377)&ChrW(25928)&ChrW(32593)&ChrW(22336), a) 
+end if 
+
+dim i 
+i = split(a & vbCrLf & b & vbCrLf & c & vbCrLf & d & vbCrLf & e & vbCrLf & f & vbCrLf & g & vbCrLf & h, vbCrLf) 
+handleHttpUrlArray = i 
 end function 
 
-
-
-'处理POST或Cookes发送方式的参数处理
-function handlePostCookiesParame(parame, sType)
-    dim splStr, s, c, leftC, rightC 
-    splStr = split(parame, "&") 
-    for each s in splStr
-        if inStr(s, "=") > 0 then
-            leftC = mid(s, 1, inStr(s, "=")) 
-            rightC = mid(s, inStr(s, "=") + 1) 
-            if LCase(sType) = "post" or sType = "" then
-    
-	            if c <> "" then 
-					c = c & "&" 		'这里在转.net时会多个=号 ? 20160727  不能用一行
-				end if
-                rightC = escape(rightC) 
-            elseIf LCase(sType) = "cookies" or LCase(sType) = "cookie" then
-                if c <> "" then c = c & ";" 
-                rightC = URLEncoding(rightC) 
-            end if 
-            c = c & leftC & rightC 
-        'call echo(leftC,RightC)
-        end if 
-    next 
-    handlePostCookiesParame = c 
+function remoteJsCssParam(a, b)
+remoteJsCssParam = handleRemoteJsCssParam(a, b, ChrW(124)&ChrW(26367)&ChrW(25442)&ChrW(20869)&ChrW(23481)&ChrW(124)&ChrW(26367)&ChrW(25442)&ChrW(32593)&ChrW(22336)) 
 end function 
 
+function handleRemoteJsCssParam(a, b, c)
+dim d, e, f, g, h, i, j, k 
+c = ChrW(124) & c & ChrW(124) 
+d = split(b, vbCrLf) 
+for each f in d
+if f <> "" then
+if e <> "" then e = e & vbCrLf 
+g = handleHttpUrlArray(f) 
+h = g(2) 
+i = LCase(g(3)) 
+j = LCase(g(4)) 
+if (i = ChrW(106)&ChrW(115) or i = ChrW(99)&ChrW(115)&ChrW(115)) and inStr(j, ChrW(63)) > 0 and instr(h, ChrW(46)) > 0 then
+k = mid(f, 1, inStr(f, ChrW(63)) - 1) 
 
-'移除网址中参数20150724
-function remoteHttpUrlParameter(httpurl)
-    dim splStr, s, c, leftC, rightC 
-    '没有?号退出
-    if inStr(httpurl, "?") = 0 then
-        remoteHttpUrlParameter = httpurl 
-        exit function 
-    end if 
-    splStr = split(httpurl, "&") 
-    for each s in splStr
-        if inStr(s, "=") > 0 then
-            leftC = mid(s, 1, inStr(s, "=")) 
-            rightC = mid(s, inStr(s, "=") + 1) 
-            if c <> "" then c = c & "&" 
-            c = c & leftC 
-        end if 
-    next 
-    remoteHttpUrlParameter = c 
+
+if inStr(c, ChrW(124)&ChrW(26367)&ChrW(25442)&ChrW(20869)&ChrW(23481)&ChrW(124)) > 0 then
+a = replace(a, f, k) 
+end if 
+if inStr(c, ChrW(124)&ChrW(26367)&ChrW(25442)&ChrW(32593)&ChrW(22336)&ChrW(124)) > 0 then
+b = replace(b, f, k) 
+end if 
+end if 
+end if 
+next 
 end function 
 
-
-'检测当前网址里文件名称是否存在(20150909)
-'用法 call echo("checkUrlName",checkUrlName("1|2|3|"))      <%=IIF(checkUrlName("1|2|3|"),"111","222")% >
-function checkUrlName(searchUrlName)
-    dim splStr, urlName, url 
-    searchUrlName = LCase(searchUrlName)                                            '搜索网址名称转小写
-    url = LCase(request.serverVariables("script_name")) 
-    splStr = split(searchUrlName, "|") 
-    for each urlName in splStr
-        if urlName <> "" then
-            if inStr(url, urlName) > 0 then
-                checkUrlName = true 
-                exit function 
-            end if 
-        end if 
-    next 
-    checkUrlName = false 
+function batchHandleHttpUrlComplete(a, b)
+dim c, d, e, f, g 
+c = getwebsite(a) 
+d = split(b, vbCrLf) 
+for each e in d
+e = phptrim(e) 
+f = LCase(e) 
+if f <> ChrW(35) and left(f, 11) <> ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58) then
+if inStr(vbCrLf & LCase(g) & vbCrLf, vbCrLf & f & vbCrLf) = 0 then
+if g <> "" then g = g & vbCrLf 
+g = g & urlAddHttpUrl(c, e) 
+end if 
+end if 
+next 
+batchHandleHttpUrlComplete = g 
 end function 
 
-
-
-'注意   这里面有问题的
-
-'0 url：http://127.0.0.1/aa/4.asp?act=sdf&v=sdf
-'1 urlDir：http://127.0.0.1/
-'2 fileName：4.asp
-'3 FileType：asp
-'4 fileStr：4.asp?act=sdf&v=sdf
-'5 HttpAgreement：http
-'6 webSite：http://127.0.0.1/
-'7 folderDir：aa/
-
-'网址处理成数组20150124  数组  0原文件路径 1为文件路径   2为文件名称  3为去除文件类型文件名称   4为文件类型后缀名
-function handleHttpUrlArray(byVal url)
-    'on error resume next
-    dim urlDir, fileName, fileType, fileStr, httpAgreement, webSite, folderDir 
-    url = handleHttpUrl(url) 
-
-    urlDir = mid(url, 1, inStrRev(url, "/")) 
-    fileStr = mid(url, inStrRev(url, "/") + 1) : fileName = fileStr 
-    if inStr(fileStr, "?") > 0 then
-        fileName = mid(fileStr, 1, inStr(fileStr, "?") - 1) 
-    end if 
-    fileType = mid(fileName, inStrRev(fileName, ".") + 1) 
-    httpAgreement = mid(url, 1, inStr(url, ":") - 1) 
-    webSite = getWebSite(url) 
-    'Call echo("url", url)
-    '域名为空则发粗获得文件夹目录20160613
-    if webSite <> "" then
-        folderDir = mid(urlDir, len(webSite)) 
-    else
-        call echoYellowB("注意：不是有效网址", url) 
-    end if 
-    'HandleHttpUrlArray = Array(url, urlDir, fileName, fileType, fileStr, HttpAgreement, webSite, folderDir)
-    dim arrayData 
-    arrayData = split(url & vbCrLf & urlDir & vbCrLf & fileName & vbCrLf & fileType & vbCrLf & fileStr & vbCrLf & httpAgreement & vbCrLf & webSite & vbCrLf & folderDir, vbCrLf) 
-    handleHttpUrlArray = arrayData 
+function isWebSite(byVal a, byVal b)
+isWebSite = handleIsWebSite(a, b, "") 
 end function 
 
-
-'移除jsCss后的参数Param (20151019)
-function remoteJsCssParam(content, pubAHrefList)
-    remoteJsCssParam = handleRemoteJsCssParam(content, pubAHrefList, "|替换内容|替换网址") 
+function isSonWebSite(byVal a, byVal b)
+isSonWebSite = handleIsWebSite(a, b, ChrW(23376)&ChrW(22495)&ChrW(21517)) 
 end function 
 
-'处理移除jsCss后的参数Param (20151019)
-function handleRemoteJsCssParam(content, urlList, sType)
-    dim splStr, c, url, arrData, fileName, fileType, fileStr, replaceStr 
-    sType = "|" & sType & "|" 
-    splStr = split(urlList, vbCrLf) 
-    for each url in splStr
-        if url <> "" then
-            if c <> "" then c = c & vbCrLf 
-            arrData = handleHttpUrlArray(url) 
-            fileName = arrData(2) 
-            fileType = LCase(arrData(3)) 
-            fileStr = LCase(arrData(4)) 
-            if (fileType = "js" or fileType = "css") and inStr(fileStr, "?") > 0 and instr(fileName, ".") > 0 then
-                replaceStr = mid(url, 1, inStr(url, "?") - 1) 
-                'call echo(replaceStr,fileStr)
-                '这种替换方法还是不精准，待改进
-                if inStr(sType, "|替换内容|") > 0 then
-                    content = replace(content, url, replaceStr) 
-                end if 
-                if inStr(sType, "|替换网址|") > 0 then
-                    urlList = replace(urlList, url, replaceStr) 
-                end if 
-            end if 
-        end if 
-    next 
+function handleIsWebSite(byVal a, byVal b, c)
+a = getwebsite(a) 
+b = getwebsite(b) 
+if inStr(a, ChrW(58)&ChrW(47)&ChrW(47)) > 0 then
+a = mid(a, inStr(a, ChrW(58)&ChrW(47)&ChrW(47)) + 3) 
+end if 
+if left(a, 4) = ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46) then
+a = mid(a, 5) 
+end if 
+if inStr(b, ChrW(58)&ChrW(47)&ChrW(47)) > 0 then
+b = mid(b, inStr(b, ChrW(58)&ChrW(47)&ChrW(47)) + 3) 
+end if 
+if left(b, 4) = ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46) then
+b = mid(b, 5) 
+end if 
+if c = ChrW(23376)&ChrW(22495)&ChrW(21517) then
+dim d, e, f 
+f = ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(46)&ChrW(104)&ChrW(107)&ChrW(124)&ChrW(46)&ChrW(115)&ChrW(104)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(111)&ChrW(114)&ChrW(103)&ChrW(46)&ChrW(99)&ChrW(110) 
+f = f & ChrW(124)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(124)&ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)&ChrW(124)&ChrW(46)&ChrW(111)&ChrW(114)&ChrW(103)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(118)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(99)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(99)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(116)&ChrW(119)&ChrW(124)&ChrW(58)&ChrW(56)&ChrW(49)&ChrW(124)&ChrW(58)&ChrW(57)&ChrW(57)&ChrW(124)&ChrW(46)&ChrW(98)&ChrW(105)&ChrW(122)&ChrW(124)&ChrW(46)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(124)&ChrW(46)&ChrW(104)&ChrW(107)&ChrW(124)&ChrW(46)&ChrW(117)&ChrW(115)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(124)&ChrW(46)&ChrW(103)&ChrW(108)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(115)&ChrW(111)&ChrW(124)&ChrW(46)&ChrW(105)&ChrW(109)&ChrW(124)&ChrW(46)&ChrW(108)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(124)&ChrW(46)&ChrW(120)&ChrW(121)&ChrW(122)&ChrW(124)&ChrW(46)&ChrW(119)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(124) 
+d = split(f, ChrW(124)) 
+for each e in d
+if e <> "" then
+a = replace(a, e, "") 
+b = replace(b, e, "") 
+end if 
+next 
+if inStr(a, ChrW(46))>0 then
+a = mid(a, inStr(a, ChrW(46)) + 1) 
+end if 
+if inStr(b, ChrW(46))>0 then
+b = mid(b, inStr(b, ChrW(46)) + 1) 
+end if 
+end if 
+handleIsWebSite = false 
+if a = b then
+handleIsWebSite = true 
+end if 
 end function 
 
-
-'批量处理网址完整(20151022)
-function batchHandleHttpUrlComplete(httpurl, content)
-    dim webSite, splStr, url, lCaseUrl, c 
-    webSite = getwebsite(httpurl) 
-    splStr = split(content, vbCrLf) 
-    for each url in splStr
-        url = phptrim(url) 
-        lCaseUrl = LCase(url) 
-        if lCaseUrl <> "#" and left(lCaseUrl, 11) <> "javascript:" then
-            if inStr(vbCrLf & LCase(c) & vbCrLf, vbCrLf & lCaseUrl & vbCrLf) = 0 then
-                if c <> "" then c = c & vbCrLf 
-                c = c & urlAddHttpUrl(webSite, url) 
-            end if 
-        end if 
-    next 
-    batchHandleHttpUrlComplete = c 
+function getContentUrlList(a, byVal b)
+getContentUrlList = handleGetContentUrlList(a, b, ChrW(124)&ChrW(42)&ChrW(124)&ChrW(20869)&ChrW(38142)&ChrW(124)) 
 end function 
 
-
-'检测同域名(20151023)
-function isWebSite(byVal url1, byVal url2)
-    isWebSite = handleIsWebSite(url1, url2, "") 
-end function 
-'检测同子域名(20151023)
-function isSonWebSite(byVal url1, byVal url2)
-    isSonWebSite = handleIsWebSite(url1, url2, "子域名") 
-end function 
-
-'处理两网址是否域名同等(20151023)
-function handleIsWebSite(byVal url1, byVal url2, sType)
-    url1 = getwebsite(url1) 
-    url2 = getwebsite(url2) 
-    if inStr(url1, "://") > 0 then
-        url1 = mid(url1, inStr(url1, "://") + 3) 
-    end if 
-    if left(url1, 4) = "www." then
-        url1 = mid(url1, 5) 
-    end if 
-    if inStr(url2, "://") > 0 then
-        url2 = mid(url2, inStr(url2, "://") + 3) 
-    end if 
-    if left(url2, 4) = "www." then
-        url2 = mid(url2, 5) 
-    end if 
-
-    if sType = "子域名" then
-        dim splStr, s, c 
-        c = ".com.hk|.sh.cn|.com.cn|.net.cn|.org.cn" 
-        c = c & "|.com|.net|.org|.tv|.cc|.info|.cn|.tw|:81|:99|.biz|.mobi|.hk|.us|.la|.gl|.in|.so|.im|.love|.xyz|.wang|" 
-        splStr = split(c, "|") 
-        for each s in splStr
-            if s <> "" then
-                url1 = replace(url1, s, "") 
-                url2 = replace(url2, s, "") 
-            end if 
-        next 
-
-        if inStr(url1, ".")>0 then
-            url1 = mid(url1, inStr(url1, ".") + 1) 
-        end if 
-        if inStr(url2, ".")>0 then
-            url2 = mid(url2, inStr(url2, ".") + 1) 
-        end if 
-
-
-    end if 
-    handleIsWebSite = false 
-    if url1 = url2 then
-        handleIsWebSite = true 
-    end if 
-end function 
-
-
-'获得内容里网址列表(20161025)
-function getContentUrlList(httpurl, byVal content)
-    getContentUrlList = handleGetContentUrlList(httpurl, content, "|*|内链|") 
-end function 
-'处理获得内容里网址列表(20161025)
-function handleGetContentUrlList(httpurl, byVal content, sType)
-    dim i, s, sNext, sEndLCase, sEnd, urlStr, nLen, urlList, url, urlLCase, webSite, labelType, isHandle, valueLabel 
-    sType = "|" & LCase(trim(sType)) & "|" 
-    webSite = getwebsite(httpurl) 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        sNext = mid(content & " ", i + 1, 1) 
-        sEnd = mid(content, i + 1) : sEndLCase = LCase(sEnd) 
-        if s = "<" then
-            url = "" 
-            labelType = "" 
-            isHandle = false 
-            if left(sEndLCase, 2) = "a " then
-                labelType = "a" 
-                valueLabel = "href" 
-                isHandle = true 
-            elseIf left(sEndLCase, 5) = "link " then
-                labelType = "link" 
-                valueLabel = "href" 
-                isHandle = true 
-            elseIf left(sEndLCase, 4) = "img " then
-                labelType = "img" 
-                valueLabel = "src" 
-                isHandle = true 
-            elseIf left(sEndLCase, 7) = "script " then
-                labelType = "script" 
-                valueLabel = "src" 
-                isHandle = true 
-            end if 
-            if isHandle = true then
-                if inStr(sType, "|" & labelType & "|") > 0 or inStr(sType, "|*|") > 0 then
-                    nLen = inStr(sEnd, ">") 
-                    urlStr = mid(sEnd, 1, nLen) 
-                    url = RParam(urlStr, valueLabel) 
-                    i = i + nLen 
-                end if 
-            end if 
-            if url <> "" then
-                urlLCase = LCase(url) 
-                if urlLCase <> "#" and left(urlLCase, 11) <> "javascript:" then
-                    if inStr(vbCrLf & urlList & vbCrLf, vbCrLf & url & vbCrLf) = 0 then
-                        url = fullHttpUrl(httpurl, url) 
-                        isHandle = isSonWebSite(url, httpurl) 
-                        if inStr(sType, "|内链|") > 0 then
-                            if isHandle = true then
-                                urlList = urlList & url & vbCrLf 
-                            end if 
-                        elseIf inStr(sType, "|外链|") > 0 then
-                            if isHandle = false then
-                                urlList = urlList & url & vbCrLf 
-                            end if 
-                        else
-                            urlList = urlList & url & vbCrLf 
-                        end if 
-                    end if 
-                end if 
-            end if 
-        end if 
-    next 
-    if urlList <> "" then urlList = left(urlList, len(urlList) - 2) 
-    handleGetContentUrlList = urlList 
-end function 
-'获得网址中内链与外链列表
-function getInChain(httpurl, urlList)
-    dim splStr, url, c, urlLCase, isHandle 
-    splStr = split(urlList, vbCrLf) 
-    urlList = "" 
-    for each url in splStr
-        if url <> "" then
-            urlLCase = LCase(url) 
-            if left(urlLCase, 1) <> "#" and left(urlLCase, 11) <> "javascript:" then
-                if inStr(vbCrLf & urlList & vbCrLf, vbCrLf & url & vbCrLf) = 0 then
-                    url = fullHttpUrl(httpurl, url) 
-                    isHandle = isSonWebSite(url, httpurl) 
-                    if isHandle = true then
-                        urlList = urlList & url & vbCrLf 
-                    end if 
-                end if 
-            end if 
-        end if 
-    next 
-    if urlList <> "" then urlList = left(urlList, len(urlList) - 2) 
-    getInChain = urlList 
+function handleGetContentUrlList(a, byVal b, c)
+dim d, e, f, g, h, i, j, k, l, m, n, o, p, q 
+c = ChrW(124) & LCase(trim(c)) & ChrW(124) 
+n = getwebsite(a) 
+for d = 1 to len(b)
+e = mid(b, d, 1) 
+f = mid(b & ChrW(32), d + 1, 1) 
+h = mid(b, d + 1) : g = LCase(h) 
+if e = ChrW(60) then
+l = "" 
+o = "" 
+p = false 
+if left(g, 2) = ChrW(97)&ChrW(32) then
+o = ChrW(97) 
+q = ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102) 
+p = true 
+elseIf left(g, 5) = ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(32) then
+o = ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107) 
+q = ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102) 
+p = true 
+elseIf left(g, 4) = ChrW(105)&ChrW(109)&ChrW(103)&ChrW(32) then
+o = ChrW(105)&ChrW(109)&ChrW(103) 
+q = ChrW(115)&ChrW(114)&ChrW(99) 
+p = true 
+elseIf left(g, 7) = ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32) then
+o = ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116) 
+q = ChrW(115)&ChrW(114)&ChrW(99) 
+p = true 
+end if 
+if p = true then
+if inStr(c, ChrW(124) & o & ChrW(124)) > 0 or inStr(c, ChrW(124)&ChrW(42)&ChrW(124)) > 0 then
+j = inStr(h, ChrW(62)) 
+i = mid(h, 1, j) 
+l = RParam(i, q) 
+d = d + j 
+end if 
+end if 
+if l <> "" then
+m = LCase(l) 
+if m <> ChrW(35) and left(m, 11) <> ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58) then
+if inStr(vbCrLf & k & vbCrLf, vbCrLf & l & vbCrLf) = 0 then
+l = fullHttpUrl(a, l) 
+p = isSonWebSite(l, a) 
+if inStr(c, ChrW(124)&ChrW(20869)&ChrW(38142)&ChrW(124)) > 0 then
+if p = true then
+k = k & l & vbCrLf 
+end if 
+elseIf inStr(c, ChrW(124)&ChrW(22806)&ChrW(38142)&ChrW(124)) > 0 then
+if p = false then
+k = k & l & vbCrLf 
+end if 
+else
+k = k & l & vbCrLf 
+end if 
+end if 
+end if 
+end if 
+end if 
+next 
+if k <> "" then k = left(k, len(k) - 2) 
+handleGetContentUrlList = k 
 end function 
 
-
-'处理扫描后网址列表 20160428
-function handleScanUrlList(httpurl, urlList)
-    dim splStr, url, c, lCaseUrl 
-    splStr = split(urlList, vbCrLf) 
-    for each url in splStr
-        url = phptrim(url) 
-        lCaseUrl = lcase(url) 
-        if url <> "" and left(url, 10) <> "tencent://" and left(url, 11) <> "javascript:" and left(url, 1) <> "#" then
-            url = fullHttpUrl(httpurl, url) 
-            if instr(vbCrLf & c & vbCrLf, vbCrLf & url & vbCrLf) = 0 then
-                c = c & url & vbCrLf 
-            end if 
-        end if 
-    next 
-    handleScanUrlList = c 
+function getInChain(a, b)
+dim c, d, e, f, g 
+c = split(b, vbCrLf) 
+b = "" 
+for each d in c
+if d <> "" then
+f = LCase(d) 
+if left(f, 1) <> ChrW(35) and left(f, 11) <> ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58) then
+if inStr(vbCrLf & b & vbCrLf, vbCrLf & d & vbCrLf) = 0 then
+d = fullHttpUrl(a, d) 
+g = isSonWebSite(d, a) 
+if g = true then
+b = b & d & vbCrLf 
+end if 
+end if 
+end if 
+end if 
+next 
+if b <> "" then b = left(b, len(b) - 2) 
+getInChain = b 
 end function 
 
-'处理相同域名列表 20160501
-function handleWithWebSiteList(httpurl, urllist)
-    dim webSite, splStr, url, c, urlWebsite, s 
-    webSite = lcase(getwebsite(httpurl)) 
-    splStr = split(urllist, vbCrLf) 
-    for each url in splStr
-        if url <> "" then
-            if right(url, 1) <> "/" and instr(url, "?") = 0 then
-                s = mid(url, instrrev(url, "/")) 
-                'call echo("s",s)
-                if (instr(s, ".") = 0 or instr(s, ".com") > 0 or instr(s, ".cn") > 0 or instr(s, ".net") > 0) and instr(s, "@") = 0 then
-                    url = url & "/" 
-                end if 
-            'call echo("url",url)
-            end if 
-            urlWebsite = lcase(getwebsite(url)) 
-            if webSite = urlWebsite and instr(vbCrLf & c & vbCrLf, vbCrLf & url & vbCrLf) = 0 then
-                if c <> "" then
-                    c = c & vbCrLf 
-                end if 
-                c = c & url 
-            end if 
-        end if 
-    next 
-    handleWithWebSiteList = c 
-end function 
-'处理不同域名列表 20160501
-function handleDifferenceWebSiteList(httpurl, urllist)
-    dim webSite, splStr, url, c, urlWebsite, websiteList 
-    webSite = lcase(getwebsite(httpurl)) 
-    splStr = split(urllist, vbCrLf) 
-    for each url in splStr
-        urlWebsite = lcase(getwebsite(url)) 
-        if urlWebsite <> "" and webSite <> urlWebsite and instr(vbCrLf & websiteList & vbCrLf, vbCrLf & urlWebsite & vbCrLf) = 0 then
-            websiteList = websiteList & urlWebsite & vbCrLf 
-        end if 
-    next 
-    handleDifferenceWebSiteList = websiteList 
+function handleScanUrlList(a, b)
+dim c, d, e, f 
+c = split(b, vbCrLf) 
+for each d in c
+d = phptrim(d) 
+f = lcase(d) 
+if d <> "" and left(d, 10) <> ChrW(116)&ChrW(101)&ChrW(110)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(58)&ChrW(47)&ChrW(47) and left(d, 11) <> ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58) and left(d, 1) <> ChrW(35) then
+d = fullHttpUrl(a, d) 
+if instr(vbCrLf & e & vbCrLf, vbCrLf & d & vbCrLf) = 0 then
+e = e & d & vbCrLf 
+end if 
+end if 
+next 
+handleScanUrlList = e 
 end function 
 
-'检测域名存在 20160511   例：checkDomainName('http://www.baidu.com/a/b/sdf')
-function checkDomainName(httpurl)
-    dim url, url2, s, s2 
-    url = getwebsite(httpurl) 
-    url2 = url & "/a/1/b/2/cdefg/"  
-    'call echo(url, url2) 
-    checkDomainName = true 
-    s = getHttpUrl(url, "") 
-    s2 = getHttpUrl(url2, "") 
-    if s = s2 then
-        checkDomainName = false  
-    end if 
+function handleWithWebSiteList(a, b)
+dim c, d, e, f, g, h 
+c = lcase(getwebsite(a)) 
+d = split(b, vbCrLf) 
+for each e in d
+if e <> "" then
+if right(e, 1) <> ChrW(47) and instr(e, ChrW(63)) = 0 then
+h = mid(e, instrrev(e, ChrW(47))) 
+
+if (instr(h, ChrW(46)) = 0 or instr(h, ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)) > 0 or instr(h, ChrW(46)&ChrW(99)&ChrW(110)) > 0 or instr(h, ChrW(46)&ChrW(110)&ChrW(101)&ChrW(116)) > 0) and instr(h, ChrW(64)) = 0 then
+e = e & ChrW(47) 
+end if 
+
+end if 
+g = lcase(getwebsite(e)) 
+if c = g and instr(vbCrLf & f & vbCrLf, vbCrLf & e & vbCrLf) = 0 then
+if f <> "" then
+f = f & vbCrLf 
+end if 
+f = f & e 
+end if 
+end if 
+next 
+handleWithWebSiteList = f 
 end function 
 
-'获得url状态说明
-function getHttpUrlStateAbout(nState)
-    dim n, c 
-    n = cint(trim(nState)) 
-    select case n
-        case 100 : c = "继续"
-        case 101 : c = "开关协议"
-        case 200 : c = "成功"
-        case 201 : c = "创建"
-        case 202 : c = "接受"
-        case 203 : c = "非权威信息"
-        case 204 : c = "不含内容"
-        case 205 : c = "重置内容"
-        case 206 : c = "部分内容"
-        case 300 : c = "多项选择"
-        case 301 : c = "移动永久"
-        case 302 : c = "暂时移动"
-        case 303 : c = "看其他的"
-        case 304 : c = "未修改"
-        case 305 : c = "使用代理"
-        case 307 : c = "临时重定向"
-        case 400 : c = "坏的要求"
-        case 401 : c = "未经授权"
-        case 402 : c = "付款要求"
-        case 403 : c = "禁止"
-        case 404 : c = "未找到"
-        case 405 : c = "不允许的方法"
-        case 406 : c = "不可接受"
-        case 407 : c = "代理验证所需"
-        case 408 : c = "请求超时"
-        case 409 : c = "冲突"
-        case 410 : c = "消失"
-        case 411 : c = "所需长度"
-        case 412 : c = "先决条件"
-        case 413 : c = "请求实体过大"
-        case 414 : c = "的请求URI太长"
-        case 415 : c = "不支持的媒体类型"
-        case 416 : c = "的请求范围不满足"
-        case 417 : c = "期望失败"
-        case 500 : c = "内部服务器错误"
-        case 501 : c = "未实施"
-        case 502 : c = "坏网关"
-        case 503 : c = "服务不可用"
-        case 504 : c = "网关超时"
-        case 505 : c = "的HTTP版本不支持"
-        case 509 : c = "带宽限制超过"
-    end select
-    getHttpUrlStateAbout = c 
+function handleDifferenceWebSiteList(a, b)
+dim c, d, e, f, g, h 
+c = lcase(getwebsite(a)) 
+d = split(b, vbCrLf) 
+for each e in d
+g = lcase(getwebsite(e)) 
+if g <> "" and c <> g and instr(vbCrLf & h & vbCrLf, vbCrLf & g & vbCrLf) = 0 then
+h = h & g & vbCrLf 
+end if 
+next 
+handleDifferenceWebSiteList = h 
 end function 
 
+function checkDomainName(a)
+dim b, c, d, e 
+b = getwebsite(a) 
+c = b & ChrW(47)&ChrW(97)&ChrW(47)&ChrW(49)&ChrW(47)&ChrW(98)&ChrW(47)&ChrW(50)&ChrW(47)&ChrW(99)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(103)&ChrW(47)  
+
+checkDomainName = true 
+d = getHttpUrl(b, "") 
+e = getHttpUrl(c, "") 
+if d = e then
+checkDomainName = false  
+end if 
+end function 
+
+function getHttpUrlStateAbout(a)
+dim b, c 
+b = cint(trim(a)) 
+select case b
+case 100 : c = ChrW(32487)&ChrW(32493)
+case 101 : c = ChrW(24320)&ChrW(20851)&ChrW(21327)&ChrW(35758)
+case 200 : c = ChrW(25104)&ChrW(21151)
+case 201 : c = ChrW(21019)&ChrW(24314)
+case 202 : c = ChrW(25509)&ChrW(21463)
+case 203 : c = ChrW(38750)&ChrW(26435)&ChrW(23041)&ChrW(20449)&ChrW(24687)
+case 204 : c = ChrW(19981)&ChrW(21547)&ChrW(20869)&ChrW(23481)
+case 205 : c = ChrW(37325)&ChrW(32622)&ChrW(20869)&ChrW(23481)
+case 206 : c = ChrW(37096)&ChrW(20998)&ChrW(20869)&ChrW(23481)
+case 300 : c = ChrW(22810)&ChrW(39033)&ChrW(36873)&ChrW(25321)
+case 301 : c = ChrW(31227)&ChrW(21160)&ChrW(27704)&ChrW(20037)
+case 302 : c = ChrW(26242)&ChrW(26102)&ChrW(31227)&ChrW(21160)
+case 303 : c = ChrW(30475)&ChrW(20854)&ChrW(20182)&ChrW(30340)
+case 304 : c = ChrW(26410)&ChrW(20462)&ChrW(25913)
+case 305 : c = ChrW(20351)&ChrW(29992)&ChrW(20195)&ChrW(29702)
+case 307 : c = ChrW(20020)&ChrW(26102)&ChrW(37325)&ChrW(23450)&ChrW(21521)
+case 400 : c = ChrW(22351)&ChrW(30340)&ChrW(35201)&ChrW(27714)
+case 401 : c = ChrW(26410)&ChrW(32463)&ChrW(25480)&ChrW(26435)
+case 402 : c = ChrW(20184)&ChrW(27454)&ChrW(35201)&ChrW(27714)
+case 403 : c = ChrW(31105)&ChrW(27490)
+case 404 : c = ChrW(26410)&ChrW(25214)&ChrW(21040)
+case 405 : c = ChrW(19981)&ChrW(20801)&ChrW(35768)&ChrW(30340)&ChrW(26041)&ChrW(27861)
+case 406 : c = ChrW(19981)&ChrW(21487)&ChrW(25509)&ChrW(21463)
+case 407 : c = ChrW(20195)&ChrW(29702)&ChrW(39564)&ChrW(35777)&ChrW(25152)&ChrW(38656)
+case 408 : c = ChrW(35831)&ChrW(27714)&ChrW(36229)&ChrW(26102)
+case 409 : c = ChrW(20914)&ChrW(31361)
+case 410 : c = ChrW(28040)&ChrW(22833)
+case 411 : c = ChrW(25152)&ChrW(38656)&ChrW(38271)&ChrW(24230)
+case 412 : c = ChrW(20808)&ChrW(20915)&ChrW(26465)&ChrW(20214)
+case 413 : c = ChrW(35831)&ChrW(27714)&ChrW(23454)&ChrW(20307)&ChrW(36807)&ChrW(22823)
+case 414 : c = ChrW(30340)&ChrW(35831)&ChrW(27714)&ChrW(85)&ChrW(82)&ChrW(73)&ChrW(22826)&ChrW(38271)
+case 415 : c = ChrW(19981)&ChrW(25903)&ChrW(25345)&ChrW(30340)&ChrW(23186)&ChrW(20307)&ChrW(31867)&ChrW(22411)
+case 416 : c = ChrW(30340)&ChrW(35831)&ChrW(27714)&ChrW(33539)&ChrW(22260)&ChrW(19981)&ChrW(28385)&ChrW(36275)
+case 417 : c = ChrW(26399)&ChrW(26395)&ChrW(22833)&ChrW(36133)
+case 500 : c = ChrW(20869)&ChrW(37096)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(38169)&ChrW(35823)
+case 501 : c = ChrW(26410)&ChrW(23454)&ChrW(26045)
+case 502 : c = ChrW(22351)&ChrW(32593)&ChrW(20851)
+case 503 : c = ChrW(26381)&ChrW(21153)&ChrW(19981)&ChrW(21487)&ChrW(29992)
+case 504 : c = ChrW(32593)&ChrW(20851)&ChrW(36229)&ChrW(26102)
+case 505 : c = ChrW(30340)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(29256)&ChrW(26412)&ChrW(19981)&ChrW(25903)&ChrW(25345)
+case 509 : c = ChrW(24102)&ChrW(23485)&ChrW(38480)&ChrW(21046)&ChrW(36229)&ChrW(36807)
+end select
+getHttpUrlStateAbout = c 
+end function 
+
+function replaceUrlPort(a,b)
+Dim c,d,e,f,g
+d=getwebsite(a)
+g=split(d,ChrW(58))
+if ubound(g)=2 then
+c=instrrev(d,ChrW(58))
+e=mid(d,1,c) & b & ChrW(47)
+f=e & mid(a,len(d)+1)
+else
+c=instrrev(d,ChrW(47))
+
+e=mid(d,1,c-1) & ChrW(58) & b & ChrW(47)
+f=e & mid(a,len(d)+1)
+end if
+
+
+
+
+replaceUrlPort=f
+end function
 %> 

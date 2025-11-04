@@ -1,0 +1,4 @@
+'批量生成全部文章到html 20251016
+elseif request("act")="batchCreateAllArticleHtml" then
+    call echoB("一键生成文章html完成","共 "&batchCreateArticleHtml("*",0) & " 条")
+    call die(getTimer())

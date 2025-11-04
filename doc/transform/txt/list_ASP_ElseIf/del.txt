@@ -1,0 +1,3 @@
+'删除多个id'
+elseif request("act")="del" then 
+    call batchDel() 

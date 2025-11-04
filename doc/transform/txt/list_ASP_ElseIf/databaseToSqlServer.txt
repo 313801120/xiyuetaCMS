@@ -1,0 +1,4 @@
+'导出databaseToSqlServer用 20250912
+elseif request("act")="databaseToSqlServer" then     
+    databaseType=thisDatabaseType '处理等于mysql数据库'    
+    call die("{""info"": """&jsonCL2(databaseToSqlServer(db_PREFIX,conn,tableName,false))&""",""status"": ""y""}")

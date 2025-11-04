@@ -1,986 +1,938 @@
-﻿<%
-'通过ChatGPT写的代码 20231011'
-Function getCharacterLength(str)
-  Dim i, count
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><%
 
-  count = 0
-  For i = 1 To Len(str)
-    If AscW(Mid(str, i, 1)) < 256 Then
-      count = count + 1
-    Else
-      count = count + 2
-    End If
-  Next
+Function getCharacterLength(a)
+Dim b, c
+c = 0
+For b = 1 To Len(a)
+If AscW(Mid(a, b, 1)) < 256 Then
+c = c + 1
+Else
+c = c + 2
+End if
+Next
+getCharacterLength = c
+End function
 
-  getCharacterLength = count
-End Function
+function handleFormatNumber(a,b)
+dim c,d,e,f,g,h
+if isNul(a) then handleFormatNumber=0:exit function
 
-'处理数字后两位 20231012'
-function handleFormatNumber(n,n2)
-    dim c,splxx,s,s1,s2,i
-    if isNul(n) then handleFormatNumber=0:exit function
-    ' call echo(typename(n),typename(n2))
-    ' call echo(n & "",n2 & ""):doevents
-    c=cstr(numberBeforeAddZero(formatNumber(n,n2)))
-    splxx=split(c,".")
-    s1=splxx(0)    
-    for i=1 to len(splxx(1))
-        s=mid(splxx(1),i,1)
-        if s="" or s="0" then exit for
-        s2=s2 & s
-    next
-    if s2<>"" then
-        s1=s1 & "." & s2
-    end if
-    handleFormatNumber=replace(s1,",","")  '把这个,号去掉'
+
+c=cstr(numberBeforeAddZero(formatNumber(a,b)))
+d=split(c,ChrW(46))
+f=d(0)    
+for h=1 to len(d(1))
+e=mid(d(1),h,1)
+if e="" or e=ChrW(48) then exit for
+g=g & e
+next
+if g <>"" then
+f=f & ChrW(46) & g
+end if
+handleFormatNumber=replace(f,ChrW(44),"")
+end function
+function myFormatNumber(a,b)
+dim c,d
+d=a & ""
+if d="" then a=0
+c=formatNumber(a,b)
+if c<1 then c=ChrW(48) & c
+myFormatNumber=c
 end function
 
-function myFormatNumber(n,n2)
-    dim n3,s
-    s=n & ""
-    if s="" then n=0
-    n3=formatNumber(n,n2)
-    if n3<1 then n3="0" & n3
-    myFormatNumber=n3
+function numberBeforeAddZero(a) 
+if left(cstr(a),1)=ChrW(46) then
+a=0 & a
+end if  
+numberBeforeAddZero=a
 end function
 
 
- 
-'数字前面加零 20230427'
-function numberBeforeAddZero(n) 
-    if left(cstr(n),1)="." then
-        n=0 & n
-    end if  
-    numberBeforeAddZero=n
-end function
-'求两数比分比方法
-'dim a,b,c
-'a=1002
-'b=6003
-'c=(a+b)/100
-'response.Write(a/c)
 
-'身份证年月时隐藏为*代替 20220605' 
-function idcardYMDHide(s)
-  idcardYMDHide=mid(s,1,10) & "****" & mid(s,15)
+
+
+
+
+function idcardYMDHide(a)
+idcardYMDHide=mid(a,1,10) & ChrW(42)&ChrW(42)&ChrW(42)&ChrW(42) & mid(a,15)
 end function
 
-'判断是否为字符转义 
-function isStrTransferred(content)
-    dim splStr, i, s, nCount 
-    nCount = 0 
-    isStrTransferred = false  
-    for i = 0 to len(content) - 1   
-        s = mid(content, len(content) - i, 1) 
-        if s = "\" then
-            nCount = nCount + 1 
-        else
-            isStrTransferred = IIF(nCount mod 2 = 1, true, false) 
-            exit function 
-        end if 
-    next  
+function isStrTransferred(a)
+dim b, c, d, e 
+e = 0 
+isStrTransferred = false  
+for c = 0 to len(a) - 1   
+d = mid(a, len(a) - c, 1) 
+if d = ChrW(92) then
+e = e + 1 
+else
+isStrTransferred = IIF(e mod 2 = 1, true, false) 
+exit function 
+end if 
+next  
 end function  
-'获得比率新宽 20180720 arr=getRatioNewWidth(720,404,1300)   833：467
-function getRatioNewWidth(x,y,width)
-	dim n2,n3,n4,nB1,nB2,nA,nB
-	n3=x+y
-	n4=100/n3	 
-	nB1=n4*x
-	nB2=n4*y
-	nA=cint(width/100*nB1)
-	nB=cint(width/100*nB2)
-	getRatioNewWidth=array(nA,nB)
+
+function getRatioNewWidth(a,b,c)
+dim d,e,f,g,h,i,j
+e=a+b
+f=100/e   
+g=f*a
+h=f*b
+i=cint(c/100*g)
+j=cint(c/100*h)
+getRatioNewWidth=array(i,j)
 end function
-'计算比率，游戏开发中用到 20150601
-function getBL(nSetWidth, nSetHeight, nDanFuXianZhi)
-    dim arrNSplStr(3) 
-    dim nWidthZheFu : nWidthZheFu = 1                                               '宽正负 
-    dim nHeightZheFu : nHeightZheFu = 1                                             '高正负
-    dim nBFB                                                                        '百分比
-    dim nXXFBX                                                                      '每个百分比，因为要判断他不能超过10
-    if nSetWidth < 0 then
-        nSetWidth = nSetWidth * - 1 
-        nWidthZheFu = -1 
-    end if 
-    if nSetHeight < 0 then
-        nSetHeight = nSetHeight * - 1 
-        nHeightZheFu = -1 
-    end if 
-    if nSetWidth > nSetHeight then
-        nBFB = cint(formatNumber(nSetWidth / nSetHeight, 2))                                  '//长宽 百分比
-        arrNSplStr(0) = nBFB 
-        arrNSplStr(1) = 1 
-    else
-        nBFB = cint(formatNumber(nSetHeight / nSetWidth, 2))                                  '//高宽 百分比
-        arrNSplStr(0) = 1 
-        arrNSplStr(1) = nBFB 
-    end if 
-    '每步超出指定值，处理
-    'if nBFB>=nDanFuXianZhi then
-    nXXFBX = cint(formatNumber(nDanFuXianZhi / nBFB, 2)) 
-    arrNSplStr(0) = arrNSplStr(0) * nXXFBX 
-    arrNSplStr(1) = arrNSplStr(1) * nXXFBX 
-    'end if
 
-    arrNSplStr(0) = arrNSplStr(0) * nWidthZheFu 
-    arrNSplStr(1) = arrNSplStr(1) * nHeightZheFu 
-    arrNSplStr(2) = nBFB 
-    arrNSplStr(3) = getCountPage(nSetWidth, arrNSplStr(0)) 
-    'Call echo("page count 页数", arrNSplStr(3))
-    arrNSplStr(3) = getCountStep(nSetWidth, nSetHeight, arrNSplStr(0), arrNSplStr(1), arrNSplStr(3)) 
+function getBL(a, b, c)
+dim arrNSplStr(3) 
+dim d : d = 1
+dim e : e = 1
+dim f
+dim g
+if a < 0 then
+a = a * - 1 
+d = -1 
+end if 
+if b < 0 then
+b = b * - 1 
+e = -1 
+end if 
+if a > b then
+f = cint(formatNumber(a / b, 2))
+arrNSplStr(0) = f 
+arrNSplStr(1) = 1 
+else
+f = cint(formatNumber(b / a, 2))
+arrNSplStr(0) = 1 
+arrNSplStr(1) = f 
+end if 
 
-    getBL = arrNSplStr 
+
+g = cint(formatNumber(c / f, 2)) 
+arrNSplStr(0) = arrNSplStr(0) * g 
+arrNSplStr(1) = arrNSplStr(1) * g 
+
+arrNSplStr(0) = arrNSplStr(0) * d 
+arrNSplStr(1) = arrNSplStr(1) * e 
+arrNSplStr(2) = f 
+arrNSplStr(3) = getCountPage(a, arrNSplStr(0)) 
+
+arrNSplStr(3) = getCountStep(a, b, arrNSplStr(0), arrNSplStr(1), arrNSplStr(3)) 
+getBL = arrNSplStr 
 end function 
 
-'获得总步数
-function getCountStep(nWidthStep, nHeightStep, nWidthBL, nHeightBL, nCountPage)
-    dim i 
-    getCountStep = 0
-    if nWidthStep < 0 then
-        nWidthStep = nWidthStep * - 1  
-    end if 
-    if nHeightStep < 0 then
-        nHeightStep = nHeightStep * - 1 
-    end if 
-    if nWidthBL < 0 then
-        nWidthBL = nWidthBL * - 1 
-    end if 
-    if nHeightBL < 0 then
-        nHeightBL = nHeightBL * - 1 
-    end if 
-    for i = nCountPage - 10 to nCountPage
-        'call echo(i & "、nWidthBL*i>=nWidthStep",nWidthBL*i &">="&nWidthStep    & "   |  " & nHeightBL*i &">="& nHeightStep)
-        if nWidthBL * i >= nWidthStep or nHeightBL * i >= nHeightStep then
-            getCountStep = i 
-        'call echo("getCountStep",getCountStep)
-        end if 
-    next 
+function getCountStep(a, b, c, d, e)
+dim f 
+getCountStep = 0
+if a < 0 then
+a = a * - 1  
+end if 
+if b < 0 then
+b = b * - 1 
+end if 
+if c < 0 then
+c = c * - 1 
+end if 
+if d < 0 then
+d = d * - 1 
+end if 
+for f = e - 10 to e
+
+if c * f >= a or d * f >= b then
+getCountStep = f 
+
+end if 
+next 
 end function 
 
+function getChina(a)
+dim b, c, d, e 
+for b = 1 to len(a)
+d = asc(mid(a, b, 1)) 
+e = mid(a, b, 1) 
 
-'获得中文汉字内容
-function getChina(content)
-    dim i, c, j, s 
-    for i = 1 to len(content)
-        j = asc(mid(content, i, 1)) 
-        s = mid(content, i, 1) 
-        '是汉字累加
-        if j < 0 then
-            if (j <= -22033 and j >= -24158) = false then
-                c = c & s 
-            end if 
-        end if 
-    next 
-    getChina = c 
+if d < 0 then
+if (d <= -22033 and d >= -24158) = false then
+c = c & e 
+end if 
+end if 
+next 
+getChina = c 
 end function 
-'判断是否有中文
-function isChina(content)
-    dim i, j, s 
-    isChina = false 
-    for i = 1 to len(content)
-        j = asc(mid(content, i, 1)) 
-        s = mid(content, i, 1) 
-        '是汉字累加
-        if j < 0 then
-            if (j <= -22033 and j >= -24158) = false then
-                isChina = true 
-                exit function 
-            end if 
-        end if 
-    next 
+
+function isChina(a)
+dim b, c, d 
+isChina = false 
+for b = 1 to len(a)
+c = asc(mid(a, b, 1)) 
+d = mid(a, b, 1) 
+
+if c < 0 then
+if (c <= -22033 and c >= -24158) = false then
+isChina = true 
+exit function 
+end if 
+end if 
+next 
 end function  
-'判断是否有中文 (辅助) 
-function checkChina(content)
-    checkChina = isChina(content) 
+
+function checkChina(a)
+checkChina = isChina(a) 
 end function 
 
-'PHP里Rand使用20150212
-function phpRand(nMinimum, nMaximum)
-    randomize 
-    phpRand = 0
-    dim i 
-    for i = 1 to 9
-        phpRand = CInt((nMinimum + nMaximum) * rnd) 
-        if phpRand >= nMinimum and phpRand <= nMaximum then 
-            exit for 
-        end if 
-    next 
-    if phpRand < nMinimum then
-        phpRand = nMinimum 
-    elseIf phpRand > nMaximum then
-        phpRand = nMaximum 
-    end if 
+function phpRand(a, b)
+randomize 
+phpRand = 0
+dim c 
+for c = 1 to 9
+phpRand = CInt((a + b) * rnd) 
+if phpRand >= a and phpRand <= b then 
+exit for 
+end if 
+next 
+if phpRand < a then
+phpRand = a 
+elseIf phpRand > b then
+phpRand = b 
+end if 
 end function 
 
-'引用上面，为什么？因为我老写错这个单词 
-function phpRnd(nMinimum, nMaximum)
-    phpRnd = phpRand(nMinimum, nMaximum) 
+function phpRnd(a, b)
+phpRnd = phpRand(a, b) 
 end function 
 
- 
-'删除重复内容  20141220
-function deleteRepeatStr(content, sSplType)
-    dim splStr, s, c 
-    c = "" 
-    splStr = split(content, sSplType) 
-    for each s in splStr
-        if s <> "" then
-            if inStr(sSplType & c & sSplType, sSplType & s & sSplType) = 0 then
-                c = c & s & sSplType 
-            end if 
-        end if 
-    next 
-    if c <> "" then c = left(c, len(c) - len(sSplType)) 
-    deleteRepeatStr = c 
+function deleteRepeatStr(a, b)
+dim c, d, e 
+e = "" 
+c = split(a, b) 
+for each d in c
+if d <> "" then
+if inStr(b & e & b, b & d & b) = 0 then
+e = e & d & b 
+end if 
+end if 
+next 
+if e <> "" then e = left(e, len(e) - len(b)) 
+deleteRepeatStr = e 
 end function 
 
-'替换内容N次 20141220
-function replaceN(content, yunStr, replaceStr, nNumb)
-    dim i,sNumb
-    sNumb = handleNumber(cStr(nNumb))			'为了给.netc用 
-    if sNumb = "" then
-        nNumb = 1 
-    else
-        nNumb = CInt(sNumb) 
-    end if 
-    for i = 1 to nNumb
-        content = replace(content, yunStr, replaceStr) 
-    next 
-
-    replaceN = content 
+function replaceN(a, b, c, d)
+dim e,f
+f = handleNumber(cStr(d))
+if f = "" then
+d = 1 
+else
+d = CInt(f) 
+end if 
+for e = 1 to d
+a = replace(a, b, c) 
+next 
+replaceN = a 
 end function 
 
-'asp日期补0函数   引用别人20141216
-function fillZero(content)
-	fillZero=""
-    if len(content) = 1 then
-        fillZero = "0" & content 
-    else
-        fillZero = content 
-    end if 
+function fillZero(a)
+fillZero=""
+if len(a) = 1 then
+fillZero = ChrW(48) & a 
+else
+fillZero = a 
+end if 
 end function 
 
-'不分大小写替换，作者：小云，写于20140925 用法Response.Write(CaseInsensitiveReplace("112233aabbbccddee","b","小云你牛"))
-function caseInsensitiveReplace(content, sCheck, sReplace)
-    dim nStartLen, nEndLen, lowerCase, startStr, endStr, c, i 
-    c = "" 
-    if LCase(sCheck) = LCase(sReplace) then
-        caseInsensitiveReplace = content 
-    end if 
-    lowerCase = LCase(content) 
-    for i = 1 to 99
-        if inStr(lowerCase, sCheck) > 0 then
-            nStartLen = inStr(lowerCase, sCheck) - 1 
-            startStr = left(content, nStartLen) 
-            nEndLen = nStartLen + len(sCheck) + 1 
-            endStr = mid(content, nEndLen)   
-            content = startStr & sReplace & endStr 
-            'Call Echo(StartLen,EndLen)
-            'Call Echo(StartStr,EndStr)
-            'Call Echo("Content",Content)
-            lowerCase = LCase(content) 
-        else
-            exit for 
-        end if 
-    next 
-    caseInsensitiveReplace = content 
+function caseInsensitiveReplace(a, b, c)
+dim d, e, f, g, h, i, j 
+i = "" 
+if LCase(b) = LCase(c) then
+caseInsensitiveReplace = a 
+end if 
+f = LCase(a) 
+for j = 1 to 99
+if inStr(f, b) > 0 then
+d = inStr(f, b) - 1 
+g = left(a, d) 
+e = d + len(b) + 1 
+h = mid(a, e)   
+a = g & c & h 
+
+
+
+f = LCase(a) 
+else
+exit for 
+end if 
+next 
+caseInsensitiveReplace = a 
 end function  
- 
-'数组数字排序 (2013,10,1)
-function array_Sort(arrnArray)
-    dim i, j, nMinmaxSlot, nMinmax, nTemp 
-    for i = uBound(arrnArray) to 0 step - 1
-        nMinmax = arrnArray(i)  
-        nMinmaxSlot = 0 
-        for j = 1 to i
-            if arrnArray(j) > nMinmax then
-                nMinmax = arrnArray(j) 
-                nMinmaxSlot = j 
-            end if 
-        next 
-        if nMinmaxSlot <> i then
-            nTemp = arrnArray(nMinmaxSlot) 
-            arrnArray(nMinmaxSlot) = arrnArray(i) 
-            arrnArray(i) = nTemp 
-        end if 
-    next 
-    array_Sort = arrnArray 
+
+function array_Sort(a)
+dim b, c, d, e, f 
+for b = uBound(a) to 0 step - 1
+e = a(b)  
+d = 0 
+for c = 1 to b
+if a(c) > e then
+e = a(c) 
+d = c 
+end if 
+next 
+if d <> b then
+f = a(d) 
+a(d) = a(b) 
+a(b) = f 
+end if 
+next 
+array_Sort = a 
 end function 
 
-'处理Zip大小
-function handleZipSize(byVal zipSize)
-    on error resume next 
-    dim nSize 
-    zipSize = LCase(zipSize) 
-    nSize = getDianNumb(zipSize) 
-    if inStr(zipSize, "g")>0 then
-        nSize = nSize * 1073741824 
-    elseIf inStr(zipSize, "m")>0 then
-        nSize = nSize * 1048576 
-    elseIf inStr(zipSize, "k")>0 then
-        nSize = nSize * 1024 
-    end if 
-    handleZipSize = nSize 
-    if err then call doError(Err.description, "HandleZipSize 处理Zip大小 函数出错，ZipSize=" & zipSize) 
+function handleZipSize(byVal a)
+on error resume next 
+dim b 
+a = LCase(a) 
+b = getDianNumb(a) 
+if inStr(a, ChrW(103))>0 then
+b = b * 1073741824 
+elseIf inStr(a, ChrW(109))>0 then
+b = b * 1048576 
+elseIf inStr(a, ChrW(107))>0 then
+b = b * 1024 
+end if 
+handleZipSize = b 
+if err then call doError(Err.description, ChrW(72)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(90)&ChrW(105)&ChrW(112)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(32)&ChrW(22788)&ChrW(29702)&ChrW(90)&ChrW(105)&ChrW(112)&ChrW(22823)&ChrW(23567)&ChrW(32)&ChrW(20989)&ChrW(25968)&ChrW(20986)&ChrW(38169)&ChrW(65292)&ChrW(90)&ChrW(105)&ChrW(112)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61) & a) 
 end function 
 
-'//生成随机数
-function getRnd(byVal nCount)
-    randomize 
-    dim charS, i, c 
-    for i = 1 to nCount
-        if i mod 2 = 0 then
-            charS = chrW((57 - 48) * rnd + 48)                                                  '0~9
-        elseIf i mod 3 = 0 then
-            charS = chrW((90 - 65) * rnd + 65)                                                  'A~Z
-        else
-            charS = chrW((122 - 97) * rnd + 97)                                                 'a~z
-        end if 
-        c = c & charS 
-    next 
-    getRnd = c 
-end function 
-'call echo("getRndTel",getRndTel(11))
-'//生成随机手机号20230421,如 138 & getRndTel(8)
-function getRndTel(byVal nCount)
-    randomize 
-    dim charS, i, c 
-    for i = 1 to nCount
-        charS = chrW((57 - 48) * rnd + 48)                                                  '0~9
-        c = c & charS 
-    next 
-    getRndTel = c 
+function getRnd(byVal a)
+randomize 
+dim b, c, d 
+for c = 1 to a
+if c mod 2 = 0 then
+b = chrW((57 - 48) * rnd + 48)
+elseIf c mod 3 = 0 then
+b = chrW((90 - 65) * rnd + 65)
+else
+b = chrW((122 - 97) * rnd + 97)
+end if 
+d = d & b 
+next 
+getRnd = d 
 end function 
 
-'获得随机数，仿js(20150826)
+
+function getRndTel(byVal a)
+randomize 
+dim b, c, d 
+for c = 1 to a
+b = chrW((57 - 48) * rnd + 48)
+d = d & b 
+next 
+getRndTel = d 
+end function 
+
 function mathRandom()
-    dim i, c 
-    c = "" 
-    randomize 
-    for i = 1 to 16
-        c = c & cint(int(rnd() * 9)) 
-    next 
-    mathRandom = "0." & c 
+dim a, b 
+b = "" 
+randomize 
+for a = 1 to 16
+b = b & cint(int(rnd() * 9)) 
+next 
+mathRandom = ChrW(48)&ChrW(46) & b 
+end function 
+
+function getRndAZ(a)
+dim b, c, d, e 
+e = "" : b = "" 
+randomize 
+b = ChrW(97)&ChrW(98)&ChrW(99)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(103)&ChrW(104)&ChrW(105)&ChrW(106)&ChrW(107)&ChrW(108)&ChrW(109)&ChrW(110)&ChrW(111)&ChrW(112)&ChrW(113)&ChrW(114)&ChrW(115)&ChrW(116)&ChrW(117)&ChrW(118)&ChrW(119)&ChrW(120)&ChrW(121)&ChrW(122) & uCase(b) 
+for c = 1 to a
+d = mid(b, phpRnd(1, len(b)), 1) 
+e = e & d 
+next 
+getRndAZ = e 
+end function 
+
+function getRand(byVal a)
+getRand = getRnd(a) 
 end function 
 
 
-
-'获得指定位数随机A到Z字符
-function getRndAZ(nCount)
-    dim zd, i, s, c 
-    c = "" : zd = "" 
-    randomize 
-    zd = "abcdefghijklmnopqrstuvwxyz" & uCase(zd) 
-    for i = 1 to nCount
-        s = mid(zd, phpRnd(1, len(zd)), 1) 
-        c = c & s 
-    next 
-    getRndAZ = c 
+function copyStrNumb(byVal a, b)
+dim c, d 
+if b > 0 then
+d = a 
+for c = 1 to b - 1
+a = a & d 
+next 
+else
+a = "" 
+end if 
+copyStrNumb = a 
 end function 
 
-'获得随机数 （辅助上面） 
-function getRand(byVal nCount)
-    getRand = getRnd(nCount) 
+function str_Repeat(byVal a, b)
+str_Repeat = copyStrNumb(a, b) 
 end function 
 
-'拷贝内容N次 InputStr输入值  nMultiplier乘数和php里面一样2014 12 02
-'如果 nMultiplier 被设置为小于等于0，函数返回空字符串。
-function copyStrNumb(byVal inputStr, nMultiplier)
-    dim i, s 
-    if nMultiplier > 0 then
-        s = inputStr 
-        for i = 1 to nMultiplier - 1
-            inputStr = inputStr & s 
-        next 
-    else
-        inputStr = "" 
-    end if 
-    copyStrNumb = inputStr 
+function copyStr(a, b)
+copyStr = copyStrNumb(a, b) 
 end function 
 
-'拷贝内容N次  PHP里函数
-function str_Repeat(byVal inputStr, nMultiplier)
-    str_Repeat = copyStrNumb(inputStr, nMultiplier) 
-end function 
-
-'引用上面的
-function copyStr(inputStr, nMultiplier)
-    copyStr = copyStrNumb(inputStr, nMultiplier) 
-end function 
-
-'内容加Tab
-function contentAddTab(byVal content, nNumb)
-    contentAddTab = copyStr("    ", nNumb) & join(split(content, vbCrLf), vbCrLf & copyStr("    ", nNumb)) 
+function contentAddTab(byVal a, b)
+contentAddTab = copyStr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32), b) & join(split(a, vbCrLf), vbCrLf & copyStr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32), b)) 
 end function  
 
-'删除最后指定字符20150228 Content=DeleteEndStr(Content,2) 
-function deleteEndStr(content, nLen)
-    if content <> "" then content = left(content, len(content) - nLen) 
-    deleteEndStr = content 
+function deleteEndStr(a, b)
+if a <> "" then a = left(a, len(a) - b) 
+deleteEndStr = a 
 end function 
-    
 
-'StringNumber (2013,9,27)
-function toNumber(byVal n, byVal nD)
-    toNumber = cint(formatNumber(n, nD, - 1))   
+function toNumber(byVal a, byVal b)
+toNumber = cint(formatNumber(a, b, - 1))   
 end function  
 
-'处理成数字
-function handleNumber(byVal content)
-    dim i, s, c 
-    c = ""   
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if inStr("0123456789", s) > 0 then
-            c = c & s 
-        end if 
-    next 
-    handleNumber = c
+function handleNumber(byVal a)
+dim b, c, d 
+d = ""   
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+d = d & c 
+end if 
+next 
+handleNumber = d
 end function 
 
-'字符串中提取数字 20150507
-function strDrawInt(byVal content)
-    strDrawInt = handleNumber(content) 
+function strDrawInt(byVal a)
+strDrawInt = handleNumber(a) 
 end function 
 
-'处理成数字 首字符可以是-符号
-function getFirstNegativeNumber(byVal content)
-    dim i, s, c 
-    c = "" 
-    content = trim(content) 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if s = "-" and c = "" then
-            c = c & s 
-        elseIf inStr("0123456789", s) > 0 then
-            c = c & s 
-        end if 
-    next 
-    if c = "" then c = "0"
-    getFirstNegativeNumber = c 
+function getFirstNegativeNumber(byVal a)
+dim b, c, d 
+d = "" 
+a = trim(a) 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if c = ChrW(45) and d = "" then
+d = d & c 
+elseIf inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+d = d & c 
+end if 
+next 
+if d = "" then d = ChrW(48)
+getFirstNegativeNumber = d 
 end function 
 
-'检测是否为数字类型
-function checkNumberType(byVal content)
-    checkNumberType = handleNumber(content) 
+function checkNumberType(byVal a)
+checkNumberType = handleNumber(a) 
 end function 
 
-'检测字符内容为数字类型
-function checkStrIsNumberType(byVal content)
-    dim i, s 
-    checkStrIsNumberType = true 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if inStr("0123456789", s) = 0 then
-            checkStrIsNumberType = false 
-            exit function 
-        end if 
-    next 
+function checkStrIsNumberType(byVal a)
+dim b, c 
+checkStrIsNumberType = true 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) = 0 then
+checkStrIsNumberType = false 
+exit function 
+end if 
+next 
 end function 
 
-'处理成数字类型
-function handleNumberType(byVal content)
-    dim i, s, c 
-    c = "" 
-    content = trim(content) 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if i = 1 and inStr("+-*/", left(content, 1)) > 0 then
-            c = c & s 
-        elseIf i > 1 and s = "." then
-            c = c & s 
-        elseIf inStr("0123456789", s) > 0 then
-            c = c & s 
-        end if 
-    next 
-    handleNumberType = c 
+function handleNumberType(byVal a)
+dim b, c, d 
+d = "" 
+a = trim(a) 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if b = 1 and inStr(ChrW(43)&ChrW(45)&ChrW(42)&ChrW(47), left(a, 1)) > 0 then
+d = d & c 
+elseIf b > 1 and c = ChrW(46) then
+d = d & c 
+elseIf inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+d = d & c 
+end if 
+next 
+handleNumberType = d 
 end function 
 
-'获得数字  -12.11
-function getStrToNumber(byVal content)
-    dim i, s, c 
-    c = "" 
-    content = trim(content) 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if i = 1 and inStr("-", left(content, 1)) > 0 then
-            c = c & s 
-        elseIf i > 1 and s = "." then
-            c = c & s 
-        elseIf inStr("0123456789", s) > 0 then
-            c = c & s 
-        end if 
-    next 
-    getStrToNumber = c 
+function getStrToNumber(byVal a)
+dim b, c, d 
+d = "" 
+a = trim(a) 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if b = 1 and inStr(ChrW(45), left(a, 1)) > 0 then
+d = d & c 
+elseIf b > 1 and c = ChrW(46) then
+d = d & c 
+elseIf inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+d = d & c 
+end if 
+next 
+getStrToNumber = d 
 end function 
 
-'获得数字 只单独获得数字 并且第一个字数不能为零0     20150322
-function getNumber(byVal content)
-    dim i, s, c 
-    c = "" 
-    content = trim(content) 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if inStr("0123456789", s) > 0 then
-            if c = "" and s = "0" then                                                      '待改进，因为现在脑子不够用了，就这么定敢20150322
-            else
-                c = c & s 
-            end if 
-        end if 
-    next 
-    getNumber = c
+function getNumber(byVal a)
+dim b, c, d 
+d = "" 
+a = trim(a) 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+if d = "" and c = ChrW(48) then
+else
+d = d & c 
+end if 
+end if 
+next 
+getNumber = d
 end function 
 
-'检测是否为数字
-function checkNumb(c)
-	dim s,i
-	checkNumb = true
-	for i = 1 to len(c)
-		s=mid(c,i,1)
-		if inStr("0123456789.", s) =0 then
-			checkNumb = false
-			exit function
-		end if 
-	next
+function checkNumb(a)
+dim b,c
+checkNumb = true
+for c = 1 to len(a)
+b=mid(a,c,1)
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57)&ChrW(46), b) =0 then
+checkNumb = false
+exit function
+end if 
+next
 end function 
 
-'获得有小数点数字
-function getDianNumb(byVal content)
-    dim i, s, c,isDian
-    c = "" 
-	isDian=false
-    for i = 1 to len(content)
-        s = mid(content, i, 1)
-		if s="." and isDian=true then
-			exit for
-		elseif s="." and c<>"" and isDian=false then
-			c=c & s
-			isDian=true 
-        elseif inStr("0123456789.", s) > 0 then
-            c = c & s 
-        end if 
-    next 
-    getDianNumb = c 
+function getDianNumb(byVal a)
+dim b, c, d,e
+d = "" 
+e=false
+for b = 1 to len(a)
+c = mid(a, b, 1)
+if c=ChrW(46) and e=true then
+exit for
+elseif c=ChrW(46) and d <>"" and e=false then
+d=d & c
+e=true 
+elseif inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57)&ChrW(46), c) > 0 then
+d = d & c 
+end if 
+next 
+getDianNumb = d 
 end function 
 
-'获得总页数
-function getCountPage(nCount, nPageSize)
-    '把负数转成正确进行计算20150502
-    dim nCountPage 
-    if nCount < 0 then
-        nCount = nCount * - 1 
-    end if 
-    if nPageSize < 0 then
-        nPageSize = nPageSize * - 1 
-    end if 
-    nCountPage = fix(nCount / nPageSize) 
-    if  nCount Mod nPageSize  > 0 then nCountPage = nCountPage + 1 
-    getCountPage = nCountPage 
+function getCountPage(a, b)
+
+dim c 
+if a < 0 then
+a = a * - 1 
+end if 
+if b < 0 then
+b = b * - 1 
+end if 
+c = fix(a / b) 
+if  a Mod b  > 0 then c = c + 1 
+getCountPage = c 
 end function 
 
-'获得处理后页数
-function getPageNumb(nRecordCount, nPageSize)
-    dim n 
-    n = int(nRecordCount / nPageSize) 
-    if nRecordCount mod nPageSize > 0 then
-        n = n + 1 
-    end if 
-    getPageNumb = n 
+function getPageNumb(a, b)
+dim c 
+c = int(a / b) 
+if a mod b > 0 then
+c = c + 1 
+end if 
+getPageNumb = c 
 end function 
 
-'处理获得采集总页数
-function getCaiHandleCountPage(content)
-    content = delHtml(content) 
-    content = handleNumber(content) 
-    getCaiHandleCountPage = "" 
-    if len(content) < 10 then
-        getCaiHandleCountPage = right(content, 1) 
-    elseIf len(content) < 200 then
-        getCaiHandleCountPage = right(content, 2) 
-    end if 
+function getCaiHandleCountPage(a)
+a = delHtml(a) 
+a = handleNumber(a) 
+getCaiHandleCountPage = "" 
+if len(a) < 10 then
+getCaiHandleCountPage = right(a, 1) 
+elseIf len(a) < 200 then
+getCaiHandleCountPage = right(a, 2) 
+end if 
 end function 
 
-'获得采集排序总页数 20150312
-function getCaiSortCountPage(byVal content)
-    dim i, s 
-    getCaiSortCountPage = "" 
-    content = delHtml(content) 
-    content = handleNumber(content) 
-    for i = 1 to 30
-        s = mid(content, 1, len(i)) 
-        if s = CStr(i) then
-            getCaiSortCountPage = cstr(i) 
-            'Call Echo(i,s)
-            content = right(content, len(content) - len(i)) 
-        end if 
-    next 
+function getCaiSortCountPage(byVal a)
+dim b, c 
+getCaiSortCountPage = "" 
+a = delHtml(a) 
+a = handleNumber(a) 
+for b = 1 to 30
+c = mid(a, 1, len(b)) 
+if c = CStr(b) then
+getCaiSortCountPage = cstr(b) 
+
+a = right(a, len(a) - len(b)) 
+end if 
+next 
 end function 
 
-'最大与最小之间 Between the minimum and maximum
-function minMaxBetween(nMin, nMax, nValue)
-    'nMin = CInt(nMin)                                                         '最小数
-    'nMax = CInt(nMax)                                                         '最大数
-    'nValue = CInt(nValue)                                                     '当前数
-	minMaxBetween = nMin
-    if nMin > nMax then
-        minMaxBetween = nMax 
-    elseIf nValue > nMin then
-        minMaxBetween = nValue 
-        if nValue > nMax then
-            minMaxBetween = nMax 
-        end if 
-    end if 
+function minMaxBetween(a, b, c)
+
+
+
+minMaxBetween = a
+if a > b then
+minMaxBetween = b 
+elseIf c > a then
+minMaxBetween = c 
+if c > b then
+minMaxBetween = b 
+end if 
+end if 
 end function 
 
-'获得内容文件名称中类型  (在FSO文件里已经有这个功能了20141220)
-function getStrFileType(fileName)
-    dim c 
-    c = "" 
-    if inStr(fileName, ".") > 0 then
-        c = LCase(mid(fileName, inStrRev(fileName, ".") + 1)) 
-        if inStr(c, "?") > 0 then
-            c = mid(c, 1, inStr(c, "?") - 1) 
-        end if 
-    end if 
-    getStrFileType = c 
-end function 
- 
-'将字符类型转成数字类型
-function val(byVal s)
-	val = cint(s) 
-    if s = "" or not isNumeric(s) then
-        val = 0  
-    end if 
+function getStrFileType(a)
+dim b 
+b = "" 
+if inStr(a, ChrW(46)) > 0 then
+b = LCase(mid(a, inStrRev(a, ChrW(46)) + 1)) 
+if inStr(b, ChrW(63)) > 0 then
+b = mid(b, 1, inStr(b, ChrW(63)) - 1) 
+end if 
+end if 
+getStrFileType = b 
 end function 
 
-'返回字符串左边N个byte
-function strLen(str)
-    on error resume next 
-	strLen = 0 
-    if isNull(str)<>false and str <> "" then
-        dim i, n, nK, chrA  
-        nK = 0 
-        n = len(str) 
-        for i = 1 to n
-
-
-            chrA = mid(str, i, 1) 
-
-            'If Asc(chrA) >= 0 And Asc(chrA) <= 255 Then
-            'nK = nK + 1
-            'Else
-            'nK = nK + 2
-            'End If
-
-            if chrA < 0 then chrA = chrA + 65536 
-            if chrA < 255 then nK = nK + 1 
-            if chrA > 255 then nK = nK + 2 
-
-        next 
-        strLen = nK 
-    end if 
+function val(byVal a)
+val = cint(a) 
+if a = "" or not isNumeric(a) then
+val = 0  
+end if 
 end function 
 
-'循环加缩进 AddIndent(Content,"    ")
-function addIndent(content, indentStr)
-    dim splStr, s, c 
-    c = "" 
-    splStr = split(content, vbCrLf) 
-    for each s in splStr
-        c = c & indentStr & s & vbCrLf 
-    next 
-    addIndent = trimVbCrlf(c) 
+function strLen(a)
+on error resume next 
+strLen = 0 
+if isNull(a) <>false and a <> "" then
+dim b, c, d, e  
+d = 0 
+c = len(a) 
+for b = 1 to c
+e = mid(a, b, 1) 
+
+
+
+
+
+if e < 0 then e = e + 65536 
+if e < 255 then d = d + 1 
+if e > 255 then d = d + 2 
+next 
+strLen = d 
+end if 
 end function 
 
-'获得数字前字符 2014 12 12(作用是为夏文强切换分块服务的)
-function getNumberBeforeStr(content)
-    dim i, s, c 
-    c = "" 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if inStr("0123456789", s) > 0 then exit for 
-        c = c & s 
-    next 
-    getNumberBeforeStr = c 
+function addIndent(a, b)
+dim c, d, e 
+e = "" 
+c = split(a, vbCrLf) 
+for each d in c
+e = e & b & d & vbCrLf 
+next 
+addIndent = trimVbCrlf(e) 
+end function 
+
+function getNumberBeforeStr(a)
+dim b, c, d 
+d = "" 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then exit for 
+d = d & c 
+next 
+getNumberBeforeStr = d 
 end function
 
-'获得数字包换负数 20171017
-function getNumberGroup(content)
-    dim i, s, c 
-    c = "" 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if s="-" and c="" then
-			c=s
-		elseif inStr("0123456789", s) > 0 then
-        	c = c & s 
-		end if
-    next 
-    getNumberGroup = c 
+function getNumberGroup(a)
+dim b, c, d 
+d = "" 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if c=ChrW(45) and d="" then
+d=c
+elseif inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+d = d & c 
+end if
+next 
+getNumberGroup = d 
+end function 
+
+function getParamNumb(a)
+dim b, c, d 
+d = "" 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57), c) > 0 then
+d = d & c 
+end if
+next 
+getParamNumb = d 
 end function 
 
 
-'获得参数里的数字 20231001
-function getParamNumb(content)
-    dim i, s, c 
-    c = "" 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if inStr("0123456789", s) > 0 then
-            c = c & s 
-        end if
-    next 
-    getParamNumb = c 
-end function 
-
-'获得随机数 20141212
-'用法response.write makePassword(6)
-function makePassword(byVal nMaxLen)
-    dim strNewPass ,n
-    dim nWhatsNext, nUpper, nLower, nCounter 
-    randomize 
-    strNewPass = "" 
-    for nCounter = 1 to nMaxLen
-        nWhatsNext = int((1 - 0 + 1) * rnd + 0) 
-        if nWhatsNext = 0 then 
-            nUpper = 90 
-            nLower = 65 
-        else
-            nUpper = 57 
-            nLower = 48 
-        end if 
-		n=cint( (nUpper - nLower + 1) * rnd + nLower)
-        strNewPass = strNewPass & chr(n)
-    next 
-    makePassword = strNewPass 
-end function 
-
-'功能说明：生成随机字符串，包括大小写字母，数字，和其它符合，常用于干扰码。 20141212
-'参数说明：nMin--干扰码最小长度，ends--干扰码最大长度
-'用法'Response.Write rndCode(20, 330)
-function rndCode(byVal nMin, byVal nMax)
-    dim nRndLen, i 
-    randomize 
-    rndCode = "" 
-    nRndLen = int(nMin * rnd + nMax - nMin) 
-    for i = 1 to nRndLen
-        randomize 
-        rndCode = rndCode & chr(cint(127 * rnd + 1)) 
-    next 
-end function 
-
-'获得随机手机号码 没什么意义，引用别人的  20141217
-'例:CAll Rw(GetRandomPhoneNumber(41))
-function getRandomPhoneNumber(nCount)
-    dim s, rndnum, j, c ,n
-    c = "" : rndnum = "" 
-    j = 1 
-    do while j < nCount
-        randomize 
-        do while len(rndnum) < 9                                                        '产生随机数的个数 
-            n = cint((57 - 48) * rnd + 48)
-            rndnum = rndnum & chr(n)
-        loop 
-        c = c & 13 & rndnum & vbCrLf 
-        rndnum = "" 
-        j = j + 1 
-    loop 
-    if c <> "" then c = left(c, len(c) - 2) 
-    getRandomPhoneNumber = c 
-end function 
- 
-'获得字符长度
-function lenStr(content)
-    dim l, t, c 
-    c = "" 
-    dim i 
-    l = len(content)  
-    t = 0 
-    for i = 1 to l
-        c = asc(mid(content, i, 1))  
-        if c < 0 then c = c + 65536 
-        if c < 255 then t = t + 1 
-        if c > 255 then t = t + 2  
-    next 
-    lenStr = t 
-end function 
-
-'数组转字符串
-function toString(byVal arr)
-    dim tmp 
-    if isArray(arr) then
-        tmp = join(arr, ",")   
-    end if 
-	toString = tmp 
-end function 
-'移除数字(20151022)
-function remoteNumber(content)
-    dim i, s, c 
-    for i = 1 to len(content)
-        s = mid(content, i, 1) 
-        if inStr("0123456789.", s) = 0 then
-            c = c & s 
-        end if 
-    next 
-    remoteNumber = c 
+function makePassword(byVal a)
+dim b ,c
+dim d, e, f, g 
+randomize 
+b = "" 
+for g = 1 to a
+d = int((1 - 0 + 1) * rnd + 0) 
+if d = 0 then 
+e = 90 
+f = 65 
+else
+e = 57 
+f = 48 
+end if 
+c=cint( (e - f + 1) * rnd + f)
+b = b & chr(c)
+next 
+makePassword = b 
 end function 
 
 
-'================================================= 判断有特殊字符 start
-'处理有无指定字符
-function handleHaveStr(content, zd)
-    dim s, i 
-    handleHaveStr = false 
-    for i = 1 to len(zd)
-        s = mid(zd, i, 1) 
-        if inStr(content, s) > 0 then
-            handleHaveStr = true 
-            exit function 
-        end if 
-    next 
+
+function rndCode(byVal a, byVal b)
+dim c, d 
+randomize 
+rndCode = "" 
+c = int(a * rnd + b - a) 
+for d = 1 to c
+randomize 
+rndCode = rndCode & chr(cint(127 * rnd + 1)) 
+next 
 end function 
-'有小写(20151224)
-function haveLowerCase(content)
-    haveLowerCase = handleHaveStr(content, "abcdefghijklmnopqrstuvwxyz") 
+
+
+function getRandomPhoneNumber(a)
+dim b, c, d, e ,f
+e = "" : c = "" 
+d = 1 
+do while d < a
+randomize 
+do while len(c) < 9
+f = cint((57 - 48) * rnd + 48)
+c = c & chr(f)
+loop 
+e = e & 13 & c & vbCrLf 
+c = "" 
+d = d + 1 
+loop 
+if e <> "" then e = left(e, len(e) - 2) 
+getRandomPhoneNumber = e 
 end function 
-'有大写(20151224)
-function haveUpperCase(content)
-    haveUpperCase = handleHaveStr(content, "ABCDEFGHIJKLMNOPQRSTUVWXYZ") 
+
+function lenStr(a)
+dim b, c, d 
+d = "" 
+dim e 
+b = len(a)  
+c = 0 
+for e = 1 to b
+d = asc(mid(a, e, 1))  
+if d < 0 then d = d + 65536 
+if d < 255 then c = c + 1 
+if d > 255 then c = c + 2  
+next 
+lenStr = c 
 end function 
-'有数字(20151224)
-function haveNumber(content)
-    haveNumber = handleHaveStr(content, "0123456789") 
+
+function toString(byVal a)
+dim b 
+if isArray(a) then
+b = join(a, ChrW(44))   
+end if 
+toString = b 
 end function 
-'有汉字(20151224)
-function haveChina(content)
-    dim i, j 
-    haveChina = false 
-    for i = 1 to len(content)
-        j = asc(mid(content, i, 1)) 
-        '是汉字累加
-        if j < 0 then
-            if (j <= -22033 and j >= -24158) = false then
-                haveChina = true 
-                exit function 
-            end if 
-        end if 
-    next 
+
+function remoteNumber(a)
+dim b, c, d 
+for b = 1 to len(a)
+c = mid(a, b, 1) 
+if inStr(ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57)&ChrW(46), c) = 0 then
+d = d & c 
+end if 
+next 
+remoteNumber = d 
 end function 
-'================================================= 判断有特殊字符 end
+
+
+function handleHaveStr(a, b)
+dim c, d 
+handleHaveStr = false 
+for d = 1 to len(b)
+c = mid(b, d, 1) 
+if inStr(a, c) > 0 then
+handleHaveStr = true 
+exit function 
+end if 
+next 
+end function 
+
+function haveLowerCase(a)
+haveLowerCase = handleHaveStr(a, ChrW(97)&ChrW(98)&ChrW(99)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(103)&ChrW(104)&ChrW(105)&ChrW(106)&ChrW(107)&ChrW(108)&ChrW(109)&ChrW(110)&ChrW(111)&ChrW(112)&ChrW(113)&ChrW(114)&ChrW(115)&ChrW(116)&ChrW(117)&ChrW(118)&ChrW(119)&ChrW(120)&ChrW(121)&ChrW(122)) 
+end function 
+
+function haveUpperCase(a)
+haveUpperCase = handleHaveStr(a, ChrW(65)&ChrW(66)&ChrW(67)&ChrW(68)&ChrW(69)&ChrW(70)&ChrW(71)&ChrW(72)&ChrW(73)&ChrW(74)&ChrW(75)&ChrW(76)&ChrW(77)&ChrW(78)&ChrW(79)&ChrW(80)&ChrW(81)&ChrW(82)&ChrW(83)&ChrW(84)&ChrW(85)&ChrW(86)&ChrW(87)&ChrW(88)&ChrW(89)&ChrW(90)) 
+end function 
+
+function haveNumber(a)
+haveNumber = handleHaveStr(a, ChrW(48)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53)&ChrW(54)&ChrW(55)&ChrW(56)&ChrW(57)) 
+end function 
+
+function haveChina(a)
+dim b, c 
+haveChina = false 
+for b = 1 to len(a)
+c = asc(mid(a, b, 1)) 
+
+if c < 0 then
+if (c <= -22033 and c >= -24158) = false then
+haveChina = true 
+exit function 
+end if 
+end if 
+next 
+end function 
 
 
 
 
-'*************************************************
-'函数名：EncodeJP
-'作  用：过滤日本片假名导致Access搜索失效的bug
-'*************************************************
-function encodeJP(str)
-    if not str = "" then
-        str = replace(str, "ガ", "&#12460;") 
-        str = replace(str, "ギ", "&#12462;") 
-        str = replace(str, "グ", "&#12464;") 
-        str = replace(str, "ア", "&#12450;") 
-        str = replace(str, "ゲ", "&#12466;") 
-        str = replace(str, "ゴ", "&#12468;") 
-        str = replace(str, "ザ", "&#12470;") 
-        str = replace(str, "ジ", "&#12472;") 
-        str = replace(str, "ズ", "&#12474;") 
-        str = replace(str, "ゼ", "&#12476;") 
-        str = replace(str, "ゾ", "&#12478;") 
-        str = replace(str, "ダ", "&#12480;") 
-        str = replace(str, "ヂ", "&#12482;") 
-        str = replace(str, "ヅ", "&#12485;") 
-        str = replace(str, "デ", "&#12487;") 
-        str = replace(str, "ド", "&#12489;") 
-        str = replace(str, "バ", "&#12496;") 
-        str = replace(str, "パ", "&#12497;") 
-        str = replace(str, "ビ", "&#12499;") 
-        str = replace(str, "ピ", "&#12500;") 
-        str = replace(str, "ブ", "&#12502;") 
-        str = replace(str, "ブ", "&#12502;") 
-        str = replace(str, "プ", "&#12503;") 
-        str = replace(str, "ベ", "&#12505;") 
-        str = replace(str, "ペ", "&#12506;") 
-        str = replace(str, "ボ", "&#12508;") 
-        str = replace(str, "ポ", "&#12509;") 
-        str = replace(str, "ヴ", "&#12532;") 
-    end if 
-    encodeJP = str 
+
+function encodeJP(a)
+if not a = "" then
+a = replace(a, ChrW(12460), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(54)&ChrW(48)&ChrW(59)) 
+a = replace(a, ChrW(12462), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(54)&ChrW(50)&ChrW(59)) 
+a = replace(a, ChrW(12464), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(54)&ChrW(52)&ChrW(59)) 
+a = replace(a, ChrW(12450), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(53)&ChrW(48)&ChrW(59)) 
+a = replace(a, ChrW(12466), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(54)&ChrW(54)&ChrW(59)) 
+a = replace(a, ChrW(12468), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(54)&ChrW(56)&ChrW(59)) 
+a = replace(a, ChrW(12470), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(55)&ChrW(48)&ChrW(59)) 
+a = replace(a, ChrW(12472), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(55)&ChrW(50)&ChrW(59)) 
+a = replace(a, ChrW(12474), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(55)&ChrW(52)&ChrW(59)) 
+a = replace(a, ChrW(12476), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(55)&ChrW(54)&ChrW(59)) 
+a = replace(a, ChrW(12478), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(55)&ChrW(56)&ChrW(59)) 
+a = replace(a, ChrW(12480), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(56)&ChrW(48)&ChrW(59)) 
+a = replace(a, ChrW(12482), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(56)&ChrW(50)&ChrW(59)) 
+a = replace(a, ChrW(12485), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(56)&ChrW(53)&ChrW(59)) 
+a = replace(a, ChrW(12487), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(56)&ChrW(55)&ChrW(59)) 
+a = replace(a, ChrW(12489), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(56)&ChrW(57)&ChrW(59)) 
+a = replace(a, ChrW(12496), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(57)&ChrW(54)&ChrW(59)) 
+a = replace(a, ChrW(12497), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(57)&ChrW(55)&ChrW(59)) 
+a = replace(a, ChrW(12499), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(52)&ChrW(57)&ChrW(57)&ChrW(59)) 
+a = replace(a, ChrW(12500), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(59)) 
+a = replace(a, ChrW(12502), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(50)&ChrW(59)) 
+a = replace(a, ChrW(12502), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(50)&ChrW(59)) 
+a = replace(a, ChrW(12503), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(51)&ChrW(59)) 
+a = replace(a, ChrW(12505), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(53)&ChrW(59)) 
+a = replace(a, ChrW(12506), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(54)&ChrW(59)) 
+a = replace(a, ChrW(12508), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(56)&ChrW(59)) 
+a = replace(a, ChrW(12509), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(57)&ChrW(59)) 
+a = replace(a, ChrW(12532), ChrW(38)&ChrW(35)&ChrW(49)&ChrW(50)&ChrW(53)&ChrW(51)&ChrW(50)&ChrW(59)) 
+end if 
+encodeJP = a 
 end function 
-'中文转unicode
-function cnTounicode(str)
-    cnTounicode=""
-    dim i
-    for i=1 to len(str)
-    'asc函数：返回字符串的第一个字母对应的ANSI字符代码
-        'AscW函数：返回每一个GB编码文字的Unicode字符代码
-        'hex函数：返回表示十六进制数字值的字符串
-        cnTounicode=cnTounicode & "\u" & LCase(Right("0000" & Cstr(hex(AscW(mid(str,i,1)))),4))
-    next
+
+function cnTounicode(a)
+cnTounicode=""
+dim b
+for b=1 to len(a)
+
+
+
+cnTounicode=cnTounicode & ChrW(92)&ChrW(117) & LCase(Right(ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48) & Cstr(hex(AscW(mid(a,b,1)))),4))
+next
 end function
-'\u51cc\u9648\u4eae\u535a\u5ba2
-function unicodeto(str) 'unicode转中文
-	dim i,s,c
-	for i=1 to len(str)
-		s=mid(str & "  ",i,2)
-		if s="\u" then
-			c=c & ChrW(cint("&H" & mid(str,i+2,4)))
-			i=i+5
-		else
-			c=c & mid(str,i,1)
-		end if
-		
-	next
-	unicodeto=c
+
+function unicodeto(a)
+dim b,c,d
+for b=1 to len(a)
+c=mid(a & ChrW(32)&ChrW(32),b,2)
+if c=ChrW(92)&ChrW(117) then
+d=d & ChrW(cint(ChrW(38)&ChrW(72) & mid(a,b+2,4)))
+b=b+5
+else
+d=d & mid(a,b,1)
+end if
+next
+unicodeto=d
 end function
- 
+
+function getHanZiTxt(a)
+dim b,c,d
+for c=1 to len(a)
+b=mid(a,c,1)
+
+if isChinese(b) then
+d=d & b
+end if
+next
+getHanZiTxt=d
+end function
+
+Function isChinese(a)
+Dim b, c
+Set b = New RegExp
+b.pattern = ChrW(94)&ChrW(91)&ChrW(92)&ChrW(117)&ChrW(52)&ChrW(101)&ChrW(48)&ChrW(48)&ChrW(45)&ChrW(92)&ChrW(117)&ChrW(57)&ChrW(102)&ChrW(97)&ChrW(53)&ChrW(93)&ChrW(43)&ChrW(36)
+b.ignorecase = True
+c = b.test(a)
+Set b = Nothing
+isChinese = c
+End function
+
+function myLeft(a,b)
+dim c, d, e,f,g
+g = "" 
+d=0
+
+for c = 1 to len(a)
+f=mid(a, c, 1)
+if isChinese(f)=true then
+d=d+2
+else
+d=d+1
+end if
 
 
-'获得汉字文本部分20230509'
-function getHanZiTxt(txt)
-    dim s,i,c
-    for i=1 to len(txt)
-        s=mid(txt,i,1)
-        ' call echo(i, s)
-        if isChinese(s) then
-            c=c & s
-        end if
-    next
-    getHanZiTxt=c
-end function
-'判断是否为汉字20230509'
-Function isChinese(str)
-  Dim regEx, result
-  Set regEx = New RegExp
-  regEx.Pattern = "^[\u4e00-\u9fa5]+$"
-  regEx.IgnoreCase = True
-  result = regEx.Test(str)
-  Set regEx = Nothing
-  isChinese = result
-End Function
- 
-'获得字符长度 汉字为两个字符 20230709
-function myLeft(content,nEnd)
-    dim i, t, n,s,c
-    c = "" 
-    t=0
-    ' call echo("len", len(content))
-    for i = 1 to len(content)
-        s=mid(content, i, 1)
-        if isChinese(s)=true then
-            t=t+2
-        else
-            t=t+1
-        end if
-        ' call echo(t,nEnd)
-        ' call echo("i",s)
-        if t>nEnd then
-            exit for
-        end if
-        c=c & s 
-    next 
-    myLeft = c
+if d>b then
+exit for
+end if
+g=g & f 
+next 
+myLeft = g
 end function 
+
+function nHleZhe(a)
+dim b,c,d
+if isnul(a) then
+nHleZhe=""
+exit function
+end if
+b=cstr(a)
+if left(b,1)=ChrW(46) then
+b=ChrW(48)&ChrW(46) & mid(b,2)
+elseif left(b,2)=ChrW(45)&ChrW(46) then
+b=ChrW(45)&ChrW(48)&ChrW(46) & mid(b,3)
+end if
+
+for c =1 to 99
+d=right(b,1)
+
+if (d=ChrW(48) and instr(b,ChrW(46))>0) or d=ChrW(46) then
+b=mid(b,1,len(b)-1)
+else
+exit for
+end if
+next 
+nHleZhe=b
+end function
+
+function newCStr(a)
+if isnul(a) then
+newCStr=""
+else
+newCStr=cstr(a)
+end if
+end function
 %>   
-

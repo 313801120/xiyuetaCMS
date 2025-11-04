@@ -1,0 +1,5 @@
+    if request("dataOrderyBy")="查找未生成html" then
+        sql=IIF(sql=""," where ",sql & " and ")
+        sql = sql & "updatetime > createHtmltime"
+        dataOrderyBy=" ORDER BY updatetime DESC"
+    end if

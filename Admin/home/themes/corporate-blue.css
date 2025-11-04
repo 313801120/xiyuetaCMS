@@ -1,0 +1,49 @@
+:root {
+    --chart-title-color: #0050b3;
+    --chart-legend-color: #262626;
+    --chart-axis-line-color: #bae7ff;
+    --chart-axis-label-color: #262626;
+    --chart-split-line-color: #e6f7ff;
+    --chart-income-start-color: #1890ff; /* 收入条形图开始颜色 */
+    --chart-income-end-color: #40a9ff;   /* 收入条形图结束颜色 */
+    --chart-expense-start-color: #faad14; /* 支出条形图开始颜色 */
+    --chart-expense-end-color: #ffc069;   /* 支出条形图结束颜色 */
+}
+body {
+    background: #e6f7ff;
+    color: #262626;
+}
+.dashboard-title {
+    color: #0050b3;
+    text-shadow: none;
+}
+.data-card {
+    background: #fff;
+    border: 1px solid #bae7ff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.data-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.data-title {
+    color: #0050b3;
+}
+.data-value {
+    color: #1890ff;
+}
+.data-trend {
+    color: #595959;
+}
+.layuiadmin-span-color{
+    color:#1890ff;
+}
+.theme-selector {
+    background-color: rgba(24,144,255,0.1);
+    border: 1px solid rgba(24,144,255,0.2);
+    color: #1890ff;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231890ff%22%20d%3D%22M287,197.3L159.2,69.5c-4.7-4.7-12.3-4.7-17,0L5.4,197.3c-4.7,4.7-4.7,12.3,0,17l17,17c4.7,4.7,12.3,4.7,17,0l110.6-110.6c4.7-4.7,12.3-4.7,17,0l110.6,110.6c4.7,4.7-12.3,4.7,17,0l17-17C291.7,209.5,291.7,202,287,197.3z%22/%3E%3C/svg%3E');
+}
+.theme-selector option {
+    background-color: #e6f7ff;
+    color: #262626;
+} 

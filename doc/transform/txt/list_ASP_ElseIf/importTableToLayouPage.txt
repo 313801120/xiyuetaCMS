@@ -1,0 +1,3 @@
+'加载数据库里对应的表列表20250810
+elseif request("act")="importTableToLayouPage" then    
+    call die("{""info"": """&importTableToLayouPage()&""",""status"": ""y""}")

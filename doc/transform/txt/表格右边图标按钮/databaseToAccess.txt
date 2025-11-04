@@ -1,0 +1,13 @@
+                            // 使用通用导出函数
+                            showExportModal({
+                                confirmText: '确定要导出Access用数据吗？',
+                                confirmTitle: '确认导出',
+                                action: 'databaseToAccess',
+                                exportTitle: '导出Access用数据',
+                                filePrefix: 'access_data_',
+                                fileExtension: '.sql',
+                                successTitle: '数据已成功导出，您可以复制以下内容用于Access数据库：',
+                                copyBtnText: '复制全部',
+                                downloadBtnText: '下载文件',
+                                closeBtnText: '关闭'
+                            });

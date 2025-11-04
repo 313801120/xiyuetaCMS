@@ -1,0 +1,558 @@
+
+
+'====注册类搜索Start===='
+     sql =sql & " or [guestname] like '%" & Request("key") & "%'  or [tel] like '%" & Request("key") & "%'" 
+     idlist=getXiyuetaColumnSearchIdList(request("key"))
+     if idlist<>"" then sql=sql &" or ntype in("& idlist & ") or onregistered in("& idlist &")"
+'====注册类搜索End===='
+
+'====非注册类搜索Start===='
+     sql =sql & " or [guestname] like '%" & Request("key") & "%'  or [tel] like '%" & Request("key") & "%' or [safetyclass] like '%" & Request("key") & "%' " 
+     'idlist=getXiyuetaColumnSearchIdList(request("key"))
+     'if idlist<>"" then sql=sql &" or safetyclass in("& idlist & ")"
+'====非注册类搜索End===='
+
+'====职称搜索Start===='
+     sql =sql & " or [guestname] like '%" & Request("key") & "%' or [tel] like '%" & Request("key") & "%'" 
+     idlist=getXiyuetaColumnSearchIdList(request("key"))
+     if idlist<>"" then sql=sql &" or onregistered in("& idlist & ")"
+'====职称搜索End====' 
+     
+
+ layui-col-space10  不要加上面了
+'====表单在一行Start===='
+                <div class="layui-row layui-form-item">
+                    <div class="layui-col-xs6">
+'左边'
+                    </div>
+					
+                    <div class="layui-col-xs6">
+'右边'
+                    </div>
+                </div>		
+				
+						
+'====表单在一行End===='
+
+'====List追加sql部分Start===='
+if userrs("level")<>1 and checkPermission("库存管理")=false and checkPermission("出库管理")=false  then
+ sql=IIF(sql=""," where ",sql & " and ")
+ sql=sql & " adminid="& userrs("id")
+end if
+'====List追加sql部分End===='
+
+'====List追加Request的SQL部分Start===='
+    If Request("selectnstate") <> "" Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & "nstate="&request("selectnstate")
+    End If
+    If Request("selectisthrough") <> "" Then
+      sql=IIF(sql=""," where ",sql & " and ")
+      sql = sql & "isthrough="&request("selectisthrough")
+    End If
+'====List追加Request的SQL部分End===='
+
+
+'====List双击监听工具事件Start===='
+    // 双击表格中的某一行-触发行双击事件  20220604 
+    table.on('rowDouble(demo)',function (obj) {
+        showwin2('查看信息', 'listview.asp?id=' + obj.data["id"])
+    })
+'====List双击监听工具事件End===='
+
+
+'====注册非注册职称公司修改Start===='
+      '修改并出库20220818'
+      if rs("nstate")=0 then
+        'rs("nstate")=1'为出库
+        'rs("outadminid")=userRs("id")
+        rs("companyAdminId")=userRs("id")  '为在库存里修改了为当前出库员的，超级管理在出库里修改不变，还是为此人员'
+      end if
+'====注册非注册职称公司修改End===='
+
+
+
+'====注册类Form底部JS块Start===='
+
+
+
+
+
+
+    $("textarea[name='timelist']").parent().parent().hide();//隐藏
+ 
+
+    $("input[name='issuetime']").hide();//追加20220906
+    $("input[name='expirydate']").hide();//追加20220906
+    $("input[name='bcertificatedate']").hide();//追加20220906
+
+    var isClickSafetyclass=true;
+    //监听复选框，只能选择3个   20220904
+    form.on('checkbox(safetyclass)',function(obj){ 
+      isClickSafetyclass=true;
+      var len=$("input[name='safetyclass']:checked").length;
+      if(len>3){
+        $(obj.elem).next().attr("class","layui-unselect layui-form-checkbox");
+        $(obj.elem).prop("checked",false);
+        layer.msg('最多只能选3项！',{icon:5,time:1000});
+        isClickSafetyclass=false;
+        return false;
+      }
+    });
+
+    //安全类多选
+    var cTimeList=$("textarea[name='timelist']").val();
+    // alert(cTimeList)
+    // var thisSafetyclass=""   //当前选中项名称
+    // var obj=$("input[name='safetyclass']").parent();
+    // obj.find("div").click(function(i){
+    //   var sClass=$(this).attr("class")
+    //   var did=$(this).find("span").text();
+    //   // console.log(sClass,did)
+    //   if(sClass.indexOf("layui-form-checked")!=-1){
+    //     //保存之前旧的
+    //       if(thisSafetyclass!=""){
+    //         var upValue=$("input[name='bcertificatedate']").val();
+    //         cTimeList=updateStrArray(cTimeList, thisSafetyclass, 1, upValue)
+    //         // cTimeList=updateStrArray(cTimeList, thisSafetyclass, 2, "")//开启
+    //       }
+    //       //获得当前新的
+    //     if(checkStrArray(cTimeList, did)){
+    //       var sValue=getStrArray(cTimeList, did, 1);
+    //       $("input[name='bcertificatedate']").val(sValue);
+    //       //没有则累加
+    //     }else{
+    //       if(cTimeList!="")cTimeList+=","
+    //       cTimeList+=did+"||||";//追加
+    //       $("input[name='bcertificatedate']").val("");
+    //     }
+
+    //     thisSafetyclass=did;//更新选中项
+    //   //取消则保存值
+    //   }else{
+    //     // cTimeList=deleteStrArray(cTimeList,did);//删除 不删除
+    //       // cTimeList=updateStrArray(cTimeList, did, 2, "del")
+    //   }
+    //     console.log("cTimeList",did,cTimeList)
+    // }) 
+
+    //专业多选 
+    // cTimeList不要重复获得，用上面的
+    // alert(cTimeList)
+    var thisprofession=""   //当前选中项名称
+    var obj=$("input[name='profession'],input[name='safetyclass']").parent();
+    obj.find("div").click(function(i){
+      var sClass=$(this).attr("class")
+      var did=$(this).find("span").text();
+      var inputName=$(this).parent().parent().find("input").attr("name")
+      console.log("inputName",inputName)
+      // console.log(sClass,did)
+      if(sClass.indexOf("layui-form-checked")!=-1){
+        //保存之前旧的
+          if(thisprofession!=""){
+            //资格证签发时间
+            var upValue=$("input[name='issuetime']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 1, upValue)
+            //证书有效截止时间
+            var upValue=$("input[name='expirydate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 2, upValue)
+            //安全B证截止时间
+            var upValue=$("input[name='bcertificatedate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 3, upValue)
+
+          }
+
+
+          if(inputName=="profession"){
+            $("input[name='issuetime']").show();
+            $("input[name='expirydate']").show();
+          }else{            
+            $("input[name='bcertificatedate']").show();
+          }
+
+
+          //获得当前新的
+        if(checkStrArray(cTimeList, did)){
+          if(inputName=="profession"){
+            //资格证签发时间
+            var sValue=getStrArray(cTimeList, did, 1);
+            $("input[name='issuetime']").val(sValue);
+            //证书有效截止时间
+            var sValue=getStrArray(cTimeList, did, 2);
+            $("input[name='expirydate']").val(sValue);
+          }else{
+            //安全B证截止时间
+            var sValue=getStrArray(cTimeList, did, 3);
+            $("input[name='bcertificatedate']").val(sValue); 
+          }
+
+          //没有则累加
+        }else{
+          if(cTimeList!="")cTimeList+=","
+          cTimeList+=did+"||||";//追加
+          if(inputName=="profession"){
+            $("input[name='issuetime']").val("");//追加20220906
+            $("input[name='expirydate']").val("");//追加20220906
+          }else{
+            $("input[name='bcertificatedate']").val("");//追加20220906
+          }
+        }
+
+        thisprofession=did;//更新选中项
+      //取消则保存值
+      }else{
+        // cTimeList=deleteStrArray(cTimeList,did);//删除 不删除
+          // cTimeList=updateStrArray(cTimeList, did, 2, "del")
+
+
+        //保存之前旧的
+          if(thisprofession!=""){
+            //资格证签发时间
+            var upValue=$("input[name='issuetime']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 1, upValue)
+            //证书有效截止时间
+            var upValue=$("input[name='expirydate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 2, upValue)
+            //安全B证截止时间
+            var upValue=$("input[name='bcertificatedate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 3, upValue)
+
+          }
+          thisprofession=""
+          if(inputName=="profession"){
+            $("input[name='issuetime']").val("");//取消清空
+            $("input[name='expirydate']").val("");//取消清空
+            $("input[name='issuetime']").hide();//追加20220906
+            $("input[name='expirydate']").hide();//追加20220906
+          }else{
+            $("input[name='bcertificatedate']").val("");//取消清空                        
+            $("input[name='bcertificatedate']").hide();//追加20220906
+          }
+      }
+        // console.log("cTimeList",did,cTimeList)
+    })
+
+    //改变时间就自动保存当前20220812
+    $("input[name=issuetime],input[name=expirydate],input[name=bcertificatedate]").blur(function(){
+        //保存当前
+          if(thisprofession!=""){
+            //资格证签发时间
+            var upValue=$("input[name='issuetime']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 1, upValue)
+            //证书有效截止时间
+            var upValue=$("input[name='expirydate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 2, upValue)
+            //安全B证截止时间
+            var upValue=$("input[name='bcertificatedate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 3, upValue)
+
+          }
+          //console.log(thisprofession)
+    })
+
+    //提交 
+    $("#form1").submit(function(){
+        if(thisprofession!=""){
+            //资格证签发时间
+            var upValue=$("input[name='issuetime']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 1, upValue)
+            //证书有效截止时间
+            var upValue=$("input[name='expirydate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 2, upValue)
+            //安全B证截止时间
+            var upValue=$("input[name='bcertificatedate']").val();
+            cTimeList=updateStrArray(cTimeList, thisprofession, 3, upValue)
+
+
+        }
+      //职业
+      var smallTime="";
+      var smallTime2="";
+      var smallTime3="";
+      var obj=$("input[name='profession'],input[name='safetyclass']").parent();
+      //先清空
+      $("input[name='issuetime']").val(smallTime);   //最小时间
+      $("input[name='expirydate']").val(smallTime2);   //最小时间
+      $("input[name='bcertificatedate']").val(smallTime3);   //最小时间 
+      obj.find("div").each(function(i){
+          var sClass=$(this).attr("class")
+          var did=$(this).find("span").text();
+          if(sClass.indexOf("layui-form-checked")!=-1){
+            //资格证签发时间
+            var sValue=getStrArray(cTimeList, did, 1);
+            if(sValue!=""){
+              if(smallTime==""){
+                smallTime=sValue;
+              }else if(new Date(sValue)<new Date(smallTime)){
+                smallTime=sValue;
+              }
+            }
+            //证书有效截止时间
+            var sValue=getStrArray(cTimeList, did, 2);
+            if(sValue!=""){
+              if(smallTime2==""){
+                smallTime2=sValue;
+              }else if(new Date(sValue)<new Date(smallTime2)){
+                smallTime2=sValue;
+              }
+            }
+            //安全B证截止时间
+            var sValue=getStrArray(cTimeList, did, 3);
+            if(sValue!=""){
+              if(smallTime3==""){
+                smallTime3=sValue;
+              }else if(new Date(sValue)<new Date(smallTime3)){
+                smallTime3=sValue;
+              }
+            }
+
+          }
+        })  
+        $("input[name='issuetime']").val(smallTime);   //最小时间
+        $("input[name='expirydate']").val(smallTime2);   //最小时间
+        $("input[name='bcertificatedate']").val(smallTime3);   //最小时间
+
+      // // 资格证签发时间
+      // var smallTime="";
+      // var obj=$("input[name='safetyclass']").parent();
+      // obj.find("div").each(function(i){
+      //     var sClass=$(this).attr("class")
+      //     var did=$(this).find("span").text();
+      //     if(sClass.indexOf("layui-form-checked")!=-1){
+      //       var sValue=getStrArray(cTimeList, did, 1);
+      //       if(sValue!=""){
+      //         if(smallTime==""){
+      //           smallTime=sValue;
+      //         }else if(new Date(sValue)<new Date(smallTime)){
+      //           smallTime=sValue;
+      //         }
+      //       }
+      //     }
+      //   })  
+      //   $("input[name='bcertificatedate']").val(smallTime);   //最小时间
+
+
+
+
+        $("textarea[name='timelist']").val(cTimeList);// 时间列表
+
+ 
+    })
+
+
+
+
+    //追加于20220904 4
+    if(<%=userRs("level")%>!=1 && <%=userRs("level")%>!=4){//不为超级管理员和审核员，则不可输入
+
+      $("input[name='certificateprice']").parent().parent().hide();//隐藏 
+      //$("input[name='certificateprice']").attr("readonly","readonly");//不可输入值 220906
+
+
+    }   
+    //追加于20220905
+    var certificatepricexval=100;//出值价格X值
+    var tempContractperiod=$("input[name='contractperiod']").val();//暂存初始值  0905
+    $("input[name='contractperiod']").keyup(function(){
+      var s=$(this).val();
+      if(tempContractperiod!=s){
+        console.log('改变',tempContractperiod,s)
+        tempContractperiod=s;//更新暂存值
+        var n=parseFloat(s) 
+        $("input[name='certificateprice']").val( (n+certificatepricexval) );
+      }
+    });
+
+
+
+    <%
+
+            rsx.open"select * from ["& db_PREFIX &"certificate_config]",conn,1,1
+            if not rsx.eof then
+              response.write("certificatepricexval=" & rsx("certificatepricexval"))
+            end if:rsx.close
+    %>
+
+
+'====注册类Form底部JS块End===='
+
+
+
+'====非注册类Form底部JS块Start===='
+  
+
+
+ 
+$("textarea[name='timelist']").parent().parent().hide();//隐藏
+
+var isClickSafetyclass=true;
+//监听复选框，只能选择3个
+form.on('checkbox(safetyclass)',function(obj){ 
+    isClickSafetyclass=true;
+    var len=$("input[name='safetyclass']:checked").length;
+    if(len>3){
+      $(obj.elem).next().attr("class","layui-unselect layui-form-checkbox");
+      $(obj.elem).prop("checked",false);
+      layer.msg('最多只能选3项！',{icon:5,time:1000});
+      isClickSafetyclass=false;
+      return false;
+    }
+  });
+
+    $("textarea[name='timelist']").parent().parent().hide();//隐藏
+
+     //安全类多选
+    var cTimeList=$("textarea[name='timelist']").val();
+
+    // alert(cTimeList)
+    var thisSafetyclass=""   //当前选中项名称
+    var obj=$("input[name='safetyclass']").parent();
+    obj.find("div").click(function(i){
+      if(isClickSafetyclass==false)return false;//为假退出
+      var sClass=$(this).attr("class")
+      var did=$(this).find("span").text(); 
+      // console.log(sClass,did)
+      if(sClass.indexOf("layui-form-checked")!=-1){
+        //保存之前旧的
+          if(thisSafetyclass!=""){
+            var upValue=$("input[name='expirydate']").val();
+            cTimeList=updateStrArray(cTimeList, thisSafetyclass, 1, upValue)
+            // cTimeList=updateStrArray(cTimeList, thisSafetyclass, 2, "")//开启
+          }
+          // if($("input[name='safetyclass']").parent().find("div[class='layui-unselect layui-form-checkbox layui-form-checked']").length>=3){
+             
+          // }
+
+          //获得当前新的
+        if(checkStrArray(cTimeList, did)){
+          var sValue=getStrArray(cTimeList, did, 1);
+          $("input[name='expirydate']").val(sValue);
+          //没有则累加
+        }else{
+          if(cTimeList!="")cTimeList+=","
+          cTimeList+=did+"||||";//追加
+          $("input[name='expirydate']").val("");
+        }
+
+        thisSafetyclass=did;//更新选中项
+      //取消则保存值
+      }else{
+        // cTimeList=deleteStrArray(cTimeList,did);//删除 不删除
+          // cTimeList=updateStrArray(cTimeList, did, 2, "del")
+
+        //保存上次
+        if(thisSafetyclass!=""){
+          var upValue=$("input[name='expirydate']").val();
+          cTimeList=updateStrArray(cTimeList, thisSafetyclass, 1, upValue)
+        }
+        thisSafetyclass=""
+        $("input[name='expirydate']").val("");//取消清空
+      }
+        // console.log("cTimeList",did,cTimeList)
+    }) 
+
+'====订单撤单Start===='
+ //撤单  未开奖，并不为赢
+                    if(d.result=='' && d.result!='4'){
+                      sEdit+='<a class="layui-btn layui-btn-xs layui-bg-orange<%=IIF(checkPermission("订单撤单")=false," layui-btn-disabled","")%>" lay-event="undo<%=IIF(checkPermission("订单撤单")=false,"NO`","")%>"><i class="layui-icon layui-icon-edit"></i>撤单</a>'
+                    }
+'====订单撤单End===='
+
+    //提交 
+    $("#form1").submit(function(){
+        if(thisSafetyclass!=""){
+            var upValue=$("input[name='expirydate']").val();
+            cTimeList=updateStrArray(cTimeList, thisSafetyclass, 1, upValue) 
+
+        }
+
+      // 证书有效截止时间
+      var smallTime="";
+      var obj=$("input[name='safetyclass']").parent();
+      //先清空
+      $("input[name='expirydate']").val(smallTime);   //最小时间 
+      $("textarea[name='timelist']").val(cTimeList);// 时间列表
+      obj.find("div").each(function(i){
+          var sClass=$(this).attr("class")
+          var did=$(this).find("span").text();
+          if(sClass.indexOf("layui-form-checked")!=-1){
+            var sValue=getStrArray(cTimeList, did, 1);
+            if(sValue!=""){
+              if(smallTime==""){
+                smallTime=sValue;
+              }else if(new Date(sValue)<new Date(smallTime)){
+                smallTime=sValue;
+              }
+            }
+          }
+        })  
+        $("input[name='expirydate']").val(smallTime);   //最小时间 
+        $("textarea[name='timelist']").val(cTimeList);// 时间列表
+ 
+    })
+
+
+
+
+
+'====非注册类Form底部JS块End===='
+
+
+
+
+
+'====新公司Form底部JS块Start===='
+
+    //js动作块20220811
+    var s=$("input[name='invoicetype']:checked").val();
+    if(s!='普票'){
+        $("input[name='invoicecount']").parent().parent().parent().hide();
+    } 
+    //点击动作
+    var obj=$("input[name='invoicetype']").parent();
+    obj.find("div").click(function(i){
+        var s=$("input[name='invoicetype']:checked").val();
+        // console.log(s)
+        if(s!='普票'){
+            $("input[name='invoicecount']").parent().parent().parent().hide();
+        }else{
+            $("input[name='invoicecount']").parent().parent().parent().show();
+        }
+    })
+
+
+'====新公司Form底部JS块End===='
+
+
+
+'====开发票Form底部JS块Start===='
+  //隐藏公司对应的ID 20220811
+  $("input[name='newcompanyid']").parent().parent().hide();
+
+'====开发票Form底部JS块End===='
+
+
+
+
+'====编辑器JS代码块Start===='
+    //编辑器初始化
+    var editor = layui.tinymce;
+    var edit = editor.render({
+        selector: "#bodycontent",
+        images_upload_url: '/api/upload/?act=tinymce',//图片上传接口
+        height: 500
+    });
+'====编辑器JS代码块End===='
+
+
+
+
+
+'====标签显示代码块Start===='
+<link rel='stylesheet' href='../../css/tagsinput.css?v4'>
+<script type='text/javascript' src='../../js/tagsinput.min.js'></script>
+'====标签显示代码块End===='
+
+
+
+

@@ -1,0 +1,66 @@
+                            NProgress.start();
+                            try{
+                                var tableId2 = obj.config.id;
+                                var tableData2 = (typeof table.getData === 'function' ? table.getData(tableId2) : null) || table.cache[tableId2] || [];
+                                var cols2 = (obj.config && obj.config.cols) ? obj.config.cols : [];
+                                var headerRow2 = [];
+                                var fieldKeys2 = [];
+                                if(cols2.length > 0){
+                                    layui.each(cols2[0], function(idx, col){
+                                        if(col.type === 'checkbox') return;
+                                        if(col.fixed === 'right') return;
+                                        if(col.hide === true) return; // 只导出可见列
+                                        if(!col.field) return;
+                                        fieldKeys2.push(col.field);
+                                        headerRow2.push(col.title || col.field);
+                                    });
+                                }else{
+                                    if(tableData2.length){
+                                        for(var k2 in tableData2[0]){
+                                            if(k2 === 'LAY_CHECKED') continue;
+                                            fieldKeys2.push(k2);
+                                            headerRow2.push(k2);
+                                        }
+                                    }
+                                }
+                                var out2 = [];
+                                out2.push(headerRow2);
+                                layui.each(tableData2, function(i2, row2){
+                                    var arr2 = [];
+                                    for(var j2=0;j2<fieldKeys2.length;j2++){
+                                        var v2 = row2[fieldKeys2[j2]];
+                                        if(typeof v2 === 'string'){
+                                            v2 = v2.replace(/<[^>]*>/g, '');
+                                        }
+                                        arr2.push(v2);
+                                    }
+                                    out2.push(arr2);
+                                });
+                                var csv = '';
+                                for(var i=0;i<out2.length;i++){
+                                    var row = out2[i].map(function(x){
+                                        var s = (x==null?'':String(x)).replace(/\"/g,'""');
+                                        if(/[",\n]/.test(s)) s = '"'+ s +'"';
+                                        return s;
+                                    }).join(',');
+                                    csv += row + '\r\n';
+                                }
+                                var blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+                                var url = URL.createObjectURL(blob);
+                                var a = document.createElement('a');
+                                var ts2 = (function(d){
+                                    var pad2 = function(n){return n<10?('0'+n):n};
+                                    return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())+"_"+pad2(d.getHours())+"-"+pad2(d.getMinutes())+"-"+pad2(d.getSeconds());
+                                })(new Date());
+                                a.href = url;
+                                a.download = ('<%=tableName%>_'+ ts2 + '.csv');
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                URL.revokeObjectURL(url);
+                                layer.msg('已导出为 CSV');
+                            }catch(e){
+                                layer.msg('CSV 导出失败');
+                            }finally{
+                                NProgress.done();
+                            }

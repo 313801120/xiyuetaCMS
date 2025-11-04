@@ -1,0 +1,90 @@
+    // 根据“动作类型”显示/隐藏相关字段（使用 HTML 上的 id）  20250905 20250913 7
+    function toggleActionSections(value){
+        var $cutType = $('#cuttype');
+        var $range = $('#sub_startstr_endstr');
+        var $forStr = $('#forstr'); 
+        var $isaddforstr = $('#isaddforstr');
+        var $sub_findstr_replacestr = $('#sub_findstr_replacestr');
+        var $selectfieldlist = $('#selectfieldlist');
+        var $tablename = $('#tablename');
+        var $addsql = $('#addsql');
+        var $fieldaddstrlist = $('#fieldaddstrlist');
+        var $ifcheck = $('#ifcheck');
+        var $customizeaction = $('#customizeaction');
+        var $varleftaddstr = $('#varleftaddstr');
+        var $varrightaddstr = $('#varrightaddstr');
+        var $nitem = $('#nitem');
+        var $addvar = $('#addvar');
+        var $addvardefaultvalue = $('#addvardefaultvalue');
+        var $aspcode = $('#aspcode');
+        var $functionlist = $('#functionlist');
+    
+
+        // 未选择任何动作类型时，全部隐藏
+        $cutType.hide();
+        $range.hide();
+        $forStr.hide();
+        $isaddforstr.hide(); 
+        $sub_findstr_replacestr.hide();
+        $selectfieldlist.hide();
+        $tablename.hide();
+        $addsql.hide();
+        $fieldaddstrlist.hide();
+        $ifcheck.hide();
+        $customizeaction.hide();
+        $varleftaddstr.hide();
+        $varrightaddstr.hide();
+        $nitem.hide();
+        $addvar.hide();
+        $addvardefaultvalue.hide();
+        $aspcode.hide();
+        $functionlist.hide();
+
+        if(value === 'cut'){
+            $cutType.show();
+            $range.show();   
+        }else if(value === 'for'){ 
+            $forStr.show();
+            $isaddforstr.show();  
+        }else if(value === 'replace'){ 
+            $sub_findstr_replacestr.show(); 
+        }else if(value === 'if'){ 
+            $ifcheck.show(); 
+        }else if(value === 'insert' || value === 'update'){ 
+            $selectfieldlist.show();
+            $tablename.show();
+            $addsql.show();
+            $fieldaddstrlist.show(); 
+        }else if(value === 'action'){ 
+            $customizeaction.show(); 
+        }else if(value === 'varAddStr'){ 
+            $varleftaddstr.show();
+            $varrightaddstr.show(); 
+        }else if(value === 'item'){ 
+            $nitem.show(); 
+        }else if(value === 'addVar'){ 
+            $addvar.show();
+            $addvardefaultvalue.show();  
+        }else if(value === 'aspCode'){ 
+            $aspcode.show();
+        }else if(value === 'serverjs'){ 
+            $aspcode.show();
+            $customizeaction.show(); 
+        }else if(value === 'importAspFunction'){ 
+            $functionlist.show(); 
+        }
+    }
+
+
+    // 渲染单选框（确保 Layui 已处理为自定义样式）
+    form.render('radio');
+
+    // 初始化：根据当前已选的动作类型决定显示/隐藏
+    // 如果没有选中任何动作类型，则不默认选择，保持全部隐藏
+    var current = $('input[name="actiontype"]:checked').val() || '';
+    toggleActionSections(current);
+
+    // 仅使用 Layui 的监听方式
+    form.on('radio(actiontype)', function(data){
+      toggleActionSections(data.value || '');
+    });

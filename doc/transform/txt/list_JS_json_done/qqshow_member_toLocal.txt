@@ -1,0 +1,4 @@
+            $.each(res.data, function (i, obj) {  
+                addUpdateMember(i,obj);//添加更新会员信息
+            
+            })

@@ -1,0 +1,22 @@
+'解密特殊字符替换'20250724  decTsStrReplace(c,"=,")
+function decTsStrReplace(c,sType)
+    if instr(sType,",")>0 then
+        c=replace(c,"[[{逗号}]]",",")
+    end if
+    if instr(sType,"|")>0 then
+        c=replace(c,"[[{竖线}]]","|")
+    end if
+    if instr(sType,"=")>0 then
+        c=replace(c,"[[{等于号}]]","=")
+    end if
+    if instr(sType,"-")>0 then
+        c=replace(c,"[[{连字符}]]","-")
+    end if
+    if instr(sType,"_")>0 then
+        c=replace(c,"[[{下划线}]]","_")
+    end if
+    if instr(sType,">")>0 then
+        c=replace(c,"[[{大于号}]]",">")
+    end if
+    decTsStrReplace=c
+end function

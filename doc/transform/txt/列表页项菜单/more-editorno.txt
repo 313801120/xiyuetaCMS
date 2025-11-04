@@ -1,0 +1,1 @@
+                            showwin('编辑<%=winTitle%>', 'listform.asp?id=' + pid+"&editor=no") //more no editor

@@ -1,0 +1,21 @@
+
+                var checkStatus = table.checkStatus('testReload')
+                ,checkData = checkStatus.data; //得到选中的数据
+
+                if(checkData.length === 0){
+                   return layer.msg('请选择数据');
+                }
+                var idlist='';
+                for(var i=0;i<checkData.length;i++){
+                    if(idlist!='')idlist+=',';
+                    idlist+=checkData[i].id;
+                }               
+                layer.confirm('是否要批量生成文章html', {
+                    icon: 3,
+                    title: '确认生成'
+                }, function(index) {
+                    layer.close(index); // 关闭输入弹窗
+                    showwin2('生成文章html', "?act=batchCreateArticleHtml&id="+idlist);  
+                });
+
+                break;

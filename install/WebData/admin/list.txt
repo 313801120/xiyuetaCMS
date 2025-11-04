@@ -1,0 +1,36 @@
+﻿【adminroleid】admin_role[==>>][==>>]id[==>>]title[==>>]超级管理员
+【username】admin
+【pwd】c3284d0f94606de1fd2af172aba15bf3
+【nickname】小孙
+【level】1
+【pic】/uploadfiles/testpic/logo.jpg
+【sex】1
+【email】313801120@qq.com
+【isthrough】1
+【flags】|*|
+【grouping】4
+【isiplimit】1
+【loginstatus】1
+【lastlogintime】2025/11/1 7:07:28
+【createtime】2025/9/6 12:19:08
+【updatetime】2025/10/31 9:31:11
+【upip】127.0.0.1
+-------------------------------
+【adminroleid】admin_role[==>>][==>>]id[==>>]title[==>>]普通管理员
+【username】test
+【pwd】fb469d7ef430b0baf0cab6c436e70375
+【nickname】测试
+【level】2
+【pic】/uploadfiles/testpic/33.jpg
+【sex】0
+【email】313801120@qq.com
+【isthrough】1
+【grouping】5
+【isiplimit】1
+【loginstatus】1
+【lastlogintime】2025/10/31 9:47:12
+【createtime】2025/9/6 12:40:08
+【updatetime】2025/10/31 7:31:01
+【regip】127.0.0.1
+【upip】127.0.0.1
+-------------------------------

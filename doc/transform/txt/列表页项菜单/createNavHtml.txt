@@ -1,0 +1,7 @@
+                          layer.confirm('是否要生成导航html文件？', {
+                            icon: 3,
+                            title: '确认生成'
+                          }, function(index) {
+                            layer.close(index); // 关闭确认弹窗                            
+                            showwin2('生成导航html', "?act=createNavHtml&id="+data.id); 
+                          }); 

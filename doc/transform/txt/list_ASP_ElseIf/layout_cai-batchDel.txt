@@ -1,0 +1,3 @@
+
+    '删除采集页对应的动作
+    conn.execute"delete from ["& db_PREFIX & "layout_cai_action] where layout_cai_id in("&id&")"

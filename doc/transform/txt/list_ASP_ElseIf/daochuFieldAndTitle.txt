@@ -1,0 +1,3 @@
+'导出字段名和标题 20250904
+elseif request("act")="daochuFieldAndTitle" then     
+    call die("{""info"": """&daochuFieldAndTitle(tableName)&""",""status"": ""y""}")

@@ -1,0 +1,4 @@
+        // 双击表格中的某一行-触发行双击事件  20220604         
+        table.on('rowDouble(demo)',function (obj) {
+            showwin2('查看信息', 'listview.asp?id=' + obj.data["id"])
+        }) 

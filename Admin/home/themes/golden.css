@@ -1,0 +1,74 @@
+:root {
+    --bg-color: #1c1c1c;
+    --card-bg: #2a2a2a;
+    --text-color: #e6e6e6;
+    --title-color: #ffd700;
+    --border-color: #3d3d3d;
+    --hover-color: #333333;
+    --chart-title-color: #ffd700;
+    --chart-legend-color: #e6e6e6;
+    --chart-axis-line-color: #4a4a4a;
+    --chart-axis-label-color: #b8b8b8;
+    --chart-split-line-color: rgba(74, 74, 74, 0.2);
+    --chart-income-start-color: #ffd700;
+    --chart-income-end-color: #ffa500;
+    --chart-expense-start-color: #ff4d4f;
+    --chart-expense-end-color: #ff7875;
+}
+
+.dashboard-container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    background-image: linear-gradient(45deg, rgba(255, 215, 0, 0.05) 25%, transparent 25%, transparent 50%, rgba(255, 215, 0, 0.05) 50%, rgba(255, 215, 0, 0.05) 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+}
+
+.data-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.data-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+
+.data-card:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.data-title {
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+.data-value {
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.data-trend {
+    color: var(--text-color);
+}
+
+.theme-selector {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.theme-selector option {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+} 

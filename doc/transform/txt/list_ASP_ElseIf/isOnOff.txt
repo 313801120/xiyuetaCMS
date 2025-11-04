@@ -1,0 +1,4 @@
+'通过或取消'
+elseif request("act")="isOnOff" then    
+    fieldValue=IIF(request("value")="true",1,0)
+    call editFieldValue(id,fieldName,fieldValue)

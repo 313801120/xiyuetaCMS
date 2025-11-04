@@ -1,0 +1,4 @@
+            case 'LAYTABLE_TIPS':
+                // layer.alert('自定义工具栏图标按钮');
+                xiyuetaCMSHelp('<%=tableName%>')
+                break;

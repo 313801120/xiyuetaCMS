@@ -1,0 +1,14 @@
+'检测Access数据库存放位置安全' 20250909 2
+function checkMdbPositionSafe(mdbPath)
+    dim s
+    checkMdbPositionSafe=true
+    if userrs("level")=1 then   '为超级管理员，不检测为真'        
+        exit function
+    end if    
+    s=phptrim(lcase(handlePath(mdbPath)))
+
+    if instr(s,"\uploadfiles\mdb\")=false then  '为假则不安全'
+        'call eerr("s",s)
+        checkMdbPositionSafe=false
+    end if
+end function

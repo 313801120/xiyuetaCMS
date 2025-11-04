@@ -1,205 +1,169 @@
-﻿<% 
-'系统信息  (2014,05,27)
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
 Function getObjectArrayCofnig()
-    Dim Sot(53, 2) 
-    Sot(0, 0) = "Scripting.FileSystemObject" 
-    Sot(0, 2) = "文件操作组件" 
-    Sot(1, 0) = "wscript.shell" 
-    Sot(1, 2) = "命令行执行组件" 
-    Sot(2, 0) = "ADOX.Catalog" 
-    Sot(2, 2) = "ACCESS建库组件" 
-    Sot(3, 0) = "JRO.JetEngine" 
-    Sot(3, 2) = "ACCESS压缩组件" 
-    Sot(4, 0) = "Scripting.Dictionary" 
-    Sot(4, 2) = "数据流上传辅助组件" 
-    Sot(5, 0) = "Adodb.connection" 
-    Sot(5, 2) = "数据库连接组件" 
-    Sot(6, 0) = "Adodb.Stream" 
-    Sot(6, 2) = "数据流上传组件" 
-    Sot(7, 0) = "SoftArtisans.FileUp" 
-    Sot(7, 2) = "SA-FileUp 文件上传组件" 
-    Sot(8, 0) = "LyfUpload.UploadFile" 
-    Sot(8, 2) = "刘云峰文件上传组件" 
-    Sot(9, 0) = "Persits.Upload.1" 
-    Sot(9, 2) = "ASPUpload 文件上传组件" 
-    Sot(10, 0) = "JMail.SmtpMail" 
-    Sot(10, 2) = "JMail 邮件收发组件" 
-    Sot(11, 0) = "CDONTS.NewMail" 
-    Sot(11, 2) = "虚拟SMTP发信组件" 
-    Sot(12, 0) = "SmtpMail.SmtpMail.1" 
-    Sot(12, 2) = "SmtpMail发信组件" 
-    Sot(13, 0) = "JMail.Message" 
-    Sot(13, 2) = "JMail.Message发信组件" 
+Dim Sot(53, 2) 
+Sot(0, 0) = ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(46)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(83)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116) 
+Sot(0, 2) = ChrW(25991)&ChrW(20214)&ChrW(25805)&ChrW(20316)&ChrW(32452)&ChrW(20214) 
+Sot(1, 0) = ChrW(119)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(115)&ChrW(104)&ChrW(101)&ChrW(108)&ChrW(108) 
+Sot(1, 2) = ChrW(21629)&ChrW(20196)&ChrW(34892)&ChrW(25191)&ChrW(34892)&ChrW(32452)&ChrW(20214) 
+Sot(2, 0) = ChrW(65)&ChrW(68)&ChrW(79)&ChrW(88)&ChrW(46)&ChrW(67)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103) 
+Sot(2, 2) = ChrW(65)&ChrW(67)&ChrW(67)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(24314)&ChrW(24211)&ChrW(32452)&ChrW(20214) 
+Sot(3, 0) = ChrW(74)&ChrW(82)&ChrW(79)&ChrW(46)&ChrW(74)&ChrW(101)&ChrW(116)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101) 
+Sot(3, 2) = ChrW(65)&ChrW(67)&ChrW(67)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(21387)&ChrW(32553)&ChrW(32452)&ChrW(20214) 
+Sot(4, 0) = ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(46)&ChrW(68)&ChrW(105)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(114)&ChrW(121) 
+Sot(4, 2) = ChrW(25968)&ChrW(25454)&ChrW(27969)&ChrW(19978)&ChrW(20256)&ChrW(36741)&ChrW(21161)&ChrW(32452)&ChrW(20214) 
+Sot(5, 0) = ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110) 
+Sot(5, 2) = ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(36830)&ChrW(25509)&ChrW(32452)&ChrW(20214) 
+Sot(6, 0) = ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109) 
+Sot(6, 2) = ChrW(25968)&ChrW(25454)&ChrW(27969)&ChrW(19978)&ChrW(20256)&ChrW(32452)&ChrW(20214) 
+Sot(7, 0) = ChrW(83)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(65)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(115)&ChrW(97)&ChrW(110)&ChrW(115)&ChrW(46)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(85)&ChrW(112) 
+Sot(7, 2) = ChrW(83)&ChrW(65)&ChrW(45)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(85)&ChrW(112)&ChrW(32)&ChrW(25991)&ChrW(20214)&ChrW(19978)&ChrW(20256)&ChrW(32452)&ChrW(20214) 
+Sot(8, 0) = ChrW(76)&ChrW(121)&ChrW(102)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(46)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) 
+Sot(8, 2) = ChrW(21016)&ChrW(20113)&ChrW(23792)&ChrW(25991)&ChrW(20214)&ChrW(19978)&ChrW(20256)&ChrW(32452)&ChrW(20214) 
+Sot(9, 0) = ChrW(80)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(115)&ChrW(46)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(46)&ChrW(49) 
+Sot(9, 2) = ChrW(65)&ChrW(83)&ChrW(80)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(32)&ChrW(25991)&ChrW(20214)&ChrW(19978)&ChrW(20256)&ChrW(32452)&ChrW(20214) 
+Sot(10, 0) = ChrW(74)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(46)&ChrW(83)&ChrW(109)&ChrW(116)&ChrW(112)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108) 
+Sot(10, 2) = ChrW(74)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(32)&ChrW(37038)&ChrW(20214)&ChrW(25910)&ChrW(21457)&ChrW(32452)&ChrW(20214) 
+Sot(11, 0) = ChrW(67)&ChrW(68)&ChrW(79)&ChrW(78)&ChrW(84)&ChrW(83)&ChrW(46)&ChrW(78)&ChrW(101)&ChrW(119)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108) 
+Sot(11, 2) = ChrW(34394)&ChrW(25311)&ChrW(83)&ChrW(77)&ChrW(84)&ChrW(80)&ChrW(21457)&ChrW(20449)&ChrW(32452)&ChrW(20214) 
+Sot(12, 0) = ChrW(83)&ChrW(109)&ChrW(116)&ChrW(112)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(46)&ChrW(83)&ChrW(109)&ChrW(116)&ChrW(112)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(46)&ChrW(49) 
+Sot(12, 2) = ChrW(83)&ChrW(109)&ChrW(116)&ChrW(112)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(21457)&ChrW(20449)&ChrW(32452)&ChrW(20214) 
+Sot(13, 0) = ChrW(74)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(46)&ChrW(77)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(97)&ChrW(103)&ChrW(101) 
+Sot(13, 2) = ChrW(74)&ChrW(77)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(46)&ChrW(77)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(21457)&ChrW(20449)&ChrW(32452)&ChrW(20214) 
+Sot(14, 0) = ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80) 
+Sot(14, 2) = ChrW(25968)&ChrW(25454)&ChrW(20256)&ChrW(36755)&ChrW(32452)&ChrW(20214) 
+Sot(15, 0) = ChrW(78)&ChrW(101)&ChrW(116)&ChrW(66)&ChrW(111)&ChrW(120)&ChrW(46)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) 
+Sot(15, 2) = ChrW(78)&ChrW(101)&ChrW(116)&ChrW(66)&ChrW(111)&ChrW(120)&ChrW(46)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(21704)&ChrW(21704) 
+Sot(16, 0) = ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109)&ChrW(46)&ChrW(54)&ChrW(46)&ChrW(48) 
+Sot(16, 2) = ChrW(65)&ChrW(68)&ChrW(79)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(109)&ChrW(46)&ChrW(54)&ChrW(46)&ChrW(48) 
+Sot(20, 0) = ChrW(77)&ChrW(83)&ChrW(88)&ChrW(77)&ChrW(76)&ChrW(50)&ChrW(46)&ChrW(68)&ChrW(79)&ChrW(77)&ChrW(68)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116) 
+Sot(20, 2) = ChrW(120)&ChrW(109)&ChrW(108)&ChrW(22788)&ChrW(29702) 
+Sot(31, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(67)&ChrW(111)&ChrW(100)&ChrW(101) 
+Sot(31, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(20195)&ChrW(30721)&ChrW(26684)&ChrW(24335)&ChrW(21270) 
+Sot(32, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(84)&ChrW(111)&ChrW(80)&ChrW(104)&ChrW(112)&ChrW(67)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115) 
+Sot(32, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(36716)&ChrW(80)&ChrW(72)&ChrW(80) 
+Sot(33, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(100)&ChrW(108)&ChrW(108) 
+Sot(33, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(22238)&ChrW(35843) 
+Sot(34, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(115)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115) 
+Sot(34, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(23494)&ChrW(30721)&ChrW(30772)&ChrW(35299) 
+Sot(35, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(100)&ChrW(108)&ChrW(108)&ChrW(67)&ChrW(111)&ChrW(109)&ChrW(109)&ChrW(97)&ChrW(110)&ChrW(100) 
+Sot(35, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(20844)&ChrW(20849) 
+Sot(36, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(100)&ChrW(108)&ChrW(108)&ChrW(83)&ChrW(97)&ChrW(102)&ChrW(101) 
+Sot(36, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(23433)&ChrW(20840) 
+Sot(37, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(71)&ChrW(80)&ChrW(83) 
+Sot(37, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(22270)&ChrW(29255)&ChrW(22788)&ChrW(29702) 
+Sot(38, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(100)&ChrW(108)&ChrW(108)&ChrW(70)&ChrW(90) 
+Sot(38, 2) = ChrW(20113)&ChrW(31077)&ChrW(23385)&ChrW(20223)&ChrW(31449)&ChrW(31867) 
+Sot(40, 0) = ChrW(87)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(83)&ChrW(104)&ChrW(101)&ChrW(108)&ChrW(108)&ChrW(46)&ChrW(49) 
+Sot(40, 2) = ChrW(87)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(46)&ChrW(83)&ChrW(104)&ChrW(101)&ChrW(108)&ChrW(108)&ChrW(46)&ChrW(49) 
+Sot(50, 0) = ChrW(121)&ChrW(117)&ChrW(110)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(46)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(100)&ChrW(108)&ChrW(108)&ChrW(95)&ChrW(78)&ChrW(79)&ChrW(78)&ChrW(79) 
+Sot(50, 2) = ChrW(19981)&ChrW(23384)&ChrW(22312)&ChrW(30340)&ChrW(32452)&ChrW(20214)&ChrW(65288)&ChrW(21482)&ChrW(20026)&ChrW(27979)&ChrW(35797)&ChrW(65289) 
+getObjectArrayCofnig = Sot 
+End function
 
-    Sot(14, 0) = "Microsoft.XMLHTTP" 
-    Sot(14, 2) = "数据传输组件" 
-    Sot(15, 0) = "NetBox.HttpServer" 
-    Sot(15, 2) = "NetBox.HttpServer哈哈" 
-    Sot(16, 0) = "ADODB.Stream.6.0" 
-    Sot(16, 2) = "ADODB.Stream.6.0" 
-
-    Sot(20, 0) = "MSXML2.DOMDocument" 
-    Sot(20, 2) = "xml处理" 
-
-
-
-
-
-    Sot(31, 0) = "yunsun.AspCode" 
-    Sot(31, 2) = "云祥孙ASP代码格式化" 
-
-    Sot(32, 0) = "yunsun.AspToPhpClass" 
-    Sot(32, 2) = "云祥孙ASP转PHP" 
-
-    Sot(33, 0) = "yunsun.calldll" 
-    Sot(33, 2) = "云祥孙回调" 
-
-    Sot(34, 0) = "yunsun.clsAccessPass" 
-    Sot(34, 2) = "云祥孙Access密码破解" 
-
-    Sot(35, 0) = "yunsun.dllCommand" 
-    Sot(35, 2) = "云祥孙公共" 
-
-    Sot(36, 0) = "yunsun.dllSafe" 
-    Sot(36, 2) = "云祥孙安全" 
-
-    Sot(37, 0) = "yunsun.GPS" 
-    Sot(37, 2) = "云祥孙图片处理" 
-
-    Sot(38, 0) = "yunsun.dllFZ" 
-    Sot(38, 2) = "云祥孙仿站类" 
-
-    Sot(40, 0) = "WScript.Shell.1" 
-    Sot(40, 2) = "WScript.Shell.1" 
-
-
-
-
-    Sot(50, 0) = "yunsun.calldll_NONO" 
-    Sot(50, 2) = "不存在的组件（只为测试）" 
-    getObjectArrayCofnig = Sot 
-End Function
- 
-
-'显示对象  =showObject()
 Function showObject()
-    Dim i, t, s, isObj, okC, errC, en, cn, sot 
+Dim a, b, c, d, e, f, g, h, i 
+i = getObjectArrayCofnig() 
+For a = 0 To UBound(i)
+g = i(a, 0) 
+h = i(a, 2) 
+If g <> "" Then
+If checkObject(g) = True Then
+c = ChrW(32)&ChrW(8730) 
+e = e & g & ChrW(32)&ChrW(32) & c & ChrW(32)&ChrW(32)&ChrW(32) & h & vbCrLf 
+Else
+c = ChrW(32)&ChrW(215) 
+f = f & g & ChrW(32)&ChrW(32) & c & ChrW(32)&ChrW(32)&ChrW(32) & h & vbCrLf 
+End if 
+End if 
+Next 
+showObject = e & f 
+End function
 
-    sot = getObjectArrayCofnig() 
-
-    For i = 0 To UBound(sot)
-        en = sot(i, 0) 
-        cn = sot(i, 2) 
-        If en <> "" Then
-            If checkObject(en) = True Then
-                s = " √" 
-                okC = okC & en & "  " & s & "   " & cn & vbCrLf 
-            Else
-                s = " ×" 
-                errC = errC & en & "  " & s & "   " & cn & vbCrLf 
-            End If 
-        End If 
-    Next 
-    showObject = okC & errC 
-End Function
- 
-'显示组件第二种
 Function showObject2()
-    Dim sot, s, c, i, en, cn, okC, errC 
-    sot = getObjectArrayCofnig() 
-    c = "<br><table width='80%' bgcolor='menu' border='0' cellspacing='1' cellpadding='0' align='center'>" 
-    c = c & "<tr><td height='20' colspan='3' align='center' bgcolor='menu'>服务器组件信息</td></tr>" 
-    c = c & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>服务器名</td><td bgcolor='#FFFFFF'>&nbsp;</td><td bgcolor='#FFFFFF'>" & Request.ServerVariables("SERVER_NAME") & "</td></tr>" 
-    c = c & "<form method=post action='http://www.ip138.com/index.asp' name='ipform' target='_blank'><tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>服务器IP</td><td bgcolor='#FFFFFF'>&nbsp;</td><td bgcolor='#FFFFFF'>" 
-    c = c & "<input type='text' name='ip' size='15' value='" & Request.ServerVariables("LOCAL_ADDR") & "'> <input type='submit' value='查询'><input type='hidden' name='action' value='2'></td></tr></form>" 
-    c = c & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>服务器时间</td><td bgcolor='#FFFFFF'>&nbsp;</td><td bgcolor='#FFFFFF'>" & Now & "&nbsp;</td></tr>" 
-    c = c & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>服务器CPU数量</td><td bgcolor='#FFFFFF'>&nbsp;</td><td bgcolor='#FFFFFF'>" & Request.ServerVariables("NUMBER_OF_PROCESSORS") & "</td></tr>" 
-    c = c & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>服务器操作系统</td><td bgcolor='#FFFFFF'>&nbsp;</td><td bgcolor='#FFFFFF'>" & Request.ServerVariables("OS") & "</td></tr>" 
-    c = c & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>WEB服务器版本</td><td bgcolor='#FFFFFF'>&nbsp;</td><td bgcolor='#FFFFFF'>" & Request.ServerVariables("SERVER_SOFTWARE") & "</td></tr>" 
+Dim a, b, c, d, e, f, g, h 
+a = getObjectArrayCofnig() 
+c = ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(56)&ChrW(48)&ChrW(37)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(108)&ChrW(108)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(99)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(61)&ChrW(39)&ChrW(49)&ChrW(39)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(108)&ChrW(108)&ChrW(112)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(61)&ChrW(39)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62) 
+c = c & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(51)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(39)&ChrW(62)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(32452)&ChrW(20214)&ChrW(20449)&ChrW(24687)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+c = c & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(21517)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & Request.ServerVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)) & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+c = c & ChrW(60)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(32)&ChrW(109)&ChrW(101)&ChrW(116)&ChrW(104)&ChrW(111)&ChrW(100)&ChrW(61)&ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)&ChrW(105)&ChrW(112)&ChrW(49)&ChrW(51)&ChrW(56)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(39)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(105)&ChrW(112)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(97)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(73)&ChrW(80)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) 
+c = c & ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(39)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(105)&ChrW(112)&ChrW(39)&ChrW(32)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(49)&ChrW(53)&ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39) & Request.ServerVariables(ChrW(76)&ChrW(79)&ChrW(67)&ChrW(65)&ChrW(76)&ChrW(95)&ChrW(65)&ChrW(68)&ChrW(68)&ChrW(82)) & ChrW(39)&ChrW(62)&ChrW(32)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(26597)&ChrW(35810)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(104)&ChrW(105)&ChrW(100)&ChrW(100)&ChrW(101)&ChrW(110)&ChrW(39)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(62) 
+c = c & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(26102)&ChrW(38388)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & Now & ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+c = c & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(67)&ChrW(80)&ChrW(85)&ChrW(25968)&ChrW(37327)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & Request.ServerVariables(ChrW(78)&ChrW(85)&ChrW(77)&ChrW(66)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(79)&ChrW(70)&ChrW(95)&ChrW(80)&ChrW(82)&ChrW(79)&ChrW(67)&ChrW(69)&ChrW(83)&ChrW(83)&ChrW(79)&ChrW(82)&ChrW(83)) & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+c = c & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(25805)&ChrW(20316)&ChrW(31995)&ChrW(32479)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & Request.ServerVariables(ChrW(79)&ChrW(83)) & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+c = c & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(87)&ChrW(69)&ChrW(66)&ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(29256)&ChrW(26412)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & Request.ServerVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(83)&ChrW(79)&ChrW(70)&ChrW(84)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(69)) & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+For d = 0 To UBound(a)
+e = a(d, 0) 
+f = a(d, 2) 
+If e <> "" Then
+If checkObject(e) = True Then
+b = ChrW(32)&ChrW(8730) 
+g = g & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & e & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & b & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(108)&ChrW(101)&ChrW(102)&ChrW(116)&ChrW(62) & f & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+Else
+b = ChrW(32)&ChrW(215) 
+h = h & ChrW(60)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & e & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(62) & b & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(116)&ChrW(100)&ChrW(32)&ChrW(98)&ChrW(103)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(61)&ChrW(108)&ChrW(101)&ChrW(102)&ChrW(116)&ChrW(62) & f & ChrW(60)&ChrW(47)&ChrW(116)&ChrW(100)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(116)&ChrW(114)&ChrW(62) 
+End if 
+End if 
+Next 
+showObject2 = c & g & h 
+End function
 
-    For i = 0 To UBound(sot)
-        en = sot(i, 0) 
-        cn = sot(i, 2) 
-        If en <> "" Then
-            If checkObject(en) = True Then
-                s = " √" 
-                okC = okC & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>" & en & "</td><td bgcolor='#FFFFFF'>" & s & "</td><td bgcolor='#FFFFFF' align=left>" & cn & "</td></tr>" 
-            Else
-                s = " ×" 
-                errC = errC & "<tr align='center'><td height='20' width='200' bgcolor='#FFFFFF'>" & en & "</td><td bgcolor='#FFFFFF'>" & s & "</td><td bgcolor='#FFFFFF' align=left>" & cn & "</td></tr>" 
-            End If 
-        End If 
-    Next 
+Function checkObject(a)
+Dim b 
+On error resume next 
+Set b = CreateObject(a)
+If - 2147221005 <> Err And 429 <> Err Then
+checkObject = True 
+Else
+checkObject = False 
+Err.Clear 
+End if 
+Set b = Nothing 
+End function
 
-    showObject2 = c & okC & errC 
-End Function
- 
-
-'检测对象
-Function checkObject(objecName)
-    Dim t 
-    On Error Resume Next 
-    Set t = CreateObject(objecName)
-        If - 2147221005 <> Err And 429 <> Err Then
-            checkObject = True 
-        Else
-            checkObject = False 
-            Err.Clear 
-        End If 
-    Set t = Nothing 
-End Function
- 
-
-
-'操作系统版本
 Function operationSystem()
-    Dim httpAgent, systemVer 
-    httpAgent = Request.ServerVariables("HTTP_USER_AGENT") 
-    If InStr(httpAgent, "NT 5.2") > 0 Then
-        systemVer = "Windows Server 2003" 
-    ElseIf InStr(httpAgent, "NT 5.1") > 0 Then
-        systemVer = "Windows XP" 
-    ElseIf InStr(httpAgent, "NT 5") > 0 Then
-        systemVer = "Windows 2000" 
-    ElseIf InStr(httpAgent, "NT 4") > 0 Then
-        systemVer = "Windows NT4" 
-    ElseIf InStr(httpAgent, "4.9") > 0 Then
-        systemVer = "Windows ME" 
-    ElseIf InStr(httpAgent, "98") > 0 Then
-        systemVer = "Windows 98" 
-    ElseIf InStr(httpAgent, "95") > 0 Then
-        systemVer = "Windows 95" 
-    Else
-        systemVer = httpAgent 
-    End If 
-    operationSystem = httpAgent 
-End Function
+Dim a, b 
+a = Request.ServerVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(85)&ChrW(83)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(65)&ChrW(71)&ChrW(69)&ChrW(78)&ChrW(84)) 
+If InStr(a, ChrW(78)&ChrW(84)&ChrW(32)&ChrW(53)&ChrW(46)&ChrW(50)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(51) 
+ElseIf InStr(a, ChrW(78)&ChrW(84)&ChrW(32)&ChrW(53)&ChrW(46)&ChrW(49)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(88)&ChrW(80) 
+ElseIf InStr(a, ChrW(78)&ChrW(84)&ChrW(32)&ChrW(53)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(48) 
+ElseIf InStr(a, ChrW(78)&ChrW(84)&ChrW(32)&ChrW(52)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(78)&ChrW(84)&ChrW(52) 
+ElseIf InStr(a, ChrW(52)&ChrW(46)&ChrW(57)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(77)&ChrW(69) 
+ElseIf InStr(a, ChrW(57)&ChrW(56)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(57)&ChrW(56) 
+ElseIf InStr(a, ChrW(57)&ChrW(53)) > 0 Then
+b = ChrW(87)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(57)&ChrW(53) 
+Else
+b = a 
+End if 
+operationSystem = a 
+End function
 
-'检测是否为手机浏览  '用这种20190420通用 
 Function checkMobile()
-	dim splstr,s,sagent
-    checkMobile = False 
-	sagent = lcase(Request.ServerVariables("HTTP_USER_AGENT")) & "" 
-	splstr=split("mini 9.5|vx1000|lge |m800|e860|u940|ux840|compal|wireless| mobi|ahong|lg380|lgku|lgu900|lg210|lg47|lg920|lg840|lg370|sam-r|mg50|s55|g83|t66|vx400|mk99|d615|d763|el370|sl900|mp500|samu3|samu4|vx10|xda_|samu5|samu6|samu7|samu9|a615|b832|m881|s920|n210|s700|c-810|_h797|mob-x|sk16d|848b|mowser|s580|r800|471x|v120|rim8|c500foma:|160x|x160|480x|x640|t503|w839|i250|sprint|w398samr810|m5252|c7100|mt126|x225|s5330|s820|htil-g1|fly v71|s302|-x113|novarra|k610i|-three|8325rc|8352rc|sanyo|vx54|c888|nx250|n120|mtk |c5588|s710|t880|c5005|i;458x|p404i|s210|c5100|teleca|s940|c500|s590|foma|samsu|vx8|vx9|a1000|_mms|myx|a700|gu1100|bc831|e300|ems100|me701|me702m-three|sd588|s800|8325rc|ac831|mw200|brew |d88|htc/|htc_touch|355x|m50|km100|d736|p-9521|telco|sl74|ktouch|m4u/|me702|8325rc|kddi|phone|lg |sonyericsson|samsung|240x|x320vx10|nokia|sony cmd|motorola|up.browser|up.link|mmp|symbian|smartphone|midp|wap|vodafone|o2|pocket|kindle|mobile|psp|treo|iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce; iemobile|ipod|iphone|android|opera mini|blackberry|palm os|palm|hiptop|avantgo|fennec|plucker|xiino|blazer|elaine|iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce; iemobile","|")
-	for each s in splstr
-		if s<>"" then
-			if instr(sagent,s)>0 then
-				checkMobile = true 
-				exit function
-			end if
-		end if
-	next 
-	If Request.ServerVariables("HTTP_X_WAP_PROFILE") <> "" Then		'这是旧版的
-		checkMobile = True 
-	End If 
-End Function
- 
+dim a,b,c
+checkMobile = False 
+c = lcase(Request.ServerVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(85)&ChrW(83)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(65)&ChrW(71)&ChrW(69)&ChrW(78)&ChrW(84))) & "" 
+a=split(ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(32)&ChrW(57)&ChrW(46)&ChrW(53)&ChrW(124)&ChrW(118)&ChrW(120)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(101)&ChrW(32)&ChrW(124)&ChrW(109)&ChrW(56)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(101)&ChrW(56)&ChrW(54)&ChrW(48)&ChrW(124)&ChrW(117)&ChrW(57)&ChrW(52)&ChrW(48)&ChrW(124)&ChrW(117)&ChrW(120)&ChrW(56)&ChrW(52)&ChrW(48)&ChrW(124)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(114)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(124)&ChrW(32)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(124)&ChrW(97)&ChrW(104)&ChrW(111)&ChrW(110)&ChrW(103)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(51)&ChrW(56)&ChrW(48)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(107)&ChrW(117)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(117)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(50)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(52)&ChrW(55)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(57)&ChrW(50)&ChrW(48)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(56)&ChrW(52)&ChrW(48)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(51)&ChrW(55)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(45)&ChrW(114)&ChrW(124)&ChrW(109)&ChrW(103)&ChrW(53)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(53)&ChrW(53)&ChrW(124)&ChrW(103)&ChrW(56)&ChrW(51)&ChrW(124)&ChrW(116)&ChrW(54)&ChrW(54)&ChrW(124)&ChrW(118)&ChrW(120)&ChrW(52)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(109)&ChrW(107)&ChrW(57)&ChrW(57)&ChrW(124)&ChrW(100)&ChrW(54)&ChrW(49)&ChrW(53)&ChrW(124)&ChrW(100)&ChrW(55)&ChrW(54)&ChrW(51)&ChrW(124)&ChrW(101)&ChrW(108)&ChrW(51)&ChrW(55)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(108)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(109)&ChrW(112)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(117)&ChrW(51)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(117)&ChrW(52)&ChrW(124)&ChrW(118)&ChrW(120)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(120)&ChrW(100)&ChrW(97)&ChrW(95)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(117)&ChrW(53)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(117)&ChrW(54)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(117)&ChrW(55)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(117)&ChrW(57)&ChrW(124)&ChrW(97)&ChrW(54)&ChrW(49)&ChrW(53)&ChrW(124)&ChrW(98)&ChrW(56)&ChrW(51)&ChrW(50)&ChrW(124)&ChrW(109)&ChrW(56)&ChrW(56)&ChrW(49)&ChrW(124)&ChrW(115)&ChrW(57)&ChrW(50)&ChrW(48)&ChrW(124)&ChrW(110)&ChrW(50)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(55)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(99)&ChrW(45)&ChrW(56)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(95)&ChrW(104)&ChrW(55)&ChrW(57)&ChrW(55)&ChrW(124)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(45)&ChrW(120)&ChrW(124)&ChrW(115)&ChrW(107)&ChrW(49)&ChrW(54)&ChrW(100)&ChrW(124)&ChrW(56)&ChrW(52)&ChrW(56)&ChrW(98)&ChrW(124)&ChrW(109)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(124)&ChrW(115)&ChrW(53)&ChrW(56)&ChrW(48)&ChrW(124)&ChrW(114)&ChrW(56)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(52)&ChrW(55)&ChrW(49)&ChrW(120)&ChrW(124)&ChrW(118)&ChrW(49)&ChrW(50)&ChrW(48)&ChrW(124)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(56)&ChrW(124)&ChrW(99)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(102)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(58)&ChrW(124)&ChrW(49)&ChrW(54)&ChrW(48)&ChrW(120)&ChrW(124)&ChrW(120)&ChrW(49)&ChrW(54)&ChrW(48)&ChrW(124)&ChrW(52)&ChrW(56)&ChrW(48)&ChrW(120)&ChrW(124)&ChrW(120)&ChrW(54)&ChrW(52)&ChrW(48)&ChrW(124)&ChrW(116)&ChrW(53)&ChrW(48)&ChrW(51)&ChrW(124)&ChrW(119)&ChrW(56)&ChrW(51)&ChrW(57)&ChrW(124)&ChrW(105)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(116)&ChrW(124)&ChrW(119)&ChrW(51)&ChrW(57)&ChrW(56)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(114)&ChrW(56)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(109)&ChrW(53)&ChrW(50)&ChrW(53)&ChrW(50)&ChrW(124)&ChrW(99)&ChrW(55)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(109)&ChrW(116)&ChrW(49)&ChrW(50)&ChrW(54)&ChrW(124)&ChrW(120)&ChrW(50)&ChrW(50)&ChrW(53)&ChrW(124)&ChrW(115)&ChrW(53)&ChrW(51)&ChrW(51)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(56)&ChrW(50)&ChrW(48)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(105)&ChrW(108)&ChrW(45)&ChrW(103)&ChrW(49)&ChrW(124)&ChrW(102)&ChrW(108)&ChrW(121)&ChrW(32)&ChrW(118)&ChrW(55)&ChrW(49)&ChrW(124)&ChrW(115)&ChrW(51)&ChrW(48)&ChrW(50)&ChrW(124)&ChrW(45)&ChrW(120)&ChrW(49)&ChrW(49)&ChrW(51)&ChrW(124)&ChrW(110)&ChrW(111)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(124)&ChrW(107)&ChrW(54)&ChrW(49)&ChrW(48)&ChrW(105)&ChrW(124)&ChrW(45)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(124)&ChrW(56)&ChrW(51)&ChrW(50)&ChrW(53)&ChrW(114)&ChrW(99)&ChrW(124)&ChrW(56)&ChrW(51)&ChrW(53)&ChrW(50)&ChrW(114)&ChrW(99)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(110)&ChrW(121)&ChrW(111)&ChrW(124)&ChrW(118)&ChrW(120)&ChrW(53)&ChrW(52)&ChrW(124)&ChrW(99)&ChrW(56)&ChrW(56)&ChrW(56)&ChrW(124)&ChrW(110)&ChrW(120)&ChrW(50)&ChrW(53)&ChrW(48)&ChrW(124)&ChrW(110)&ChrW(49)&ChrW(50)&ChrW(48)&ChrW(124)&ChrW(109)&ChrW(116)&ChrW(107)&ChrW(32)&ChrW(124)&ChrW(99)&ChrW(53)&ChrW(53)&ChrW(56)&ChrW(56)&ChrW(124)&ChrW(115)&ChrW(55)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(116)&ChrW(56)&ChrW(56)&ChrW(48)&ChrW(124)&ChrW(99)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(53)&ChrW(124)&ChrW(105)&ChrW(59)&ChrW(52)&ChrW(53)&ChrW(56)&ChrW(120)&ChrW(124)&ChrW(112)&ChrW(52)&ChrW(48)&ChrW(52)&ChrW(105)&ChrW(124)&ChrW(115)&ChrW(50)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(99)&ChrW(53)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(97)&ChrW(124)&ChrW(115)&ChrW(57)&ChrW(52)&ChrW(48)&ChrW(124)&ChrW(99)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(115)&ChrW(53)&ChrW(57)&ChrW(48)&ChrW(124)&ChrW(102)&ChrW(111)&ChrW(109)&ChrW(97)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(115)&ChrW(117)&ChrW(124)&ChrW(118)&ChrW(120)&ChrW(56)&ChrW(124)&ChrW(118)&ChrW(120)&ChrW(57)&ChrW(124)&ChrW(97)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(95)&ChrW(109)&ChrW(109)&ChrW(115)&ChrW(124)&ChrW(109)&ChrW(121)&ChrW(120)&ChrW(124)&ChrW(97)&ChrW(55)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(103)&ChrW(117)&ChrW(49)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(98)&ChrW(99)&ChrW(56)&ChrW(51)&ChrW(49)&ChrW(124)&ChrW(101)&ChrW(51)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(101)&ChrW(109)&ChrW(115)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(109)&ChrW(101)&ChrW(55)&ChrW(48)&ChrW(49)&ChrW(124)&ChrW(109)&ChrW(101)&ChrW(55)&ChrW(48)&ChrW(50)&ChrW(109)&ChrW(45)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(101)&ChrW(124)&ChrW(115)&ChrW(100)&ChrW(53)&ChrW(56)&ChrW(56)&ChrW(124)&ChrW(115)&ChrW(56)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(56)&ChrW(51)&ChrW(50)&ChrW(53)&ChrW(114)&ChrW(99)&ChrW(124)&ChrW(97)&ChrW(99)&ChrW(56)&ChrW(51)&ChrW(49)&ChrW(124)&ChrW(109)&ChrW(119)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(98)&ChrW(114)&ChrW(101)&ChrW(119)&ChrW(32)&ChrW(124)&ChrW(100)&ChrW(56)&ChrW(56)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(99)&ChrW(47)&ChrW(124)&ChrW(104)&ChrW(116)&ChrW(99)&ChrW(95)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(99)&ChrW(104)&ChrW(124)&ChrW(51)&ChrW(53)&ChrW(53)&ChrW(120)&ChrW(124)&ChrW(109)&ChrW(53)&ChrW(48)&ChrW(124)&ChrW(107)&ChrW(109)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(124)&ChrW(100)&ChrW(55)&ChrW(51)&ChrW(54)&ChrW(124)&ChrW(112)&ChrW(45)&ChrW(57)&ChrW(53)&ChrW(50)&ChrW(49)&ChrW(124)&ChrW(116)&ChrW(101)&ChrW(108)&ChrW(99)&ChrW(111)&ChrW(124)&ChrW(115)&ChrW(108)&ChrW(55)&ChrW(52)&ChrW(124)&ChrW(107)&ChrW(116)&ChrW(111)&ChrW(117)&ChrW(99)&ChrW(104)&ChrW(124)&ChrW(109)&ChrW(52)&ChrW(117)&ChrW(47)&ChrW(124)&ChrW(109)&ChrW(101)&ChrW(55)&ChrW(48)&ChrW(50)&ChrW(124)&ChrW(56)&ChrW(51)&ChrW(50)&ChrW(53)&ChrW(114)&ChrW(99)&ChrW(124)&ChrW(107)&ChrW(100)&ChrW(100)&ChrW(105)&ChrW(124)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(124)&ChrW(108)&ChrW(103)&ChrW(32)&ChrW(124)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(115)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(115)&ChrW(97)&ChrW(109)&ChrW(115)&ChrW(117)&ChrW(110)&ChrW(103)&ChrW(124)&ChrW(50)&ChrW(52)&ChrW(48)&ChrW(120)&ChrW(124)&ChrW(120)&ChrW(51)&ChrW(50)&ChrW(48)&ChrW(118)&ChrW(120)&ChrW(49)&ChrW(48)&ChrW(124)&ChrW(110)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(97)&ChrW(124)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(121)&ChrW(32)&ChrW(99)&ChrW(109)&ChrW(100)&ChrW(124)&ChrW(109)&ChrW(111)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(111)&ChrW(108)&ChrW(97)&ChrW(124)&ChrW(117)&ChrW(112)&ChrW(46)&ChrW(98)&ChrW(114)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(124)&ChrW(117)&ChrW(112)&ChrW(46)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(124)&ChrW(109)&ChrW(109)&ChrW(112)&ChrW(124)&ChrW(115)&ChrW(121)&ChrW(109)&ChrW(98)&ChrW(105)&ChrW(97)&ChrW(110)&ChrW(124)&ChrW(115)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(124)&ChrW(109)&ChrW(105)&ChrW(100)&ChrW(112)&ChrW(124)&ChrW(119)&ChrW(97)&ChrW(112)&ChrW(124)&ChrW(118)&ChrW(111)&ChrW(100)&ChrW(97)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(124)&ChrW(111)&ChrW(50)&ChrW(124)&ChrW(112)&ChrW(111)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(116)&ChrW(124)&ChrW(107)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(101)&ChrW(124)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(124)&ChrW(112)&ChrW(115)&ChrW(112)&ChrW(124)&ChrW(116)&ChrW(114)&ChrW(101)&ChrW(111)&ChrW(124)&ChrW(105)&ChrW(114)&ChrW(105)&ChrW(115)&ChrW(124)&ChrW(51)&ChrW(103)&ChrW(95)&ChrW(116)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(124)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(97)&ChrW(32)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(59)&ChrW(32)&ChrW(115)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(59)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(59)&ChrW(32)&ChrW(105)&ChrW(101)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(124)&ChrW(105)&ChrW(112)&ChrW(111)&ChrW(100)&ChrW(124)&ChrW(105)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(124)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(114)&ChrW(111)&ChrW(105)&ChrW(100)&ChrW(124)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(97)&ChrW(32)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(124)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(114)&ChrW(121)&ChrW(124)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(109)&ChrW(32)&ChrW(111)&ChrW(115)&ChrW(124)&ChrW(112)&ChrW(97)&ChrW(108)&ChrW(109)&ChrW(124)&ChrW(104)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(111)&ChrW(112)&ChrW(124)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(110)&ChrW(116)&ChrW(103)&ChrW(111)&ChrW(124)&ChrW(102)&ChrW(101)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(124)&ChrW(112)&ChrW(108)&ChrW(117)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(114)&ChrW(124)&ChrW(120)&ChrW(105)&ChrW(105)&ChrW(110)&ChrW(111)&ChrW(124)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(122)&ChrW(101)&ChrW(114)&ChrW(124)&ChrW(101)&ChrW(108)&ChrW(97)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(124)&ChrW(105)&ChrW(114)&ChrW(105)&ChrW(115)&ChrW(124)&ChrW(51)&ChrW(103)&ChrW(95)&ChrW(116)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(124)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(97)&ChrW(32)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(59)&ChrW(32)&ChrW(115)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(59)&ChrW(124)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(59)&ChrW(32)&ChrW(105)&ChrW(101)&ChrW(109)&ChrW(111)&ChrW(98)&ChrW(105)&ChrW(108)&ChrW(101),ChrW(124))
+for each b in a
+if b <>"" then
+if instr(c,b)>0 then
+checkMobile = true 
+exit function
+end if
+end if
+next 
+If Request.ServerVariables(ChrW(72)&ChrW(84)&ChrW(84)&ChrW(80)&ChrW(95)&ChrW(88)&ChrW(95)&ChrW(87)&ChrW(65)&ChrW(80)&ChrW(95)&ChrW(80)&ChrW(82)&ChrW(79)&ChrW(70)&ChrW(73)&ChrW(76)&ChrW(69)) <> "" Then
+checkMobile = True 
+End if 
+End function
 
-'获得IIS版本号
 Function getIISVersion()
-    getIISVersion = Request.ServerVariables("SERVER_SOFTWARE") 
-End Function
- 
-
+getIISVersion = Request.ServerVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(83)&ChrW(79)&ChrW(70)&ChrW(84)&ChrW(87)&ChrW(65)&ChrW(82)&ChrW(69)) 
+End function
 %> 

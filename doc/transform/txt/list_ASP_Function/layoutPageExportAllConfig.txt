@@ -1,0 +1,111 @@
+'导出布局页及相关配置 20251028
+function layoutPageExportAllConfig(dbPrefix,conn,configId)
+    dim c,exportObj,subId,c2,c3
+    set exportObj = New exportData
+    ' call eerr("configId",configId)
+    '1. 导出布局页数据
+    c="====[layout_page]===="&vbcrlf
+    c=c & exportObj.handleDaoChuData_plus("get","layout_page",configId)
+    c=c & vbcrlf
+    
+    '2. 导出配置表数据
+    sql="select id,layout_field_id from ["& dbPrefix & "layout_page_config] where layout_page_id="&configId
+    rss.open sql,conn,1,1
+    if not rss.eof then
+        c=c & "======================================" & vbcrlf
+        c=c & "====[layout_page_config]===="&vbcrlf
+        while not rss.eof
+            c=c & exportObj.handleDaoChuData_plus("get","layout_page_config",rss("id"))
+            ' 导出对应的 layout_field 配置
+          
+            if not isnull(rss("layout_field_id")) and rss("layout_field_id")<>"" and rss("layout_field_id")<>"-1" then
+                c2=c2&exportObj.handleDaoChuData_plus("get","layout_field",rss("layout_field_id")) 
+                
+            end if
+            rss.movenext
+        wend
+        c=c & vbcrlf
+    end if
+    rss.close
+    
+    '3. 导出按钮配置
+    sql="select id from ["& dbPrefix & "layout_table_button] where layout_page_id="&configId & " order by id"
+    rss.open sql,conn,1,1
+    if not rss.eof then
+        c=c & "======================================" & vbcrlf
+        c=c & "====[layout_table_button]===="&vbcrlf
+        while not rss.eof
+            c=c & exportObj.handleDaoChuData_plus("get","layout_table_button",rss("id"))
+            rss.movenext
+        wend
+        c=c & vbcrlf
+    end if
+    rss.close
+    
+    '4. 导出工具栏配置
+    sql="select id from ["& dbPrefix & "layout_table_toolbar] where layout_page_id="&configId & " order by id"
+    rss.open sql,conn,1,1
+    if not rss.eof then
+        c=c & "======================================" & vbcrlf
+        c=c & "====[layout_table_toolbar]===="&vbcrlf
+        while not rss.eof
+            c=c & exportObj.handleDaoChuData_plus("get","layout_table_toolbar",rss("id"))
+            rss.movenext
+        wend
+        c=c & vbcrlf
+    end if
+    rss.close
+    
+    '5. 导出动作配置
+    sql="select id from ["& dbPrefix & "layout_action] where layout_page_id="&configId & " order by id"
+    rss.open sql,conn,1,1
+    if not rss.eof then
+        c=c & "======================================" & vbcrlf
+        c=c & "====[layout_action]===="&vbcrlf
+        while not rss.eof
+            c=c & exportObj.handleDaoChuData_plus("get","layout_action",rss("id"))
+            rss.movenext
+        wend
+        c=c & vbcrlf
+    end if
+    rss.close
+    
+    '6. 导出表单配置
+    sql="select id from ["& dbPrefix & "layout_listPage_form] where layout_page_id="&configId & " order by id"
+    rss.open sql,conn,1,1
+    if not rss.eof then
+        c=c & "======================================" & vbcrlf
+        c=c & "====[layout_listPage_form]===="&vbcrlf
+        while not rss.eof
+            c=c & exportObj.handleDaoChuData_plus("get","layout_listPage_form",rss("id"))
+            rss.movenext
+        wend
+        c=c & vbcrlf
+    end if
+    rss.close
+
+    
+    '7. 项菜单配置
+    sql="select id from ["& dbPrefix & "layout_table_action] where layout_page_id="&configId & " order by id"
+    rss.open sql,conn,1,1
+    if not rss.eof then
+        c=c & "======================================" & vbcrlf
+        c=c & "====[layout_table_action]===="&vbcrlf
+        while not rss.eof
+            c=c & exportObj.handleDaoChuData_plus("get","layout_table_action",rss("id"))
+            rss.movenext
+        wend
+        c=c & vbcrlf
+    end if
+    rss.close
+
+
+    if c2<>"" then
+        c3="====[layout_field]===="&vbcrlf & c2 
+        c3=c3 & "======================================" & vbcrlf
+        c=c3 & c
+    end if
+    
+    set exportObj=nothing
+    layoutPageExportAllConfig=c
+end function

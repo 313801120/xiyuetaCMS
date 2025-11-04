@@ -1,0 +1,8 @@
+'导出相关配置 20251027
+elseif request("act")="layoutPageExportAllConfig" then
+    dim configId:configId=request("id")
+    if configId="" then
+        call die("{""info"": ""ID为空"",""status"": ""n""}")
+    end if
+    databaseType=thisDatabaseType '处理当前数据库类型'
+    call die("{""info"": """&jsonCL2(layoutPageExportAllConfig(db_PREFIX,conn,configId))&""",""status"": ""y""}")

@@ -1,0 +1,2 @@
+                showwin('添加<%=winTitle%>','listform.asp?')
+                break;                

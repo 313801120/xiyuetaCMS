@@ -1,0 +1,1 @@
+                window.open("/doc/transform/cai/asp_action_cai.asp?id="+data.id)

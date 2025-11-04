@@ -1,0 +1,4 @@
+'加载数据库里对应的表列表20250810
+elseif request("act")="loadDataBaseTableToAccess" then    
+    call loadDataBaseTableToAccess()
+    call die("")

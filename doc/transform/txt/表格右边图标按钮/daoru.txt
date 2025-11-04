@@ -1,0 +1,10 @@
+                            // 添加确认弹窗
+                            layer.confirm('确定要导入数据吗？', {
+                                icon: 3,
+                                title: '确认导入'
+                            }, function(index) {
+                                layer.close(index); // 关闭确认弹窗
+                                // 跳转到导入页面
+                                window.open('/install/addData.asp?act=importData&tablename=<%=tableName%>');
+
+                            })   

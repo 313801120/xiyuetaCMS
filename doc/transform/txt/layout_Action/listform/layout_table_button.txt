@@ -1,0 +1,43 @@
+    //根据“动作类型”显示隐藏相关字段 layout_table_button 表 20250910 2
+    function toggleActionSections(value){ 
+      var $customizeaction = $('#customizeaction'); 
+      var $parentidname = $('#parentidname'); 
+      var $fieldname = $('#fieldname'); 
+
+ 
+      if(value === 'customize'){   
+        $parentidname.hide();  
+        $fieldname.hide();  
+        $customizeaction.show(); 
+      }else if(value === 'batchCopy'){   
+        $customizeaction.show(); 
+        $parentidname.show();  
+        $fieldname.show();  
+      }else if(value === 'batchdel'){   
+        $customizeaction.show(); 
+        $parentidname.hide();  
+        $fieldname.hide();  
+      }else if(value === 'batchEdit'){   
+        $customizeaction.hide(); 
+        $parentidname.hide();  
+        $fieldname.show();  
+      
+      }else{
+        //未选择任何动作类型时，全部隐藏 
+        $customizeaction.hide();  
+        $parentidname.hide();  
+        $fieldname.hide();  
+      }
+    }
+    // 渲染单选框（确保 Layui 已处理为自定义样式）
+    form.render('radio');
+
+    // 初始化：根据当前已选的动作类型决定显示/隐藏
+    // 如果没有选中任何动作类型，则不默认选择，保持全部隐藏
+    var current = $('input[name="saction"]:checked').val() || '';
+    toggleActionSections(current);
+
+    // 仅使用 Layui 的监听方式
+    form.on('radio(saction)', function(data){
+      toggleActionSections(data.value || '');
+    });

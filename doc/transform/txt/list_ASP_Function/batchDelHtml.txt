@@ -1,0 +1,25 @@
+'生成导航html' 20251014
+function batchDelHtml(idList,nDelHtmlOKCount)  
+    dim addSql,filePath
+    if idList<>"" then
+        addSql=" where status=1"
+        if idList<>"*" then  '为*生成全部文章'
+            addSql=addSql & " and id in("&idList&")"
+        end if 
+
+        dim rs:Set rs = CreateObject("Adodb.RecordSet")
+        rs.open"select * from " & db_PREFIX & "htmlFile " & addSql,conn,1,3
+        while not rs.eof
+            filePath=phptrim(rs("htmlFilePath"))
+            if instr(filePath,".")>0 then
+                call deleteFile(filePath)
+                call echo("删除文件成功",filePath)
+                nDelHtmlOKCount=nDelHtmlOKCount+1
+            end if
+            rs("status")=0   '改为未生成状态'
+            rs.update
+        rs.movenext:wend:rs.close
+         
+    end if
+    batchDelHtml=nDelHtmlOKCount
+end function 

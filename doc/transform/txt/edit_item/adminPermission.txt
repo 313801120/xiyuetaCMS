@@ -1,0 +1,28 @@
+<%  
+splstr=split(adminPermissionLits,",") 
+for i=0 to ubound(splstr)
+	sList=splstr(i)
+	splxx=split(sList,"|")
+	for j=0 to ubound(splxx)
+		s=splxx(j)
+		checked=""
+		if instr("|"&permission&"|","|"&s&"|")>0 then checked=" checked"
+		if j=0 then
+		  %>
+<div class="checkbox15" style="padding:10px 0;">
+<input type="checkbox" lay-filter="rule" name="permission" value="<%=s%>" data_biaoji="<%=i%>" lay-skin="primary" title="<%=s%>" <%=checked%>>
+</div>
+<div class="layui-form-item" style="margin-bottom:3px; padding-bottom:16px;border-bottom:1px solid #ccc;">
+<%else%>
+
+<div class="layui-input-inline" style="margin-right:10px;">
+<input type="checkbox" data-rule="<%=i%>" name="permission" value="<%=s%>" lay-skin="primary" title="<%=s%>"  <%=checked%>>
+</div>
+<% 
+		end if
+		if j=ubound(splxx) then
+			call rw("</div>" & vbcrlf)
+		end if
+	next
+next  
+%>

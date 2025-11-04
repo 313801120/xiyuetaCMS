@@ -1,0 +1,10 @@
+
+                layer.confirm('是否要批量生成全部导行html', {
+                    icon: 3,
+                    title: '确认生成'
+                }, function(index) {
+                    layer.close(index); // 关闭输入弹窗
+                    showwin2('生成全部导行html', "?act=batchCreateAllNavHtml");  
+                });
+
+                break;

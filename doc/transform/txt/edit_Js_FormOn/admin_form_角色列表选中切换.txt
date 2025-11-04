@@ -1,0 +1,23 @@
+    //监听多选框点击事件  通过 lay-filter="rule"来监听
+    form.on('checkbox(rule)', function (data) {
+      
+    　　let val = $(this).attr("data_biaoji");//data.value;
+      if(data.elem.checked){
+        //判断当前多选框是选中还是取消选中
+        $("input[data-rule='"+val+"']").prop("checked", true);//true:选中 false:不选中
+      }
+      else{
+        $("input[data-rule='"+val+"']").prop("checked", false);
+      }
+      form.render();//实时渲染选中和不选中的样式
+    });
+
+
+    //角色选择，为超级管理员，则隐藏权限列表
+    form.on('select(level)',function(obj){       
+        if($(this).text()=='超级管理员'){
+            $("#rulelayout").hide();
+        }else{
+          $("#rulelayout").show();
+        }
+    });

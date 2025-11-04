@@ -1,608 +1,612 @@
-﻿<% 
-'加密解密(2014)
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
 
-'特殊Html上传加密解密 20150121 specialHtmlUploadEncryptionDecrypt(Content,"Decrypt")
-Function specialHtmlUploadEncryptionDecrypt(content, sType)
-    Dim splStr, splxx, c, s 
-    c = "·|[*-24156*]" & vbCrLf 
-    splStr = Split(c, vbCrLf) 
-    For Each s In splStr
-        If InStr(s, "|") > 0 Then
-            splxx = Split(s, "|") 
-            If sType = "1" Or sType = "解密" Or sType = "Decrypt" Then
-                content = Replace(content, splxx(1), splxx(0)) 
-            Else
-                content = Replace(content, splxx(0), splxx(1)) 
-            End If 
-        End If 
-    Next 
-    specialHtmlUploadEncryptionDecrypt = content 
-End Function
- 
+Function specialHtmlUploadEncryptionDecrypt(a, b)
+Dim c, d, e, f 
+e = ChrW(183)&ChrW(124)&ChrW(91)&ChrW(42)&ChrW(45)&ChrW(50)&ChrW(52)&ChrW(49)&ChrW(53)&ChrW(54)&ChrW(42)&ChrW(93) & vbCrLf 
+c = Split(e, vbCrLf) 
+For each f In c
+If InStr(f, ChrW(124)) > 0 Then
+d = Split(f, ChrW(124)) 
+If b = ChrW(49) Or b = ChrW(35299)&ChrW(23494) Or b = ChrW(68)&ChrW(101)&ChrW(99)&ChrW(114)&ChrW(121)&ChrW(112)&ChrW(116) Then
+a = Replace(a, d(1), d(0)) 
+Else
+a = Replace(a, d(0), d(1)) 
+End if 
+End if 
+Next 
+specialHtmlUploadEncryptionDecrypt = a 
+End function
 
-'加密ASP代码内容
-Function encAspContent(ByVal content)
-    Dim splStr, c, s, THStr 
-    c = "Str=Str&""|Str=Str & |If | Then|End If|&vbCrlf|Temp |Rs(|Rs.|.AddNew|(""Title"")|(""Content"")|=False|ElseIf|" 
-    c = c & "Conn.Execute(""| Exit For|[Product]|.Open|.Close|Exit For|Exit Function|MoveNext:Next:|Str " 
-    splStr = Split(c, "|") 
-    For Each s In splStr
-        If s <> "" Then
-            THStr = upperCaseORLowerCase(s) 
-            content = Replace(content, Chr(9), "") 'Chr(9) = Tab
-            content = Replace(content, s, THStr) 
-        End If 
-    Next 
-    encAspContent = content 
-End Function
- 
-'让大小写乱掉
-Function upperCaseORLowerCase(ByVal content)
-    Dim i, s, c, nRnd 
-    c = "" 
-    For i = 1 To Len(content)
-        s = Mid(content, i, 1) 
-        Randomize 
-        nRnd = CInt(Rnd() * 1) 
-        If nRnd = 0 Then
-            c = c & LCase(s) 
-        Else
-            c = c & UCase(s) 
-        End If 
-    Next 
-    upperCaseORLowerCase = c 
-End Function
- 
-'加密  Encryption
-Function encCode(ByVal content)
-    Dim i, c 
-    c = "" 
-    For i = 1 To Len(content)
-        c = c & "%" & Hex(Asc(Mid(content, i, 1))) 
-    Next 
-    encCode = c 
-End Function
- 
-'解密  Decrypt
-Function decCode(ByVal content)
-    Dim i, c, splStr, s 
-    c = "" 
-    splStr = Split(content, "%") 
-    For i = 1 To UBound(splStr)
-        If splStr(i) <> "" Then
-            s = "&H" & splStr(i) 
-            c = c & Chr(CInt(s)) 
-        End If 
-    Next 
-    decCode = c 
-End Function
- 
-'将汉字等转换为&#开头的unicode字符串形式
-Public Function toUnicode(str)
-    Dim i, j, c, p 
-    toUnicode = "" 
-    c = "" 
-    p = "" 
-    For i = 1 To Len(str)
-        c = Mid(str, i, 1) 
-        j = AscW(c) 
-        If j < 0 Then
-            j = j + 65536 
-        End If  
-        If j >= 0 And j <= 128 Then
-            If p = "c" Then
-                toUnicode = " " & toUnicode 
-                p = "e" 
-            End If 
-            toUnicode = toUnicode & c 
-        Else
-            If p = "e" Then
-                toUnicode = toUnicode & " " 
-                p = "c" 
-            End If 
-            toUnicode = toUnicode & "&#" & j & ";" 
-        End If 
-    Next 
-End Function
- 
-'日文26字母编码
-Function japan(ByVal iStr, sType)
-    japan = "" 
-    If IsNull(iStr) Or IsEmpty(iStr) Then
-        japan = "" 
-        Exit Function 
-    End If 
-    Dim arrF, i, arrE 
-    If sType = "" Then sType = "0" 
-    'F=array("ゴ","ガ","ギ","グ","ゲ","ザ","ジ","ズ","ヅ","デ",_
-    '"ド","ポ","ベ","プ","ビ","パ","ヴ","ボ","ペ","ブ","ピ","バ",_
-    '"ヂ","ダ","ゾ","ゼ")
-    'E = Array("Jn0;", "Jn1;", "Jn2;", "Jn3;", "Jn4;", "Jn5;", "Jn6;", "Jn7;", "Jn8;", "Jn9;", "Jn10;", "Jn11;", "Jn12;", "Jn13;", "Jn14;", "Jn15;", "Jn16;", "Jn17;", "Jn18;", "Jn19;", "Jn20;", "Jn21;", "Jn22;", "Jn23;", "Jn24;", "Jn25;")
-    arrE = Split("Jn0;,Jn1;,Jn2;,Jn3;,Jn4;,Jn5;,Jn6;,Jn7;,Jn8;,Jn9;,Jn10;,Jn11;,Jn12;,Jn13;,Jn14;,Jn15;,Jn16;,Jn17;,Jn18;,Jn19;,Jn20;,Jn21;,Jn22;,Jn23;,Jn24;,Jn25;", ",") 
+Function encAspContent(ByVal a)
+Dim b, c, d, e 
+c = ChrW(83)&ChrW(116)&ChrW(114)&ChrW(61)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(38)&ChrW(34)&ChrW(124)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(61)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(38)&ChrW(32)&ChrW(124)&ChrW(73)&ChrW(102)&ChrW(32)&ChrW(124)&ChrW(32)&ChrW(84)&ChrW(104)&ChrW(101)&ChrW(110)&ChrW(124)&ChrW(69)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(73)&ChrW(102)&ChrW(124)&ChrW(38)&ChrW(118)&ChrW(98)&ChrW(67)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(124)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(124)&ChrW(82)&ChrW(115)&ChrW(40)&ChrW(124)&ChrW(82)&ChrW(115)&ChrW(46)&ChrW(124)&ChrW(46)&ChrW(65)&ChrW(100)&ChrW(100)&ChrW(78)&ChrW(101)&ChrW(119)&ChrW(124)&ChrW(40)&ChrW(34)&ChrW(84)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(41)&ChrW(124)&ChrW(40)&ChrW(34)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(34)&ChrW(41)&ChrW(124)&ChrW(61)&ChrW(70)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(124)&ChrW(69)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(102)&ChrW(124) 
+c = c & ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(46)&ChrW(69)&ChrW(120)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34)&ChrW(124)&ChrW(32)&ChrW(69)&ChrW(120)&ChrW(105)&ChrW(116)&ChrW(32)&ChrW(70)&ChrW(111)&ChrW(114)&ChrW(124)&ChrW(91)&ChrW(80)&ChrW(114)&ChrW(111)&ChrW(100)&ChrW(117)&ChrW(99)&ChrW(116)&ChrW(93)&ChrW(124)&ChrW(46)&ChrW(79)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(124)&ChrW(46)&ChrW(67)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(124)&ChrW(69)&ChrW(120)&ChrW(105)&ChrW(116)&ChrW(32)&ChrW(70)&ChrW(111)&ChrW(114)&ChrW(124)&ChrW(69)&ChrW(120)&ChrW(105)&ChrW(116)&ChrW(32)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(77)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(78)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(58)&ChrW(78)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(58)&ChrW(124)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(32) 
+b = Split(c, ChrW(124)) 
+For each d In b
+If d <> "" Then
+e = upperCaseORLowerCase(d) 
+a = Replace(a, Chr(9), "")
+a = Replace(a, d, e) 
+End if 
+Next 
+encAspContent = a 
+End function
 
-    'F = Array(Chr( -23116), Chr( -23124), Chr( -23122), Chr( -23120),    Chr(-23118), Chr( -23114), Chr( -23112), Chr( -23110),     Chr(-23099), Chr( -23097), Chr( -23095), Chr( -23075),   Chr(-23079), Chr( -23081), Chr( -23085), Chr( -23087),  Chr(-23052), Chr( -23076), Chr( -23078), Chr( -23082),  Chr(-23084), Chr( -23088), Chr( -23102), Chr( -23104), Chr(-23106), Chr( -23108))
-    arrF = Split(Chr( -23116) & "," & Chr( -23124) & "," & Chr( -23122) & "," & Chr( -23120) & "," & Chr( -23118) & "," & Chr( -23114) & "," & Chr( -23112) & "," & Chr( -23110) & "," & Chr( -23099) & "," & Chr( -23097) & "," & Chr( -23095) & "," & Chr( -23075) & "," & Chr( -23079) & "," & Chr( -23081) & "," & Chr( -23085) & "," & Chr( -23087) & "," & Chr( -23052) & "," & Chr( -23076) & "," & Chr( -23078) & "," & Chr( -23082) & "," & Chr( -23084) & "," & Chr( -23088) & "," & Chr( -23102) & "," & Chr( -23104) & "," & Chr( -23106) & "," & Chr( -23108), ",") 
-    japan = iStr 
-    For i = 0 To 25
-        If sType = "0" Then
-            japan = Replace(japan, arrF(i), arrE(i)) 
-        Else
-            japan = Replace(japan, arrE(i), arrF(i)) 
-        End If 
-    Next 
-End Function
- 
-'日文26字母 加密
-Function japan26(iStr)
-    japan26 = japan(iStr, "0") 
-End Function
- 
-'日文26字母 解密
-Function unJapan26(iStr)
-    unJapan26 = japan(iStr, "1") 
-End Function
- 
-'处理内容让它成为纯HTML代码
-Function handleHTML(ByVal content)
-    'Content = Replace(Content, "&", "&amp;")
-    content = Replace(content, "<", "&lt;") 
-    handleHTML = content 
-End Function
- 
-'解开 处理内容让它成为纯HTML代码
-Function unHandleHTML(ByVal content)
-    'Content = Replace(Content, "&amp;", "&")
-    content = Replace(content, "&lt;", "<") 
-    unHandleHTML = content 
-End Function
- 
-'小写加密   [可扩展为大写与数字]
-Function lcaseEnc(str)
-    Dim i, n, s, c 
-    c = "" 
-    For i = 1 To Len(str)
-        s = Mid(str, i, 1) 
-        n = AscW(s) 
-        If n >= 97 And n <= 122 Then
-            c = c & ChrW(n + 1) 
-        Else
-            c = c & s 
-        End If 
-    Next 
-    c = Replace(c, vbCrLf, "＠") 
-    lcaseEnc = c 
-End Function
- 
-'小写解密
-Function lcaseDec(str)
-    Dim i, n, s, c 
-    c = "" 
-    For i = 1 To Len(str)
-        s = Mid(str, i, 1) 
-        n = AscW(s) 
-        If n >= 97 And n <= 123 Then
-            c = c & ChrW(n - 1) 
-        Else
-            c = c & s 
-        End If 
-    Next 
-    c = Replace(c, "＠", vbCrLf) 
-    lcaseDec = c 
-End Function
- 
+Function upperCaseORLowerCase(ByVal a)
+Dim b, c, d, e 
+d = "" 
+For b = 1 To Len(a)
+c = Mid(a, b, 1) 
+Randomize 
+e = CInt(Rnd() * 1) 
+If e = 0 Then
+d = d & LCase(c) 
+Else
+d = d & UCase(c) 
+End if 
+Next 
+upperCaseORLowerCase = d 
+End function
 
-'html转换成js
-Function htmlToJs(ByVal c)
-    c = Replace("" & c, "\", "\\") 
-    c = Replace(c, "/", "\/") 
-    c = Replace(c, "'", "\'") 
-    c = Replace(c, """", "\""") 
-    c = Join(Split(c, vbCrLf), """);" & vbCrLf & "document.write(""") 
-    c = "document.write(""" & c & """);" 
-    htmlToJs = c 
-End Function
- 
-'js转换成html
-Function jsToHtml(ByVal c)
-    c = Replace(c, "document.write(""", "") 
-    c = Replace(c, """);", "") 
-    c = Replace(c, "\""", """") 
-    c = Replace(c, "\'", "'") 
-    c = Replace(c, "\/", "/") 
-    c = Replace(c, "\\", "\") 
-    jsToHtml = c 
-End Function
- 
-'html转换成Asp
-Function htmlToAsp(ByVal c)
-    c = Replace(c, """", """""") 
-    c = Join(Split(c, vbCrLf), """)" & vbCrLf & "Response.Write(""") 
-    c = "Response.Write(""" & c & """)" 
-    htmlToAsp = c 
-End Function
- 
-'Html转Asp变量存储
-Function htmlToAspDim(ByVal c)
-    c = Replace(c, """", """""") 
-    c = Join(Split(c, vbCrLf), """" & vbCrLf & "C=C & """) 
-    c = "C=C & """ & c & """" 
-    htmlToAspDim = c 
-End Function
- 
-'Asp转换成html
-Function aspToHtml(ByVal c)
-    c = Replace(c, "Response.Write(""", "") 
-    c = Replace(c, """""", """") 
-    aspToHtml = c 
-End Function
- 
-'检测创建文件名称是否合法
-Function checkCreateFileName(ByVal fileName)
-    Dim i, s, sArrayA 
-    sArrayA = Array("\", "/", ":", "*", "?", """", "<", ">", "|", ",") 
-    For i = 0 To UBound(sArrayA)
-        s = sArrayA(i) 
-        If InStr(fileName, s) > 0 Then
-            checkCreateFileName = False 
-            Exit Function 
-        End If 
-    Next 
-    checkCreateFileName = True 
-End Function
- 
-'文件命名规则
-Function setFileName(ByVal fileName)
-    Dim i, s, tStr, sArrayA, sArrayB 
-    'sArrayA = array("\", "/", ":", "*", "?", """", "<", ">", "|", ".", ",")       '换这种方法是为了与PHP版通用 20160511
-    'sArrayB = array("撇", "揦", "：", "星", "？", "“", "左", "右", "横", "。", "，")
-    sArrayA = Array("\", "/", ":", "*", "?", """", "<", ">", "|", ".", ",") 
-    sArrayB = Array("撇", "揦", "：", "星", "？", "“", "左", "右", "横", "。", "，") 
-    For i = 0 To UBound(sArrayA)
-        s = sArrayA(i) 
-        tStr = sArrayB(i) 
-        fileName = Replace(fileName, s, tStr) 
-    Next 
-    fileName = Replace(fileName, "&nbsp;", " ") 
-    fileName = Replace(fileName, "&quot;", "双") 
-    fileName = Replace(fileName, vbCrLf, "") 
-    setFileName = fileName 
-End Function
- 
-'文件命名规则解开
-Function unSetFileName(ByVal fileName)
-    Dim i, s, tStr, sArrayA, sArrayB 
-    sArrayA = Array("\", "/", ":", "*", "?", """", "<", ">", "|", ".", ",") 
-    sArrayB = Array("撇", "揦", "：", "星", "？", "“", "左", "右", "横", "。", "，") 
-    For i = 0 To UBound(sArrayA)
-        s = sArrayA(i) 
-        tStr = sArrayB(i) 
-        fileName = Replace(fileName, tStr, s) 
-    Next 
+Function encCode(ByVal a)
+Dim b, c 
+c = "" 
+For b = 1 To Len(a)
+c = c & ChrW(37) & Hex(Asc(Mid(a, b, 1))) 
+Next 
+encCode = c 
+End function
 
-    unSetFileName = fileName 
-End Function
- 
+Function decCode(ByVal a)
+Dim b, c, d, e 
+c = "" 
+d = Split(a, ChrW(37)) 
+For b = 1 To UBound(d)
+If d(b) <> "" Then
+e = ChrW(38)&ChrW(72) & d(b) 
+c = c & Chr(CInt(e)) 
+End if 
+Next 
+decCode = c 
+End function
 
-'把Html转成ASP，并且字符转成Chr(*)样式
-Function HTMLToAscChr(title)
-    Dim i, s, c 
-    c = "" 
-    For i = 1 To Len(title)
-        s = Mid(title, i, 1) 
-        c = c & "Chr(" & Asc(s) & ")&" 
-    Next 
-    If c <> "" Then c = Left(c, Len(c) - 1) 
-    HTMLToAscChr = c 
-'HTMLToAscChr = "<" & "%=" & C & "%" & ">"
-End Function
- 
-'解密AscChr
-Function unHTMLToAscChr(content)
-    Dim i, s, c, splStr, temp 
-    c = content : temp = "" 
-    c = Replace(c, "Chr(", "") 
-    c = Replace(c, ")&", " ") 
-    c = Replace(c, ")", " ") 
-    splStr = Split(c, " ") 
-    For i = 0 To UBound(splStr) - 1
-        s = splStr(i) 
-        temp = temp & Chr(s) 
-    Next 
-    unHTMLToAscChr = temp 
-End Function
- 
+Public Function toUnicode(a)
+Dim b, c, d, e 
+toUnicode = "" 
+d = "" 
+e = "" 
+For b = 1 To Len(a)
+d = Mid(a, b, 1) 
+c = AscW(d)  
+If c < 0 Then
+c = c + 65536 
+End if  
+If c >= 0 And c <= 128 Then
+If e = ChrW(99) Then
+toUnicode = ChrW(32) & toUnicode 
+e = ChrW(101) 
+End if 
+toUnicode = toUnicode & d 
+Else
+If e = ChrW(101) Then
+toUnicode = toUnicode & ChrW(32) 
+e = ChrW(99) 
+End if 
+toUnicode = toUnicode & ChrW(38)&ChrW(35) & c & ChrW(59) 
+End if 
+Next 
+End function
 
-'变量移位
-Function variableDisplacement(content, nPass)
-    Dim c, i, s, letterGroup, digitalGroup, nLetterGroup, nDigitalGroup, nLetterLen, nDigitalLen, nX 
-    '字母组
-    'LetterGroup="abcdefghijklmnopqrstuvwxyz"
-    letterGroup = "yzoehijklmfgqrstuvpabnwxcd" 
-    '字母长
-    nLetterGroup = Len(letterGroup) 
-    '数字组
-    'DigitalGroup="0123456789"
-    digitalGroup = "4539671820" 
-    '数字长
-    nDigitalGroup = Len(digitalGroup) 
-    c = "" 
-    For i = 1 To Len(content)
-        s = Mid(content, i, 1) 
-        nLetterLen = InStr(letterGroup, s) 
-        nDigitalLen = InStr(digitalGroup, s) 
-        '字母处理
-        If nLetterLen > 0 Then
-            nX = nLetterLen + nPass 
-            If nX > nLetterGroup Then
-                nX = nX - nLetterGroup 
-            ElseIf nX <= 0 Then
-                'Call Echo("nX",nX & "," & (nLetterGroup - nX) & "/" & nLetterGroup)
-                nX = nX + nLetterGroup 
-            End If 
-            s = Mid(letterGroup, nX, 1) 
-        '数字处理
-        ElseIf nDigitalLen > 0 Then
-            nX = nDigitalLen + nPass 
-            If nX > nDigitalGroup Then
-                nX = nX - nDigitalGroup 
-            ElseIf nX <= 0 Then
-                'Call Echo("nX",nX & "," & (nLetterGroup - nX) & "/" & nLetterGroup)
-                nX = nX + nDigitalGroup 
-            End If 
-            s = Mid(digitalGroup, nX, 1) 
-
-
-        End If 
-        c = c & s 
-    Next 
-    variableDisplacement = c 
-End Function
- 
-
-'字母加密20180826
-Function letterEncryption(str)
-    Dim splStr, i, j, s, c, sAZ, letterGroup 
-    letterGroup = "abcdefghijklmnopqrstuvwxyz" 
-    For i = 1 To Len(str)
-        s = Mid(str, i, 1) 
-        For j = 1 To Len(letterGroup)
-            sAZ = Mid(letterGroup, j, 1) 
-            If s = sAZ Then
-                s = Mid(letterGroup & "a", j + 1, 1) 
-                Exit For 
-            End If 
-        Next 
-        c = c & s 
-    Next 
-    letterEncryption = c 
-End Function
- 
-'字母解密20180826
-Function unLetterEncryption(str)
-    Dim splStr, i, j, s, c, sAZ, letterGroup 
-    letterGroup = "abcdefghijklmnopqrstuvwxyz" 
-    For i = 1 To Len(str)
-        s = Mid(str, i, 1) 
-        For j = 1 To Len(letterGroup)
-            sAZ = Mid(letterGroup, j, 1) 
-            If s = sAZ Then
-                If j - 1 = 0 Then
-                    s = "z" 
-                Else
-                    s = Mid(letterGroup, j - 1, 1) 
-                End If 
-                Exit For 
-            End If 
-        Next 
-        c = c & s 
-    Next 
-    unLetterEncryption = c 
-End Function
- 
-
-'【删除此行start】
-
-'Xor加密
-Function xorEnc(code, n)
-    Dim c, s1, s2, s3, i 
-    c = code 
-    s1 = Len(c) : s3 = "" 
-    For i = 0 To s1 - 1
-        s2 = AscW(Right(c, s1 - i)) Xor n 
-        s3 = s3 & ChrW(Int(s2)) 
-    Next 
-    'Chr(34) 就是等于(") 防止出错 因为"在ASP里出错
-    s3 = Replace(s3, ChrW(34), "ㄨ") 
-    xorEnc = s3 
-End Function
- 
-'Xor解密
-Function xorDec(code, n)
-    Dim c, s1, s2, s3, i 
-    c = code : s3 = "" 
-    c = Replace(c, "ㄨ", ChrW(34)) 
-    s1 = Len(c) 
-    For i = 0 To s1 - 1
-        s2 = AscW(Right(c, s1 - i)) Xor n 
-        s3 = s3 & ChrW(Int(s2)) 
-    Next 
-    s3 = Replace(s3, "＠", vbCrLf) 
-    xorDec = s3 
-End Function
- 
-
-
-'处理Eval加密
-Function handleEvalAddDec(ByVal content, addStr)
-    Dim c 
-    c = addStr & "Execute unDec_log(""" & encCode(content) & """)" & addStr 
-    c = c & "Function unDec_log(ByVal Content)" & addStr 
-    c = c & "    Dim I, C, SplStr " & addStr 
-    c = c & "    SplStr = Split(Content, ""%"") " & addStr 
-    c = c & "    For I = 1 To UBound(SplStr)" & addStr 
-    c = c & "        C = C & Chr(CInt(""&H"" & SplStr(I))) " & addStr 
-    c = c & "    Next " & addStr 
-    c = c & "    unDec_log = C " & addStr 
-    c = c & "End Function " & addStr 
-    handleEvalAddDec = c 
-End Function
- 
-'Eval加密
-Function evalAddDec(ByVal content)
-    evalAddDec = handleEvalAddDec(content, vbCrLf) 
-End Function
- 
-'Eval加密
-Function vbEvalAddDec(ByVal content)
-    vbEvalAddDec = escape(handleEvalAddDec(content, ":")) 
-End Function
- 
-
-'Xor解密    这个暂时留着
-Function XDec(code)
-    Dim c, s1, s2, s3, i 
-    c = code 
-    c = Replace(c, "ㄨ", Chr(34)) 
-    s1 = Len(c) : s2 = "" : s3 = "" 
-    For i = 0 To s1 - 1
-        s2 = Asc(Right(c, s1 - i)) Xor 20 
-        s3 = s3 & Chr(Int(s2)) 
-    Next 
-    s3 = Replace(s3, "＠", vbCrLf) 
-    XDec = s3 
-End Function
- 
-
-
-'RGB转十六进制
-Public Function toHexColor(scrColor)
-    Dim hexColor 
-    toHexColor = "" 
-    hexColor = CStr(Hex(scrColor)) 
-    Select Case Len(hexColor)
-        Case 1 : toHexColor = "&H00000" & hexColor
-        Case 2 : toHexColor = "&H0000" & hexColor
-        Case 3 : toHexColor = "&H000" & hexColor
-        Case 4 : toHexColor = "&H00" & hexColor
-        Case 5 : toHexColor = "&H0" & hexColor
-        Case 6 : toHexColor = "&H" & hexColor
-    End Select
-End Function
- 
-'十六进制与RGB
-Public Function colorRGB(color)
-    Dim byN, byN2 
-    byN = "" : byN2 = "" 
-    Dim arrayStr(2) 
-    arrayStr(0) =(color Mod byN) 
-    arrayStr(1) =((color Mod byN2) \ byN) 
-    arrayStr(2) =(color \ byN2) 
-    colorRGB = arrayStr 
-End Function
- 
-
-'简单加密
-Function simpleEnc(c)
-    c = Replace(c, "x", "輕") 
-    c = Replace(c, "f", "蚛") 
-    c = Replace(c, "s", "鋋") 
-    c = Replace(c, "h", "孿") 
-    c = Replace(c, "t", "謣") 
-    c = Replace(c, "o", "薺") 
-    c = Replace(c, "<", "讞") 
-    c = Replace(c, ">", "旻") 
-    c = Replace(c, "a", "艓") 
-    c = Replace(c, "c", "襋") 
-    c = Replace(c, "n", "贁") 
-    c = Replace(c, "m", "曁") 
-    c = Replace(c, vbCrLf, "樞") 
-    simpleEnc = c 
-End Function
- 
-'简单解密
-Function simpleDec(c)
-    c = Replace(c, "輕", "x") 
-    c = Replace(c, "蚛", "f") 
-    c = Replace(c, "鋋", "s") 
-    c = Replace(c, "孿", "h") 
-    c = Replace(c, "謣", "t") 
-    c = Replace(c, "薺", "o") 
-    c = Replace(c, "讞", "<") 
-    c = Replace(c, "旻", ">") 
-    c = Replace(c, "艓", "a") 
-    c = Replace(c, "襋", "c") 
-    c = Replace(c, "贁", "n") 
-    c = Replace(c, "曁", "m") 
-    c = Replace(c, "樞", vbCrLf) 
-    simpleDec = c 
-End Function
- 
-'加密ASP内容成Eval来运行
-Function encAspEvalRun(ByVal content)
-    Dim splStr, i, c 
-    '去除<% % >
-    content = Replace(content, "<" & "%", "") 
-    content = Replace(content, "%" & ">", "") 
-    content = Replace(content, """", """""") 
-    content = Replace(content, "x", "輕") 
-    content = Replace(content, "f", "蚛") 
-    content = Replace(content, "s", "鋋") 
-    content = Replace(content, "o", "薺") 
-    content = Replace(content, "e", "療") 
-    splStr = Split(content, vbCrLf) 
-    c = "" 
-    For i = 0 To UBound(splStr)
-        If InStr(splStr(i), "'") = False And Len(splStr(i)) > 1 Then
-            c = c & splStr(i) & "⊙" 
-        End If 
-    Next 
-    c = Left(c, Len(c) - 1) 
-    c = "Execute MyEval(""" & c & """)" & vbCrLf 
-    c = c & "Function MyEval(HtmlStr)" & vbCrLf 
-    c = c & vbTab & "MyEval=Replace(HtmlStr,""⊙"",vbCrlf)" & vbCrLf 
-    c = c & vbTab & "MyEval=Replace(MyEval,""輕"",""x"")" & vbCrLf 
-    c = c & vbTab & "MyEval=Replace(MyEval,""蚛"",""f"")" & vbCrLf 
-    c = c & vbTab & "MyEval=Replace(MyEval,""鋋"",""s"")" & vbCrLf 
-    c = c & vbTab & "MyEval=Replace(MyEval,""薺"",""o"")" & vbCrLf 
-    c = c & vbTab & "MyEval=Replace(MyEval,""療"",""e"")" & vbCrLf 
-    c = c & "End Function" & vbCrLf 
-    encAspEvalRun = "<" & "%" & vbCrLf & c & "%" & ">" 
-End Function
- 
+Function japan(ByVal a, b)
+japan = "" 
+If IsNull(a) Or IsEmpty(a) Then
+japan = "" 
+Exit function 
+End if 
+Dim c, d, e 
+If b = "" Then b = ChrW(48) 
 
 
 
 
-'解决json处理文本时出错的函数20220720'
-function jsonCL(c)
-    'c=chineseToUnicode(c)'汉字转uni编码，网站也可以显示  如 "  ==  &#x22;           20220722
-    'c=chineseToUnicode2(c)'汉字转uni编码第二种，网站也可以显示  如 "  ==  &#34;           20220722  html字符实体#34或quot  一般用这个
-    if isnul(c) then c=""
-    c=replace(c,"&nbsp;"," ") 
-    c=replace(c,"""","&quot;")   
-    c=replace(c,"\","\\") 
-    c=replace(c, vbtab,"  ")   'tab退格替换成两个空格20231014
-    c=replace(replace(c,chr(10),""),chr(13),"")
+e = Split(ChrW(74)&ChrW(110)&ChrW(48)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(51)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(52)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(53)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(54)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(55)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(56)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(57)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(48)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(49)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(50)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(51)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(52)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(53)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(54)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(55)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(56)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(49)&ChrW(57)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(48)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(49)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(50)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(51)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(52)&ChrW(59)&ChrW(44)&ChrW(74)&ChrW(110)&ChrW(50)&ChrW(53)&ChrW(59), ChrW(44)) 
 
-    jsonCL=inputCL(c)
+c = Split(Chr( -23116) & ChrW(44) & Chr( -23124) & ChrW(44) & Chr( -23122) & ChrW(44) & Chr( -23120) & ChrW(44) & Chr( -23118) & ChrW(44) & Chr( -23114) & ChrW(44) & Chr( -23112) & ChrW(44) & Chr( -23110) & ChrW(44) & Chr( -23099) & ChrW(44) & Chr( -23097) & ChrW(44) & Chr( -23095) & ChrW(44) & Chr( -23075) & ChrW(44) & Chr( -23079) & ChrW(44) & Chr( -23081) & ChrW(44) & Chr( -23085) & ChrW(44) & Chr( -23087) & ChrW(44) & Chr( -23052) & ChrW(44) & Chr( -23076) & ChrW(44) & Chr( -23078) & ChrW(44) & Chr( -23082) & ChrW(44) & Chr( -23084) & ChrW(44) & Chr( -23088) & ChrW(44) & Chr( -23102) & ChrW(44) & Chr( -23104) & ChrW(44) & Chr( -23106) & ChrW(44) & Chr( -23108), ChrW(44)) 
+japan = a 
+For d = 0 To 25
+If b = ChrW(48) Then
+japan = Replace(japan, c(d), e(d)) 
+Else
+japan = Replace(japan, e(d), c(d)) 
+End if 
+Next 
+End function
+
+Function japan26(a)
+japan26 = japan(a, ChrW(48)) 
+End function
+
+Function unJapan26(a)
+unJapan26 = japan(a, ChrW(49)) 
+End function
+
+Function handleHTML(ByVal a)
+
+a = Replace(a, ChrW(60), ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59)) 
+handleHTML = a 
+End function
+
+Function unHandleHTML(ByVal a)
+
+a = Replace(a, ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59), ChrW(60)) 
+unHandleHTML = a 
+End function
+
+Function htmlEncode(a)
+If IsNull(a) Or a = "" Then
+htmlEncode = ""
+Exit function
+End if
+Dim b
+b = a
+b = Replace(b, ChrW(38), ChrW(38)&ChrW(97)&ChrW(109)&ChrW(112)&ChrW(59))
+b = Replace(b, ChrW(60), ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59))
+b = Replace(b, ChrW(62), ChrW(38)&ChrW(103)&ChrW(116)&ChrW(59))
+b = Replace(b, ChrW(34), ChrW(38)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(59))
+b = Replace(b, ChrW(39), ChrW(38)&ChrW(35)&ChrW(51)&ChrW(57)&ChrW(59))
+htmlEncode = b
+End function
+
+Function lcaseEnc(a)
+Dim b, c, d, e 
+e = "" 
+For b = 1 To Len(a)
+d = Mid(a, b, 1) 
+c = AscW(d) 
+If c >= 97 And c <= 122 Then
+e = e & ChrW(c + 1) 
+Else
+e = e & d 
+End if 
+Next 
+e = Replace(e, vbCrLf, ChrW(65312)) 
+lcaseEnc = e 
+End function
+
+Function lcaseDec(a)
+Dim b, c, d, e 
+e = "" 
+For b = 1 To Len(a)
+d = Mid(a, b, 1) 
+c = AscW(d) 
+If c >= 97 And c <= 123 Then
+e = e & ChrW(c - 1) 
+Else
+e = e & d 
+End if 
+Next 
+e = Replace(e, ChrW(65312), vbCrLf) 
+lcaseDec = e 
+End function
+
+Function htmlToJs(ByVal a)
+a = Replace("" & a, ChrW(92), ChrW(92)&ChrW(92)) 
+a = Replace(a, ChrW(47), ChrW(92)&ChrW(47)) 
+a = Replace(a, ChrW(39), ChrW(92)&ChrW(39)) 
+a = Replace(a, ChrW(34), ChrW(92)&ChrW(34)) 
+a = Join(Split(a, vbCrLf), ChrW(34)&ChrW(41)&ChrW(59) & vbCrLf & ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(119)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34)) 
+a = ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(119)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34) & a & ChrW(34)&ChrW(41)&ChrW(59) 
+htmlToJs = a 
+End function
+
+Function jsToHtml(ByVal a)
+a = Replace(a, ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(119)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34), "") 
+a = Replace(a, ChrW(34)&ChrW(41)&ChrW(59), "") 
+a = Replace(a, ChrW(92)&ChrW(34), ChrW(34)) 
+a = Replace(a, ChrW(92)&ChrW(39), ChrW(39)) 
+a = Replace(a, ChrW(92)&ChrW(47), ChrW(47)) 
+a = Replace(a, ChrW(92)&ChrW(92), ChrW(92)) 
+jsToHtml = a 
+End function
+
+Function htmlToAsp(ByVal a)
+a = Replace(a, ChrW(34), ChrW(34)&ChrW(34)) 
+a = Join(Split(a, vbCrLf), ChrW(34)&ChrW(41) & vbCrLf & ChrW(82)&ChrW(101)&ChrW(115)&ChrW(112)&ChrW(111)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(46)&ChrW(87)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34)) 
+a = ChrW(82)&ChrW(101)&ChrW(115)&ChrW(112)&ChrW(111)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(46)&ChrW(87)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34) & a & ChrW(34)&ChrW(41) 
+htmlToAsp = a 
+End function
+
+Function htmlToAspDim(ByVal a)
+a = Replace(a, ChrW(34), ChrW(34)&ChrW(34)) 
+a = Join(Split(a, vbCrLf), ChrW(34) & vbCrLf & ChrW(67)&ChrW(61)&ChrW(67)&ChrW(32)&ChrW(38)&ChrW(32)&ChrW(34)) 
+a = ChrW(67)&ChrW(61)&ChrW(67)&ChrW(32)&ChrW(38)&ChrW(32)&ChrW(34) & a & ChrW(34) 
+htmlToAspDim = a 
+End function
+
+Function aspToHtml(ByVal a)
+a = Replace(a, ChrW(82)&ChrW(101)&ChrW(115)&ChrW(112)&ChrW(111)&ChrW(110)&ChrW(115)&ChrW(101)&ChrW(46)&ChrW(87)&ChrW(114)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(34), "") 
+a = Replace(a, ChrW(34)&ChrW(34), ChrW(34)) 
+aspToHtml = a 
+End function
+
+Function checkCreateFileName(ByVal a)
+Dim b, c, d 
+d = Array(ChrW(92), ChrW(47), ChrW(58), ChrW(42), ChrW(63), ChrW(34), ChrW(60), ChrW(62), ChrW(124), ChrW(44)) 
+For b = 0 To UBound(d)
+c = d(b) 
+If InStr(a, c) > 0 Then
+checkCreateFileName = False 
+Exit function 
+End if 
+Next 
+checkCreateFileName = True 
+End function
+
+Function setFileName(ByVal a)
+Dim b, c, d, e, f 
+
+
+e = Array(ChrW(92), ChrW(47), ChrW(58), ChrW(42), ChrW(63), ChrW(34), ChrW(60), ChrW(62), ChrW(124), ChrW(46), ChrW(44)) 
+f = Array(ChrW(25735), ChrW(25574), ChrW(65306), ChrW(26143), ChrW(65311), ChrW(8220), ChrW(24038), ChrW(21491), ChrW(27178), ChrW(12290), ChrW(65292)) 
+For b = 0 To UBound(e)
+c = e(b) 
+d = f(b) 
+a = Replace(a, c, d) 
+Next 
+a = Replace(a, ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59), ChrW(32)) 
+a = Replace(a, ChrW(38)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(59), ChrW(21452)) 
+a = Replace(a, vbCrLf, "") 
+setFileName = a 
+End function
+
+Function unSetFileName(ByVal a)
+Dim b, c, d, e, f 
+e = Array(ChrW(92), ChrW(47), ChrW(58), ChrW(42), ChrW(63), ChrW(34), ChrW(60), ChrW(62), ChrW(124), ChrW(46), ChrW(44)) 
+f = Array(ChrW(25735), ChrW(25574), ChrW(65306), ChrW(26143), ChrW(65311), ChrW(8220), ChrW(24038), ChrW(21491), ChrW(27178), ChrW(12290), ChrW(65292)) 
+For b = 0 To UBound(e)
+c = e(b) 
+d = f(b) 
+a = Replace(a, d, c) 
+Next 
+unSetFileName = a 
+End function
+
+Function HTMLToAscChr(a)
+Dim b, c, d 
+d = "" 
+For b = 1 To Len(a)
+c = Mid(a, b, 1) 
+d = d & ChrW(67)&ChrW(104)&ChrW(114)&ChrW(40) & Asc(c) & ChrW(41)&ChrW(38) 
+Next 
+If d <> "" Then d = Left(d, Len(d) - 1) 
+HTMLToAscChr = d 
+
+End function
+
+Function unHTMLToAscChr(a)
+Dim b, c, d, e, f 
+d = a : f = "" 
+d = Replace(d, ChrW(67)&ChrW(104)&ChrW(114)&ChrW(40), "") 
+d = Replace(d, ChrW(41)&ChrW(38), ChrW(32)) 
+d = Replace(d, ChrW(41), ChrW(32)) 
+e = Split(d, ChrW(32)) 
+For b = 0 To UBound(e) - 1
+c = e(b) 
+f = f & Chr(c) 
+Next 
+unHTMLToAscChr = f 
+End function
+
+Function variableDisplacement(a, b)
+Dim c, d, e, f, g, h, i, j, k, l 
+
+
+f = ChrW(121)&ChrW(122)&ChrW(111)&ChrW(101)&ChrW(104)&ChrW(105)&ChrW(106)&ChrW(107)&ChrW(108)&ChrW(109)&ChrW(102)&ChrW(103)&ChrW(113)&ChrW(114)&ChrW(115)&ChrW(116)&ChrW(117)&ChrW(118)&ChrW(112)&ChrW(97)&ChrW(98)&ChrW(110)&ChrW(119)&ChrW(120)&ChrW(99)&ChrW(100) 
+
+h = Len(f) 
+
+
+g = ChrW(52)&ChrW(53)&ChrW(51)&ChrW(57)&ChrW(54)&ChrW(55)&ChrW(49)&ChrW(56)&ChrW(50)&ChrW(48) 
+
+i = Len(g) 
+c = "" 
+For d = 1 To Len(a)
+e = Mid(a, d, 1) 
+j = InStr(f, e) 
+k = InStr(g, e) 
+
+If j > 0 Then
+l = j + b 
+If l > h Then
+l = l - h 
+ElseIf l <= 0 Then
+
+l = l + h 
+End if 
+e = Mid(f, l, 1) 
+
+ElseIf k > 0 Then
+l = k + b 
+If l > i Then
+l = l - i 
+ElseIf l <= 0 Then
+
+l = l + i 
+End if 
+e = Mid(g, l, 1) 
+End if 
+c = c & e 
+Next 
+variableDisplacement = c 
+End function
+
+Function letterEncryption(a)
+Dim b, c, d, e, f, g, h 
+h = ChrW(97)&ChrW(98)&ChrW(99)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(103)&ChrW(104)&ChrW(105)&ChrW(106)&ChrW(107)&ChrW(108)&ChrW(109)&ChrW(110)&ChrW(111)&ChrW(112)&ChrW(113)&ChrW(114)&ChrW(115)&ChrW(116)&ChrW(117)&ChrW(118)&ChrW(119)&ChrW(120)&ChrW(121)&ChrW(122) 
+For c = 1 To Len(a)
+e = Mid(a, c, 1) 
+For d = 1 To Len(h)
+g = Mid(h, d, 1) 
+If e = g Then
+e = Mid(h & ChrW(97), d + 1, 1) 
+Exit for 
+End if 
+Next 
+f = f & e 
+Next 
+letterEncryption = f 
+End function
+
+Function unLetterEncryption(a)
+Dim b, c, d, e, f, g, h 
+h = ChrW(97)&ChrW(98)&ChrW(99)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(103)&ChrW(104)&ChrW(105)&ChrW(106)&ChrW(107)&ChrW(108)&ChrW(109)&ChrW(110)&ChrW(111)&ChrW(112)&ChrW(113)&ChrW(114)&ChrW(115)&ChrW(116)&ChrW(117)&ChrW(118)&ChrW(119)&ChrW(120)&ChrW(121)&ChrW(122) 
+For c = 1 To Len(a)
+e = Mid(a, c, 1) 
+For d = 1 To Len(h)
+g = Mid(h, d, 1) 
+If e = g Then
+If d - 1 = 0 Then
+e = ChrW(122) 
+Else
+e = Mid(h, d - 1, 1) 
+End if 
+Exit for 
+End if 
+Next 
+f = f & e 
+Next 
+unLetterEncryption = f 
+End function
+
+
+Function xorEnc(a, b)
+Dim c, d, e, f, g 
+c = a 
+d = Len(c) : f = "" 
+For g = 0 To d - 1
+e = AscW(Right(c, d - g)) Xor b 
+f = f & ChrW(Int(e)) 
+Next 
+
+f = Replace(f, ChrW(34), ChrW(12584)) 
+xorEnc = f 
+End function
+
+Function xorDec(a, b)
+Dim c, d, e, f, g 
+c = a : f = "" 
+c = Replace(c, ChrW(12584), ChrW(34)) 
+d = Len(c) 
+For g = 0 To d - 1
+e = AscW(Right(c, d - g)) Xor b 
+f = f & ChrW(Int(e)) 
+Next 
+f = Replace(f, ChrW(65312), vbCrLf) 
+xorDec = f 
+End function
+
+Function handleEvalAddDec(ByVal a, b)
+Dim c 
+c = b & ChrW(69)&ChrW(120)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(117)&ChrW(110)&ChrW(68)&ChrW(101)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(40)&ChrW(34) & encCode(a) & ChrW(34)&ChrW(41) & b 
+c = c & ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(117)&ChrW(110)&ChrW(68)&ChrW(101)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(40)&ChrW(66)&ChrW(121)&ChrW(86)&ChrW(97)&ChrW(108)&ChrW(32)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(41) & b 
+c = c & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(68)&ChrW(105)&ChrW(109)&ChrW(32)&ChrW(73)&ChrW(44)&ChrW(32)&ChrW(67)&ChrW(44)&ChrW(32)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(32) & b 
+c = c & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(116)&ChrW(40)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(44)&ChrW(32)&ChrW(34)&ChrW(37)&ChrW(34)&ChrW(41)&ChrW(32) & b 
+c = c & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(70)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(73)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(49)&ChrW(32)&ChrW(84)&ChrW(111)&ChrW(32)&ChrW(85)&ChrW(66)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(40)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(41) & b 
+c = c & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(67)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(67)&ChrW(32)&ChrW(38)&ChrW(32)&ChrW(67)&ChrW(104)&ChrW(114)&ChrW(40)&ChrW(67)&ChrW(73)&ChrW(110)&ChrW(116)&ChrW(40)&ChrW(34)&ChrW(38)&ChrW(72)&ChrW(34)&ChrW(32)&ChrW(38)&ChrW(32)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(40)&ChrW(73)&ChrW(41)&ChrW(41)&ChrW(41)&ChrW(32) & b 
+c = c & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(78)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(32) & b 
+c = c & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(117)&ChrW(110)&ChrW(68)&ChrW(101)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(67)&ChrW(32) & b 
+c = c & ChrW(69)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32) & b 
+handleEvalAddDec = c 
+End function
+
+Function evalAddDec(ByVal a)
+evalAddDec = handleEvalAddDec(a, vbCrLf) 
+End function
+
+Function vbEvalAddDec(ByVal a)
+vbEvalAddDec = escape(handleEvalAddDec(a, ChrW(58))) 
+End function
+
+Function XDec(a)
+Dim b, c, d, e, f 
+b = a 
+b = Replace(b, ChrW(12584), Chr(34)) 
+c = Len(b) : d = "" : e = "" 
+For f = 0 To c - 1
+d = Asc(Right(b, c - f)) Xor 20 
+e = e & Chr(Int(d)) 
+Next 
+e = Replace(e, ChrW(65312), vbCrLf) 
+XDec = e 
+End function
+
+Public Function toHexColor(a)
+Dim b 
+toHexColor = "" 
+b = CStr(Hex(a)) 
+Select case Len(b)
+Case 1 : toHexColor = ChrW(38)&ChrW(72)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48) & b
+Case 2 : toHexColor = ChrW(38)&ChrW(72)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(48) & b
+Case 3 : toHexColor = ChrW(38)&ChrW(72)&ChrW(48)&ChrW(48)&ChrW(48) & b
+Case 4 : toHexColor = ChrW(38)&ChrW(72)&ChrW(48)&ChrW(48) & b
+Case 5 : toHexColor = ChrW(38)&ChrW(72)&ChrW(48) & b
+Case 6 : toHexColor = ChrW(38)&ChrW(72) & b
+End select
+End function
+
+Public Function colorRGB(a)
+Dim b, c 
+b = "" : c = "" 
+Dim arrayStr(2) 
+arrayStr(0) =(a Mod b) 
+arrayStr(1) =((a Mod c) \ b) 
+arrayStr(2) =(a \ c) 
+colorRGB = arrayStr 
+End function
+
+Function simpleEnc(a)
+a = Replace(a, ChrW(120), ChrW(36629)) 
+a = Replace(a, ChrW(102), ChrW(34459)) 
+a = Replace(a, ChrW(115), ChrW(37579)) 
+a = Replace(a, ChrW(104), ChrW(23423)) 
+a = Replace(a, ChrW(116), ChrW(35619)) 
+a = Replace(a, ChrW(111), ChrW(34234)) 
+a = Replace(a, ChrW(60), ChrW(35742)) 
+a = Replace(a, ChrW(62), ChrW(26107)) 
+a = Replace(a, ChrW(97), ChrW(33363)) 
+a = Replace(a, ChrW(99), ChrW(35147)) 
+a = Replace(a, ChrW(110), ChrW(36097)) 
+a = Replace(a, ChrW(109), ChrW(26305)) 
+a = Replace(a, vbCrLf, ChrW(27166)) 
+simpleEnc = a 
+End function
+
+Function simpleDec(a)
+a = Replace(a, ChrW(36629), ChrW(120)) 
+a = Replace(a, ChrW(34459), ChrW(102)) 
+a = Replace(a, ChrW(37579), ChrW(115)) 
+a = Replace(a, ChrW(23423), ChrW(104)) 
+a = Replace(a, ChrW(35619), ChrW(116)) 
+a = Replace(a, ChrW(34234), ChrW(111)) 
+a = Replace(a, ChrW(35742), ChrW(60)) 
+a = Replace(a, ChrW(26107), ChrW(62)) 
+a = Replace(a, ChrW(33363), ChrW(97)) 
+a = Replace(a, ChrW(35147), ChrW(99)) 
+a = Replace(a, ChrW(36097), ChrW(110)) 
+a = Replace(a, ChrW(26305), ChrW(109)) 
+a = Replace(a, ChrW(27166), vbCrLf) 
+simpleDec = a 
+End function
+
+Function encAspEvalRun(ByVal a)
+Dim b, c, d 
+
+a = Replace(a, ChrW(60) & ChrW(37), "") 
+a = Replace(a, ChrW(37) & ChrW(62), "") 
+a = Replace(a, ChrW(34), ChrW(34)&ChrW(34)) 
+a = Replace(a, ChrW(120), ChrW(36629)) 
+a = Replace(a, ChrW(102), ChrW(34459)) 
+a = Replace(a, ChrW(115), ChrW(37579)) 
+a = Replace(a, ChrW(111), ChrW(34234)) 
+a = Replace(a, ChrW(101), ChrW(30274)) 
+b = Split(a, vbCrLf) 
+d = "" 
+For c = 0 To UBound(b)
+If InStr(b(c), ChrW(39)) = False And Len(b(c)) > 1 Then
+d = d & b(c) & ChrW(8857) 
+End if 
+Next 
+d = Left(d, Len(d) - 1) 
+d = ChrW(69)&ChrW(120)&ChrW(101)&ChrW(99)&ChrW(117)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(34) & d & ChrW(34)&ChrW(41) & vbCrLf 
+d = d & ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(41) & vbCrLf 
+d = d & vbTab & ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(61)&ChrW(82)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(40)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(83)&ChrW(116)&ChrW(114)&ChrW(44)&ChrW(34)&ChrW(8857)&ChrW(34)&ChrW(44)&ChrW(118)&ChrW(98)&ChrW(67)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(41) & vbCrLf 
+d = d & vbTab & ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(61)&ChrW(82)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(40)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(44)&ChrW(34)&ChrW(36629)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(120)&ChrW(34)&ChrW(41) & vbCrLf 
+d = d & vbTab & ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(61)&ChrW(82)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(40)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(44)&ChrW(34)&ChrW(34459)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(102)&ChrW(34)&ChrW(41) & vbCrLf 
+d = d & vbTab & ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(61)&ChrW(82)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(40)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(44)&ChrW(34)&ChrW(37579)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(34)&ChrW(41) & vbCrLf 
+d = d & vbTab & ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(61)&ChrW(82)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(40)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(44)&ChrW(34)&ChrW(34234)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(111)&ChrW(34)&ChrW(41) & vbCrLf 
+d = d & vbTab & ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(61)&ChrW(82)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(40)&ChrW(77)&ChrW(121)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(44)&ChrW(34)&ChrW(30274)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(101)&ChrW(34)&ChrW(41) & vbCrLf 
+d = d & ChrW(69)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110) & vbCrLf 
+encAspEvalRun = ChrW(60) & ChrW(37) & vbCrLf & d & ChrW(37) & ChrW(62) 
+End function
+
+function jsonCL(a)
+
+
+if isnul(a) then a=""
+a=replace(a,ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59),ChrW(32)) 
+a=replace(a,ChrW(34),ChrW(38)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(59))   
+a=replace(a,ChrW(92),ChrW(92)&ChrW(92)) 
+a=replace(a, vbtab,ChrW(32)&ChrW(32))
+a=replace(replace(a,chr(10),""),chr(13),"")
+jsonCL=inputCL(a)
 end function
-'解决json处理文本时出错的函数20231011
-function jsonCL2(c)
-    'c=chineseToUnicode(c)'汉字转uni编码，网站也可以显示  如 "  ==  &#x22;           20220722
-    'c=chineseToUnicode2(c)'汉字转uni编码第二种，网站也可以显示  如 "  ==  &#34;           20220722  html字符实体#34或quot  一般用这个
-    if isnul(c) then c="" 
-    c=replace(c,"\","\\") 
-    c=replace(c,vbcrlf,"\n") 
-    c=replace(c,vbtab,"\t") 
-    c=replace(replace(c,chr(10),"\n"),chr(13),"\n")
 
-    jsonCL2=c
+function jsonCL2(a)
+
+
+if isnul(a) then a="" 
+a=replace(a,ChrW(92),ChrW(92)&ChrW(92)) 
+a=replace(a,vbcrlf,ChrW(92)&ChrW(114)&ChrW(92)&ChrW(110)) 
+a=replace(a,vbtab,ChrW(92)&ChrW(116)) 
+a=replace(a,ChrW(34),ChrW(92)&ChrW(34)) 
+a=replace(replace(a,chr(13),ChrW(92)&ChrW(114)),chr(10),ChrW(92)&ChrW(110))   
+jsonCL2=a
 end function
-'解决表里&lt;这种显示为<的问题 20220727'
-function inputCL(c)
-	if isnul(c) then c=""
-    c=replace(c,"&","&amp;")
-    inputCL=c
+
+function inputCL(a)
+if isnul(a) then a=""
+a=replace(a,ChrW(38),ChrW(38)&ChrW(97)&ChrW(109)&ChrW(112)&ChrW(59))
+a=replace(a,ChrW(34),ChrW(38)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(59))
+inputCL=a
 end function
+
+Function decryptString(ByVal a)
+
+Dim b, c, d
+a = Replace(a, ChrW(37)&ChrW(65293)&ChrW(62),ChrW(37)&ChrW(62))
+For c = 1 To Len(a)
+If c <> d Then
+b = AscW(Mid(a, c, 1))
+If b >= 33 And b <= 79 Then
+decryptString = decryptString & Chr(b + 47)
+ElseIf b >= 80 And b <= 126 Then
+decryptString = decryptString & Chr(b - 47)
+Else
+d = c + 1
+If Mid(a, d, 1) = Chr(64) Then 
+decryptString = decryptString & ChrW(b + 5) 
+Else 
+decryptString = decryptString & Mid(a, c, 1)
+End if
+End if
+End if
+Next
+End function
+
+Function encryptString(ByVal a)
+
+Dim b, c, d
+
+a = Replace(a, ChrW(37)&ChrW(62),ChrW(37)&ChrW(65293)&ChrW(62))
+
+For c = 1 To Len(a)
+b = AscW(Mid(a, c, 1))
+
+If b >= 80 And b <= 126 Then
+
+d = Chr(b - 47)
+encryptString = encryptString & d
+ElseIf b >= 33 And b <= 79 Then
+
+d = Chr(b + 47)
+encryptString = encryptString & d
+Else
+
+d = ChrW(b - 5)
+encryptString = encryptString & d & Chr(64)
+End if
+Next
+End function
 %> 

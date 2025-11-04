@@ -19,3 +19,6 @@ web.config 网站配置文件
 
 技术支持:QQ313801120，学习交流群：35915100。官网：www.xiyueta.com
 【/bodycontent】
+【en_bodycontent】
+XiyuetCMS open-source website management system v1.1.0 is an intelligent system based on Asp+Access/SQL Server architecture, integrating computer, mobile, and tablet versions for seamless switching. Short cycle:The system is very versatile in website usage habits, easy to get started with, and website creation is effortless. It is a great tool for imitating websites! Fully functional: The system is fully functional and can add combination plugins according to website needs, with strong scalability. Easy optimization: The system has a very comprehensive optimization system that combines various search engines, making it easy to add websites.
+【/en_bodycontent】

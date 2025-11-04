@@ -1,0 +1,55 @@
+                            var excel = layui.excel;
+                            NProgress.start();
+                            var out = [];
+                            try{
+                                var tableId = obj.config.id;
+                                var tableData = (typeof table.getData === 'function' ? table.getData(tableId) : null) || table.cache[tableId] || [];
+                                var cols = (obj.config && obj.config.cols) ? obj.config.cols : [];
+                                var headerRow = [];
+                                var fieldKeys = [];
+                                if(cols.length > 0){
+                                    layui.each(cols[0], function(idx, col){
+                                        if(col.type === 'checkbox') return;
+                                        if(col.fixed === 'right') return;
+                                        if(col.hide === true) return; // 只导出可见列
+                                        if(!col.field) return;
+                                        fieldKeys.push(col.field);
+                                        headerRow.push(col.title || col.field);
+                                    });
+                                }else{
+                                    if(tableData.length){
+                                        for(var k in tableData[0]){
+                                            if(k === 'LAY_CHECKED') continue;
+                                            fieldKeys.push(k);
+                                            headerRow.push(k);
+                                        }
+                                    }
+                                }
+                                out.push(headerRow);
+                                layui.each(tableData, function(i, row){
+                                    var arr = [];
+                                    for(var j=0;j<fieldKeys.length;j++){
+                                        var v = row[fieldKeys[j]];
+                                        if(typeof v === 'string'){
+                                            v = v.replace(/<[^>]*>/g, '');
+                                        }
+                                        arr.push(v);
+                                    }
+                                    out.push(arr);
+                                });
+                                var ts = (function(d){
+                                    var pad = function(n){return n<10?('0'+n):n};
+                                    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+"_"+pad(d.getHours())+"-"+pad(d.getMinutes())+"-"+pad(d.getSeconds());
+                                })(new Date());
+                                var fileName = '<%=tableName%>_'+ ts + '.xlsx';
+                                if(excel && typeof excel.exportExcel === 'function'){
+                                    excel.exportExcel({ 'sheet1': out }, fileName, 'xlsx');
+                                    layer.msg('已导出当前页数据');
+                                }else{
+                                    throw new Error('excel 模块未加载');
+                                }
+                            }catch(e){
+                                layer.msg('Excel 导出失败，请检查 excel 模块是否已加载');
+                            }finally{
+                                NProgress.done();
+                            }

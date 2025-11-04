@@ -1,0 +1,34 @@
+'修改 - 20250924_2
+function editRow()
+    if checkAdminRule("编辑" & winTitle)=false then 
+        call die("{""info"": ""没有【编辑"&winTitle&"】权限"",""status"": ""n""}")
+    end if
+    dim  field
+     
+    if id="" then
+        call die("{""info"": ""ID为空"",""status"": ""n""}")
+    end if 
+    sql = "select * from "&thisAddPrefix(tableName)&" where id in("&id&")"
+    rs.open sql, conn, 1, 1
+    if rs.eof then
+        rs.close:set rs=nothing
+        call die("{""info"": ""未找到要复制的数据"",""status"": ""n""}")
+    end if 
+    while not rs.eof
+        if phptrim(request("fieldName"))<>"" and phptrim(request("fieldValue"))<>"" then  '不为空'
+            fieldValue=request("fieldValue")
+            call rsData(phptrim(request("fieldName")),fieldValue)
+            'call rsUpdate(tableName,rs("id"))
+            if rsUpdate_conn(tableName," wehre id="&rs("id"),conn,db_PREFIX,thisDatabaseType)=false then
+                call addSystemLog(tableName,"修改ID("&id&")失败，错误SQL：" & insertOrUpdateSql)
+                call die("{""info"": ""修改失败，错误SQ："&jsonCL(insertOrUpdateSql)&""",""status"": ""n""}") 
+            end if
+			
+			
+        end if
+    rs.movenext:wend:rs.close
+    call addSystemLog(tableName,"编辑ID("&id&")成功。")
+
+    call die("{""info"": ""编辑成功"",""status"": ""y""}")
+
+end function

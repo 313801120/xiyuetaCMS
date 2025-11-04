@@ -1,1022 +1,962 @@
-﻿<%
-'######################################################################
-'引用别人20150724  这种引用虽然快，但最好是以后自己来写
-'######################################################################
-'Dim obj : Set obj = New Cls_AB_JSON
-'call rw(obj.toJSON)   '将字典对象转成json字符串'
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><%
 
-'call rw(getPostToJson()) 
 
-'处理字符串到json 20170827  handleStrToJson("aa=11,bb=22,c=33") {"aa":"11","bb":"22","c":"33"}
-function handleStrToJson(byval content)
-	dim c,splstr,splxx,aspD,s,name,value
-	set aspD = createObject("Scripting.Dictionary")
-	c=replace(content,"\""","[|-双引号-|]")
-	c=replace(content,"\=","[|-等号-|]")
-	c=replace(content,"\,","[|-逗号-|]")
-	splstr=split(c,",")
-	for each s in splstr
-		if instr(s,"=")>0 then
-			splxx=split(s,"=")
-			name=replace(splxx(0),"[|-双引号-|]","""")
-			name=replace(name,"[|-等号-|]","=")
-			name=replace(name,"[|-逗号-|]",",")
-			value=replace(splxx(1),"[|-双引号-|]","""")
-			value=replace(value,"[|-等号-|]","=")
-			value=replace(value,"[|-逗号-|]",",")
-			aspD.add name, value
-		end if
-	next
-	
-	handleStrToJson=json_encode(aspD)
+
+
+
+
+
+function handleStrToJson(byval a)
+dim b,c,d,e,f,g,h
+set e = createObject(ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(46)&ChrW(68)&ChrW(105)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(114)&ChrW(121))
+b=replace(a,ChrW(92)&ChrW(34),ChrW(91)&ChrW(124)&ChrW(45)&ChrW(21452)&ChrW(24341)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93))
+b=replace(a,ChrW(92)&ChrW(61),ChrW(91)&ChrW(124)&ChrW(45)&ChrW(31561)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93))
+b=replace(a,ChrW(92)&ChrW(44),ChrW(91)&ChrW(124)&ChrW(45)&ChrW(36887)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93))
+c=split(b,ChrW(44))
+for each f in c
+if instr(f,ChrW(61))>0 then
+d=split(f,ChrW(61))
+g=replace(d(0),ChrW(91)&ChrW(124)&ChrW(45)&ChrW(21452)&ChrW(24341)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93),ChrW(34))
+g=replace(g,ChrW(91)&ChrW(124)&ChrW(45)&ChrW(31561)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93),ChrW(61))
+g=replace(g,ChrW(91)&ChrW(124)&ChrW(45)&ChrW(36887)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93),ChrW(44))
+h=replace(d(1),ChrW(91)&ChrW(124)&ChrW(45)&ChrW(21452)&ChrW(24341)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93),ChrW(34))
+h=replace(h,ChrW(91)&ChrW(124)&ChrW(45)&ChrW(31561)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93),ChrW(61))
+h=replace(h,ChrW(91)&ChrW(124)&ChrW(45)&ChrW(36887)&ChrW(21495)&ChrW(45)&ChrW(124)&ChrW(93),ChrW(44))
+e.add g, h
+end if
+next
+handleStrToJson=json_encode(e)
 end function
 
-'转json
-function  json_encode(o)
-	Dim obj : Set obj = New Cls_AB_JSON
-	 json_encode=obj.toJSON(o) 
+function  json_encode(a)
+Dim b : Set b = New Cls_AB_JSON
+json_encode=b.tojson(a) 
 end function
 Class Cls_AB_JSON
-	Public Collection, Count, QuotedVars, Kind, StrEncode
-	Private s_charset
+Public Collection, Count, QuotedVars, Kind, StrEncode
+Private s_charset
+Private Sub Class_Initialize
 
-	Private Sub Class_Initialize
-		 '这时面删除了一些东西
-	End Sub
-
-	Private Sub Class_Terminate
-		Set Collection = Nothing
-	End Sub
-
-	Public Property Let CharSet(ByVal s)
-		s_charset = Ucase(s)
-	End Property
-	Public Property Get CharSet()
-		CharSet = s_charset
-	End Property
-
-	'@ *****************************************************************************************
-	'@ 属  性:  AB.Json.Kind 属性 (可读/可写)
-	'@ 返  回:  Integer (整数) 返回0，表示是Json对象；返回1，表示是数组。
-	'@ 作  用:  设置新建Json对象的类型，此属性可读可写
-	'@ 			此属性可以设置和获取新建Json对象的类型，0表示是Json对象；1表示是数组。
-	'@ 			如果是使用 AB.Json.New 方法建立的AspBox Json对象，则不用再指定此属性。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ 无
-	'@ *****************************************************************************************
-
-	'@ *****************************************************************************************
-	'@ 属  性:  AB.Json.QuotedVars 属性 (可读/可写)
-	'@ 语  法:  AB.Json.QuotedVars [ = boolean]
-	'@ 返  回:  Boolean (布尔值) 当前设置的输出JSON字符串是否使用引号包含变量名称
-	'@ 作  用:  设置是否在输出的JSON字符串的名称中使用引号，此属性可读可写
-	'@ 			如果设置了此属性为真(True)，则输出的JSON字符串中的名称将包含引号，否则不包含引号。此属性默认为真(True)。
-	'==DESC=====================================================================================
-	'@ 参数 boolean: 为 True 则表示输出JSON字符串中名称用引号包含，为 False 则表示不用引号。默认为 True
-	'==DEMO=====================================================================================
-	'@ 在不设置此属性或者设置此属性为真(True)的情况下，输出的JSON字符串为以下格式：
-	'@ {"name":"Ray", "country":"China", "city":"Leshan"}
-	'@ 如果设置了此属性为假(False)，则输出的JSON字符串为以下格式：
-	'@ {name:"Ray", country:"China", city:"Leshan"}
-	'@ *****************************************************************************************
-
-	'@ *****************************************************************************************
-	'@ 属  性:  AB.Json.StrEncode 属性 (可读/可写)
-	'@ 语  法:  AB.Json.StrEncode [ = boolean]
-	'@ 返  回:  Boolean (布尔值) 当前是否设置输出的Json字符串要编码中文
-	'@ 作  用:  设置输出的Json字符串是否编码中文，此属性可读可写
-	'@ 			此属性可以设置输出的Json字符串是否编码中文等多字节字符。
-	'@ 			如果用于javascript，为了避免产生乱码，通常是要编码的；
-	'@ 			但如果用于特殊的场合，比如用于传入Flash中的ActionScript，则需要不编码中文字符。
-	'@ 			此属性默认为真(True)，即要编码多字节字符。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ 无
-	'@ *****************************************************************************************
-
-	Public Function [New](ByVal k)
-		Set [New] = New Cls_AB_JSON
-		Select Case LCase(k)
-			Case "0", "object" [New].Kind = 0
-			Case "1", "array"  [New].Kind = 1
-		End Select
-	End Function
-
-	Private Property Get Counter
-		Counter = Count
-		Count = Count + 1
-	End Property
-
-	'@ *****************************************************************************************
-	'@ 属  性:  AB.Json.Pair 属性 (可读/可写)
-	'@ 属  性:  AB.Json.Pair(name)[ = value] 别名 AB.Json(name) [ = value]
-	'@ 返  回:  Object (ASP对象) 或 String (字符串) 返回相应对值中储存的值
-	'@ 作  用:  设置Json对象中的对值，此属性可读可写
-	'@ 			此属性是Json类的主要方法，即是对Json数据赋值的属性，
-	'@ 			赋值时的值可以是字符串，也可以是另一个AspBox Json对象。
-	'@ 			此属性在实际编写的过程中可以省略为 AB.Json(name) 。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ Dim jso : Set jso = ab.json.jsObject()
-	'@ jso("a") = "x" : jso("b") = "y" : jso("c") = "z"
-	'@ PrintCn jso.JsString '输出结果：{"a":"x","b":"y","c":"z"}
-	'@ PrintCn jso.Pair("b") '输出结果：y
-	'@ jso.Pair("b") = "-"
-	'@ PrintCn jso.JsString '输出结果：{"a":"x","b":"-","c":"z"}
-	'@ *****************************************************************************************
-
-	Public Property Let Pair(Byval p, Byval v)
-		If IsNull(p) Then p = Counter
-		If vartype(v) = 9 Then
-			If TypeName(v) = "Cls_AB_JSON" Then
-				Set Collection(p) = v
-			Else
-				Collection(p) = v
-			End If
-		Else
-			Collection(p) = v
-		End If
-	End Property
-
-	Public Default Property Get Pair(Byval p)
-		If IsNull(p) Then p = Count - 1
-		If IsObject(Collection(p)) Then
-			Set Pair = Collection(p)
-		Else
-			Pair = Collection(p)
-		End If
-	End Property
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.Clean 方法
-	'@ 返  回:  无返回值
-	'@ 作  用:  删除Json对象的全部对值，调用此方法可以删除AspBox Json对象中的全部对值。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ Dim jso : Set jso = ab.json.jsObject()
-	'@ jso("a") = "x" : jso("b") = "y" : jso("c") = "z"
-	'@ PrintCn jso.JsString '输出结果：{"a":"x","b":"y","c":"z"}
-	'@ jso.Clean
-	'@ PrintCn jso.JsString '输出结果：{}
-	'@ *****************************************************************************************
-
-	Public Sub Clean
-		Collection.RemoveAll
-	End Sub
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.Remove name
-	'@ 返  回:  无返回值
-	'@ 作  用:  删除Json对值中的一项，调用此方法可以删除AspBox Json对象中的某一项对值。
-	'==DESC=====================================================================================
-	'@ 参数 name : 删除Json对象中的某一项对值
-	'==DEMO=====================================================================================
-	'@ Dim jso : Set jso = ab.json.jsObject()
-	'@ jso("a") = "x" : jso("b") = "y" : jso("c") = "z"
-	'@ PrintCn jso.JsString '输出结果：{"a":"x","b":"y","c":"z"}
-	'@ jso.Remove "b"
-	'@ PrintCn jso.JsString '输出结果：{"a":"x","c":"z"}
-	'@ *****************************************************************************************
-
-	Public Sub Remove(Byval name)
-		If Collection.Exists(name) Then Collection.Remove name
-	End Sub
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.toJson Object
-	'@ 别  名:  AB.Json.Stringify Object
-	'@ 返  回:  String (字符串) 可直接用于Json对值中的值的字符串
-	'@ 作  用:  将目标转化为Json对值中的值，
-	'@ 			调用此方法可以把各种类型的数据转化为可直接用于Json对值中的值的字符串，
-	'@ 			目标可以是字符串、数组、字典对象、Rs记录集等。
-	'==DESC=====================================================================================
-	'@ 参数 o : 可以是字符串，数组，对象
-	'==DEMO=====================================================================================
-	'@ Dim a(1,1) '数组
-	'@ a(0,0) = "zero - zero"
-	'@ a(0,1) = "zero - one"
-	'@ a(1,0) = "one - zero"
-	'@ a(1,1) = "one - one"
-	'@ PrintCn AB.Json.toJSON(a) '输出结果：[["zero - zero","zero - one"],["one - zero","one - one"]]
-	'@ Dim o_json : Set o_json = AB.Json.New(0) '可操作Json对象
-	'@ o_json("name") = "Booty Music" : o_json("artist") = "Deepside"
-	'@ PrintCn AB.Json.toJSON(o_json) '输出结果：{"name":"Booty Music","artist":"Deepside"}
-	'@ 'Rem 高级语法:
-	'@ PrintCn AB.Json.toJSON(AB.Dict) '输出Dictionary字典对象
-	'@ PrintCn AB.Json.toJSON(AB.db.ExeC("SELECT id,name FROM [Table] WHERE id<=2")) '输出Rs记录集对象
-	'@ -----------------------
-	'@ Dim temp
-	'@ temp = NULL '## NUll : null
-	'@ temp = Date '## Date : "2012-2-4"
-	'@ temp = "id=6" '## String : "id=6"
-	'@ temp = Empty '## Empty : ""
-	'@ temp = "" '## String : ""
-	'@ temp = cdbl(1.2888) '## Double,Integer... : 1.2888
-	'@ temp = array(1,2,"a",array("x","y")) '## Array :
-	'@ temp = True  '## Boolean : true/false
-	'@ Rem '## ==Object==
-	'@ Set temp = Nothing '## Nothing : {}
-	'@ Set temp = AB.Dict '## Dictionary : {"name":"Lajox","msg":"Hello World"}
-	'@ Set temp = AB.db.ExeC("SELECT id,name FROM [LB_C_Media] WHERE id<=2") '## RecordSet : [{"id":1,"name":"The Dawn"},{"id":2,"name":"lubov"}]
-	'@ Rem '## --
-	'@ Dim dict_1 : Set dict_1 = new(ab.dictName)
-	'@ Dim dict_2 : Set dict_2 = new(ab.dictName)
-	'@ dict_1("id") = 1 : dict_1("name") = "The Dawn"
-	'@ dict_2("id") = 2 : dict_2("name") = "lubov"
-	'@ temp = Array(dict_1, dict_2) '## 综合型 : [t,{"id":1,"name":"The Dawn"},{"id":2,"name":"lubov"}]
-	'@ PrintCn AB.Json.toJSON(temp)
-	'@ '---------------------
-	'@ ab.use "sc"
-	'@ Dim sc : Set sc = ab.sc.new
-	'@ sc.Lang = "js"
-	'@ sc.Add "function jsobj(){ var person = {name: {a:'zhangsan'}, pass: '123', fn: function(){alert(this.name.a+':'+this.pass);} }; return person; }"
-	'@ sc.Add "function jsarr(){ return [1,5,8,9]; }"
-	'@ Dim x : set x = sc.eval("jsobj()")
-	'@ Dim y : set y = sc.eval("jsarr()")
-	'@ ab.trace(x)
-	'@ ab.trace(y)
-	'@ PrintCn x.pass '输出：123
-	'@ ab.use "json"
-	'@ PrintCn AB.Json.toJSON(x) '输出：{"name":{"a":"zhangsan"},"pass":"123"}
-	'@ PrintCn AB.Json.toJSON(y) '输出：[1,5,8,9]
-	'@ Dim str : str = "{name:'alonely', age:24, email:['test1@163.com','weed2@gmail.com'], family:{parents:['父亲','母亲']}}"
-	'@ Dim z : set z = AB.Json.toObject(str)
-	'@ PrintCn z.email.[0] '输出：test1@163.com
-	'@ PrintCn z.family.parents.[0] '输出：父亲
-	'@ *****************************************************************************************
-
-	Public Function toJSON(Byval o)
-		'On Error Resume Next
-		Dim s,i,j : i = 0 : j = 0
-		Dim bFI, bFJ, oCount, jsLib, jso
-		Dim tempJsDir : tempJsDir = "/" '目录：“AspBox/jsLib/core/”
-		Dim tempJsonJs : tempJsonJs = "json2.js"			'这个是没用的，不知道它干嘛用的
-		Dim tempJsonJsPath : tempJsonJsPath = tempJsDir&tempJsonJs '文件路径：“AspBox/jsLib/core/json2.js”
-		'call echo(ubound(a),VarType(o))
-		Select Case VarType(o)
-			Case 1 'Null
-				toJSON = "null"
-			Case 7 'Date
-				toJSON = """" & JsEncode__(CStr(o)) & """"
-			Case 8 'String 
-				Select Case TypeName(o)
-					Case "IRequest", "IRequestDictionary" 'Request.QueryString/Request.Form/Request.Cookies
-						If o = Request.QueryString Or o = Request.Form Or o = Request.Cookies Then
-							bFI = True
-							toJSON = toJSON & "{"
-							For Each i In o
-								If bFI Then bFI = False Else toJSON = toJSON & ","
-								toJSON = toJSON & IIF(QuotedVars, """" & IIF(StrEncode,JSEncode(i),JSEncode__(i)) & """", JsEncode__(i)) & ":" & toJSON(o(i))
-							Next
-							toJSON = toJSON & "}"
-						End If
-					Case "JScriptTypeInfo"
-						If isFile(tempJsonJsPath) Then
-							AB.Use "jsLib"
-							Set jsLib = AB.jsLib.New
-							jsLib.BasePath = tempJsDir
-							jsLib.Inc(tempJsonJs)
-							Set jso = jsLib.Object
-							toJSON = jso.toString(o)
-							Set jso = Nothing
-							Set jsLib = Nothing
-						Else
-							toJSON = o
-						End If
-					Case Else
-						If o="" Then
-							toJSON = """"""
-						Else 
-							toJSON = """" & IIF(StrEncode,JSEncode(o),JSEncode__(o)) & """"
-						End If
-				End Select
-			Case 9 'Object
-				Select Case TypeName(o)
-					Case "Nothing","Empty"
-						toJSON = "{}"
-					Case "Recordset"
-						If o.State = 0 Then '此记录集对象已关闭
-							toJSON = "[]"
-						Else
-							If IsNul(o) Then '此记录集对象为空记录集，没有数据
-								toJSON = "[]"
-							Else
-								On Error Resume Next
-								Set o = o.Clone
-								On Error Goto 0
-								If o.RecordCount = 1 Then '单条记录集,记录字段名,字段值
-									bFI = True
-									toJSON = toJSON & "[{"
-									For j = 0 To o.Fields.Count-1
-										If bFI Then bFI = False Else toJSON = toJSON & ","
-										If QuotedVars Then
-											toJSON = toJSON & """" & IIF(StrEncode,JSEncode(lcase(o.Fields(j).Name)),JSEncode__(lcase(o.Fields(j).Name))) & """:" & toJSON(o.Fields(j).Value)
-										Else
-											toJSON = toJSON & IIF(StrEncode,JSEncode(lcase(o.Fields(j).Name)),JSEncode__(lcase(o.Fields(j).Name))) & ":" & toJSON(o.Fields(j).Value)
-										End If
-									Next
-									toJSON = toJSON & "}]"
-								Else
-									bFJ = True
-									toJSON = toJSON & "["
-									o.MoveFirst
-									Do While Not o.Eof
-										If bFJ Then bFJ = False Else toJSON = toJSON & ","
-										bFI = True
-										toJSON = toJSON & "{"
-										For j = 0 To o.Fields.Count-1
-											If bFI Then bFI = False Else toJSON = toJSON & ","
-											If QuotedVars Then
-												toJSON = toJSON & """" & IIF(StrEncode,JSEncode(lcase(o.Fields(j).Name)),JSEncode__(lcase(o.Fields(j).Name))) & """:" & toJSON(o.Fields(j).Value)
-											Else
-												toJSON = toJSON & IIF(StrEncode,JSEncode(lcase(o.Fields(j).Name)),JSEncode__(lcase(o.Fields(j).Name))) & ":" & toJSON(o.Fields(j).Value)
-											End If
-										Next
-										toJSON = toJSON & "}"
-										i = i + 1
-										o.MoveNext
-									Loop
-									toJSON = toJSON & "]"
-								End If
-							End If
-						End If
-					Case "Dictionary", "IRequest", "IRequestDictionary", "IApplicationObject", "ISessionObject"
-						If TypeName(o) = "IRequest" Then
-							Dim req : Set req = Server.CreateObject(AB.dictName)
-							req.add "clientcertificate", o.ClientCertificate
-							req.add "cookies", o.cookies
-							req.add "form", o.form
-							req.add "querystring", o.queryString
-							req.add "servervariables", o.serverVariables
-							req.add "totalbytes", o.totalBytes
-							toJSON = toJSON(req)
-						ElseIf TypeName(o) = "IApplicationObject" Or TypeName(o) = "ISessionObject" Then
-							oCount = o.Contents.Count
-							If oCount = 0 Then '此对象是空的，还没有任何键值
-								toJSON = "{}"
-							Else 'Application对象、Session对象等
-								bFI = True
-								toJSON = toJSON & "{"
-								For Each i In o.Contents
-									If bFI Then bFI = False Else toJSON = toJSON & ","
-									toJSON = toJSON & IIF(QuotedVars, """" & IIF(StrEncode,JSEncode(i),JSEncode__(i)) & """", IIF(StrEncode,JSEncode(i),JSEncode__(i))) & ":" & toJSON(o(i))
-								Next
-								toJSON = toJSON & "}"
-							End If
-						ElseIf TypeName(o) = "Dictionary" Then
-							oCount = o.Count
-							If oCount = 0 Then '此对象是空的，还没有任何键值
-								toJSON = "{}"
-							Else 'Dictionary对象
-								bFI = True
-								toJSON = toJSON & "{"
-								For Each i In o
-									If bFI Then bFI = False Else toJSON = toJSON & ","
-									toJSON = toJSON & """" & IIF(QuotedVars, """" & IIF(StrEncode,JSEncode(i),JSEncode__(i)) & """", IIF(StrEncode,JSEncode(i),JSEncode__(i))) & """:" & toJSON(o(i))
-								Next
-								toJSON = toJSON & "}"
-							End If
-						Else
-							bFI = True
-							toJSON = toJSON & "{"
-							For Each i In o
-								If bFI Then bFI = False Else toJSON = toJSON & ","
-								toJSON = toJSON & IIF(QuotedVars, """" & IIF(StrEncode,JSEncode(i),JSEncode__(i)) & """", IIF(StrEncode,JSEncode(i),JSEncode__(i))) & ":" & toJSON(o(i))
-							Next
-							toJSON = toJSON & "}"
-						End If
-					Case "Cls_AB_JSON"
-						bFI = True
-						toJSON = toJSON & IIF(o.Kind, "[", "{")
-						For Each i In o.Collection
-							If bFI Then bFI = False Else toJSON = toJSON & ","
-							toJSON = toJSON & IfThen(o.Kind=0, IIF(QuotedVars, """" & IIF(StrEncode,JSEncode(i),JSEncode__(i)) & """", IIF(StrEncode,JSEncode(i),JSEncode__(i))) & ":") & toJSON(o(i))
-						Next
-						toJSON = toJSON & IIF(o.Kind, "]", "}")
-					Case "JScriptTypeInfo"
-						If isFile(tempJsonJsPath) Then
-							AB.Use "jsLib"
-							Set jsLib = AB.jsLib.New
-							jsLib.BasePath = tempJsDir
-							jsLib.Inc(tempJsonJs)
-							Set jso = jsLib.Object
-							toJSON = jso.toString(o)
-							Set jso = Nothing
-							Set jsLib = Nothing
-						Else
-							toJSON = "{}"
-						End If
-					Case "VBScriptTypeInfo"
-						toJSON = "{}"
-					Case Else 'e.g. TypeName(Server) = "IServer"
-						toJSON = "{}"
-				End Select
-			Case 11 'Boolean
-				toJSON = IIF(o, "true", "false")
-			Case 12, 8192, 8204, 8209 'Array
-				toJSON = RenderArray(o, 1, "")
-			Case 2, 3, 17, 19  'int, long, byte
-				toJSON = CLng(o)
-			Case 4, 5, 6, 14  'single, double, currency
-				toJSON = Replace(CDbl(o), ",", ".")
-			Case Else
-				toJSON = """" & IIF(StrEncode,JSEncode(Cstr(o)),JSEncode__(Cstr(o))) & """"
-		End select
-		'On Error Goto 0
-	End Function
-	
-	'数据转JSON，根据自己定义的字段显示 20150727
-	function fieldToJson(rs,byval setFieldList)
-		dim bFI, c,fieldName,fieldValue,j
-		setFieldList = "|" & LCase(setFieldList) & "|"
-		bFI = True
-		c = c & "{"
-		while not rs.eof
-		For j = 0 To rs.Fields.Count-1
-			fieldName = rs.Fields(j).Name
-			fieldValue = rs.Fields(j).Value
-			'存在字段则操作
-			if instr(setFieldList,"|"& LCase(fieldName) &"|")>0 then
-				If bFI Then bFI = False Else c = c & ","
-				If QuotedVars Then
-					c = c & """" & IIF(StrEncode,JSEncode(fieldName),JSEncode__(fieldName)) & """:" & toJSON(fieldValue)
-				Else
-					c = c & IIF(StrEncode,JSEncode(fieldName),JSEncode__(fieldName)) & ":" & toJSON(fieldValue)
-				End If
-			end if
-		Next
-		c = c & "}"
-		rs.movenext:wend:rs.close
-		c= "["& c &"]"		
-		fieldToJson = c
-	end function
-	
-	'使成为数组 
-	Private Function RenderArray(Byval arr, Byval depth, Byval parent)
-		'call echo("arr",ubound(arr)):doevents
-		Dim first : first = LBound(arr, depth)
-		Dim last : last = UBound(arr, depth)
-		Dim index, rendered
-		Dim limiter : limiter = ","
-		RenderArray = "["
-		For index = first To last
-			If index = last Then
-				limiter = ""
-			End If
-			On Error Resume Next
-			rendered = RenderArray(arr, depth + 1, parent & index & "," )
-			If Err = 9 Then
-				On Error GoTo 0
-				RenderArray = RenderArray & toJSON(Eval("arr(" & parent & index & ")")) & limiter
-			Else
-				RenderArray = RenderArray & rendered & "" & limiter
-			End If
-		Next
-		RenderArray = RenderArray & "]"
-	End Function
-	
-	Public Function JsEncode(ByVal s)
-		If isNul(s) Then JsEncode = "" : Exit Function
-		Dim arr1, arr2, i, j, c, p, t
-		arr1 = Array(&h27,&h22,&h5C,&h2F,&h08,&h0C,&h0A,&h0D,&h09)
-		arr2 = Array(&h27,&h22,&h5C,&h2F,&h62,&h66,&h6E,&h72,&h749)
-		For i = 1 To Len(s)
-			p = True
-			c = Mid(s, i, 1)
-			For j = 0 To Ubound(arr1)
-				If c = Chr(arr1(j)) Then
-					t = t & "\" & Chr(arr2(j))
-					p = False
-					Exit For
-				End If
-			Next
-			If p Then
-				Dim a
-				a = AscW(c)
-				If a > 31 And a < 127 Then
-					t = t & c
-				ElseIf a > -1 Or a < 65535 Then
-					t = t & "\u" & String(4 - Len(Hex(a)), "0") & Hex(a)
-				End If
-			End If
-		Next
-		JsEncode = t
-		'call echo("JsEncode s",s & "t=" & t)
-	End Function
-	Private Function JsEncode__(ByVal s)
-		'call echo("JsEncode__",s)
-		If isNul(s) Then JsEncode__ = "" : Exit Function
-		Dim arr1, arr2, i, j, c, p, t
-		arr1 = Array(&h27,&h22,&h5C,&h2F,&h08,&h0C,&h0A,&h0D,&h09)
-		arr2 = Array(&h27,&h22,&h5C,&h2F,&h62,&h66,&h6E,&h72,&h749)
-		For i = 1 To Len(s)
-			p = True
-			c = Mid(s, i, 1)
-			For j = 0 To Ubound(arr1)
-				If c = Chr(arr1(j)) Then
-					t = t & "\" & Chr(arr2(j))
-					p = False
-					Exit For
-				End If
-			Next
-			If p Then t = t & c
-		Next
-		JsEncode__ = t
-	End Function
-	
-	Public Function Stringify(Byval o)
-		Stringify = toJSON(o)
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.JsString 方法
-	'@ 返  回:  String (字符串) Json格式字符串
-	'@ 作  用:  用当前Json对象生成Json字符串
-	'@ 			调用此方法可以把当前AspBox Json对象直接以Json格式转化为字符串。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ Dim jsa : Set jsa = ab.json.jsArray()
-	'@ jsa(0) = "a" : jsa(1) = "b" : jsa(2) = "c"
-	'@ PrintCn jsa.JsString '输出结果：["a","b","c"]
-	'@ PrintCn AB.Json.toStr(jsa) '输出结果：["a","b","c"]
-	'@ *****************************************************************************************
-
-	Public Property Get jsString
-		jsString = toJSON(Me)
-	End Property
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.toObject(s) 方法
-	'@ 别  名:  AB.Json.Parse(s)
-	'@ 返  回:  ASP实体，可以是对象，也可以是其他类型
-	'@ 作  用:  将字符串转化为ASP实体, json字符串将转为JS Object对象
-	'==DESC=====================================================================================
-	'@ 参数 s : 字符串
-	'==DEMO=====================================================================================
-	'# Dim strTest
-	'# 'strTest = "{name:'alonely', age:24, email:['test1@163.com','weed2@gmail.com'], family:{parents:['父亲','母亲']}, func:function(){} }"
-	'# 'strTest = "{name:""alonely"", age:24, email:[""test1@163.com"",""weed2@gmail.com""], family:{parents:[""父亲"",""母亲""],toString:function(){return ""家庭成员"";}}}"
-	'# strTest = "{name:'alonely', age:24, email:['test1@163.com','weed2@gmail.com'], family:{parents:['父亲','母亲']}}"
-	'# Dim objTest
-	'# AB.Use "json"
-	'# Set objTest = AB.Json.toObject(strTest)
-	'# AB.Trace objTest
-	'# PrintCn objTest.name & "的邮件地址是" & objTest.email.[0] '输出：alonely的邮件地址是ycplxl1314@163.com
-	'# PrintCn "共有邮件地址" & objTest.email.length & "个" '输出：共有邮件地址2个
-	'# PrintCn objTest.family.parents.[0] '输出：父亲
-	'# Dim father
-	'# AB.Json.setJSArrayItem father, objTest.family.parents, 0
-	'# PrintCn father '输出：父亲
-	'# PrintCn ab.json.getJSArrayItem(objTest.family.parents, 0) '输出：父亲
-	'@ *****************************************************************************************
-
-	Public Function toObject(Byval o)
-		On Error Resume Next
-		If Err Then Err.Clear
-		Dim i,j : i = 0 : j = 0
-		Dim Sc, jsLib, jso, temp
-		Dim tempJsDir : tempJsDir = AB.BasePath & "jsLib/core/" '目录：“AspBox/jsLib/core/”
-		Dim tempJsonJs : tempJsonJs = "json2.js"
-		Dim tempJsonJsPath : tempJsonJsPath = tempJsDir&tempJsonJs '文件路径：“AspBox/jsLib/core/json2.js”
-		Select Case VarType(o)
-			Case 9 'vbObject
-				Set toObject = o
-			Case 8 'vbString
-				Select Case TypeName(o)
-					Case "JScriptTypeInfo"
-						If isFile(tempJsonJsPath) Then
-							AB.Use "jsLib"
-							Set jsLib = AB.jsLib.New
-							jsLib.BasePath = tempJsDir
-							jsLib.Inc(tempJsonJs)
-							Set jso = jsLib.Object
-							If IsObject(jso.toObject(o)) Then Set toObject = jso.toObject(o) Else toObject = jso.toObject(o)
-							Set jso = Nothing
-							Set jsLib = Nothing
-						Else
-							toObject = o
-						End If
-					Case "String"
-						If LCase(o) = "null" Then 'null
-							toObject = Null
-						ElseIf LCase(o) = "empty" Then 'empty
-							toObject = Empty
-						ElseIf o = "" Or o = """""" Then 'empty
-							toObject = ""
-						ElseIf LCase(o) = "nothing" Then 'nothing
-							Set toObject = Nothing
-						ElseIf LCase(o) = "true" Or LCase(o) = "false" Then 'boolean
-							toObject = CBool(o)
-						ElseIf isInt(o) Then 'int, long, byte
-							toObject = CLng(o)
-						ElseIf Test(o,"double") Then  'single, double
-							toObject = CDbl(o)
-						ElseIf Test(o,"date") Then  'Date
-							toObject = CDate(o)
-						Else
-							' If RegTest(Trim(o),"^\s*[(""']*[\{].*?[\}][""')]*\s*$") Or RegTest(Trim(o),"^\s*[(""']*[\[].*?[\]][""')]*\s*$") Then 'json format
-								' o = RegReplace(Trim(o),"^\s*[(""']*([\{].*?[\}])[""')]*\s*$","$1")
-								' o = RegReplace(Trim(o),"^\s*[(""']*([\[].*?[\]])[""')]*\s*$","$1")
-								' If isFile(tempJsonJsPath) Then
-									' AB.Use "jsLib"
-									' Set jsLib = AB.jsLib.New
-									' jsLib.BasePath = tempJsDir
-									' jsLib.Inc(tempJsonJs)
-									' Set jso = jsLib.Object
-									' If IsObject(jso.toObject(o)) Then Set temp = jso.toObject(o) Else temp = jso.toObject(o)
-									' Set jso = Nothing
-									' Set jsLib = Nothing
-								' Else
-									' If IsObject(Me.jsEval(o)) Then Set temp = Me.jsEval(o) Else temp = Me.jsEval(o)
-								' End If
-								' If IsObject(temp) Then Set toObject = temp Else toObject = temp
-							' End If
-							'o = RegReplace(Trim(o),"^\s*[(""']*([\{].*?[\}])[""')]*\s*$","$1")
-							'o = RegReplace(Trim(o),"^\s*[(""']*([\[].*?[\]])[""')]*\s*$","$1")
-							AB.Use "Sc"
-							Set Sc = AB.Sc.New
-							Sc.Lang = "js"
-							Sc.Add "var jsonObject = " & o & ";"
-							If IsObject(Sc.CodeObject.jsonObject) Then Set toObject = Sc.CodeObject.jsonObject Else Set toObject = Nothing
-						End If
-					Case Else
-						'toObject = o
-						If IsObject(Me.jsEval(o)) Then Set temp = Me.jsEval(o) Else temp = Me.jsEval(o)
-						If IsObject(temp) Then Set toObject = temp Else toObject = temp
-				End Select
-			Case Else
-				'toObject = o
-				If IsObject(Me.jsEval(o)) Then Set temp = Me.jsEval(o) Else temp = Me.jsEval(o)
-				If IsObject(temp) Then Set toObject = temp Else toObject = temp
-		End select
-		If Err Then : toObject = o : Err.Clear : End If
-		On Error Goto 0
-	End Function
-
-
-	Public Function Parse(Byval o)
-		If IsObject(toObject(o)) Then Set Parse = toObject(o) Else Parse = toObject(o)
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.setJSArrayItem(o, objJSArray, index) 方法
-	'@ 返  回:  void
-	'@ 作  用:  设置变量o值为objJSArray数组的index索引项值
-	'==DESC=====================================================================================
-	'@ 参数 o 			[Any] 		: 变量o
-	'@ 参数 objJSArray 	[Object] 	: JS Array 对象
-	'@ 参数 index 		[Integer] 	: JS Array的索引
-	'==DEMO=====================================================================================
-	'# Dim strTest
-	'# strTest = "{name:'alonely', age:24, email:['test1@163.com','weed2@gmail.com'], family:{parents:['父亲','母亲']}}"
-	'# Dim objTest
-	'# AB.Use "json"
-	'# Set objTest = AB.Json.toObject(strTest)
-	'# PrintCn objTest.family.parents.[0] '输出：父亲
-	'# Dim father
-	'# AB.Json.setJSArrayItem father, objTest.family.parents, 0
-	'# PrintCn father '输出：父亲
-	'# PrintCn ab.json.getJSArrayItem(objTest.family.parents, 0) '输出：父亲
-	'@ *****************************************************************************************
-
-	Public Sub setJSArrayItem(ByRef o, ByVal objJSArray, ByVal index)
-		On Error Resume Next
-		AB.Use "Sc"
-		Dim Sc : Set Sc = AB.Sc.New
-		Sc.Lang = "js"
-		Sc.Add "var itemTemp=null; function setJSArray(arr, index){try { itemTemp = arr[index]; } catch(e) { itemTemp = null; }}"
-		Sc.Run "setJSArray", Array(objJSArray, index)
-		Set o = Sc.CodeObject.itemTemp
-		If Err.number=0 Then
-			Exit Sub
-		End If
-		o = Sc.CodeObject.itemTemp
-		On Error Goto 0
-	End Sub
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.getJSArrayItem(objJSArray, index) 方法
-	'@ 返  回:  void
-	'@ 作  用:  获取objJSArray数组的index索引项值
-	'==DESC=====================================================================================
-	'@ 参数 objJSArray 	[Object] 	: JS Array 对象
-	'@ 参数 index 		[Integer] 	: JS Array的索引
-	'==DEMO=====================================================================================
-	'# Dim strTest
-	'# strTest = "{name:'alonely', age:24, email:['test1@163.com','weed2@gmail.com'], family:{parents:['父亲','母亲']}}"
-	'# Dim objTest
-	'# AB.Use "json"
-	'# Set objTest = AB.Json.toObject(strTest)
-	'# PrintCn objTest.family.parents.[0] '输出：父亲
-	'# PrintCn ab.json.getJSArrayItem(objTest.family.parents, 0) '输出：父亲
-	'@ *****************************************************************************************
-
-	Public Function getJSArrayItem(ByVal objJSArray, ByVal index)
-		On Error Resume Next
-		AB.Use "Sc"
-		Dim Sc : Set Sc = AB.Sc.New
-		Sc.Lang = "js"
-		Sc.Add "function getJSArray(arr, index){var temp=null; try { temp = arr[index]; } catch(e) {} return temp;}"
-		If IsObject(Sc.Run("getJSArray", Array(objJSArray, index))) Then
-			Set getJSArrayItem = Sc.Run("getJSArray", Array(objJSArray, index))
-		Else
-			getJSArrayItem = Sc.Run("getJSArray", Array(objJSArray, index))
-		End If
-		On Error Goto 0
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.jsEval(o) 方法
-	'@ 返  回:  js对象
-	'@ 作  用:  将字符串转为js对象
-	'==DESC=====================================================================================
-	'@ 参数 s : 字符串
-	'==DEMO=====================================================================================
-	'# Dim str : str = "{name:'alonely', age:24, email:['test1@163.com','weed2@gmail.com'], family:{parents:['父亲','母亲']}}"
-	'# Dim temp
-	'# AB.Use "json"
-	'# If IsObject(AB.Json.jsEval(str)) Then Set temp = AB.Json.jsEval(str) Else temp = AB.Json.jsEval(str)
-	'# AB.Trace temp
-	'@ *****************************************************************************************
-
-	Public Function jsEval(Byval o)
-		On Error Resume Next
-		If Err Then Err.Clear
-		Dim Sc, jsLib, jso, temp
-		AB.Use "Sc"
-		Set Sc = AB.Sc.New
-		Sc.Lang = "js"
-		Sc.Add "function toEval(str) { var _temp = null; try { eval('_temp = (' + str + ');'); } catch(e) { _temp = null; } return (_temp);}"
-		Set jso = Sc.Object
-		If IsObject(jso.toEval(o)) Then Set jsEval = jso.toEval(o) Else jsEval = jso.toEval(o)
-		Set jso = Nothing
-		Set Sc = Nothing
-		If Err.Number <> 0 Then : Err.Clear : jsEval = o : End If
-		On Error Goto 0
-	End Function
-
-	Public Function vbEval(Byval o)
-		On Error Resume Next
-		If Err Then Err.Clear
-		If IsObject(Eval(o)) Then Set vbEval = Eval(o) Else vbEval = Eval(o)
-		If Err.Number <> 0 Then : Err.Clear : vbEval = o : End If
-		On Error Goto 0
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.JSArrayToVBArray 方法
-	'@ 返  回:  Array (VB数组)
-	'@ 作  用:  将当前JS数组对象 转成 VB数组
-	'==DESC=====================================================================================
-	'@ 参数 jsArr: [Object] JS数组对象
-	'==DEMO=====================================================================================
-	'@ ab.use "sc"
-	'@ Dim sc : Set sc = ab.sc.new
-	'@ sc.Lang = "js"
-	'@ sc.Add "function foo(){ return [1,5,8,9]; }"
-	'@ Dim s,y,x
-	'@ set x = sc.eval("foo();") 'js数组对象
-	'@ 'Response.Write x.[2]
-	'@ ab.use "json"
-	'@ Dim temp : temp = AB.Json.JSArrayToVBArray(x) '返回vb数组
-	'@ AB.Trace(temp)
-	'@ *****************************************************************************************
-
-	Public Function JSArrayToVBArray(ByVal jsArr)
-		On Error Resume Next
-		Dim temp, myVBArray
-		If TypeName(jsArr) = "JScriptTypeInfo" Then
-			temp = jsArr.join("{@Lx.Split@}") '先将 JSArray 转化为 [字符串]
-			myVBArray = Split(temp, "{@Lx.Split@}") '再将 [字符串] 转化为 VBArray
-		End If
-		JSArrayToVBArray = myVBArray
-		On Error Goto 0
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.VBArrayToJSArray 方法
-	'@ 返  回:  Object (JS数组对象)
-	'@ 作  用:  将当前VB数组 转成 JS数组对象
-	'==DESC=====================================================================================
-	'@ 参数 vbArr: [Array] VB数组
-	'==DEMO=====================================================================================
-	'@ Dim arr
-	'@ arr = Array(1,3,8,7)
-	'@ AB.Use "json"
-	'@ Dim temp : Set temp = AB.Json.VBArrayToJSArray(arr) '返回js数组对象
-	'@ AB.Trace(temp)
-	'@ PrintCn AB.Json.toJSON(arr) '输出：[1,3,8,7]
-	'@ PrintCn AB.Json.toJSON(temp) '输出：[1,3,8,7]
-	'@ Dim obj : Set obj = AB.Json.toObject(AB.Json.toJSON(temp))
-	'@ AB.Trace(obj)
-	'@ PrintCn obj.[0]
-	'@ *****************************************************************************************
-
-	Public Function vbArrayToJSArray(ByVal vbArr)
-		On Error Resume Next
-		AB.Use "Sc"
-		Dim objSC : Set objSC = AB.Sc.New
-		objSC.Lang = "js"
-		Dim objModule : Set objModule = objSC.Modules.Add("NewModule")
-		objModule.AddCode "function jsVBArrayToJSArray(vbArr){ var temp = new VBArray(vbArr); return temp.toArray(); }"
-		Dim objCodeObject : Set objCodeObject = objModule.CodeObject
-		If IsObject(objCodeObject.jsVBArrayToJSArray(vbArr)) Then
-			Set VBArrayToJSArray = objCodeObject.jsVBArrayToJSArray(vbArr)
-		Else
-			VBArrayToJSArray = objCodeObject.jsVBArrayToJSArray(vbArr)
-		End If
-		On Error Goto 0
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.Flush 方法
-	'@ 返  回:  Stream (流数据) Json文件
-	'@ 作  用:  用当前Json对象向浏览器输出Json文件
-	'@ 			调用此方法可以用当前Json对象向浏览器直接输出Json文件，即输出的内容的ContentType是"application/json"。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ AB.Json.Flush
-	'@ *****************************************************************************************
-
-	Public Sub Flush
-		Response.Clear()
-		Response.Charset = s_charset
-		Response.ContentType = "application/json"
-		NoCache()
-		If TypeName(Response) <> "Empty" Then
-			Put jsString
-		ElseIf WScript <> Empty Then
-			WScript.Echo(jsString)
-		End If
-	End Sub
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.Clone 方法
-	'@ 返  回:  AspBox Json对象
-	'@ 作  用:  复制当前Json对象为新的AspBox Json对象
-	'@ 			调用此方法可以复制当前Json对象为新的AspBox Json对象，原来的Json对象不受影响。
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ Dim jsa : Set jsa = ab.json.jsArray()
-	'@ jsa(0) = "a" : jsa(1) = "b" : jsa(2) = "c"
-	'@ Dim jsb : Set jsb = jsa.Clone
-	'@ jsb(3) = "d" : jsb(4) = "e"
-	'@ PrintCn AB.Json.toStr(jsa) '输出结果：["a","b","c"]
-	'@ PrintCn AB.Json.toStr(jsb) '输出结果：["a","b","c","d","e"]
-	'@ *****************************************************************************************
-
-	Public Function Clone
-		Set Clone = ColClone(Me)
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.jsObject 方法
-	'@ 返  回: 	Object (对象)
-	'@ 作  用:  创建Json对象
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ Dim member
-	'@ Set member = ab.json.jsObject() '等同于： Set member = AB.Json.New(0)
-	'@ member("name") = "Turul"
-	'@ member("surname") = "Topuz"
-	'@ member("message") = "Hello World"
-	'@ member.Flush '输出结果：{"name":"Tu\u011Frul","surname":"Topuz","message":"Hello World"}
-	'@ *****************************************************************************************
-
-	Public Function jsObject
-		Set jsObject = AB.Json.New(0)
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.jsArray 方法
-	'@ 返  回: 	Array (数组)
-	'@ 作  用:  创建Json数组
-	'==DESC=====================================================================================
-	'@ 参数: 无
-	'==DEMO=====================================================================================
-	'@ Dim jsa : Set jsa = ab.json.jsArray() '等同于： Set jsa = AB.Json.New(1)
-	'@ jsa(0) = "a" : jsa(1) = "b" : jsa(2) = "c"
-	'@ jsa.Flush '输出结果：["a","b","c"]
-	'@ *****************************************************************************************
-
-	Public Function jsArray
-		Set jsArray = AB.Json.New(1)
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.toStr 方法
-	'@ 返  回: 	String (字符串)
-	'@ 作  用:  根据数据类型返回字符串 [以(js object)或(js array)形式]
-	'==DESC=====================================================================================
-	'@ 参数 o: String/Object/Array 字符串/对象(Json对象、字典对象、记录集对象等)/数组
-	'==DEMO=====================================================================================
-	'@ PrintCn AB.Json.toStr("hello world")
-	'@ PrintCn AB.Json.toStr(Array("a","b","c"))
-	'@ PrintCn AB.Json.toStr(AB.Dict)
-	'@ PrintCn AB.Json.toStr(AB.db.ExeC("SELECT id,name FROM [Table] WHERE id<=2"))
-	'@ *****************************************************************************************
-
-	Public Function toStr(Byval o)
-		toStr = AB.Json.toJSON(o)
-	End Function
-
-	'@ *****************************************************************************************
-	'@ 过程名:  AB.Json.QueryToJSON 方法
-	'@ 返  回:  AspBox Json对象
-	'@ 作  用:  查询数据库并返回Json对象
-	'==DESC=====================================================================================
-	'@ 参数 dbconn: 数据库连接对象
-	'@ 参数 sql: 要执行的SQL语句
-	'==DEMO=====================================================================================
-	'@ Dim dbJson : Set dbJson = AB.Json.QueryToJSON(AB.db.Conn, "SELECT id,name FROM [Table] WHERE id <= 2")
-	'@ dbJson.Flush
-	'@ Put AB.Json.toJSON(dbJson) '返回形式：[{"id":1,"name":"The Dawn"},{"id":2,"name":"lubov"}]
-	'@ *****************************************************************************************
-
-	Public Function QueryToJSON(Byval dbconn, Byval sql)
-		On Error Resume Next
-		Dim Rs, jsa, Col, tpobj
-		Set jsa = jsArray()
-		If Not IsObject(dbconn) Or TypeName(dbconn)<>"Connection" Then:Err.Clear:Set QueryToJSON=jsa:Exit Function:End If
-		Set Rs = dbconn.Execute(sql)
-		If Err.Number<>0 Then : Err.Clear : Set QueryToJSON = jsa : Exit Function : End If
-		Dim i : i = 0
-		Do While Not (Rs.EOF Or Rs.BOF)
-			Set tpobj = jsObject()
-			jsa(i) = tpobj
-			For Each Col In Rs.Fields
-				jsa(i)(Col.Name) = Col.Value
-			Next
-			i = i + 1
-			Set tpobj = Nothing
-			Rs.MoveNext
-		Loop
-		Rs.Close : Set Rs = Nothing
-		Set QueryToJSON = jsa
-		On Error Goto 0
-	End Function
+End sub
+Private Sub Class_Terminate
+Set Collection = Nothing
+End sub
+Public Property Let CharSet(ByVal s)
+s_charset = Ucase(s)
+End Property
+Public Property Get CharSet()
+CharSet = s_charset
+End Property
 
 
 
-	Private Function ColClone(Byval core)
-		Dim jsc, i
-		Set jsc = new Cls_AB_JSON
-		jsc.Kind = core.Kind
-		For Each i In core.Collection
-			If IsObject(core(i)) Then
-				Set jsc(i) = ColClone(core(i))
-			Else
-				jsc(i) = core(i)
-			End If
-		Next
-		Set ColClone = jsc
-	End Function
 
 
 
-	Private Function Escape__(Byval s)
-		Dim cDoubleQuote, cRevSolidus, cSolidus
-		cDoubleQuote = &h22
-		cRevSolidus = &h5C
-		cSolidus = &h2F
-		Dim i, cur, temp
-		For i = 1 To (Len(s))
-			cur = Mid(s, i, 1)
-			If AscW(cur) > &h00 and AscW(cur) < &h1F Then
-				cur = EscapeQuence(cur)
-			ElseIf AscW(cur) >= &hC280 and AscW(cur) <= &hC2BF Then
-				cur = "\u00" + Right(padLeft(hex(AscW(cur) - &hC200), 2, 0), 2)
-			ElseIf AscW(cur) >= &hC380 and AscW(cur) <= &hC3BF Then
-				cur = "\u00" + Right(padLeft(hex(AscW(cur) - &hC2C0), 2, 0), 2)
-			Else
-				Select Case AscW(cur)
-					Case cDoubleQuote: cur = EscapeQuence(cur)
-					Case cRevSolidus: cur = EscapeQuence(cur)
-					Case cSolidus: cur = EscapeQuence(cur)
-				End Select
-			End If
-			temp = temp & cur
-		Next
-		Escape__ = temp
-	End Function
-	Private Function EscapeQuence(Byval digit)
-		EscapeQuence = "\u00" + Right(padLeft(hex(AscW(digit)), 2, 0), 2)
-	End Function
-	Private Function padLeft(Byval value, Byval totalLength, Byval paddingChar)
-		padLeft = Right(cloneIt(paddingChar, totalLength) & value, totalLength)
-	End Function
-	private Function cloneIt(Byval str, Byval n)
-		Dim i:For i = 1 To n : cloneIt = cloneIt & str : Next
-	End Function
 
-End Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function [New](ByVal a)
+Set [New] = New Cls_AB_JSON
+Select case LCase(a)
+Case ChrW(48), ChrW(111)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116) [New].Kind = 0
+Case ChrW(49), ChrW(97)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)  [New].Kind = 1
+End select
+End function
+Private Property Get Counter
+Counter = Count
+Count = Count + 1
+End Property
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Property Let Pair(Byval p, Byval v)
+If IsNull(p) Then p = Counter
+If vartype(v) = 9 Then
+If TypeName(v) = ChrW(67)&ChrW(108)&ChrW(115)&ChrW(95)&ChrW(65)&ChrW(66)&ChrW(95)&ChrW(74)&ChrW(83)&ChrW(79)&ChrW(78) Then
+Set Collection(p) = v
+Else
+Collection(p) = v
+End if
+Else
+Collection(p) = v
+End if
+End Property
+Public Default Property Get Pair(Byval p)
+If IsNull(p) Then p = Count - 1
+If IsObject(Collection(p)) Then
+Set Pair = Collection(p)
+Else
+Pair = Collection(p)
+End if
+End Property
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Sub Clean
+Collection.RemoveAll
+End sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Sub Remove(Byval a)
+If Collection.Exists(a) Then Collection.Remove a
+End sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function toJSON(Byval a)
+
+Dim b,c,d : c = 0 : d = 0
+Dim e, f, g, h, i
+Dim j : j = ChrW(47)
+Dim k : k = ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(50)&ChrW(46)&ChrW(106)&ChrW(115)
+Dim l : l = j&k
+
+Select case VarType(a)
+Case 1
+toJSON = ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108)
+Case 7
+toJSON = ChrW(34) & JsEncode__(CStr(a)) & ChrW(34)
+Case 8
+Select case TypeName(a)
+Case ChrW(73)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116), ChrW(73)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(68)&ChrW(105)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(114)&ChrW(121)
+If a = Request.QueryString Or a = Request.Form Or a = Request.Cookies Then
+e = True
+toJSON = toJSON & ChrW(123)
+For each c In a
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+toJSON = toJSON & IIF(QuotedVars, ChrW(34) & IIF(StrEncode,JSEncode(c),JSEncode__(c)) & ChrW(34), JsEncode__(c)) & ChrW(58) & toJSON(a(c))
+Next
+toJSON = toJSON & ChrW(125)
+End if
+Case ChrW(74)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111)
+If isFile(l) Then
+AB.Use ChrW(106)&ChrW(115)&ChrW(76)&ChrW(105)&ChrW(98)
+Set h = AB.jsLib.New
+h.basepath = j
+h.inc(k)
+Set i = h.object
+toJSON = i.tostring(a)
+Set i = Nothing
+Set h = Nothing
+Else
+toJSON = a
+End if
+Case else
+If a="" Then
+toJSON = ChrW(34)&ChrW(34)
+Else 
+toJSON = ChrW(34) & IIF(StrEncode,JSEncode(a),JSEncode__(a)) & ChrW(34)
+End if
+End select
+Case 9
+Select case TypeName(a)
+Case ChrW(78)&ChrW(111)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(110)&ChrW(103),ChrW(69)&ChrW(109)&ChrW(112)&ChrW(116)&ChrW(121)
+toJSON = ChrW(123)&ChrW(125)
+Case ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115)&ChrW(101)&ChrW(116)
+If a.state = 0 Then
+toJSON = ChrW(91)&ChrW(93)
+Else
+If IsNul(a) Then
+toJSON = ChrW(91)&ChrW(93)
+Else
+On error resume next
+Set a = a.clone
+On error goto 0
+If a.recordcount = 1 Then
+e = True
+toJSON = toJSON & ChrW(91)&ChrW(123)
+For d = 0 To a.fields.count-1
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+If QuotedVars Then
+toJSON = toJSON & ChrW(34) & IIF(StrEncode,JSEncode(lcase(a.fields(d).Name)),JSEncode__(lcase(a.fields(d).Name))) & ChrW(34)&ChrW(58) & toJSON(a.fields(d).Value)
+Else
+toJSON = toJSON & IIF(StrEncode,JSEncode(lcase(a.fields(d).Name)),JSEncode__(lcase(a.fields(d).Name))) & ChrW(58) & toJSON(a.fields(d).Value)
+End if
+Next
+toJSON = toJSON & ChrW(125)&ChrW(93)
+Else
+f = True
+toJSON = toJSON & ChrW(91)
+a.movefirst
+Do while Not a.eof
+If f Then f = False Else toJSON = toJSON & ChrW(44)
+e = True
+toJSON = toJSON & ChrW(123)
+For d = 0 To a.fields.count-1
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+If QuotedVars Then
+toJSON = toJSON & ChrW(34) & IIF(StrEncode,JSEncode(lcase(a.fields(d).Name)),JSEncode__(lcase(a.fields(d).Name))) & ChrW(34)&ChrW(58) & toJSON(a.fields(d).Value)
+Else
+toJSON = toJSON & IIF(StrEncode,JSEncode(lcase(a.fields(d).Name)),JSEncode__(lcase(a.fields(d).Name))) & ChrW(58) & toJSON(a.fields(d).Value)
+End if
+Next
+toJSON = toJSON & ChrW(125)
+c = c + 1
+a.movenext
+Loop
+toJSON = toJSON & ChrW(93)
+End if
+End if
+End if
+Case ChrW(68)&ChrW(105)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(114)&ChrW(121), ChrW(73)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116), ChrW(73)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(68)&ChrW(105)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(114)&ChrW(121), ChrW(73)&ChrW(65)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116), ChrW(73)&ChrW(83)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116)
+If TypeName(a) = ChrW(73)&ChrW(82)&ChrW(101)&ChrW(113)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116) Then
+Dim m : Set m = Server.CreateObject(AB.dictName)
+m.add ChrW(99)&ChrW(108)&ChrW(105)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(99)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(102)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(101), a.clientcertificate
+m.add ChrW(99)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(105)&ChrW(101)&ChrW(115), a.cookies
+m.add ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109), a.form
+m.add ChrW(113)&ChrW(117)&ChrW(101)&ChrW(114)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(103), a.querystring
+m.add ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(105)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(115), a.servervariables
+m.add ChrW(116)&ChrW(111)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(98)&ChrW(121)&ChrW(116)&ChrW(101)&ChrW(115), a.totalbytes
+toJSON = toJSON(m)
+ElseIf TypeName(a) = ChrW(73)&ChrW(65)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116) Or TypeName(a) = ChrW(73)&ChrW(83)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116) Then
+g = a.contents.count
+If g = 0 Then
+toJSON = ChrW(123)&ChrW(125)
+Else
+e = True
+toJSON = toJSON & ChrW(123)
+For each c In a.contents
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+toJSON = toJSON & IIF(QuotedVars, ChrW(34) & IIF(StrEncode,JSEncode(c),JSEncode__(c)) & ChrW(34), IIF(StrEncode,JSEncode(c),JSEncode__(c))) & ChrW(58) & toJSON(a(c))
+Next
+toJSON = toJSON & ChrW(125)
+End if
+ElseIf TypeName(a) = ChrW(68)&ChrW(105)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(97)&ChrW(114)&ChrW(121) Then
+g = a.count
+If g = 0 Then
+toJSON = ChrW(123)&ChrW(125)
+Else
+e = True
+toJSON = toJSON & ChrW(123)
+For each c In a
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+toJSON = toJSON & ChrW(34) & IIF(QuotedVars, ChrW(34) & IIF(StrEncode,JSEncode(c),JSEncode__(c)) & ChrW(34), IIF(StrEncode,JSEncode(c),JSEncode__(c))) & ChrW(34)&ChrW(58) & toJSON(a(c))
+Next
+toJSON = toJSON & ChrW(125)
+End if
+Else
+e = True
+toJSON = toJSON & ChrW(123)
+For each c In a
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+toJSON = toJSON & IIF(QuotedVars, ChrW(34) & IIF(StrEncode,JSEncode(c),JSEncode__(c)) & ChrW(34), IIF(StrEncode,JSEncode(c),JSEncode__(c))) & ChrW(58) & toJSON(a(c))
+Next
+toJSON = toJSON & ChrW(125)
+End if
+Case ChrW(67)&ChrW(108)&ChrW(115)&ChrW(95)&ChrW(65)&ChrW(66)&ChrW(95)&ChrW(74)&ChrW(83)&ChrW(79)&ChrW(78)
+e = True
+toJSON = toJSON & IIF(a.kind, ChrW(91), ChrW(123))
+For each c In a.collection
+If e Then e = False Else toJSON = toJSON & ChrW(44)
+toJSON = toJSON & IfThen(a.kind=0, IIF(QuotedVars, ChrW(34) & IIF(StrEncode,JSEncode(c),JSEncode__(c)) & ChrW(34), IIF(StrEncode,JSEncode(c),JSEncode__(c))) & ChrW(58)) & toJSON(a(c))
+Next
+toJSON = toJSON & IIF(a.kind, ChrW(93), ChrW(125))
+Case ChrW(74)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111)
+If isFile(l) Then
+AB.Use ChrW(106)&ChrW(115)&ChrW(76)&ChrW(105)&ChrW(98)
+Set h = AB.jsLib.New
+h.basepath = j
+h.inc(k)
+Set i = h.object
+toJSON = i.tostring(a)
+Set i = Nothing
+Set h = Nothing
+Else
+toJSON = ChrW(123)&ChrW(125)
+End if
+Case ChrW(86)&ChrW(66)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111)
+toJSON = ChrW(123)&ChrW(125)
+Case else
+toJSON = ChrW(123)&ChrW(125)
+End select
+Case 11
+toJSON = IIF(a, ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101), ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101))
+Case 12, 8192, 8204, 8209
+toJSON = RenderArray(a, 1, "")
+Case 2, 3, 17, 19
+toJSON = CLng(a)
+Case 4, 5, 6, 14
+toJSON = Replace(CDbl(a), ChrW(44), ChrW(46))
+Case else
+toJSON = ChrW(34) & IIF(StrEncode,JSEncode(Cstr(a)),JSEncode__(Cstr(a))) & ChrW(34)
+End select
+
+End function
+
+function fieldToJson(a,byval b)
+dim c, d,e,f,g
+b = ChrW(124) & LCase(b) & ChrW(124)
+c = True
+d = d & ChrW(123)
+while not a.eof
+For g = 0 To a.fields.count-1
+e = a.fields(g).Name
+f = a.fields(g).Value
+
+if instr(b,ChrW(124)& LCase(e) &ChrW(124))>0 then
+If c Then c = False Else d = d & ChrW(44)
+If QuotedVars Then
+d = d & ChrW(34) & IIF(StrEncode,JSEncode(e),JSEncode__(e)) & ChrW(34)&ChrW(58) & toJSON(f)
+Else
+d = d & IIF(StrEncode,JSEncode(e),JSEncode__(e)) & ChrW(58) & toJSON(f)
+End if
+end if
+Next
+d = d & ChrW(125)
+a.movenext:wend:a.close
+d= ChrW(91)& d &ChrW(93)    
+fieldToJson = d
+end function
+
+Private Function RenderArray(Byval a, Byval b, Byval c)
+
+Dim d : d = LBound(a, b)
+Dim e : e = UBound(a, b)
+Dim f, g
+Dim h : h = ChrW(44)
+RenderArray = ChrW(91)
+For f = d To e
+If f = e Then
+h = ""
+End if
+On error resume next
+g = RenderArray(a, b + 1, c & f & ChrW(44) )
+If Err = 9 Then
+On error goto 0
+RenderArray = RenderArray & toJSON(Eval(ChrW(97)&ChrW(114)&ChrW(114)&ChrW(40) & c & f & ChrW(41))) & h
+Else
+RenderArray = RenderArray & g & "" & h
+End if
+Next
+RenderArray = RenderArray & ChrW(93)
+End function
+Public Function JsEncode(ByVal a)
+If isNul(a) Then JsEncode = "" : Exit function
+Dim b, c, d, e, f, g, h
+b = Array(&h27,&h22,&h5C,&h2F,&h08,&h0C,&h0A,&h0D,&h09)
+c = Array(&h27,&h22,&h5C,&h2F,&h62,&h66,&h6E,&h72,&h749)
+For d = 1 To Len(a)
+g = True
+f = Mid(a, d, 1)
+For e = 0 To Ubound(b)
+If f = Chr(b(e)) Then
+h = h & ChrW(92) & Chr(c(e))
+g = False
+Exit for
+End if
+Next
+If g Then
+Dim i
+i = AscW(f)
+If i > 31 And i < 127 Then
+h = h & f
+ElseIf i > -1 Or i < 65535 Then
+h = h & ChrW(92)&ChrW(117) & String(4 - Len(Hex(i)), ChrW(48)) & Hex(i)
+End if
+End if
+Next
+JsEncode = h
+
+End function
+Private Function JsEncode__(ByVal a)
+
+If isNul(a) Then JsEncode__ = "" : Exit function
+Dim b, c, d, e, f, g, h
+b = Array(&h27,&h22,&h5C,&h2F,&h08,&h0C,&h0A,&h0D,&h09)
+c = Array(&h27,&h22,&h5C,&h2F,&h62,&h66,&h6E,&h72,&h749)
+For d = 1 To Len(a)
+g = True
+f = Mid(a, d, 1)
+For e = 0 To Ubound(b)
+If f = Chr(b(e)) Then
+h = h & ChrW(92) & Chr(c(e))
+g = False
+Exit for
+End if
+Next
+If g Then h = h & f
+Next
+JsEncode__ = h
+End function
+Public Function Stringify(Byval a)
+Stringify = toJSON(a)
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Property Get jsString
+jsString = toJSON(Me)
+End Property
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function toObject(Byval a)
+On error resume next
+If Err Then Err.Clear
+Dim b,c : b = 0 : c = 0
+Dim d, e, f, g
+Dim h : h = AB.BasePath & ChrW(106)&ChrW(115)&ChrW(76)&ChrW(105)&ChrW(98)&ChrW(47)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(101)&ChrW(47)
+Dim i : i = ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(50)&ChrW(46)&ChrW(106)&ChrW(115)
+Dim j : j = h&i
+Select case VarType(a)
+Case 9
+Set toObject = a
+Case 8
+Select case TypeName(a)
+Case ChrW(74)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111)
+If isFile(j) Then
+AB.Use ChrW(106)&ChrW(115)&ChrW(76)&ChrW(105)&ChrW(98)
+Set e = AB.jsLib.New
+e.basepath = h
+e.inc(i)
+Set f = e.object
+If IsObject(f.toobject(a)) Then Set toObject = f.toobject(a) Else toObject = f.toobject(a)
+Set f = Nothing
+Set e = Nothing
+Else
+toObject = a
+End if
+Case ChrW(83)&ChrW(116)&ChrW(114)&ChrW(105)&ChrW(110)&ChrW(103)
+If LCase(a) = ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108) Then
+toObject = Null
+ElseIf LCase(a) = ChrW(101)&ChrW(109)&ChrW(112)&ChrW(116)&ChrW(121) Then
+toObject = Empty
+ElseIf a = "" Or a = ChrW(34)&ChrW(34) Then
+toObject = ""
+ElseIf LCase(a) = ChrW(110)&ChrW(111)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(110)&ChrW(103) Then
+Set toObject = Nothing
+ElseIf LCase(a) = ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) Or LCase(a) = ChrW(102)&ChrW(97)&ChrW(108)&ChrW(115)&ChrW(101) Then
+toObject = CBool(a)
+ElseIf isInt(a) Then
+toObject = CLng(a)
+ElseIf Test(a,ChrW(100)&ChrW(111)&ChrW(117)&ChrW(98)&ChrW(108)&ChrW(101)) Then
+toObject = CDbl(a)
+ElseIf Test(a,ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)) Then
+toObject = CDate(a)
+Else
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AB.Use ChrW(83)&ChrW(99)
+Set d = AB.Sc.New
+d.lang = ChrW(106)&ChrW(115)
+d.add ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(79)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(61)&ChrW(32) & a & ChrW(59)
+If IsObject(d.codeobject.jsonobject) Then Set toObject = d.codeobject.jsonobject Else Set toObject = Nothing
+End if
+Case else
+
+If IsObject(Me.jsEval(a)) Then Set g = Me.jsEval(a) Else g = Me.jsEval(a)
+If IsObject(g) Then Set toObject = g Else toObject = g
+End select
+Case else
+
+If IsObject(Me.jsEval(a)) Then Set g = Me.jsEval(a) Else g = Me.jsEval(a)
+If IsObject(g) Then Set toObject = g Else toObject = g
+End select
+If Err Then : toObject = a : Err.Clear : End if
+On error goto 0
+End function
+Public Function Parse(Byval a)
+If IsObject(toObject(a)) Then Set Parse = toObject(a) Else Parse = toObject(a)
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Sub setJSArrayItem(ByRef a, ByVal b, ByVal c)
+On error resume next
+AB.Use ChrW(83)&ChrW(99)
+Dim d : Set d = AB.Sc.New
+d.lang = ChrW(106)&ChrW(115)
+d.add ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(61)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(40)&ChrW(97)&ChrW(114)&ChrW(114)&ChrW(44)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(123)&ChrW(116)&ChrW(114)&ChrW(121)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(97)&ChrW(114)&ChrW(114)&ChrW(91)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(93)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(32)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(40)&ChrW(101)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(84)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(125)
+d.run ChrW(115)&ChrW(101)&ChrW(116)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121), Array(b, c)
+Set a = d.codeobject.itemtemp
+If Err.number=0 Then
+Exit sub
+End if
+a = d.codeobject.itemtemp
+On error goto 0
+End sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function getJSArrayItem(ByVal a, ByVal b)
+On error resume next
+AB.Use ChrW(83)&ChrW(99)
+Dim c : Set c = AB.Sc.New
+c.lang = ChrW(106)&ChrW(115)
+c.add ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(40)&ChrW(97)&ChrW(114)&ChrW(114)&ChrW(44)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(123)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(61)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(116)&ChrW(114)&ChrW(121)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(97)&ChrW(114)&ChrW(114)&ChrW(91)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(93)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(32)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(40)&ChrW(101)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(125)&ChrW(32)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(59)&ChrW(125)
+If IsObject(c.run(ChrW(103)&ChrW(101)&ChrW(116)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121), Array(a, b))) Then
+Set getJSArrayItem = c.run(ChrW(103)&ChrW(101)&ChrW(116)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121), Array(a, b))
+Else
+getJSArrayItem = c.run(ChrW(103)&ChrW(101)&ChrW(116)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121), Array(a, b))
+End if
+On error goto 0
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function jsEval(Byval a)
+On error resume next
+If Err Then Err.Clear
+Dim b, c, d, e
+AB.Use ChrW(83)&ChrW(99)
+Set b = AB.Sc.New
+b.lang = ChrW(106)&ChrW(115)
+b.add ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(111)&ChrW(69)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(95)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(116)&ChrW(114)&ChrW(121)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(101)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(39)&ChrW(95)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(40)&ChrW(39)&ChrW(32)&ChrW(43)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(32)&ChrW(43)&ChrW(32)&ChrW(39)&ChrW(41)&ChrW(59)&ChrW(39)&ChrW(41)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(32)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(40)&ChrW(101)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(95)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(110)&ChrW(117)&ChrW(108)&ChrW(108)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(32)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(32)&ChrW(40)&ChrW(95)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(41)&ChrW(59)&ChrW(125)
+Set d = b.object
+If IsObject(d.toeval(a)) Then Set jsEval = d.toeval(a) Else jsEval = d.toeval(a)
+Set d = Nothing
+Set b = Nothing
+If Err.Number <> 0 Then : Err.Clear : jsEval = a : End if
+On error goto 0
+End function
+Public Function vbEval(Byval a)
+On error resume next
+If Err Then Err.Clear
+If IsObject(Eval(a)) Then Set vbEval = Eval(a) Else vbEval = Eval(a)
+If Err.Number <> 0 Then : Err.Clear : vbEval = a : End if
+On error goto 0
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function JSArrayToVBArray(ByVal a)
+On error resume next
+Dim b, c
+If TypeName(a) = ChrW(74)&ChrW(83)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(73)&ChrW(110)&ChrW(102)&ChrW(111) Then
+b = a.join(ChrW(123)&ChrW(64)&ChrW(76)&ChrW(120)&ChrW(46)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(116)&ChrW(64)&ChrW(125))
+c = Split(b, ChrW(123)&ChrW(64)&ChrW(76)&ChrW(120)&ChrW(46)&ChrW(83)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(116)&ChrW(64)&ChrW(125))
+End if
+JSArrayToVBArray = c
+On error goto 0
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function vbArrayToJSArray(ByVal a)
+On error resume next
+AB.Use ChrW(83)&ChrW(99)
+Dim b : Set b = AB.Sc.New
+b.lang = ChrW(106)&ChrW(115)
+Dim c : Set c = b.modules.add(ChrW(78)&ChrW(101)&ChrW(119)&ChrW(77)&ChrW(111)&ChrW(100)&ChrW(117)&ChrW(108)&ChrW(101))
+c.addcode ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(106)&ChrW(115)&ChrW(86)&ChrW(66)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(84)&ChrW(111)&ChrW(74)&ChrW(83)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(40)&ChrW(118)&ChrW(98)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(41)&ChrW(123)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(110)&ChrW(101)&ChrW(119)&ChrW(32)&ChrW(86)&ChrW(66)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(40)&ChrW(118)&ChrW(98)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(41)&ChrW(59)&ChrW(32)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(46)&ChrW(116)&ChrW(111)&ChrW(65)&ChrW(114)&ChrW(114)&ChrW(97)&ChrW(121)&ChrW(40)&ChrW(41)&ChrW(59)&ChrW(32)&ChrW(125)
+Dim d : Set d = c.codeobject
+If IsObject(d.jsvbarraytojsarray(a)) Then
+Set VBArrayToJSArray = d.jsvbarraytojsarray(a)
+Else
+VBArrayToJSArray = d.jsvbarraytojsarray(a)
+End if
+On error goto 0
+End function
+
+
+
+
+
+
+
+
+
+
+Public Sub Flush
+Response.Clear()
+Response.Charset = s_charset
+Response.ContentType = ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)
+NoCache()
+If TypeName(Response) <> ChrW(69)&ChrW(109)&ChrW(112)&ChrW(116)&ChrW(121) Then
+Put jsString
+ElseIf WScript <> Empty Then
+WScript.Echo(jsString)
+End if
+End sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function Clone
+Set Clone = ColClone(Me)
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function jsObject
+Set jsObject = AB.Json.New(0)
+End function
+
+
+
+
+
+
+
+
+
+
+
+Public Function jsArray
+Set jsArray = AB.Json.New(1)
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function toStr(Byval a)
+toStr = AB.Json.toJSON(a)
+End function
+
+
+
+
+
+
+
+
+
+
+
+
+Public Function QueryToJSON(Byval a, Byval b)
+On error resume next
+Dim c, d, e, f
+Set d = jsArray()
+If Not IsObject(a) Or TypeName(a) <>ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110) Then:Err.Clear:Set QueryToJSON=d:Exit function:End if
+Set c = a.execute(b)
+If Err.Number <>0 Then : Err.Clear : Set QueryToJSON = d : Exit function : End if
+Dim g : g = 0
+Do while Not (c.eof Or c.bof)
+Set f = jsObject()
+d(g) = f
+For each e In c.fields
+d(g)(e.name) = e.value
+Next
+g = g + 1
+Set f = Nothing
+c.movenext
+Loop
+c.close : Set c = Nothing
+Set QueryToJSON = d
+On error goto 0
+End function
+Private Function ColClone(Byval a)
+Dim b, c
+Set b = new Cls_AB_JSON
+b.kind = a.kind
+For each c In a.collection
+If IsObject(a(c)) Then
+Set b(c) = ColClone(a(c))
+Else
+b(c) = a(c)
+End if
+Next
+Set ColClone = b
+End function
+Private Function Escape__(Byval a)
+Dim b, c, d
+b = &h22
+c = &h5C
+d = &h2F
+Dim e, f, g
+For e = 1 To (Len(a))
+f = Mid(a, e, 1)
+If AscW(f) > &h00 and AscW(f) < &h1F Then
+f = EscapeQuence(f)
+ElseIf AscW(f) >= &hC280 and AscW(f) <= &hC2BF Then
+f = ChrW(92)&ChrW(117)&ChrW(48)&ChrW(48) + Right(padLeft(hex(AscW(f) - &hC200), 2, 0), 2)
+ElseIf AscW(f) >= &hC380 and AscW(f) <= &hC3BF Then
+f = ChrW(92)&ChrW(117)&ChrW(48)&ChrW(48) + Right(padLeft(hex(AscW(f) - &hC2C0), 2, 0), 2)
+Else
+Select case AscW(f)
+Case b: f = EscapeQuence(f)
+Case c: f = EscapeQuence(f)
+Case d: f = EscapeQuence(f)
+End select
+End if
+g = g & f
+Next
+Escape__ = g
+End function
+Private Function EscapeQuence(Byval a)
+EscapeQuence = ChrW(92)&ChrW(117)&ChrW(48)&ChrW(48) + Right(padLeft(hex(AscW(a)), 2, 0), 2)
+End function
+Private Function padLeft(Byval a, Byval b, Byval c)
+padLeft = Right(cloneIt(c, b) & a, b)
+End function
+private Function cloneIt(Byval a, Byval b)
+Dim c:For c = 1 To b : cloneIt = cloneIt & a : Next
+End function
+End class
 %>

@@ -1,0 +1,25 @@
+' 确保数值大于等于1的函数
+' 参数：inputValue - 要处理的数字或字符串
+' 返回值：确保大于等于1的数值
+Function ensurePositiveValue(rs,inputValue)
+    Dim resultValue
+    
+    ' 如果输入为空，返回默认值10
+    If IsEmpty(inputValue) Or IsNull(inputValue) Or Trim(inputValue) = "" Then
+        resultValue = 10
+    Else
+        ' 检查是否为有效数字
+        If IsNumeric(Trim(inputValue)) Then
+            resultValue = CDbl(Trim(inputValue))
+            ' 如果结果小于1，则设为1（确保大于等于1）
+            If resultValue < 1 Then
+                resultValue = 1
+            End If
+        Else
+            ' 非数字字符串设为1
+            resultValue = 1
+        End If
+    End If
+    
+    ensurePositiveValue = resultValue
+End Function

@@ -1,0 +1,30 @@
+    //添加更新会员信息20250926
+    function addUpdateMember(i,obj){  
+        $.ajax({
+            type: "POST",
+            cache: true,
+            dataType: "json",
+            url: "qqshow_ajax_saveUser.asp?act=add",
+            data: { 
+                 "parentid": obj.tsfield_parentid
+                ,"userid": obj.tsfield_id
+                ,"usertype": obj.tsfield_usertype
+                ,"nickname":obj.nickname
+                ,"usermoney":obj.tsfield_usermoney 
+                ,"userdeposit":obj.tsfield_userdeposit 
+                ,"onlineip":obj.onlineip 
+                ,"onlinetime":obj.tsfield_onlinetime                
+                ,"phone":obj.tsfield_phone
+                ,"isrobot":obj.isrobot
+                ,"adddatetime":obj.adddatetime
+                ,"isthrough":obj.isthrough
+                ,"token":obj.token
+            },   
+            success: function(data) {
+                // console.log("保存","流水",data)
+                var color=data.add==1?'green':'#00309d'   // 添加为绿色，修改为蓝色 
+                $('.layui-table tr[data-index="' + i + '"] td[data-field="nindex"] .layui-table-cell').html('<span style="color:'+color+'">'+obj.nindex+'</span>')
+
+            }
+        });
+    }

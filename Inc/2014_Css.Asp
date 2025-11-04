@@ -1,94 +1,86 @@
-﻿<%
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><%
 
-'Css压缩 cssCompression(Content,0)
-function cssCompression(content, nLevel) 
-    'Css高级压缩
-    if nLevel = 1 then
-        content = regExp_Replace(content, "\/\*(.|" & vbCrLf & ")*?\*\/", "") 
-        content = regExp_Replace(content, "\s*([\{\}\:\;\,])\s*", "$1") 
-        content = regExp_Replace(content, "\,[\s\.\#\d]*\{", "{") 
-        content = regExp_Replace(content, ";\s*;", ";") 
-    'Css简单压缩
-    else
-        if nLevel >= 2 then
-            content = regExp_Replace(content, "\/\*(.|" & vbCrLf & ")*?\*\/", "")           '//删除注释
-        end if 
-        content = regExp_Replace(content, "\s*([\{\}\:\;\,])\s*", "$1") 
-        content = regExp_Replace(content, "\,[\s\.\#\d]*\{", "{")                  '//容错处理
-        content = regExp_Replace(content, ";\s*;", ";")                                 '//清除连续分号
-        content = regExp_Replace(content, ";\s*}", "}")                                 '//清除末尾分号和大括号
-        content = regExp_Replace(content, "([^\s])\{([^\s])", "$1{$2") 
-        content = regExp_Replace(content, "([^\s])\}([^" & vbCrLf & "]s*)", "$1}" & vbCrLf & "$2") 
+function cssCompression(a, b) 
 
-    end if 
-    content = trimVBcrlf(content) 
-    cssCompression = content 
+if b = 1 then
+a = regExp_Replace(a, ChrW(92)&ChrW(47)&ChrW(92)&ChrW(42)&ChrW(40)&ChrW(46)&ChrW(124) & vbCrLf & ChrW(41)&ChrW(42)&ChrW(63)&ChrW(92)&ChrW(42)&ChrW(92)&ChrW(47), "") 
+a = regExp_Replace(a, ChrW(92)&ChrW(115)&ChrW(42)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(123)&ChrW(92)&ChrW(125)&ChrW(92)&ChrW(58)&ChrW(92)&ChrW(59)&ChrW(92)&ChrW(44)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(115)&ChrW(42), ChrW(36)&ChrW(49)) 
+a = regExp_Replace(a, ChrW(92)&ChrW(44)&ChrW(91)&ChrW(92)&ChrW(115)&ChrW(92)&ChrW(46)&ChrW(92)&ChrW(35)&ChrW(92)&ChrW(100)&ChrW(93)&ChrW(42)&ChrW(92)&ChrW(123), ChrW(123)) 
+a = regExp_Replace(a, ChrW(59)&ChrW(92)&ChrW(115)&ChrW(42)&ChrW(59), ChrW(59)) 
+
+else
+if b >= 2 then
+a = regExp_Replace(a, ChrW(92)&ChrW(47)&ChrW(92)&ChrW(42)&ChrW(40)&ChrW(46)&ChrW(124) & vbCrLf & ChrW(41)&ChrW(42)&ChrW(63)&ChrW(92)&ChrW(42)&ChrW(92)&ChrW(47), "")
+end if 
+a = regExp_Replace(a, ChrW(92)&ChrW(115)&ChrW(42)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(123)&ChrW(92)&ChrW(125)&ChrW(92)&ChrW(58)&ChrW(92)&ChrW(59)&ChrW(92)&ChrW(44)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(115)&ChrW(42), ChrW(36)&ChrW(49)) 
+a = regExp_Replace(a, ChrW(92)&ChrW(44)&ChrW(91)&ChrW(92)&ChrW(115)&ChrW(92)&ChrW(46)&ChrW(92)&ChrW(35)&ChrW(92)&ChrW(100)&ChrW(93)&ChrW(42)&ChrW(92)&ChrW(123), ChrW(123))
+a = regExp_Replace(a, ChrW(59)&ChrW(92)&ChrW(115)&ChrW(42)&ChrW(59), ChrW(59))
+a = regExp_Replace(a, ChrW(59)&ChrW(92)&ChrW(115)&ChrW(42)&ChrW(125), ChrW(125))
+a = regExp_Replace(a, ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(123)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41), ChrW(36)&ChrW(49)&ChrW(123)&ChrW(36)&ChrW(50)) 
+a = regExp_Replace(a, ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94) & vbCrLf & ChrW(93)&ChrW(115)&ChrW(42)&ChrW(41), ChrW(36)&ChrW(49)&ChrW(125) & vbCrLf & ChrW(36)&ChrW(50)) 
+end if 
+a = trimVBcrlf(a) 
+cssCompression = a 
 end function 
 
-'删除Css里注释
-function deleteCssNote(content)
-    deleteCssNote = regExp_Replace(content, "\/\*(.|" & vbCrLf & ")*?\*\/", "")     '//删除注释
+function deleteCssNote(a)
+deleteCssNote = regExp_Replace(a, ChrW(92)&ChrW(47)&ChrW(92)&ChrW(42)&ChrW(40)&ChrW(46)&ChrW(124) & vbCrLf & ChrW(41)&ChrW(42)&ChrW(63)&ChrW(92)&ChrW(42)&ChrW(92)&ChrW(47), "")
 end function 
 
-'Css格式化  展开CSS
-function unCssCompression(content)
-    content = regExp_Replace(content, "\s*([\{\}\:\;\,])\s*", "$1") 
-    content = regExp_Replace(content, ";\s*;", ";")                                 '//清除连续分号
-    content = regExp_Replace(content, "\,[\s\.\#\d]*{", "{") 
-    content = regExp_Replace(content, "([^\s])\{([^\s])", "$1 {" & vbCrLf & "" & "    " & "$2") 'vbTab 替换成4个空格 
-    content = regExp_Replace(content, "([^\s])\}([^" & vbCrLf & "]*)", "$1" & vbCrLf & "}" & vbCrLf & "$2") 
-    content = regExp_Replace(content, "([^\s]);([^\s\}])", "$1;" & vbCrLf & "" & "    " & "$2")     'vbTab 替换成4个空格 
-    unCssCompression = content 
+function unCssCompression(a)
+a = regExp_Replace(a, ChrW(92)&ChrW(115)&ChrW(42)&ChrW(40)&ChrW(91)&ChrW(92)&ChrW(123)&ChrW(92)&ChrW(125)&ChrW(92)&ChrW(58)&ChrW(92)&ChrW(59)&ChrW(92)&ChrW(44)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(115)&ChrW(42), ChrW(36)&ChrW(49)) 
+a = regExp_Replace(a, ChrW(59)&ChrW(92)&ChrW(115)&ChrW(42)&ChrW(59), ChrW(59))
+a = regExp_Replace(a, ChrW(92)&ChrW(44)&ChrW(91)&ChrW(92)&ChrW(115)&ChrW(92)&ChrW(46)&ChrW(92)&ChrW(35)&ChrW(92)&ChrW(100)&ChrW(93)&ChrW(42)&ChrW(123), ChrW(123)) 
+a = regExp_Replace(a, ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(123)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41), ChrW(36)&ChrW(49)&ChrW(32)&ChrW(123) & vbCrLf & "" & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32) & ChrW(36)&ChrW(50))
+a = regExp_Replace(a, ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41)&ChrW(92)&ChrW(125)&ChrW(40)&ChrW(91)&ChrW(94) & vbCrLf & ChrW(93)&ChrW(42)&ChrW(41), ChrW(36)&ChrW(49) & vbCrLf & ChrW(125) & vbCrLf & ChrW(36)&ChrW(50)) 
+a = regExp_Replace(a, ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(93)&ChrW(41)&ChrW(59)&ChrW(40)&ChrW(91)&ChrW(94)&ChrW(92)&ChrW(115)&ChrW(92)&ChrW(125)&ChrW(93)&ChrW(41), ChrW(36)&ChrW(49)&ChrW(59) & vbCrLf & "" & ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32) & ChrW(36)&ChrW(50))
+unCssCompression = a 
 end function
 
-'去掉字符串头尾的连续的回车和空格
-function trimVbCrlf(str)
-    trimVbCrlf = phpRTrim(phpLTrim(str)) 
+function trimVbCrlf(a)
+trimVbCrlf = phpRTrim(phpLTrim(a)) 
 end function 
 
-'php里Trim方法
-function phpTrim(str)
-    phpTrim = trimVbCrlf(str) 
+function phpTrim(a)
+phpTrim = trimVbCrlf(a) 
 end function 
 
-'去掉字符串开头的连续的回车和空格 改进于20171207
-function phpLTrim(byval str)
-    dim nLen,n,i,s
-    if isnul(str) then 
-        phpLTrim=""
-        exit function
-    end if
-
-    nLen = len(str)
-    n=0
-    for i=1 to nLen
-        s=left(str,1)
-        if s=" " or s=vbTab or s=chr(10) or s=chr(13) then
-            str=mid(str,2)
-        elseif s=vbcrlf then
-            str=mid(str,3)
-        else
-            exit for
-        end if
-    next  
-    phpLTrim=str
+function phpLTrim(byval a)
+dim b,c,d,e
+if isnul(a) then 
+phpLTrim=""
+exit function
+end if
+b = len(a)
+c=0
+for d=1 to b
+e=left(a,1)
+if e=ChrW(32) or e=vbTab or e=chr(10) or e=chr(13) then
+a=mid(a,2)
+elseif e=vbcrlf then
+a=mid(a,3)
+else
+exit for
+end if
+next  
+phpLTrim=a
 end function 
 
-'去掉字符串末尾的连续的回车和空格 改进于20171207
-function phpRTrim(byval str)
-    dim nLen,n,i,s
-    nLen = len(str)
-    n=0
-    for i=1 to nLen
-        s=right(str,1)
-        if s=" " or s=vbTab or s=chr(10) or s=chr(13) then
-            str=mid(str,1,len(str)-1)
-        elseif s=vbcrlf then
-            str=mid(str,1,len(str)-2)
-        else
-            exit for
-        end if
-    next  
-    phpRTrim=str
+function phpRTrim(byval a)
+dim b,c,d,e
+b = len(a)
+c=0
+for d=1 to b
+e=right(a,1)
+if e=ChrW(32) or e=vbTab or e=chr(10) or e=chr(13) then
+a=mid(a,1,len(a)-1)
+elseif e=vbcrlf then
+a=mid(a,1,len(a)-2)
+else
+exit for
+end if
+next  
+phpRTrim=a
 end function 
 %>

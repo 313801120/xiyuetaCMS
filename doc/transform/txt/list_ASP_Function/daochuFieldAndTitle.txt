@@ -1,0 +1,24 @@
+'导出字段名和标题'20250907
+function daochuFieldAndTitle(tableName)
+    dim layout_database_table_id,sql,c,s
+    layout_database_table_id=request("layout_database_table_id")
+    sql="select * from ["& db_PREFIX & tableName &"]"
+    if layout_database_table_id<>"" then sql=sql&" where layout_database_table_id="&layout_database_table_id
+    rs.open sql,conn,1,1 
+    while not rs.eof  
+        sql = "select * from ["& db_PREFIX &  "layout_field] where isthrough=1" 
+        if rs("layout_field_id")=-1 then
+            sql=sql&" and fieldname='"&rs("fieldName")&"'" 
+        else
+            sql=sql&" and id=" & rs("layout_field_id")
+        end if
+        s=lcase(rs("fieldName")) &"="   '字段要转小写的'
+        rsx.open sql,conn,1,1
+        if not rsx.eof then  
+            s=s&rsx("fieldtitle")
+        end if:rsx.close
+        if c<>"" then c=c &","
+        c=c & s
+    rs.movenext:wend:rs.close
+    daochuFieldAndTitle=c
+end function

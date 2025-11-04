@@ -1,0 +1,240 @@
+'处理导入配置和字段数据 20251020
+function importConfigAndField()
+    if checkAdminRule("添加" & winTitle)=false then 
+        call die("{""info"": ""没有【添加"&winTitle&"】权限"",""status"": ""n""}")
+    end if
+    
+    dim txtPath, layoutPageId, fieldConfigContent, nOK, sTip
+    dim rs, rsx, rss, rsField, rsd
+    dim sql, sConfig, layoutFieldId, nLen, sSortrank
+    dim isDebug
+    isDebug = false '调试模式'
+    
+    txtPath = request("txt")
+    layoutPageId = request("layout_page_id")
+    
+    if txtPath = "" then
+        call die("{""info"": ""文件路径为空"",""status"": ""n""}")
+    end if
+    
+    if layoutPageId = "" then
+        call die("{""info"": ""布局页ID为空"",""status"": ""n""}")
+    end if
+    
+    ' 读取txt文件内容作为字段配置
+    fieldConfigContent = readfile(txtPath, "utf-8")
+    if fieldConfigContent = "" then
+        call die("{""info"": ""文件内容为空或读取失败"",""status"": ""n""}")
+    end if
+    
+    sTip = "，使用导入的字段配置"
+    
+    ' 创建记录集对象
+    set rs = CreateObject("Adodb.RecordSet")
+    set rsx = CreateObject("Adodb.RecordSet")
+    set rss = CreateObject("Adodb.RecordSet")
+    set rsField = CreateObject("Adodb.RecordSet")
+    set rsd = CreateObject("Adodb.RecordSet")
+    
+    nOK = 0
+    
+    ' 按行分割配置内容
+    dim configLines, i, line, fieldName, fieldTitle, fieldType, fieldConfig, divType, inputType, listItemWidth, sortRank, isOnlineEdit, adminLevel, isEditSafe, s
+    configLines = split(fieldConfigContent, vbcrlf)
+    
+    for i = 0 to ubound(configLines)
+        line = trim(configLines(i))
+        if line <> "" then
+            ' 解析配置行，格式：id=ID,listitemwidth=70,sortrank=2,isonlineedit=0,adminlevel=|,iseditsafe=0
+            fieldName = getStrCut(line, "", "=", 0)
+            fieldTitle = getStrCut(line, fieldName & "=", ",", 0)
+            
+            if fieldName <> "" and fieldTitle <> "" then
+                ' 检查字段是否存在（根据fieldname和fieldtitle判断）
+                sql = "select * from ["& db_PREFIX & "layout_field] where fieldname='" & fieldName & "' and fieldtitle='" & fieldTitle & "'"
+                rsx.open sql, conn, 1, 3
+                
+                if rsx.eof then ' 字段不存在，需要创建
+                    ' 解析其他配置参数
+                    fieldType = getStrCut(line, ",fieldtype=", ",", 0) '字段类型'
+                    fieldConfig = getStrCut(line, ",fieldconfig=", ",", 0) '字段配置'
+                    divType = getStrCut(line, ",divtype=", ",", 0) '字段div类型'
+                    inputType = getStrCut(line, ",inputtype=", ",", 0) '字段input类型'
+                    listItemWidth = getStrCut(line, ",listitemwidth=", ",", 0) '列表页项宽'
+                    
+                    ' 创建新字段
+                    rsx.addnew
+                    rsx("bigClassName") = -99
+                    rsx("title") = "自动创建-" & fieldTitle
+                    rsx("fieldTitle") = fieldTitle
+                    rsx("fieldName") = fieldName
+                    if fieldType <> "" then
+                        rsx("fieldType") = fieldType
+                    else
+                        rsx("fieldType") = "input" ' 默认为input类型
+                    end if
+                    if fieldConfig <> "" then rsx("fieldconfig") = fieldConfig
+                    if divType <> "" then rsx("divtype") = divType
+                    if inputType <> "" then rsx("inputtype") = inputType
+                    rsx("isthrough") = 1
+                    rsx.update
+                    rsx.close ' 关闭记录集
+                    
+                    ' 调试输出
+                    if isDebug then
+                        call echo("字段名 fieldName", fieldName) 
+                        call echo("字段标题 fieldTitle", fieldTitle) 
+                        call echo("字段类型 fieldType", fieldType) 
+                        call echo("字段配置 fieldconfig", fieldConfig) 
+                        call echo("字段div类型divtype", divType) 
+                        call echo("字段input类型inputtype", inputType) 
+                        call echo("列表页项宽listitemwidth", listItemWidth) 
+                    end if
+                    ' 重新打开记录集获取新创建字段的ID                    
+                    rsx.open sql&" order By  Id  Desc", conn, 1, 1
+                    if not rsx.eof then
+                        layoutFieldId = rsx("id")
+                        nOK = nOK + 1
+                    end if
+                else
+                    ' 字段已存在，获取ID
+                    layoutFieldId = rsx("id")
+                end if
+                rsx.close
+                
+                ' 创建或更新布局页配置
+                if layoutFieldId <> -1 then
+                    sql = "select * from ["& db_PREFIX & "layout_page_config] where layout_page_id=" & layoutPageId & " and layout_field_id=" & layoutFieldId
+                    rsd.open sql, conn, 1, 3
+                    
+                    if rsd.eof then ' 配置不存在，创建新配置
+                        rsd.addnew
+                        rsd("layout_page_id") = layoutPageId
+                        rsd("layout_field_id") = layoutFieldId
+                        rsd("isthrough") = 1
+                        rsd("islist") = 1
+                        rsd("isview") = 1
+                        rsd("sortrank") = 1
+                        rsd("viewsortrank") = 1
+                        rsd("editsortrank") = 1
+                        
+                        ' 解析配置参数
+                        listItemWidth = getStrCut(line, ",listitemwidth=", ",", 0) '列表项宽'
+                        if listItemWidth <> "" then
+                            rsd("listitemwidth") = listItemWidth
+                        else
+                            listItemWidth = strLength(fieldTitle) * 15 + 10
+                            if listItemWidth < 70 then listItemWidth = 70
+                            rsd("listitemwidth") = "min" & listItemWidth
+                        end if
+                        
+                        ' 排序设置
+                        sortRank = getStrCut(line, ",sortrank=", ",", 0) '排序'
+                        if sortRank <> "" then rsd("sortrank") = sortRank
+                        s = getStrCut(line, ",viewsortrank=", ",", 0) '查看排序'
+                        if s = "" then s = sortRank
+                        if s <> "" then rsd("viewsortrank") = s
+                        s = getStrCut(line, ",editsortrank=", ",", 0) '编辑排序'
+                        if s = "" then s = sortRank
+                        if s <> "" then rsd("editsortrank") = s
+                        
+                        ' 各种开关设置
+                        s = getStrCut(line, ",isthrough=", ",", 0) '审核'
+                        if s <> "" then rsd("isthrough") = s
+                        s = getStrCut(line, ",islist=", ",", 0) '列表页显示'
+                        if s <> "" then rsd("islist") = s
+                        s = getStrCut(line, ",isaddedit=", ",", 0) '编辑页显示'
+                        if s <> "" then rsd("isaddedit") = s
+                        s = getStrCut(line, ",isview=", ",", 0) '查看页显示'
+                        if s <> "" then rsd("isview") = s
+                        s = getStrCut(line, ",isonlineedit=", ",", 0) '是否在线修改'
+                        if s <> "" then rsd("isonlineedit") = s
+                        s = getStrCut(line, ",isenglish=", ",", 0) '英文版'
+                        if s <> "" then rsd("isenglish") = s
+                        s = getStrCut(line, ",inputonlycheck=", ",", 0) '唯一检测'
+                        if s <> "" then rsd("inputonlycheck") = s
+                        s = getStrCut(line, ",isinputcheck=", ",", 0) '表单验证'
+                        if s <> "" then rsd("isinputcheck") = s
+                        s = getStrCut(line, ",isinputtwocolumn=", ",", 0) '一行两列'
+                        if s <> "" then rsd("isinputtwocolumn") = s
+                        s = getStrCut(line, ",islistheadsort=", ",", 0) '列表头排序'
+                        if s <> "" then rsd("islistheadsort") = s
+                        s = getStrCut(line, ",islistpagejsondata=", ",", 0) 'json数据'
+                        if s <> "" then rsd("islistpagejsondata") = s
+                        s = getStrCut(line, ",iseditpageitemwrapaddid=", ",", 0) '编辑项包裹'
+                        if s <> "" then rsd("iseditpageitemwrapaddid") = s
+                        s = getStrCut(line, ",iseditpageitemaddlayfilter=", ",", 0) '编辑项过滤器'
+                        if s <> "" then rsd("iseditpageitemaddlayfilter") = s
+                        s = getStrCut(line, ",isaddpageview=", ",", 0) '编辑页显不能改'
+                        if s <> "" then rsd("isaddpageview") = s
+                        s = getStrCut(line, ",iseditpageinputhtml=", ",", 0) '编辑页只显input'
+                        if s <> "" then rsd("iseditpageinputhtml") = s
+                        s = getStrCut(line, ",iseditpagehide=", ",", 0) '编辑页不显input'
+                        if s <> "" then rsd("iseditpagehide") = s
+                        s = getStrCut(line, ",islistpagetemplet=", ",", 0) '列表项H5显示'
+                        if s <> "" then rsd("islistpagetemplet") = s
+                        s = getStrCut(line, ",iseditpageitemwraphide=", ",", 0) '编辑项包裹隐藏'
+                        if s <> "" then rsd("iseditpageitemwraphide") = s
+                        
+                        ' 文本配置
+                        s = getStrCut(line, ",noterighttext=", ",", 0) '文本注释'
+                        if s <> "" then rsd("noterighttext") = decDHJH(s)
+                        s = getStrCut(line, ",noteleftico=", ",", 0) '图标注释'
+                        if s <> "" then rsd("noteleftico") = decDHJH(s)
+                        s = getStrCut(line, ",defaultvalue=", ",", 0) '默认值'
+                        if s <> "" then rsd("defaultvalue") = decDHJH(s)
+                        s = getStrCut(line, ",adminlevel=", ",", 0) '管理权限'
+                        if s <> "" then rsd("adminlevel") = decDHJH(s)
+                        s = getStrCut(line, ",addtoinput=", ",", 0) '追加字段后'
+                        if s <> "" then rsd("addtoinput") = decDHJH(s)
+                        s = getStrCut(line, ",iseditsafe=", ",", 0) '编辑安全'
+                        if s <> "" then rsd("iseditsafe") = decDHJH(s)
+                        s = getStrCut(line, ",addnewvalue=", ",", 0) '添加系统值'
+                        if s <> "" then rsd("addnewvalue") = decDHJH(s)
+                        s = getStrCut(line, ",updatevalue=", ",", 0) '更新系统值'
+                        if s <> "" then rsd("updatevalue") = decDHJH(s)
+                        s = getStrCut(line, ",listpagerunaction=", ",", 0) '列表页运行动作'
+                        if s <> "" then rsd("listpagerunaction") = decDHJH(s)
+                        s = getStrCut(line, ",editpagerunaction=", ",", 0) '编辑页运行动作'
+                        if s <> "" then rsd("editpagerunaction") = decDHJH(s)
+                        s = getStrCut(line, ",viewpagerunaction=", ",", 0) '查看页运行动作'
+                        if s <> "" then rsd("viewpagerunaction") = decDHJH(s)
+                        s = getStrCut(line, ",isshowclick=", ",", 0) '显点击'
+                        if s <> "" then rsd("isshowclick") = decDHJH(s)
+                        s = getStrCut(line, ",clickurl=", ",", 0) '点击网址'
+                        if s <> "" then rsd("clickurl") = decDHJH(s)
+                        s = getStrCut(line, ",listpagenoteico=", ",", 0) '表头项图标'
+                        if s <> "" then rsd("listpagenoteico") = decDHJH(s)
+                        s = getStrCut(line, ",listpagenote=", ",", 0) '列头项注释'
+                        if s <> "" then rsd("listpagenote") = decDHJH(s)
+                        s = getStrCut(line, ",listpagefieldnoteico=", ",", 0) '列项图标'
+                        if s <> "" then rsd("listpagefieldnoteico") = decDHJH(s)
+                        s = getStrCut(line, ",listpagefieldnote=", ",", 0) '列项注释'
+                        if s <> "" then rsd("listpagefieldnote") = decDHJH(s)
+                        
+                        rsd.update
+                    end if
+                    rsd.close
+                end if
+            end if
+        end if
+    next
+    
+    ' 关闭记录集对象
+    set rs = nothing
+    set rsx = nothing
+    set rss = nothing
+    set rsField = nothing
+    set rsd = nothing
+    
+    ' 记录日志
+    call addSystemLog(tableName, "导入配置和字段数据完成，文件路径：" & txtPath & "，布局页ID：" & layoutPageId & "，更新 " & nOK & " 条" & sTip)
+    
+    ' 返回成功信息
+    call die("{""info"": ""导入完成，更新 " & nOK & " 条配置" & sTip & """,""status"": ""y""}")
+end function
+
+'解密等于号和逗号
+function decDHJH(s)
+    decDHJH=replace(replace(s,"[[{等于号}]]","=") ,"[[{逗号}]]", ",")
+end function

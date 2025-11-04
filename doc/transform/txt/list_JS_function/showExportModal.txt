@@ -1,0 +1,134 @@
+    // 通用导出函数  修改于20251027加个itemID   改20251029 1
+    // 使用方法：
+    // showExportModal({
+    //     confirmText: '确定要导出Install用吗？',        // 确认对话框文本
+    //     confirmTitle: '确认导出',                    // 确认对话框标题
+    //     action: 'databaseToInstall',                // 后端处理动作
+    //     exportTitle: '导出Install用数据',            // 导出弹窗标题
+    //     filePrefix: 'install_data_',                // 下载文件名前缀
+    //     fileExtension: '.sql',                      // 下载文件扩展名
+    //     successTitle: '数据已成功导出...',           // 成功提示文本
+    //     copyBtnText: '复制全部',                    // 复制按钮文本
+    //     downloadBtnText: '下载文件',                 // 下载按钮文本
+    //     closeBtnText: '关闭',                        // 关闭按钮文本
+    //     itemId: ''                                  // 可选的ID参数
+    // });
+    function showExportModal(options) {
+        var defaultOptions = {
+            confirmText: '确定要导出数据吗？',
+            confirmTitle: '确认导出',
+            action: 'daochu',
+            exportTitle: '导出数据',
+            filePrefix: 'export_data_',
+            fileExtension: '.txt',
+            successTitle: '数据已成功导出，您可以复制以下内容用于安装：',
+            copyBtnText: '复制全部',
+            downloadBtnText: '下载文件',
+            closeBtnText: '关闭',
+            itemId: ''  // 添加 itemId 参数
+        };
+        
+        // 合并默认选项和用户选项
+        var config = Object.assign({}, defaultOptions, options);
+        
+        layer.confirm(config.confirmText, {
+            icon: 3,
+            title: config.confirmTitle
+        }, function(index) {
+            layer.close(index);
+            NProgress.start();
+            
+            // 显示处理中提示
+            var processingLayer = layer.msg('正在处理中，请等待...', {
+                icon: 16,
+                time: 0,
+                shade: [0.3, '#000']
+            });
+            
+            // 根据是否有 itemId 构建不同的 URL
+            var url = "?act=" + config.action;
+            if (config.itemId) {
+                url += "&id=" + config.itemId;
+            }
+            $.ajax({
+                type: "POST",
+                cache: true,
+                dataType: "json",
+                url: url,
+                data: {},
+                success: function(data) {
+                    layer.close(processingLayer);
+                    NProgress.done();
+                    switch (data.status) {
+                        case "y":
+                            layer.open({
+                                type: 1,
+                                title: config.exportTitle + ' <span style="font-size:12px;color:#999;">(共' + data.info.length + '字符)</span>',
+                                area: ['95%', '90%'],
+                                maxmin: true,
+                                content: '<div style="padding: 15px; height: calc(100% - 60px); box-sizing: border-box;">' +
+                                    '<div style="margin-bottom: 10px; color: #666; font-size: 12px;">' +
+                                    '<i class="layui-icon layui-icon-tips" style="color: #1E9FFF;"></i> ' +
+                                    config.successTitle +
+                                    '</div>' +
+                                    '<textarea id="exportDataTextarea" style="width: 100%; height: calc(100% - 40px); font-family: \'Consolas\', \'Monaco\', \'Courier New\', monospace; font-size: 11px; line-height: 1.4; border: 1px solid #e6e6e6; border-radius: 4px; padding: 10px; resize: none; background: #fafafa; white-space: pre; overflow-x: auto; overflow-y: auto; box-sizing: border-box; tab-size: 2;" readonly>' + data.info + '</textarea>' +
+                                    '</div>',
+                                btn: ['<i class="layui-icon layui-icon-copy"></i> ' + config.copyBtnText, '<i class="layui-icon layui-icon-download-circle"></i> ' + config.downloadBtnText, config.closeBtnText],
+                                success: function(layero, index) {
+                                    var textarea = layero.find('#exportDataTextarea')[0];
+                                    if (textarea) {
+                                        // 保持原始文本，不做自动换行或重排
+                                        textarea.style.whiteSpace = 'pre';
+                                        textarea.style.overflowX = 'auto';
+                                        textarea.style.overflowY = 'auto';
+                                    }
+                                },
+                                yes: function(index, layero) {
+                                    var textarea = layero.find('#exportDataTextarea')[0];
+                                    textarea.select();
+                                    try {
+                                        document.execCommand('copy');
+                                        layer.msg('<i class="layui-icon layui-icon-ok"></i> 已复制到剪贴板', {icon: 1, time: 2000});
+                                    } catch(e) {
+                                        layer.msg('复制失败，请手动选择复制', {icon: 2});
+                                    }
+                                },
+                                btn2: function(index, layero) {
+                                    var content = layero.find('#exportDataTextarea')[0].value;
+                                    var blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
+                                    var url = URL.createObjectURL(blob);
+                                    var a = document.createElement('a');
+                                    var now = new Date();
+                                    var timestamp = now.getFullYear() + 
+                                        String(now.getMonth() + 1).padStart(2, '0') + 
+                                        String(now.getDate()).padStart(2, '0') + '_' +
+                                        String(now.getHours()).padStart(2, '0') + 
+                                        String(now.getMinutes()).padStart(2, '0') + 
+                                        String(now.getSeconds()).padStart(2, '0');
+                                    a.href = url;
+                                    a.download = config.filePrefix + timestamp + config.fileExtension;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                    URL.revokeObjectURL(url);
+                                    layer.msg('<i class="layui-icon layui-icon-ok"></i> 文件已下载', {icon: 1, time: 2000});
+                                    return false;
+                                },
+                                btn3: function(index) {
+                                    layer.close(index);
+                                }
+                            });
+                            break;
+                        case "n":
+                            layer.msg(data.info);
+                            break;
+                    }
+                },
+                error: function() {
+                    layer.close(processingLayer);
+                    NProgress.done();
+                    layer.msg('导出失败，请重试', {icon: 2});
+                }
+            });
+        });
+    } 

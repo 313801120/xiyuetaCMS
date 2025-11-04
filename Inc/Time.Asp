@@ -1,348 +1,483 @@
-﻿<% 
-'Time 时间操作类 (2013,9,27)
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
-'获得格式化时间
-function getFormatYMD(timeStr, sType)
-	'q 季   m 月   y 一年的日数   d 日   w 一周的日数   ww 周   h 时   n 分钟   s 秒 
-    getFormatYMD = dateDiff(sType, timeStr, now())   
-end function
-'获得时间处理后多久前，天，时  20171010
-function getHandleHowLongAgoTime(timeStr)
-	dim nYear,nDay,nHour,nMinute,nSecond,s
 
-	nYear=dateDiff("yyyy", timeStr, now())   '年'
-    nDay=dateDiff("d", timeStr, now())       '天'
-	nHour=dateDiff("h", timeStr, now())      '时'
-	nMinute=dateDiff("n", timeStr, now())    '分'
-    nSecond = DateDiff("s", timeStr, now())   '秒'
+Function getDaysInMonth(a)
+Dim b, c
+dim d,e
+d = Year(a)
+e = Month(a)
+b = DateSerial(d, e, 1)
+c = DateSerial(d, e + 1, 0)
+getDaysInMonth = Day(c)
+End function
 
-	if nYear>0 then
-		s=nYear & "年前"
-    elseif nDay>0 then
-        s=nDay & "天前"
-	elseif nHour>0 then 
-		s=nHour & "小时前"
-    elseif nMinute>0 then 
-		s=nMinute & "分钟前"
-    else
-        s=nSecond & "秒前"
-	end if
-	getHandleHowLongAgoTime=s
+function getWeekDayNumber(a)
+dim b
+b = Weekday(a)  
+Select case b  
+Case 1  
+b = 7
+Case 2  
+b = 1
+Case 3  
+b = 2
+Case 4  
+b = 3
+Case 5  
+b = 4
+Case 6  
+b = 5
+Case 7  
+b = 6
+Case else  
+
+b = -1
+End select  
+getWeekDayNumber=b
 end function
 
-'时间处理    
-function format_Time(timeStr, nType)
-    dim y, m, d, h, mi, s ,c,nWeek
-    if isDate(timeStr) = false then exit function 
-	
-	timeStr = CDate(timeStr)		'转时间类型
-    y = CStr(year(timeStr)) 
-    m = CStr(month(timeStr))  
-    if len(m) = 1 then m = "0" & m 
-    d = CStr(day(timeStr))                                                          '在vb.net里要这样用  D = CStr(CDate(timeStr).Day)
-	'周
-	nWeek=fix(day(timeStr)/7)
-	if day(timeStr) mod 7>0 then
-		nWeek=nWeek+1
-	end if
-	
-    if len(d) = 1 then d = "0" & d 
-    h = CStr(hour(timeStr))  
-    if len(h) = 1 then h = "0" & h 
-    mi = CStr(minute(timeStr)) 
-    if len(mi) = 1 then mi = "0" & mi 
-    s = CStr(second(timeStr)) 
-    if len(s) = 1 then s = "0" & s
-    select case nType
-        case 1:
-            'yyyy-mm-dd hh:mm:ss
-            c = y & "-" & m & "-" & d & " " & h & ":" & mi & ":" & s 
-        case 2:
-            'yyyy-mm-dd
-            c = y & "-" & m & "-" & d 
-        case 3:
-            'hh:mm:ss
-            c = h & ":" & mi & ":" & s 
-        case 4:
-            'yyyy年mm月dd日
-            c = y & "年" & m & "月" & d & "日" 
-        case 5:
-            'yyyymmdd
-            c = y & m & d 
-        case 6:
-            'yyyymmddhhmmss
-            c = y & m & d & h & mi & s 
-        case 7:
-            'mm-dd
-            c = m & "-" & d 
-        case 8:
-            'yyyy年mm月dd日
-            c = y & "年" & m & "月" & d & "日" & " " & h & ":" & mi & ":" & s 
-        case 9:
-            'yyyy年mm月dd日H时mi分S秒 早上
-            c = y & "年" & m & "月" & d & "日" & " " & h & "时" & mi & "分" & s & "秒，" & getDayStatus(h, 1) 
-        case 10:
-            'yyyy年mm月dd日H时
-            c = y & "年" & m & "月" & d & "日" & h & "时" 
-        case 11:
-            'yyyy年mm月dd日H时mi分S秒
-            c = y & "年" & m & "月" & d & "日" & " " & h & "时" & mi & "分" & s & "秒" 
-        case 12:
-            'yyyy年mm月dd日H时mi分
-            c = y & "年" & m & "月" & d & "日" & " " & h & "时" & mi & "分" 
-        case 13:
-            'yyyy年mm月dd日H时mi分 早上
-            c = m & "月" & d & "日" & " " & h & ":" & mi & " " & getDayStatus(h, 0) 
-        case 14:
-            'yyyy年mm月dd日
-            c = y & "/" & m & "/" & d 
-        case 15:
-            'yyyy年mm月 第1周
-            c = y & "年" & m & "月 第" & nWeek & "周" 
-        case 16:
-            'yyyy年mm月dd日
-            c =  m & "月" & d & "日" 
-        case 17:
-            'hh:mm
-            c = h & ":" & mi
-        case 18:				'07-19 09:50
-			 c = m & "-" & d & " " & " " & h & ":" & mi 
-        case 19:				'07-19 09:50
-			 c =h & "时" & mi & "分" & s & "秒" 
-        case 20:
-            'yyyy/mm/dd hh:mm:ss
-            c = y & "/" & m & "/" & d & " " & h & ":" & mi & ":" & s 
-        case 30:
-            'yyyy-mm
-            c = y & "-" & m
-		case 88: 
-            c = d
-        case 89: 
-            c = m		 
-		case 120:
-			select case m
-				case "01":c="Janurary"
-				case "02":c="February"
-				case "03":c="March"
-				case "04":c="April"
-				case "05":c="May"
-				case "06":c="June"
-				case "07":c="July"
-				case "08":c="August"
-				case "09":c="September"
-				case "10":c="October"
-				case "11":c="November"
-				case "12":c="December"
-			end select  
-    end select
-	format_Time=c
+function getFormatYMD(a, b)
+
+getFormatYMD = dateDiff(b, a, now())   
 end function
-'获得星期几 
-function getWeekDay(timeStr, sType)
-	dim xqj
-	sType=cstr(sType)
-	xqj=weekday(timeStr)-1
-	if sType="1" then
-		xqj="星期" & replace(replace(replace(replace(replace(replace(replace(xqj,"1","一"),"2","二"),"3","三"),"4","四"),"5","五"),"6","六"),"0","天")
-	end if
-	getWeekDay=xqj
+
+function getHandleHowLongAgoTime(a)
+dim b, c, d, e, f, g, h
+b = DateDiff(ChrW(121)&ChrW(121)&ChrW(121)&ChrW(121), a, Now())
+c = DateDiff(ChrW(109), a, Now())
+d = DateDiff(ChrW(100), a, Now())
+e = DateDiff(ChrW(104), a, Now())
+f = DateDiff(ChrW(110), a, Now())
+g = DateDiff(ChrW(115), a, Now())
+if DateAdd(ChrW(121)&ChrW(121)&ChrW(121)&ChrW(121), b, a) > Now() then
+b = b - 1
+elseif DateAdd(ChrW(109), c, a) > Now() then
+c = c - 1
+elseif DateAdd(ChrW(100), d, a) > Now() then
+d = d - 1
+elseif DateAdd(ChrW(104), e, a) > Now() then
+e = e - 1
+end if
+if b > 0 then
+h = b & ChrW(24180)&ChrW(21069)
+elseif c > 0 then
+h = c & ChrW(20010)&ChrW(26376)&ChrW(21069)
+elseif d > 0 then
+h = d & ChrW(22825)&ChrW(21069)
+elseif e > 0 then
+h = e & ChrW(23567)&ChrW(26102)&ChrW(21069)
+elseif f > 0 then
+h = f & ChrW(20998)&ChrW(38047)&ChrW(21069)
+else
+if g < 60 then
+if g < 2 then
+h = ChrW(21018)&ChrW(21018)
+else
+h = g & ChrW(31186)&ChrW(21069)
+end if
+end if
+end if
+getHandleHowLongAgoTime = h 
 end function
-'获得当前时期还可以计算  默认为加天数
-function getHandleDate(numb)
-    'if numb = "" then
-    '    numb = 0 
-    'end if
-    'getHandleDate = format_Time(now() + numb, 2)
-	getHandleDate=dateAdd("d",numb,now())
+
+function getHandleTimeToDAy(a)
+dim b,c,d,e,f
+b=dateDiff(ChrW(100), a, now())  
+c=dateDiff(ChrW(104), a, now())  
+d=dateDiff(ChrW(110), a, now())
+e=dateDiff(ChrW(115), a, now())
+if b>0 then
+f=b & ChrW(22825)&ChrW(21069)
+if b>30 then
+f=format_Time(a,2)
+end if
+elseif c>0 then
+f=c & ChrW(23567)&ChrW(26102)&ChrW(21069)
+elseif d>0 then
+f=d & ChrW(20998)&ChrW(38047)&ChrW(21069)
+else
+f=e & ChrW(31186)&ChrW(21069)
+end if
+getHandleTimeToDAy=f 
+end function
+
+function format_Time(a, b)
+dim c, d, e, f, g, h ,i,j
+if isDate(a) = false then exit function 
+a = CDate(a)
+c = CStr(year(a)) 
+d = CStr(month(a))  
+if len(d) = 1 then d = ChrW(48) & d 
+e = CStr(day(a))
+
+j=fix(day(a)/7)
+if day(a) mod 7>0 then
+j=j+1
+end if
+if len(e) = 1 then e = ChrW(48) & e 
+f = CStr(hour(a))  
+if len(f) = 1 then f = ChrW(48) & f 
+g = CStr(minute(a)) 
+if len(g) = 1 then g = ChrW(48) & g 
+h = CStr(second(a)) 
+if len(h) = 1 then h = ChrW(48) & h
+select case b
+case 1:
+
+i = c & ChrW(45) & d & ChrW(45) & e & ChrW(32) & f & ChrW(58) & g & ChrW(58) & h 
+case 2:
+
+i = c & ChrW(45) & d & ChrW(45) & e 
+case 3:
+
+i = f & ChrW(58) & g & ChrW(58) & h 
+case 4:
+
+i = c & ChrW(24180) & d & ChrW(26376) & e & ChrW(26085) 
+case 5:
+
+i = c & d & e 
+case 6:
+
+i = c & d & e & f & g & h 
+case 7:
+
+i = d & ChrW(45) & e 
+case 8:
+
+i = c & ChrW(24180) & d & ChrW(26376) & e & ChrW(26085) & ChrW(32) & f & ChrW(58) & g & ChrW(58) & h 
+case 9:
+
+i = c & ChrW(24180) & d & ChrW(26376) & e & ChrW(26085) & ChrW(32) & f & ChrW(26102) & g & ChrW(20998) & h & ChrW(31186)&ChrW(65292) & getDayStatus(f, 1) 
+case 10:
+
+i = c & ChrW(24180) & d & ChrW(26376) & e & ChrW(26085) & f & ChrW(26102) 
+case 11:
+
+i = c & ChrW(24180) & d & ChrW(26376) & e & ChrW(26085) & ChrW(32) & f & ChrW(26102) & g & ChrW(20998) & h & ChrW(31186) 
+case 12:
+
+i = c & ChrW(24180) & d & ChrW(26376) & e & ChrW(26085) & ChrW(32) & f & ChrW(26102) & g & ChrW(20998) 
+case 13:
+
+i = d & ChrW(26376) & e & ChrW(26085) & ChrW(32) & f & ChrW(58) & g & ChrW(32) & getDayStatus(f, 0) 
+case 14:
+
+i = c & ChrW(47) & d & ChrW(47) & e 
+case 15:
+
+i = c & ChrW(24180) & d & ChrW(26376)&ChrW(32)&ChrW(31532) & j & ChrW(21608) 
+case 16:
+
+i =  d & ChrW(26376) & e & ChrW(26085) 
+case 17:
+
+i = f & ChrW(58) & g
+case 18:
+i = d & ChrW(45) & e & ChrW(32) & ChrW(32) & f & ChrW(58) & g 
+case 19:
+i =f & ChrW(26102) & g & ChrW(20998) & h & ChrW(31186) 
+case 20:
+
+i = c & ChrW(47) & d & ChrW(47) & e & ChrW(32) & f & ChrW(58) & g & ChrW(58) & h 
+case 30:
+
+i = c & ChrW(45) & d
+case 88: 
+i = e
+case 89: 
+i = d     
+case 120:
+select case d
+case ChrW(48)&ChrW(49):i=ChrW(74)&ChrW(97)&ChrW(110)&ChrW(117)&ChrW(114)&ChrW(97)&ChrW(114)&ChrW(121)
+case ChrW(48)&ChrW(50):i=ChrW(70)&ChrW(101)&ChrW(98)&ChrW(114)&ChrW(117)&ChrW(97)&ChrW(114)&ChrW(121)
+case ChrW(48)&ChrW(51):i=ChrW(77)&ChrW(97)&ChrW(114)&ChrW(99)&ChrW(104)
+case ChrW(48)&ChrW(52):i=ChrW(65)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(108)
+case ChrW(48)&ChrW(53):i=ChrW(77)&ChrW(97)&ChrW(121)
+case ChrW(48)&ChrW(54):i=ChrW(74)&ChrW(117)&ChrW(110)&ChrW(101)
+case ChrW(48)&ChrW(55):i=ChrW(74)&ChrW(117)&ChrW(108)&ChrW(121)
+case ChrW(48)&ChrW(56):i=ChrW(65)&ChrW(117)&ChrW(103)&ChrW(117)&ChrW(115)&ChrW(116)
+case ChrW(48)&ChrW(57):i=ChrW(83)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)
+case ChrW(49)&ChrW(48):i=ChrW(79)&ChrW(99)&ChrW(116)&ChrW(111)&ChrW(98)&ChrW(101)&ChrW(114)
+case ChrW(49)&ChrW(49):i=ChrW(78)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)
+case ChrW(49)&ChrW(50):i=ChrW(68)&ChrW(101)&ChrW(99)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)
+end select  
+end select
+format_Time=i
+end function
+
+function handleStrToHM(a)
+dim b,c,d,e
+b=phptrim(a)
+if instr(b,ChrW(32))>0 then
+c=split(b,ChrW(32))
+b=c(1)
+end if
+if instr(b,ChrW(58))>0 then
+c=split(b,ChrW(58))
+b=c(0) & ChrW(58) & c(1)
+handleStrToHM=b
+end if
+end function
+
+function getWeekDay(a, b)
+dim c
+b=cstr(b)
+c=weekday(a)-1
+if b=ChrW(49) then
+c=ChrW(26143)&ChrW(26399) & replace(replace(replace(replace(replace(replace(replace(c,ChrW(49),ChrW(19968)),ChrW(50),ChrW(20108)),ChrW(51),ChrW(19977)),ChrW(52),ChrW(22235)),ChrW(53),ChrW(20116)),ChrW(54),ChrW(20845)),ChrW(48),ChrW(22825))
+end if
+getWeekDay=c
+end function
+
+function getHandleDate(a)
+
+
+
+
+getHandleDate=dateAdd(ChrW(100),a,now())
 end function 
-'获得当前天状态
-function getDayStatus(h, nType)
-    dim c,nH
-    if left(h, 1) = "0" then
-        h = right(h, 1) 
-    end if 
-    nH = CInt(h) 
-    if nH >= 0 and nH <= 5 then
-        c = "凌晨" 
-    elseIf nH >= 6 and nH <= 8 then
-        c = "早上" 
-    elseIf nH >= 9 and nH <= 12 then
-        c = "上午" 
-    elseIf nH >= 13 and nH <= 18 then
-        c = "下午" 
-    elseIf nH >= 19 and nH <= 24 then
-        c = "晚上" 
-    else
-        c = "深夜" 
-    end if 
-    if nType = 1 then c = "<b>" & c & "</b>" 
-    getDayStatus = c 
-end function 
-'时间计算
-function printTimeValue(byval nV) 
-    dim nVTemp, c, n 
-	nVTemp=nV
-    if nV >= 86400*366 then
-        n = nV mod 86400*366 
-        nV = fix(nV / 60 / 60 / 24 /366)        '这里面是除24，不是60，因为一天有24个小时，小云你这个傻X  20150119
-        c = c & nV & "年" 
-        nV = n 
-    end if
-    if nV >= 86400 then
-        n = nV mod 86400 
-        nV = fix(nV / 60 / 60 / 24)        '这里面是除24，不是60，因为一天有24个小时，小云你这个傻X  20150119
-        c = c & nV & "天" 
-        nV = n 
-    end if  
-    if nV >= 3600 then
-        n = nV mod 3600 
-        nV = fix(nV / 60 / 60) 
-        c = c & nV & "小时" 
-        nV = n 
-    end if 
 
-    if nV >= 60 then
-        n = nV mod 60 
-        nV = fix(nV / 60) 
-        c = c & nV & "分" 
-        nV = n 
-    end if 
-    if nV > 0 then
-        c = c & nV & "秒" 
-    end if
-	if c="" then
-		c="0秒"
-	end if
-	
-    printTimeValue = c 
+function getDayStatus(a, b)
+dim c,d
+if left(a, 1) = ChrW(48) then
+a = right(a, 1) 
+end if 
+d = CInt(a) 
+if d >= 0 and d <= 5 then
+c = ChrW(20940)&ChrW(26216) 
+elseIf d >= 6 and d <= 8 then
+c = ChrW(26089)&ChrW(19978) 
+elseIf d >= 9 and d <= 12 then
+c = ChrW(19978)&ChrW(21320) 
+elseIf d >= 13 and d <= 18 then
+c = ChrW(19979)&ChrW(21320) 
+elseIf d >= 19 and d <= 24 then
+c = ChrW(26202)&ChrW(19978) 
+else
+c = ChrW(28145)&ChrW(22812) 
+end if 
+if b = 1 then c = ChrW(60)&ChrW(98)&ChrW(62) & c & ChrW(60)&ChrW(47)&ChrW(98)&ChrW(62) 
+getDayStatus = c 
 end function 
-'计算整时  (问答以小时或分钟显示)
-function printAskTime(nV)
-    on error resume next 
-    dim  c, n  
-    if nV >= 3600 then 
-        n = nV mod 3600 
-        nV = fix(nV / 60 / 60) 
-        c = c & nV & "小时" 
-        nV = n 
-        printAskTime = c : exit function
-    end if 
-    if nV >= 60 then
-        n = nV mod 60 
-        nV = fix(nV / 60) 
-        c = c & nV & "分钟" 
-        nV = n 
-        printAskTime = c : exit function 
-    end if 
-    if nV >= 0 then
-        c = c & nV & "秒钟"  
-        printAskTime = c : exit function 
-    end if    
+
+function printTimeValue(byval a) 
+dim b, c, d 
+b=a
+if a >= 86400*366 then
+d = a mod 86400*366 
+a = fix(a / 60 / 60 / 24 /366)
+c = c & a & ChrW(24180) 
+a = d 
+end if
+if a >= 86400 then
+d = a mod 86400 
+a = fix(a / 60 / 60 / 24)
+c = c & a & ChrW(22825) 
+a = d 
+end if  
+if a >= 3600 then
+d = a mod 3600 
+a = fix(a / 60 / 60) 
+c = c & a & ChrW(23567)&ChrW(26102) 
+a = d 
+end if 
+if a >= 60 then
+d = a mod 60 
+a = fix(a / 60) 
+c = c & a & ChrW(20998) 
+a = d 
+end if 
+if a > 0 then
+c = c & a & ChrW(31186) 
+end if
+if c="" then
+c=ChrW(48)&ChrW(31186)
+end if
+printTimeValue = c 
+end function 
+
+function printAskTime(a)
+on error resume next 
+dim  b, c  
+if a >= 3600 then 
+c = a mod 3600 
+a = fix(a / 60 / 60) 
+b = b & a & ChrW(23567)&ChrW(26102) 
+a = c 
+printAskTime = b : exit function
+end if 
+if a >= 60 then
+c = a mod 60 
+a = fix(a / 60) 
+b = b & a & ChrW(20998)&ChrW(38047) 
+a = c 
+printAskTime = b : exit function 
+end if 
+if a >= 0 then
+b = b & a & ChrW(31186)&ChrW(38047)  
+printAskTime = b : exit function 
+end if    
 end function  
-'获得时间
+
 function getTimerSet()
-    getTimerSet = calculationTimer(pubTimer,now)
-end function  
-'计算时间  
-function calculationTimer(startTime,endTime)
-    dim n 
-    'n = formatNumber((timer() - pubTimer) * 1000, 2, - 1) / 1000 
-    'calculationTimer = toNumber(n, 3)   
-	calculationTimer=dateDiff("s", startTime,endTime) 
+getTimerSet = calculationTimer(pubTimer,now)
 end function  
 
-'获得时间
+function calculationTimer(a,b)
+dim c 
+
+
+calculationTimer=dateDiff(ChrW(115), a,b) 
+end function  
+
 function getTimer()
-    getTimer = "<br>------------------------------------<br>页面执行时间：" & getTimerSet() & " 秒" 
+getTimer = ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(39029)&ChrW(38754)&ChrW(25191)&ChrW(34892)&ChrW(26102)&ChrW(38388)&ChrW(65306) & getTimerSet() & ChrW(32)&ChrW(31186) 
 end function 
-'获得时间
+
+function getTimerDetail()
+getTimerDetail = ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(60)&ChrW(98)&ChrW(114)&ChrW(62)&ChrW(39029)&ChrW(38754)&ChrW(25191)&ChrW(34892)&ChrW(26102)&ChrW(38388)&ChrW(65306) & getTimerSet() & ChrW(32)&ChrW(31186)&ChrW(32)&(formatNumber((timer() - pubTimer) * 1000, 2, - 1) / 1000 )
+end function 
+
 function vbGetTimer()
-    VBGetTimer = vbCrLf & "------------------------------------" & vbCrLf & "运行时间：" & calculationTimer(pubTimer,now())
+VBGetTimer = vbCrLf & ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45)&ChrW(45) & vbCrLf & ChrW(36816)&ChrW(34892)&ChrW(26102)&ChrW(38388)&ChrW(65306) & calculationTimer(pubTimer,now())
 end function 
-'获得第三种
+
 function vbEchoTimer()
-    VBEchoTimer = "运行时间：" & calculationTimer(pubTimer,now()) & " 秒"
+VBEchoTimer = ChrW(36816)&ChrW(34892)&ChrW(26102)&ChrW(38388)&ChrW(65306) & calculationTimer(pubTimer,now()) & ChrW(32)&ChrW(31186)
 end function 
-'获得时间第四种
-function vbRunTimer(startTime)
-    VBRunTimer = "运行时间：" & calculationTimer(startTime, now()) & " 秒"
+
+function vbRunTimer(a)
+VBRunTimer = ChrW(36816)&ChrW(34892)&ChrW(26102)&ChrW(38388)&ChrW(65306) & calculationTimer(a, now()) & ChrW(32)&ChrW(31186)
 end function
 
-'添加时间
-function sAddTime(timeObj,sType,nValue)
-	dim s
-	'秒
-	if sType="s" then
-		s=timeObj+0.00001*nValue
-	'分钟
-	elseif sType="n" then
-		s=timeObj+0.00060*nValue
-	'小时
-	elseif sType="h" then
-		s=timeObj+0.00001*nValue*60*60
-	'日
-	elseif sType="d" then
-		s=timeObj+0.00001*nValue*60*60*24
-	'周
-	elseif sType="w" then
-		s=timeObj+0.00001*nValue*60*60*24*7
-	'月
-	elseif sType="m" then
-		s=timeObj+0.00001*nValue*60*60*24*30
-	'季节
-	elseif sType="q" then
-		s=timeObj+0.00001*nValue*60*60*24*120
-	'年
-	elseif sType="y" then
-		s=timeObj+0.00001*nValue*60*60*24*366
-	end if
-	sAddTime=s
+function sAddTime(a,b,c)
+dim d
+
+if b=ChrW(115) then
+d=a+0.00001*c
+
+elseif b=ChrW(110) then
+d=a+0.00060*c
+
+elseif b=ChrW(104) then
+d=a+0.00001*c*60*60
+
+elseif b=ChrW(100) then
+d=a+0.00001*c*60*60*24
+
+elseif b=ChrW(119) then
+d=a+0.00001*c*60*60*24*7
+
+elseif b=ChrW(109) then
+d=a+0.00001*c*60*60*24*30
+
+elseif b=ChrW(113) then
+d=a+0.00001*c*60*60*24*120
+
+elseif b=ChrW(121) then
+d=a+0.00001*c*60*60*24*366
+end if
+sAddTime=d
 end function
 
-'数字转时间 20180228    numberToTime("230") = 04:50
-function numberToTime(content)
-	dim n,n1,n2,s
-	n=getNumberGroup(content)
-	if n<>"" then
-		n=cint(n)
-		n1=cint(n/60)
-		if n1<10 then
-			n1="0" & n1
-		end if
-		n2=(n mod 60)
-		if n2<10 then
-			n2="0" & n2
-		end if
-		s=n1 & ":" & n2 
-	end if
-	numberToTime=s
+function numberToTime(a)
+dim b,c,d,e
+b=getNumberGroup(a)
+if b <>"" then
+b=cint(b)
+c=cint(b/60)
+if c<10 then
+c=ChrW(48) & c
+end if
+d=(b mod 60)
+if d<10 then
+d=ChrW(48)&d
+end if
+e=c & ChrW(58) & d
+end if
+numberToTime=e
 end function
 
-'把标准时间转换为UNIX时间戳 response.Write toUnixTime(now(), +8)
-Function toUnixTime(strTime, intTimeZone)
-    If IsEmpty(strTime) or Not IsDate(strTime) Then strTime = Now
-    If IsEmpty(intTimeZone) or Not isNumeric(intTimeZone) Then intTimeZone = 0
-    toUnixTime = DateAdd("h",-intTimeZone,strTime)
-    toUnixTime = DateDiff("s","1970-01-01 00:00:00", toUnixTime)
-End Function
-'把UNIX时间戳转换为标准时间 response.Write "<hr>" & fromUnixTime("1513858770", +8)
-Function fromUnixTime(nIntTime, nIntTimeZone)
-    If IsEmpty(nIntTime) or Not IsNumeric(nIntTime) Then
-        fromUnixTime = Now()
-        Exit Function
-    End If         
-    If IsEmpty(nIntTime) or Not IsNumeric(nIntTimeZone) Then nIntTimeZone = 0
-    fromUnixTime = DateAdd("s", nIntTime, "1970-01-01 00:00:00")
-    fromUnixTime = DateAdd("h", nIntTimeZone, fromUnixTime)
-End Function
 
-'把标准时间转换为13位UNIX时间戳 20231216
-Function to13UnixTime(strTime)
-    to13UnixTime = (strTime - CDate("01/01/1970 00:00:00")) * 86400000 
-End Function
-'把13位UNIX时间戳转换为标准时间 
-Function from13UnixTime(intTime)
-    from13UnixTime=DateAdd("s", CLng(intTime / 1000), "01/01/1970 00:00:00")
-End Function
+
+
+
+
+
+
+Function secToTime(a)
+Dim b, c, d
+Dim e
+
+If IsNumeric(a) Then
+e = CLng(a)
+Else
+e = 0
+End if
+
+b = Int(e / 3600)
+
+
+
+c = Int((e Mod 3600) / 60)
+
+
+d = e Mod 60
+
+
+
+
+secToTime = b & ChrW(58) & _
+Right(ChrW(48) & c, 2) & ChrW(58) & _
+Right(ChrW(48) & d, 2)
+End function
+
+Function toUnixTime(a, b)
+If IsEmpty(a) or Not IsDate(a) Then a = Now
+If IsEmpty(b) or Not isNumeric(b) Then b = 0
+toUnixTime = DateAdd(ChrW(104),-b,a)
+toUnixTime = DateDiff(ChrW(115),ChrW(49)&ChrW(57)&ChrW(55)&ChrW(48)&ChrW(45)&ChrW(48)&ChrW(49)&ChrW(45)&ChrW(48)&ChrW(49)&ChrW(32)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48), toUnixTime)
+End function
+
+Function fromUnixTime(a, b)
+a=left(a,10)
+If IsEmpty(a) or Not IsNumeric(a) Then
+fromUnixTime = Now()
+Exit function
+End if         
+If IsEmpty(a) or Not IsNumeric(b) Then b = 0
+fromUnixTime = DateAdd(ChrW(115), a, ChrW(49)&ChrW(57)&ChrW(55)&ChrW(48)&ChrW(45)&ChrW(48)&ChrW(49)&ChrW(45)&ChrW(48)&ChrW(49)&ChrW(32)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48))
+fromUnixTime = DateAdd(ChrW(104), b, fromUnixTime)
+End function
+
+Function to13UnixTime(a)
+to13UnixTime = (a - CDate(ChrW(48)&ChrW(49)&ChrW(47)&ChrW(48)&ChrW(49)&ChrW(47)&ChrW(49)&ChrW(57)&ChrW(55)&ChrW(48)&ChrW(32)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48))) * 86400000 
+End function
+
+Function from13UnixTime(a)
+from13UnixTime=DateAdd(ChrW(115), CLng(a / 1000), ChrW(48)&ChrW(49)&ChrW(47)&ChrW(48)&ChrW(49)&ChrW(47)&ChrW(49)&ChrW(57)&ChrW(55)&ChrW(48)&ChrW(32)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48)&ChrW(58)&ChrW(48)&ChrW(48))
+End function
+
+function getHandleTimeToDAy(a)
+dim b,c,d,e,f
+b=dateDiff(ChrW(100), a, now())  
+c=dateDiff(ChrW(104), a, now())  
+d=dateDiff(ChrW(110), a, now())
+e=dateDiff(ChrW(115), a, now())
+if b>0 then
+f=b & ChrW(22825)&ChrW(21069)
+if b>30 then
+f=format_Time(a,2)
+end if
+elseif c>0 then
+f=c & ChrW(23567)&ChrW(26102)&ChrW(21069)
+elseif d>0 then
+f=d & ChrW(20998)&ChrW(38047)&ChrW(21069)
+else
+f=e & ChrW(31186)&ChrW(21069)
+end if
+getHandleTimeToDAy=f 
+end function
 %>   
-

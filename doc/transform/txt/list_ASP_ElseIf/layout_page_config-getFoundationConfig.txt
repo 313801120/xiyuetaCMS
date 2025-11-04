@@ -1,0 +1,4 @@
+'获得对应的字段配置信息 20250928
+elseif request("act")="getFoundationConfig" then     
+    '获得对应的字段配置信息'
+    call die("{""info"": """&jsonCL2(getFoundationConfig(id))&""",""status"": ""y""}") 

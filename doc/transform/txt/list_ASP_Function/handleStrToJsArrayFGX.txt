@@ -1,0 +1,13 @@
+'处理|分割内容到 "aa","bb"'
+function handleStrToJsArrayFGX(str)
+	dim splxx,s,c
+    if isNul(str) then exit function
+	splxx=split(str,"|")
+	for each s in splxx
+		if s<>"" then
+			if c<>"" then c=c &","
+			c=c & """" & s &""""
+		end if
+	next
+	handleStrToJsArrayFGX=c
+end function

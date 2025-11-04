@@ -1,0 +1,19 @@
+'cls'
+elseif request("act")="cls" then 
+    if checkAdminRule("删除" & winTitle)=false then 
+        call addSystemLog(tableName,"清空后台日志失败，没有删除权限")
+        call die("{""info"": ""清空后台日志失败，没有删除权限"",""status"": ""n""}")    
+    end if
+
+    '开启密码验证'
+    if delver="yes" and session("adminid")<>-999 then   '排除系统管理员
+        if userrs("pwd")<>mymd5(request("pwd")) then
+            call addSystemLog(tableName,"清空后台日志失败，验证密码错误")
+            call die("{""info"": ""清空后台日志失败，验证密码错误"",""status"": ""n""}")        
+        end if
+    end if
+
+    conn.execute"delete from ["& db_PREFIX & tableName & "]"
+
+    call addSystemLog(tableName,"清空后台日志成功")
+    call die("{""info"": ""清空后台日志成功"",""status"": ""y""}")

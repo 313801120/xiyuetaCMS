@@ -1,0 +1,29 @@
+                //testReload为table渲染时改变的 id: 'testReload'
+                var checkStatus = table.checkStatus('testReload')
+                ,checkData = checkStatus.data; //得到选中的数据
+
+                if(checkData.length === 0){
+                   return layer.msg('请选择数据');
+                }
+                var idlist='';
+                for(var i=0;i<checkData.length;i++){
+                    if(idlist!='')idlist+=',';
+                    idlist+=checkData[i].id;
+                }              
+
+
+                // 使用通用获取内容函数
+                showContentRequestModal({
+                    confirmText: '是否要获取字段基础配置？',
+                    confirmTitle: '确认获取',
+                    action: 'getFoundationConfig',
+                    requestData: { "id": idlist },
+                    exportTitle: '字段基础配置',
+                    filePrefix: 'foundation_config_',
+                    fileExtension: '.txt',
+                    successTitle: '以下是获取到的字段基础配置：',
+                    copyBtnText: '复制全部',
+                    downloadBtnText: '下载文件',
+                    closeBtnText: '关闭'
+                });
+                break;

@@ -1,0 +1,5 @@
+'生成导航到html
+elseif request("act")="createNavHtml" then
+    call createNavHtml(id)
+    call die(getTimer())
+    'call die("{""info"": ""生成导航html成功"",""status"": ""y""}")

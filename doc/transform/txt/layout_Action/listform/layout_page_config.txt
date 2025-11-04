@@ -1,0 +1,64 @@
+    // 监听布局页ID选择变化
+    form.on('select(layout_page_id)', function(data){
+        var layout_page_id = data.value;
+        var layout_field_id=$("#layout_field_id").val()
+        // alert(layout_page_id)
+        // alert(layout_field_id)
+        console.log('选择的布局页ID:', layout_page_id);
+ 
+        if(layout_page_id) {
+            // 显示加载状态
+            var loadingIndex = layer.load(1, {shade: [0.1,'#fff']});
+            
+            // 发送Ajax请求获取对应的配置字段
+            $.ajax({
+                url: '?act=getLayoutFieldList',
+                type: 'POST',
+                data: {
+                    layout_page_id: layout_page_id,
+                    layout_field_id: layout_field_id
+                },
+                dataType: 'json',
+                success: function(response) {
+                    layer.close(loadingIndex);
+                    console.log('Ajax响应:', response);
+                    
+                    if(response.success) {
+                        // 清空并重新填充配置字段ID下拉框
+                        var $layoutFieldSelect = $('#layout_field_id');
+                        $layoutFieldSelect.empty();
+                        $layoutFieldSelect.append('<option value="">请选择配置字段</option>');
+                        
+                        if(response.data && response.data.length > 0) {
+                            $.each(response.data, function(index, item) {
+                                var selected = '';
+                                if(item.isselect == 1 || item.isselect == "1") {
+                                    selected = ' selected';
+                                }
+                                $layoutFieldSelect.append('<option value="' + item.id + '"' + selected + '>' + item.title + '(' + item.fieldName + ')</option>');
+                            });
+                        } else {
+                            $layoutFieldSelect.append('<option value="">暂无可用字段</option>');
+                        }
+                        
+                        // 重新渲染表单
+                        form.render('select');
+                        layer.msg('已加载配置字段', {icon: 1});
+                    } else {
+                        layer.msg('获取配置字段失败：' + response.message, {icon: 2});
+                    }
+                },
+                error: function(xhr, status, error) {
+                    layer.close(loadingIndex);
+                    console.error('Ajax请求失败:', xhr.responseText);
+                    layer.msg('请求失败，请检查网络连接', {icon: 2});
+                }
+            });
+        } else {
+            // 如果清空选择，则清空配置字段下拉框
+            var $layoutFieldSelect = $('#layout_field_id');
+            $layoutFieldSelect.empty();
+            $layoutFieldSelect.append('<option value="">请选择配置字段</option>');
+            form.render('select');
+        }
+    });

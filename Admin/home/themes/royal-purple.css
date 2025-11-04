@@ -1,0 +1,59 @@
+:root {
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --text-color: #e6e6e6;
+    --title-color: #ffffff;
+    --border-color: #2a2a4a;
+    --hover-color: #2d2d4d;
+    --chart-title-color: #ffffff;
+    --chart-legend-color: #e6e6e6;
+    --chart-axis-line-color: #4a4a6a;
+    --chart-axis-label-color: #b8b8d4;
+    --chart-split-line-color: rgba(74, 74, 106, 0.2);
+    --chart-income-start-color: #9b4dca;
+    --chart-income-end-color: #7b2cbf;
+    --chart-expense-start-color: #ff9e00;
+    --chart-expense-end-color: #ff6d00;
+}
+
+.dashboard-container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.data-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.data-card:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.data-title {
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+.data-value {
+    color: #9b4dca;
+    font-weight: bold;
+}
+
+.data-trend {
+    color: var(--text-color);
+}
+
+.theme-selector {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.theme-selector option {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+} 

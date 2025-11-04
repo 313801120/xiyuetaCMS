@@ -1,0 +1,38 @@
+    //是否置顶  不能放到表格加载完成后，点搜索，这个switch会重要加载一次，不好
+    form.on('switch', function(data){
+        // 保存原始状态  
+        var originalChecked = !data.elem.checked;   
+        // var pid=data.elem.value 
+        var This=$(data.elem).parent();//父级对象
+
+
+        // 找到最近的tr
+        var $tr = $(data.elem).closest('tr');
+        var index = $tr.data('index'); // layui会给tr加data-index
+        var rowData = layui.table.cache['testReload'][index]; // testReload是你的table id
+        var id = rowData.id; 
+
+        NProgress.start(); // 开始显示进度条  
+        $.ajax({
+          type: "POST",
+          cache: true,
+          dataType: "json",
+          url: "?act=isOnOff",
+          data: { "id": id,"value":data.elem.checked,fieldname:data.elem.name }, 
+          success: function(res) { 
+              NProgress.done(); // 进度条完成  
+              switch (res.status) {
+                case "y": 
+                    layer.msg(res.info, {icon: 1});
+                    break;
+                case "n":   
+                    layer.tips(res.info, This, {tips: 1});
+                    layer.msg(res.info, {icon: 2});  
+                    data.elem.checked = originalChecked;  
+                    form.render(); // 渲染
+                    break;
+              }
+          }
+      }); 
+
+    })

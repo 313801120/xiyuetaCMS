@@ -1,0 +1,14 @@
+                            // 使用通用获取内容函数
+                            showContentRequestModal({
+                                confirmText: '是否要获取字段基础配置？',
+                                confirmTitle: '确认获取',
+                                action: 'getFoundationConfig',
+                                requestData: { "id": pid },
+                                exportTitle: '字段基础配置',
+                                filePrefix: 'foundation_config_',
+                                fileExtension: '.txt',
+                                successTitle: '以下是获取到的字段基础配置：',
+                                copyBtnText: '复制全部',
+                                downloadBtnText: '下载文件',
+                                closeBtnText: '关闭'
+                            });

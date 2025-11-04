@@ -1,0 +1,205 @@
+'生成导航html' 20251014
+function batchCreateNavHtml(idList,nCreateHtmlOKCount)  
+    dim url,htmlFile,isGenerate,content,navtype,newUrl,newHtmlFile,viewUrl,nMaxPage,totalPages,totalRecords,i,pageUrl,sql,addSql,pageHtmlFile,nLen,defaultLanguage,splxx,languageList,nMax,j
+    if idList<>"" then
+        addSql=" where isthrough=1 and ishtml=1"  '生成html要为真'
+        if idList<>"*" then  '为*生成全部文章'
+            addSql=addSql & " and id in("&idList&")"
+        end if
+
+
+        dim rs:Set rs = CreateObject("Adodb.RecordSet")
+        rs.open"select languageList from " & db_PREFIX & "website order by sortrank desc,sortrank asc",conn,1,1
+        if not rs.eof then
+            languageList=rs("languageList") 
+            call echo("需要生成的版本有",rs("languageList"))
+            splxx=split(rs("languageList")&"|cn|","|")
+            defaultLanguage=splxx(1)  '默认语言'
+            call echo("默认语言为",defaultLanguage)
+        end if:rs.close
+        ' and updatetime > createHtmltime ' 暂时不需要这个
+        addSql=addSql&" ORDER BY updatetime DESC"  '生成html要正排序，更新要倒排序，让没生成在前，更新在前'
+        sql="select * from ["& db_PREFIX &"webcolumn]"&addSql
+        call echo("sql",sql):doevents 
+
+        rs.open sql,conn,1,1
+        nMax=rs.recordcount
+        if nMax>9999 then nMax=9999
+        for i=1 to nMax
+            if rs.eof then exit for      
+            call echoBlueB("生成导行id="&rs("id"),i&"/"&nMax)
+            isGenerate=true
+            if phptrim(rs("httpurl"))<>"" then        '网址不为空则URL为网址'
+                isGenerate=false
+            end if
+            navtype=rs("columntype")
+            if navtype="text" then navtype="about"
+
+            if phptrim(rs("filename"))<>"" then
+                htmlFile="/"&phptrim(rs("filename"))
+            elseif navtype="home" then
+                htmlFile="/index.html"
+            else
+                htmlFile="/"&navtype & "_" & rs("id") &  ".html"
+            end if
+            if navtype="home" then
+                url="default.asp?ishtml=1"
+            else
+                url=navtype & ".asp?id="&rs("id") & "&ishtml=1"
+            end if
+            url=webDoMain() & "/" &url
+            if isGenerate then   
+
+                if instr(languageList,"|cn|")>0 then
+                    nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                    call createWebHtml("cn",url,htmlFile,rs,defaultLanguage,"") 
+                    doevents
+                end if                
+
+                if instr(languageList,"|en|")>0 then      
+                    nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'              
+                    call createWebHtml("en",url,htmlFile,rs,defaultLanguage,"") 
+                    doevents
+                end if    
+
+                if instr(languageList,"|ft|")>0 then  
+                    nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                    call createWebHtml("ft",url,htmlFile,rs,defaultLanguage,"") 
+                    doevents
+                end if
+
+                '需要分布处理的导行'
+                if instr("|product|news|video|down|case|","|"&navtype&"|")>0 then
+ 
+                    idList=getColumAllID20251015(rs("id"))
+                    if idList<>"" then idList=idList+","
+                    idList=idList & rs("id")
+                    addSql=" where parentId in("& idList &")"
+
+                    sql="select count(*)as ct from ["&db_PREFIX&"articledetail]"&addSql
+                    rsx.open sql ,conn,1,1
+                    totalRecords=IIF(isnull(rsx("ct"))=true,0,rsx("ct")):rsx.close
+                    totalPages=calculateTotalPages(totalRecords,rs("npagesize"))
+
+                    call echo("sql",sql)
+                    call echo("条数",totalRecords)
+                    call echo("每页显示",rs("npagesize"))
+                    call echo("页数totalPages",totalPages)
+                    if totalPages>1 then
+                        for j=1 to totalPages
+                            nLen=instrrev(htmlFile,".")
+                            pageHtmlFile=mid(htmlFile,1,nLen-1) & "_"&j&mid(htmlFile,nLen)
+                            call echo("pageHtmlFile",pageHtmlFile)
+                            pageUrl=url&IIF(instr(url,"?")=false,"?","&")&"page=" & j  
+                            if instr(languageList,"|cn|")>0 then
+                                nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                                call createWebHtml("cn",pageUrl,pageHtmlFile,rs,defaultLanguage,j) 
+                                doevents
+                            end if
+                            if instr(languageList,"|en|")>0 then  
+                                nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                                call createWebHtml("en",pageUrl,pageHtmlFile,rs,defaultLanguage,j) 
+                                doevents
+                            end if
+                            if instr(languageList,"|ft|")>0 then  
+                                nCreateHtmlOKCount=nCreateHtmlOKCount+1  '生成html成功数累加'
+                                call createWebHtml("ft",pageUrl,pageHtmlFile,rs,defaultLanguage,j) 
+                                doevents
+                            end if
+                        next
+                    end if
+                    doevents
+                end if
+
+                '更新时间'
+                conn.execute("update " & db_PREFIX & "webcolumn set createHtmltime='"&now()&"' where id="&rs("id"))
+
+            end if
+        rs.movenext:next:rs.close
+    end if
+    batchCreateNavHtml=nCreateHtmlOKCount
+end function
+'创建网页html'
+function createWebHtml(language,url,byval htmlFile,rs,defaultLanguage,nPage)
+    dim newHtmlFile,newUrl,viewUrl,sType,content
+    if language="en" then
+        sType="英文版"
+    elseif language="ft" then
+        sType="繁体版"
+    elseif language="cn" then
+        sType="中文版"
+    end if
+  
+    call echoRedB("提示","生成"&sType&"导航【"&rs("columnName")&"】成功！")
+    if language<>defaultLanguage then
+        call createFolder("/"&language&"/")  '创建对英言版本目录'
+        newHtmlFile="/" & language & htmlFile  '加个判断'
+    else
+        newHtmlFile= htmlFile  '加个判断'
+    end if
+    newUrl=url
+    newUrl=newUrl&IIF(instr(newUrl,"?")=false,"?","&")
+    if language<>defaultLanguage then  '不为默认语言则加上语言参数'
+        newUrl=newUrl&"language="&language
+    end if
+    viewUrl=replace(newUrl,"ishtml=1&","")
+    viewUrl=replace(viewUrl,"?ishtml=1","")
+    call echo(""&sType&"正常访问","<a href='"&viewUrl&"' target='_blank'>"&viewUrl&"</a>")
+    call echo(""&sType&"采集访问","<a href='"&newUrl&"' target='_blank'>"&newUrl&"</a>")
+    call echo(""&sType&"生成后地址","<a href='"&newHtmlFile&"' target='_blank'>"&newHtmlFile&"</a>")
+
+    if nPage="" then
+        call addToHtmlFileTable("导航",newHtmlFile,"")
+    else
+        call addToHtmlFileTable("分页",newHtmlFile,nPage)
+    end if
+
+
+    content=gethttpurl(newUrl,"utf-8")
+    call writetofile(newHtmlFile,content,"utf-8")  
+    call hr()   
+    createWebHtml=content
+end function
+' 计算总页数的函数
+Function calculateTotalPages(totalRecords, recordsPerPage)
+    If recordsPerPage <= 0 Then
+        calculateTotalPages = 0
+        Exit Function
+    End If
+    
+    If totalRecords <= 0 Then
+        calculateTotalPages = 0
+        Exit Function
+    End If
+    
+    ' 使用向上取整计算总页数
+    calculateTotalPages = Int((totalRecords - 1) / recordsPerPage) + 1
+End Function
+'获得全部栏目ID列表 20210321  如1,4,5,6,2,6,8,9
+function getColumAllID20251015(parentid)
+  if parentid="" then getColumAllID20251015="": exit function
+  dim rs:Set rs = CreateObject("Adodb.RecordSet")
+  dim c,s
+  rs.open "select * from ["& db_PREFIX &"webcolumn] where parentid="&parentid,conn,1,1
+  while not rs.EOF 
+    if c<>"" then c=c & ","
+    c=c & rs("id")
+    s=getColumAllID20251015(rs("id"))
+    if s<>"" then
+      c=c & "," & s
+    end if
+  rs.movenext:wend:rs.close
+  getColumAllID20251015=c
+end function
+'添加html文件到表里'
+function addToHtmlFileTable(sType,htmlFilePath,nPage)
+  dim rs:Set rs = CreateObject("Adodb.RecordSet") 
+  rs.open "select * from ["& db_PREFIX &"htmlFile] where htmlFilePath='"&htmlFilePath&"'",conn,1,3
+  if rs.eof then rs.addnew
+  rs("sType")=sType
+  rs("htmlFilePath")=htmlFilePath
+  if cstr(nPage)<>"" then rs("nPage")=nPage
+  rs("status")=1  '状态为1 生成html'
+  rs("updatetime")=now() '更新时间'
+  rs.update:rs.close 
+end function

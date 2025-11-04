@@ -1,91 +1,52 @@
-<%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><%@LANGUAGE=ChrW(86)&ChrW(66)&ChrW(83)&ChrW(67)&ChrW(82)&ChrW(73)&ChrW(80)&ChrW(84) CODEPAGE=ChrW(54)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(49)%>
 <%
 Server.ScriptTimeOut=5000
 %>
 <!--#include file="UpLoadClass.asp"-->
-
 <%
-'if request.Cookies("user")("login")<>"true" and request.Cookies("admin")("login")<>"true" then
-	'response.Write("{""code"":1,""msg"": ""请登陆再上传图片""}"):response.end()
-'end if
-dim request2,formPath,formName,intCount,intTemp,act
-act=request("act")
 
-'建立上传对象
+
+
+dim request2,formPath,formName,intCount,intTemp,act
+act=request(ChrW(97)&ChrW(99)&ChrW(116))
+
 set request2=new UpLoadClass
 
-	'设置文件允许的附件类型为gif/jpg/rar/zip
-	request2.FileType="mp4"
+request2.FileType=ChrW(109)&ChrW(112)&ChrW(52)
 
-	'设置服务器文件保存路径
-	request2.SavePath="../../UploadFiles/img/"
+request2.SavePath=ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(47)
 
-	'设置字符集
-	request2.Charset="UTF-8"
+request2.Charset=ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56)
 
-	'打开对象
-	request2.Open() 
+request2.Open() 
 
-	
+intCount=0
+for intTemp=1 to Ubound(request2.FileItem)
 
-		
-			'----列出所有上传了的文件开始----
-		
-				intCount=0
-				for intTemp=1 to Ubound(request2.FileItem)
-				'获取表单文件控件名称，注意FileItem下标从1开始
-				formName=request2.FileItem(intTemp)
-				
-				'显示源文件路径与文件名
-				file_path=request2.form(formName&"_Path")
-				
-				file_name=request2.form(formName&"_Name")
-		
-				'显示文件大小（字节数）
-				file_size=request2.form(formName&"_Size")
-				
-				
-				 file_error=request2.form(formName&"_Err")
-				
-				file_msg=Error2Info(request2.form(formName&"_Err"))
-				
-		
-				if file_url<>"" then file_url=file_url&","
-				'显示目标文件路径与文件名
-				file_url=file_url&"{""src"":""/UploadFiles/img/"&formPath&request2.form(formName)&""",""title"":"""& request2.form(formName) &"""}"
-		
-		
-		      
-		
-				if request2.form(formName&"_Err")=0 then intCount=intCount+1
-		
-		
-				
-		
-			next
- 
-		
-	
-			 
+formName=request2.FileItem(intTemp)
 
-	if act="one" then
-		str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": "&file_url&"}"
-	else
-		str="{""status"":"&file_error&",""code"":"&file_error&",""msg"": """&file_msg&""",""data"": ["&file_url&"]}"
-	end if
-			
-	
+file_path=request2.form(formName&ChrW(95)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))
+file_name=request2.form(formName&ChrW(95)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
 
+file_size=request2.form(formName&ChrW(95)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101))
+file_error=request2.form(formName&ChrW(95)&ChrW(69)&ChrW(114)&ChrW(114))
+file_msg=Error2Info(request2.form(formName&ChrW(95)&ChrW(69)&ChrW(114)&ChrW(114)))
+if file_url <>"" then file_url=file_url&ChrW(44)
 
-if request.QueryString("act")="md" then
-response.Write mdstr	
+file_url=file_url&ChrW(123)&ChrW(34)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(34)&ChrW(58)&ChrW(34)&ChrW(47)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(47)&formPath&request2.form(formName)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(34)& request2.form(formName) &ChrW(34)&ChrW(125)
+if request2.form(formName&ChrW(95)&ChrW(69)&ChrW(114)&ChrW(114))=0 then intCount=intCount+1
+next
+if act=ChrW(111)&ChrW(110)&ChrW(101) then
+str=ChrW(123)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&file_msg&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(32)&file_url&ChrW(125)
 else
+str=ChrW(123)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&file_msg&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(91)&file_url&ChrW(93)&ChrW(125)
+end if
+if request.QueryString(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(109)&ChrW(100) then
+response.Write mdstr  
+else
+response.Write str  
+end if  
 
-response.Write str	
-
-end if	
-
-
-'释放上传对象
 set request2=nothing
 %>

@@ -1,0 +1,21 @@
+    //批量生成页面 20250812
+    var batchCrateAdminWebPage=function(){
+        //testReload为table渲染时改变的 id: 'testReload'
+        var checkStatus = table.checkStatus('testReload')
+        ,checkData = checkStatus.data; //得到选中的数据
+
+        if(checkData.length === 0){
+           return layer.msg('请选择数据');
+        }
+        var idList='';
+        for(var i=0;i<checkData.length;i++){
+            if(idList!='')idList+=',';
+            idList+=checkData[i].id;
+        }               
+        layer.confirm('确定要批量生成页面吗？', function(index) {
+            layer.close(index);  
+            // 跳转到导入页面
+            window.open("/doc/transform/batcratepage2025.asp?idList="+idList) 
+        });
+          
+    }

@@ -1,0 +1,78 @@
+
+产品展示=Products
+产品中心=Product Center
+新闻中心=News
+在线留言=Online Message
+关于我们=About Us
+ 
+欢迎访问=Welcome to visit
+全国咨询热线=National Consultation Hotline
+留下您的宝贵意见=Leave your valuable feedback
+查看详情=Detail
+发布=Release
+更多新闻=More News
+微信二维码=WeChat QR code
+电话咨询=by telephone
+网站首页=homepage
+热门关键词=Hot Keywords
+搜索=search
+请输入关键字...=Please enter keywords...
+传真=fax
+公司地址=Company address
+当前位置=current location
+咨询热线=Consultation Hotline
+联系我们=Contact Us
+首页=home
+末页=last
+上一篇=Previous article
+下一篇=Next article
+没有了=No more
+作者=author
+时间=time
+阅读=read
+回到顶部=Back to top
+QQ客服=QQ customer service
+
+热门产品=Popular products
+推荐资讯=Suggested Resources
+推荐产品=Recommended products
+
+
+
+姓名=full name
+请输入您的姓名=Please enter your name
+提交=submit to
+点击换一张=Click to change one
+验证码=Verification code
+请输入您的留言内容=Please enter your message content
+留言内容=Message Content
+请输入您的邮箱地址=Please enter your email address
+邮箱=email
+手机号=cell-phone number
+请输入您的手机号=Please enter your phone number
+
+
+
+ 
+
+验证码必须为四位数字和字母=The verification code must consist of four digits and letters
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+    
+    
+    

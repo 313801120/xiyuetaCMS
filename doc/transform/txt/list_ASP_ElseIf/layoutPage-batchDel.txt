@@ -1,0 +1,10 @@
+
+    '删除搜索表和排序表对应页的记录
+    'conn.execute"delete from ["& db_PREFIX & "layout_search_list] where layout_page_id in("&id&")"
+    'conn.execute"delete from ["& db_PREFIX & "layout_sortrank_list] where layout_page_id in("&id&")"
+    conn.execute"delete from ["& db_PREFIX & "layout_page_config] where layout_page_id in("&id&")"
+    conn.execute"delete from ["& db_PREFIX & "layout_table_button] where layout_page_id in("&id&")"
+    conn.execute"delete from ["& db_PREFIX & "layout_table_toolbar] where layout_page_id in("&id&")"
+    conn.execute"delete from ["& db_PREFIX & "layout_table_action] where layout_page_id in("&id&")"
+    conn.execute"delete from ["& db_PREFIX & "layout_listPage_form] where layout_page_id in("&id&")"
+    conn.execute"delete from ["& db_PREFIX & "layout_action] where layout_page_id in("&id&")"

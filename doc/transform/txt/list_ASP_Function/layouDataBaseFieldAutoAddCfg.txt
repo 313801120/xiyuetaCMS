@@ -1,0 +1,129 @@
+'处理字段自动创建配置 20250811 6
+function layouDataBaseFieldAutoAddCfg() 
+    dim layout_database_table_id,sql,layout_field_id,nOK,sConfig,sTip
+    dim splstr,splxx,i,j,s,c,fieldConfigContent,fieldName,fieldTitle,nLen
+    dim fieldtype,fieldconfig,divtype,inputtype,listitemwidth,isDebug
+    isDebug=false '调试'
+    fieldConfigContent=readfile("\doc\transform\txt\config/字段名和标题列表.txt","utf-8")
+    fieldConfigContent=vbcrlf & fieldConfigContent & vbcrlf
+	
+	if phptrim(request("layout_database_table_id"))<>"" then
+	    sql="select * from "&thisAddPrefix("layout_database_table")&" where id="&request("layout_database_table_id")
+		rs.open sql,conn,1,1
+		if not rs.eof then
+			'使用自己后台里添加的'
+			if phptrim(rs("fieldListConfig"))<>"" then
+				fieldConfigContent=vbcrlf & phptrim(rs("fieldListConfig")) & vbcrlf
+				sTip="，字段列表配置为自定义"
+			end if
+		end if:rs.close
+	end if
+	
+
+    layout_database_table_id=request("layout_database_table_id")
+    sql="select * from ["& db_PREFIX & tableName &"]"
+    if layout_database_table_id<>"" then sql=sql&" where layout_database_table_id="&layout_database_table_id
+    rs.open sql,conn,1,3
+    nOK=0
+    while not rs.eof  
+        sql = "select * from ["& db_PREFIX &  "layout_field] where isthrough=1" 
+        if rs("layout_field_id")=-1 then
+            sql=sql&" and fieldname='"&rs("fieldName")&"'" 
+        else
+            sql=sql&" and id=" & rs("layout_field_id")
+        end if
+        ' call echo("sql2",sql):doevents
+        rsx.open sql,conn,1,3
+        if rsx.eof then '不存在，则处理'
+            ' call echoRedB("提示","没有")
+            layout_field_id=-1
+
+            '新的查找'
+            sql = "select * from ["& db_PREFIX &  "layout_field] where isthrough=1 and fieldname='"&rs("fieldName")&"'"
+            rss.open sql,conn,1,1
+            while not rss.eof  
+                if layout_field_id=-1 then
+                    layout_field_id=rss("id")
+                elseif rss("fieldType")="input" then
+                    layout_field_id=rss("id")
+                end if 
+            rss.movenext:wend:rss.close
+
+            if layout_field_id=-1 then
+                fieldName=lcase(rs("fieldName"))
+                nLen=instr(fieldConfigContent,","&fieldName&"=")
+                fieldTitle=rs("fieldName")
+                '清空'
+                fieldtype="":fieldconfig="":divtype="":inputtype="":listitemwidth=""
+                '小写字段名查的'
+                sConfig=getStrCut(fieldConfigContent, vbcrlf & lcase(rs("fieldName"))&"=", vbcrlf,3)
+
+                if sConfig<>"" then
+                    sConfig=sConfig&","
+                    ' call echo("sConfig",sConfig):doevents
+                    fieldTitle=getStrCut(sConfig, vbcrlf&lcase(rs("fieldName"))&"=", ",",0)
+                    
+                    fieldtype=getStrCut(sConfig, ",fieldtype=", ",",0)
+                    fieldconfig=getStrCut(sConfig, ",fieldconfig=", ",",0)
+					
+                    fieldconfig=decTsStrReplace(fieldconfig,"=,") '解码'
+					
+                    divtype=getStrCut(sConfig, ",divtype=", ",",0)
+                    inputtype=getStrCut(sConfig, ",inputtype=", ",",0)
+                    listitemwidth=getStrCut(sConfig, ",listitemwidth=", ",",0)
+
+                    if isDebug then
+                        call echo("字段名 fieldName",rs("fieldName")) 
+                        call echo("字段标题 fieldTitle",fieldTitle) 
+                        call echo("字段类型 fieldType",fieldType) 
+                        call echo("字段配置 fieldconfig",fieldconfig) 
+                        call echo("字段div类型divtype",divtype) 
+                        call echo("字段input类型inputtype",inputtype) 
+                        call echo("列表页项宽listitemwidth",listitemwidth) 
+
+                        call echo("sConfig",sConfig) 
+                        ' call die("end")
+                    end if
+                end if
+
+                rsx.addnew
+                rsx("bigClassName")=-99
+                rsx("title")="自动创建-"&fieldTitle
+                rsx("fieldTitle")=fieldTitle
+                rsx("fieldName")=rs("fieldName")
+                if fieldType<>"" then
+                    rsx("fieldType")=fieldType
+                else
+                    if rs("fieldtype")="203" then
+                        rsx("fieldType")="editor"
+                        rsx("divtype")="block"
+                    elseif rs("fieldtype")="7" then
+                        rsx("fieldType")="time"
+                    else
+                        rsx("fieldType")="input"
+                    end if
+                end if
+                if fieldconfig<>"" then rsx("fieldconfig")=fieldconfig
+                if divtype<>"" then rsx("divtype")=divtype
+                if inputtype<>"" then rsx("inputtype")=inputtype
+                rsx("isthrough")=1
+                rsx.update
+
+                '再次打开并获得对应的id'
+                rss.open sql,conn,1,1
+                if not rss.eof then
+                    layout_field_id=rss("id")
+                end if:rss.close 
+            end if
+            if layout_field_id<>-1 then
+                nOK=nOK+1
+                rs("layout_field_id")=layout_field_id
+                rs.update  '更新'
+            end if
+        end if:rsx.close
+ 
+    rs.movenext:wend:rs.close
+
+    
+    layouDataBaseFieldAutoAddCfg="更新 "&nOK&" 条" & sTip
+end function

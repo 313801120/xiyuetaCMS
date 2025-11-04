@@ -1,0 +1,169 @@
+'获得对应的字段配置信息 20250928 2 db_PREFIX,conn,  20250930
+function getFoundationConfig(idList)
+    dim rs:Set rs = CreateObject("Adodb.RecordSet")
+    dim rsx:Set rsx = CreateObject("Adodb.RecordSet")
+    dim sql,s,c,id,splstr
+    splstr=split(idList,",")
+    for each id in splstr
+        if id<>"" then
+            sql="select * from ["&db_PREFIX&"layout_page_config] where id="&id
+            rs.open sql,conn,1,1
+            if not rs.eof then
+                sql="select * from ["&db_PREFIX&"layout_field] where id="&rs("layout_field_id")
+                rsx.open sql,conn,1,1
+                if not rsx.eof then
+                    s=lcase(rsx("fieldname"))&"="&rsx("fieldtitle")   '字段名要小写的'
+                    if rsx("fieldtype")<>"input" then
+                        s=s & ",fieldtype="&rsx("fieldtype")
+                    end if
+                    if phptrim(rsx("fieldconfig"))<>"" then  '字段配置
+                        s=s & ",fieldconfig="&encDHJH(rsx("fieldconfig"))
+                    end if
+                    if rsx("divtype")<>"inline" and rsx("divtype")<>"" then
+                        s=s & ",divtype="&rsx("divtype")
+                    end if
+                    if rsx("inputtype")<>"" then
+                        s=s & ",inputtype="&rsx("inputtype")
+                    end if
+                end if:rsx.close
+				
+				
+
+                if phptrim(rs("listitemwidth"))<>"" then  '列表项宽'
+                    s=s & ",listitemwidth="&rs("listitemwidth")
+                end if 
+                if rs("sortrank")<>""  then '排序'
+                    s=s & ",sortrank="&rs("sortrank")
+                end if
+                if rs("viewsortrank")<>rs("sortrank")  then '查看排序'
+                    s=s & ",viewsortrank="&rs("viewsortrank")
+                end if
+                if rs("editsortrank")<>rs("sortrank")  then '编辑排序'
+                    s=s & ",editsortrank="&rs("editsortrank")
+                end if
+                if rs("isthrough")=false  then '审核'
+                    s=s & ",isthrough="&rs("isthrough")
+                end if
+                if rs("islist")=false  then '列表页显示'
+                    s=s & ",islist="&rs("islist")
+                end if
+                if rs("isaddedit")=false  then '编辑页显示'
+                    s=s & ",isaddedit="&rs("isaddedit")
+                end if
+                if rs("isview")=false  then '查看页显示'
+                    s=s & ",isview="&rs("isview")
+                end if
+                if rs("isonlineedit")=false  then '在线编辑'
+                    s=s & ",isonlineedit="&rs("isonlineedit")
+                end if
+                if rs("isenglish") then '英文版'
+                    s=s & ",isenglish="&rs("isenglish")
+                end if
+                if rs("inputonlycheck") then '唯一检测'
+                    s=s & ",inputonlycheck="&rs("inputonlycheck")
+                end if
+                if rs("isinputcheck")  then '表单验证'
+                    s=s & ",isinputcheck="&rs("isinputcheck")
+                end if
+                if rs("isinputtwocolumn")  then '一行两列'
+                    s=s & ",isinputtwocolumn="&rs("isinputtwocolumn")
+                end if
+                if rs("islistheadsort")  then '列表头排序'
+                    s=s & ",islistheadsort="&rs("islistheadsort")
+                end if
+                if rs("islistpagejsondata")  then 'json数据'
+                    s=s & ",islistpagejsondata="&rs("islistpagejsondata")
+                end if
+                if rs("iseditpageitemwrapaddid")  then '编辑项包裹'
+                    s=s & ",iseditpageitemwrapaddid="&rs("iseditpageitemwrapaddid")
+                end if
+                if rs("iseditpageitemaddlayfilter")  then '编辑项过滤器'
+                    s=s & ",iseditpageitemaddlayfilter="&rs("iseditpageitemaddlayfilter")
+                end if
+                if rs("isaddpageview")  then '编辑页显不能改'
+                    s=s & ",isaddpageview="&rs("isaddpageview")
+                end if
+                if rs("iseditpageinputhtml")  then '编辑页只显input'
+                    s=s & ",iseditpageinputhtml="&rs("iseditpageinputhtml")
+                end if
+                if rs("iseditpagehide")  then '编辑页不显input'
+                    s=s & ",iseditpagehide="&rs("iseditpagehide")
+                end if
+                if rs("islistpagetemplet")  then '列表项H5显示'
+                    s=s & ",islistpagetemplet="&rs("islistpagetemplet")
+                end if
+                if rs("iseditpageitemwraphide")  then '编辑项包裹隐藏'
+                    s=s & ",iseditpageitemwraphide="&rs("iseditpageitemwraphide")
+                end if
+
+
+                if phptrim(rs("noterighttext"))<>""  then '文本注释'
+                    s=s & ",noterighttext="&encDHJH(rs("noterighttext"))
+                end if
+                if phptrim(rs("noteleftico"))<>""  then '图标注释'
+                    s=s & ",noteleftico="&encDHJH(rs("noteleftico"))
+                end if
+                if phptrim(rs("defaultvalue"))<>""  then '默认值'
+                    s=s & ",defaultvalue="&encDHJH(rs("defaultvalue"))
+                end if
+                if phptrim(rs("adminlevel"))<>""  then '管理权限'
+                    s=s & ",adminlevel="&encDHJH(rs("adminlevel"))
+                end if
+                if phptrim(rs("addtoinput"))<>""  then '追加字段后'
+                    s=s & ",addtoinput="&encDHJH(rs("addtoinput"))
+                end if
+                if phptrim(rs("iseditsafe"))<>""  then '编辑安全'
+                    s=s & ",iseditsafe="&encDHJH(rs("iseditsafe"))
+                end if
+                if phptrim(rs("addnewvalue"))<>""  then '添加系统值'
+                    s=s & ",addnewvalue="&encDHJH(rs("addnewvalue"))
+                end if
+                if phptrim(rs("updatevalue"))<>""  then '更新系统值'
+                    s=s & ",updatevalue="&encDHJH(rs("updatevalue"))
+                end if
+                if phptrim(rs("listpagerunaction"))<>""  then '列表页运行动作'
+                    s=s & ",listpagerunaction="&encDHJH(rs("listpagerunaction"))
+                end if
+                if phptrim(rs("editpagerunaction"))<>""  then '编辑页运行动作'
+                    s=s & ",editpagerunaction="&encDHJH(rs("editpagerunaction"))
+                end if
+                if phptrim(rs("viewpagerunaction"))<>""  then '查看页运行动作'
+                    s=s & ",viewpagerunaction="&encDHJH(rs("viewpagerunaction"))
+                end if
+
+                
+                if rs("isshowclick")  then '显点击'
+                    s=s & ",isshowclick="&encDHJH(rs("isshowclick"))
+                end if
+                if phptrim(rs("clickurl"))<>""  then '点击网址'
+                    s=s & ",clickurl="&encDHJH(rs("clickurl"))
+                end if
+                if phptrim(rs("listpagenoteico"))<>""  then '表头项图标'
+                    s=s & ",listpagenoteico="&encDHJH(rs("listpagenoteico"))
+                end if
+                if phptrim(rs("listpagenote"))<>""  then '列头项注释'
+                    s=s & ",listpagenote="&encDHJH(rs("listpagenote"))
+                end if
+                if phptrim(rs("listpagefieldnoteico"))<>""  then '列项图标'
+                    s=s & ",listpagefieldnoteico="&encDHJH(rs("listpagefieldnoteico"))
+                end if
+                if phptrim(rs("listpagefieldnote"))<>""  then '列项注释'
+                    s=s & ",listpagefieldnote="&encDHJH(rs("listpagefieldnote"))
+                end if
+				
+				
+				
+				
+				
+                c=c & s & vbcrlf
+            end if:rs.close
+        end if
+    next
+
+    '"testok! idList=" & idList & ",c=" &'
+    getFoundationConfig=c
+end function
+'加密等于号和逗号
+function encDHJH(s)
+	encDHJH=replace(replace(s,"=","[[{等于号}]]"),",","[[{逗号}]]")
+end function 

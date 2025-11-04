@@ -1,0 +1,68 @@
+﻿【userid】0
+【adminid】43
+【bt】aaa
+【tp】/UploadFiles/img/2025072468685953.png
+【flags】|
+【jinqian】0
+【ip】127.0.0.1
+【createtime】2025/8/2 16:55:00
+【updatetime】2025/8/2 16:55:00
+【nsortrank】0
+【tcreatetime】2025/7/23 9:37:31
+【tupdatetime】2025/7/23 9:37:31
+【nisthrough】0
+-------------------------------
+【userid】1
+【adminid】22
+【bt】bbb
+【tp】/UploadFiles/img/2025072468933913.jpg
+【flags】|
+【jinqian】11
+【ip】127.0.0.1
+【createtime】2025/8/2 16:55:00
+【updatetime】2025/8/2 16:55:00
+【nsortrank】0
+【tcreatetime】2025/7/23 9:37:33
+【tupdatetime】2025/7/23 9:37:33
+【nisthrough】0
+-------------------------------
+【userid】2
+【adminid】11
+【bt】ccc
+【flags】|
+【jinqian】444.33
+【ip】127.0.0.1
+【createtime】2025/8/2 16:55:00
+【updatetime】2025/8/2 16:55:00
+【nsortrank】0
+【tcreatetime】2025/7/23 9:37:34
+【tupdatetime】2025/7/23 9:37:34
+【nisthrough】0
+-------------------------------
+【userid】3
+【adminid】-1
+【bt】dddd
+【tp】你妈个蛋
+【flags】|h|f|
+【jinqian】233
+【ip】127.0.0.1
+【createtime】2025/7/24 16:53:52
+【updatetime】2025/8/2 16:55:00
+【nsortrank】0
+【tcreatetime】2025/7/24 16:53:52
+【tupdatetime】2025/7/24 16:53:52
+【nisthrough】0
+-------------------------------
+【userid】4
+【adminid】-1
+【bt】eeee
+【flags】|h|f|
+【jinqian】0
+【ip】127.0.0.1
+【createtime】2025/7/24 16:54:38
+【updatetime】2025/8/2 16:55:00
+【nsortrank】0
+【tcreatetime】2025/7/24 16:54:38
+【tupdatetime】2025/7/24 16:54:38
+【nisthrough】0
+-------------------------------

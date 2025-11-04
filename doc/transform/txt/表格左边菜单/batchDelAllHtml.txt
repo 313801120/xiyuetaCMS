@@ -1,0 +1,10 @@
+
+                layer.confirm('是否要批量删除全部html', {
+                    icon: 3,
+                    title: '确认生成'
+                }, function(index) {
+                    layer.close(index); // 关闭输入弹窗
+                    showwin2('删除全部html', "?act=batchDelAllHtml");  
+                });
+
+                break;

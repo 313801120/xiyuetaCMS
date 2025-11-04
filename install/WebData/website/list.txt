@@ -1,0 +1,34 @@
+﻿【weburl】http://www.xiyueta.com/
+【webfoot】<p>地址：某某市某某区某某路1号国际1层<br />邮编：000000<br />电话：066-000000<br />邮箱：313801120@qq.com</p>
+【email】313801120@qq.com
+【phone】18123456789
+【tel】021-6666666
+【fax】021-7777777
+【weixin】v123456
+【qq】313801120
+【copyright】版权所有：&copy;2022 xiyueta.com ALL RIGHTS RESERVED xiyuetaCMS
+【logo】/UploadFiles/testpic/logo.jpg
+【biglogo】/UploadFiles/testpic/logo.png
+【qrcode】/UploadFiles/testpic/qrcode.png
+【address】某某市某某区某某公路666弄66号
+【company】xiyuetaCMS网站管理系统
+【asporhtml】0
+【en_company】XiyuetaCMS website management system
+【en_address】No. 66, Lane 666, XX Road, XX District, XX City
+【en_webtitle】XiyuetaCMS Content Management System - xiyueta.com
+【en_webkeywords】xiyuetaCMS,xiyueta,xiyueta.com
+【en_webdescription】The xiyuetaCMS content management system is a universal backend permission management framework that follows the trend and is ready to use out of the box. It has multiple versions to choose from and can be used in any combination
+【en_webfoot】<p>Address: International 1st Floor, No.1 XX Road, XX District, XX City<br />Postal Code: 00000<br />Phone: 066-000000<br />Email: 313801120@qq.com</p>
+【languagelist】|cn|ft|en|
+【webtitle】xiyuetaCMS内容管理系统-xiyueta.com
+【webkeywords】xiyuetaCMS,xiyueta,喜悦TA,xiyueta.com
+【webdescription】xiyuetaCMS内容管理系统通用型后台权限管理框架，紧随潮流、开箱即用拥有多种版本选择，随意搭配使用
+【username】test2023
+【version】v2.0
+【versiontime】2025/10/24 9:15:51
+【ip】127.0.0.1
+【sortrank】0
+【isthrough】1
+【createtime】2025/10/18 13:01:34
+【updatetime】2025/10/24 13:26:16
+-------------------------------

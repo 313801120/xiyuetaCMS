@@ -1,0 +1,16 @@
+﻿【title】超级管理员
+【permission】设置|登录限制IP|编辑登录限制IP|会员|会员列表|添加会员|编辑会员|删除会员|管理员|管理员列表|添加管理员|编辑管理员|删除管理员|基本资料|修改密码|管理员角色|管理员角色列表|添加管理员角色|编辑管理员角色|删除管理员角色|网站栏目|网站栏目列表|添加网站栏目|编辑网站栏目|删除网站栏目|文章|文章列表|添加文章|编辑文章|删除文章|网站配置|网站配置列表|添加网站配置|编辑网站配置|删除网站配置|订单|订单列表|添加订单|编辑订单|删除订单|后台日志|后台日志列表|删除后台日志|管理生成html|管理生成html列表|添加管理生成html|编辑管理生成html|删除管理生成html|xiyueta页|xiyueta页列表|添加xiyueta页|编辑xiyueta页|删除xiyueta页|layout_page|layout_page列表|添加layout_page|编辑layout_page|删除layout_page|layout_page_config|layout_page_config列表|添加layout_page_config|编辑layout_page_config|删除layout_page_config|layout_table_button|layout_table_button列表|添加layout_table_button|编辑layout_table_button|删除layout_table_button|layout_table_toolbar|layout_table_toolbar列表|添加layout_table_toolbar|编辑layout_table_toolbar|删除layout_table_toolbar|layout_table_action|layout_table_action列表|添加layout_table_action|编辑layout_table_action|删除layout_table_action|layout_listPage_form|layout_listPage_form列表|添加layout_listPage_form|编辑layout_listPage_form|删除layout_listPage_form|layout_action|layout_action列表|添加layout_action|编辑layout_action|删除layout_action|layout_field|layout_field列表|添加layout_field|编辑layout_field|删除layout_field|layout_database|layout_database列表|添加layout_database|编辑layout_database|删除layout_database|layout_database_table|layout_database_table列表|添加layout_database_table|编辑layout_database_table|删除layout_database_table|layout_database_field|layout_database_field列表|添加layout_database_field|编辑layout_database_field|删除layout_database_field|layout_cai|layout_cai列表|添加layout_cai|编辑layout_cai|删除layout_cai|layout_cai_action|layout_cai_action列表|添加layout_cai_action|编辑layout_cai_action|删除layout_cai_action
+【isthrough】1
+【sortrank】10
+【ip】127.0.0.1
+【createtime】2025/10/30 9:46:48
+【updatetime】2025/11/1 7:43:50
+-------------------------------
+【title】普通管理员
+【permission】会员列表|管理员列表|基本资料|修改密码|管理员角色列表|网站栏目列表|文章列表|网站配置列表|订单列表|管理生成html列表|xiyueta页列表|layout_page列表|layout_page_config列表|layout_table_button列表|layout_table_toolbar列表|layout_table_action列表|layout_listPage_form列表|layout_action列表|layout_field列表|layout_database列表|layout_database_table列表|layout_database_field列表|layout_cai列表|layout_cai_action列表
+【isthrough】1
+【sortrank】20
+【ip】127.0.0.1
+【createtime】2025/10/30 9:46:57
+【updatetime】2025/11/1 7:43:42
+-------------------------------

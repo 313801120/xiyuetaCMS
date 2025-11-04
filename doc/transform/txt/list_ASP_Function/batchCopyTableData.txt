@@ -1,0 +1,30 @@
+ 
+'批量复制指定表指定id的数据' 20250808 
+'call batchCopyTableData(rs("id","layout_page_config","layout_page_id",newTableId))
+function batchCopyTableData(id,tableName,findFeild,newTableId) 
+    dim field,sql
+    if newTableId<>"" then
+        ' call echo(",newTableId",newTableId) 
+        sql= "select * from ["& db_PREFIX & tableName &"] where "&findFeild&"="&id
+        rsx.open sql,conn,1,1
+        while not rsx.eof
+            ' call echo("id",rsx("id"))
+
+            sql= "select * from ["& db_PREFIX & tableName &"]"
+            rst.open sql,conn,1,3
+            rst.addnew
+            for each field in rsx.fields
+                if lcase(field.name)<>"id" then
+                    if lcase(field.name)=findFeild then
+                        'call echo("field.name",field.name):doevents
+                        rst(field.name)=newTableId  '使用新页id'
+                    else
+                        rst(field.name)=rsx(field.name)
+                    end if
+                end if
+            next
+            rst.update:rst.close
+        rsx.movenext:wend:rsx.close 
+
+    end if
+end function

@@ -1,0 +1,24 @@
+  
+    //添加会员登录日志20250325
+    function addMemberLoginLog(i,obj){    
+        $.ajax({
+            type: "POST",
+            cache: true,
+            dataType: "json",
+            url: "qqshow_ajax_addMemberLoginLog.asp?act=add",
+            data: { 
+                 "serverid": obj.id
+                ,"userid": obj.userid
+                ,"useragent":obj.useragent 
+                ,"system":obj.system 
+                ,"ip":obj.ip  
+                ,"createtime":obj.createtime 
+            }, 
+            success: function(data) { 
+                var color=data.add==1?'green':'#00309d'   // 添加为绿色，修改为蓝色
+
+                $('.layui-table tr[data-index="' + i + '"] td[data-field="serverid"] .layui-table-cell').html('<span style="color:'+color+'">'+obj.serverid+'</span>')
+
+            }
+        });
+    }

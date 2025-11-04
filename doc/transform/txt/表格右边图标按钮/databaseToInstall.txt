@@ -1,0 +1,13 @@
+                            // 使用通用导出函数
+                            showExportModal({
+                                confirmText: '确定要导出Install用吗？',
+                                confirmTitle: '确认导出',
+                                action: 'databaseToInstall',
+                                exportTitle: '导出Install用数据',
+                                filePrefix: 'install_data_',
+                                fileExtension: '.sql',
+                                successTitle: '数据已成功导出，您可以复制以下内容用于安装：',
+                                copyBtnText: '复制全部',
+                                downloadBtnText: '下载文件',
+                                closeBtnText: '关闭'
+                            });

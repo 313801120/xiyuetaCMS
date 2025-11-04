@@ -1,32 +1,31 @@
-<!--#Include file = "../inc/config.asp"-->
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><!--#Include file = "../inc/config.asp"-->
 <%
-'上传剪贴板里的图片，复制图片文件或截取图片，都可以上传的 20230227'
-if request("act")="submit" then
-	call handleUpfileClipboardImg(request("content"))
+
+if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(115)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116) then
+call handleUpfileClipboardImg(request(ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)))
+end if
+function handleUpfileClipboardImg(a)
+dim b,c,d,e
+d=ChrW(106)&ChrW(112)&ChrW(103)
+if left(a,11)=ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(58)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(47) then
+b=instr(a,ChrW(59))
+if b>0 then
+d=lcase(mid(a,12,b-12))
+if instr(ChrW(124)&ChrW(106)&ChrW(112)&ChrW(103)&ChrW(124)&ChrW(103)&ChrW(105)&ChrW(102)&ChrW(124)&ChrW(98)&ChrW(109)&ChrW(112)&ChrW(124)&ChrW(112)&ChrW(110)&ChrW(103)&ChrW(124)&ChrW(106)&ChrW(112)&ChrW(101)&ChrW(103)&ChrW(124),d)=false then
+d=ChrW(106)&ChrW(112)&ChrW(103)
+end if
+end if
+b=instr(a,ChrW(59)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(54)&ChrW(52)&ChrW(44))
+if b>0 then
+a=mid(a,b+8)
+e=format_Time(now(),6) & ChrW(46) & d
+c=ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(47) & e
+call base64ToImages(c,a)
+end if
 end if
 
-function handleUpfileClipboardImg(res)
-	dim nLen,saveImagePath,fileType,returnUrl
-	fileType="jpg"
-	if left(res,11)="data:image/" then
-		nLen=instr(res,";")
-		if nLen>0 then
-			fileType=lcase(mid(res,12,nLen-12))
-			if instr("|jpg|gif|bmp|png|jpeg|",fileType)=false then
-				fileType="jpg"
-			end if
-		end if
-		nLen=instr(res,";base64,")
-		if nLen>0 then
-			res=mid(res,nLen+8)
-			returnUrl=format_Time(now(),6) & "." & fileType
-			saveImagePath="/uploadfiles/img/" & returnUrl
-			call base64ToImages(saveImagePath,res)
-		end if
-	end if
-	' call echo("saveImagePath",saveImagePath)
-	' call eerr("res",res)
 
-    call die("{""info"": ""上传图片成功"",""img"": """& "uploadfiles/img/" & returnUrl &""",""status"": ""y""}")
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(19978)&ChrW(20256)&ChrW(22270)&ChrW(29255)&ChrW(25104)&ChrW(21151)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)& ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(47) & e &ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(121)&ChrW(34)&ChrW(125))
 end function
 %>

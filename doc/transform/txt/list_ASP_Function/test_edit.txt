@@ -1,0 +1,3 @@
+function test_edit(rs,s)
+	test_edit=s&"="&len(s)
+end function

@@ -1,0 +1,79 @@
+:root {
+    --bg-color: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --text-color: #ffffff;
+    --title-color: #b9f2ff;
+    --border-color: #2a2a2a;
+    --hover-color: #252525;
+    --chart-title-color: #b9f2ff;
+    --chart-legend-color: #ffffff;
+    --chart-axis-line-color: #3a3a3a;
+    --chart-axis-label-color: #b8b8b8;
+    --chart-split-line-color: rgba(185, 242, 255, 0.1);
+    --chart-income-start-color: #b9f2ff;
+    --chart-income-end-color: #00bfff;
+    --chart-expense-start-color: #ff69b4;
+    --chart-expense-end-color: #ff1493;
+}
+
+.dashboard-container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    background-image: 
+        linear-gradient(45deg, rgba(185, 242, 255, 0.03) 25%, transparent 25%, transparent 50%, rgba(185, 242, 255, 0.03) 50%, rgba(185, 242, 255, 0.03) 75%, transparent 75%, transparent),
+        linear-gradient(-45deg, rgba(255, 105, 180, 0.03) 25%, transparent 25%, transparent 50%, rgba(255, 105, 180, 0.03) 50%, rgba(255, 105, 180, 0.03) 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+}
+
+.data-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.data-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #b9f2ff, transparent);
+}
+
+.data-card:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(185, 242, 255, 0.2);
+}
+
+.data-title {
+    color: var(--title-color);
+    font-weight: 500;
+    text-shadow: 0 0 5px rgba(185, 242, 255, 0.3);
+}
+
+.data-value {
+    color: #b9f2ff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(185, 242, 255, 0.4);
+}
+
+.data-trend {
+    color: var(--text-color);
+}
+
+.theme-selector {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 10px rgba(185, 242, 255, 0.1);
+}
+
+.theme-selector option {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+} 

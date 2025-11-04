@@ -1,0 +1,74 @@
+'加载数据库里表到'20250810 3
+function loadDataBaseTableToAccess()
+    dim thisConn:Set thisConn = CreateObject("Adodb.Connection")
+    dim sql,tableList,splstr,s,nOK,temp_db_PREFIX,sortrank
+    temp_db_PREFIX=db_PREFIX
+    sql = "select * from ["& db_PREFIX &  tableName & "] where id="&id
+    ' call echo("sql",sql)
+    rs.open sql,conn,1,1
+    if rs("databaseType")="sqlserver" or rs("databaseType")="mysql" then
+        db_PREFIX=""
+        databaseType = rs("databaseType")
+        sqlServerHostIP = rs("databaseIPPath")
+        sqlServerDatabaseName = rs("databaseName")
+        sqlServerUsername = rs("databaseUser")
+        sqlServerPassword = rs("databasePass")  
+
+    else
+        db_PREFIX=""
+        databaseType = "access" 
+        MDBPath = phpTrim(rs("databaseIPPath"))
+        accessPass = rs("databasePass") 
+        if MDBPath="" then
+            call die("{""info"": ""Access数据库为空"": ""n""}")
+
+        elseif checkFile(MDBPath)=false then
+            call die("{""info"": ""Access数据库文件不存在。"",""status"": ""n""}")
+        elseif checkMdbPositionSafe(MDBPath)=false then
+            call die("{""info"": ""导入表到数据库失败，数据库位置不在/uploadfiles/mdb/里"",""pass"": """",""status"": ""n""}")
+        end if
+    end if
+
+    call selectOpenConn(thisConn) '打开数据库'
+
+    tableList=getTableList_Conn(thisConn) 
+    splstr=split(tableList,vbcrlf)
+    nOK=0
+    sortrank=0
+    for each s in splstr
+        if s<>"" then
+            sql = "select * from ["& temp_db_PREFIX &  "layout_database_table] where layout_database_id="&rs("id") & " and tableName='"&s&"'"
+            rsx.open sql,conn,1,3
+            if rsx.eof then  '在最后添加一条'
+                rsx.addnew
+                rsx("layout_database_id")=rs("id")
+                rsx("tableName")=s
+                rsx("isthrough")=1
+                sortrank=sortrank+10
+                rsx("sortrank")=sortrank 
+                rsx("tablerecordcount")=getThisTableRecordcount(thisConn,s)
+                rsx.update
+                nOK=nOK+1
+            end if:rsx.close
+        end if
+    next
+
+    call die("{""info"": ""导入"&nOK&"张表到数据库"",""status"": ""y""}") 
+end function
+'获得当前表的记录总数 '20250904   - 20250922
+function getThisTableRecordcount(thisConn,tableName)
+    dim leftQuote,rightQuote
+    leftQuote="["
+    rightQuote="]"
+    if databaseType = "mysql" then
+        leftQuote="`"
+        rightQuote="`"
+    end if 
+    on error resume next
+    getThisTableRecordcount=thisConn.execute("select count(*) from " &leftQuote&tableName&rightQuote)(0)
+    if err <> 0 then  
+        call echo(tableName,err)
+        call echo("获得记录总数失败，getThisTableRecordcount",getThisTableRecordcount)
+        getThisTableRecordcount=0
+    end if
+end function

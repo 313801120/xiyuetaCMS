@@ -413,10 +413,19 @@ function tc(my_tit, my_url, my_width, my_height) {
 
 function tc2(my_tit, my_url, my_width, my_height) {
 
+    var sW=my_width+'';
+    var sH=my_height+'';
+    if(sW.indexOf("%")==-1){
+        sW+='px';
+    }
+    if(sH.indexOf("%")==-1){
+        sH+='px';
+    }
+
     return layer.open({
         title: my_tit,
         type: 2,
-        area: [my_width + 'px', my_height + 'px'], 
+        area: [sW,sH], 
         btn: ['确定', '取消'],
         fixed: false, //不固定
         maxmin: true,
@@ -470,11 +479,21 @@ function tc3(my_tit, my_url, my_width, my_height) {
 
 function pop_up(my_tit, my_url, my_width, my_height) {
 
+    var sW=my_width+'';
+    var sH=my_height+'';
+    if(sW.indexOf("%")==-1){
+        sW+='px';
+    }
+    if(sH.indexOf("%")==-1){
+        sH+='px';
+    }
+    
+
     return layer.open({
         title: my_tit,
         type: 2,
         // area: [my_width, my_height],
-        area: [my_width + 'px', my_height + 'px'], 
+        area: [sW, sH], 
         fixed: false, //不固定
         maxmin: true,
         content: my_url,
@@ -1091,28 +1110,207 @@ function login_close() {
 }
 //显示窗体，宽度不超过800    20220210
 function showwin(title,url){
-    var nWidth=800;
-    var n=($(window).width());
-    if(n<nWidth)nWidth=n;
-    var index=tc2(title,url, nWidth, 450);
-    // alert("index="+index);
-    if(n<800){//宽度小于800，则全屏
-        layer.full(index);//全屏
+    var screenWidth=$("body").width() 
+    if(screenWidth<800){
+        var index=tc2(title,url, "100%", "100%");    
+        // layer.full(index);//全屏
+    }else{
+        var index=tc2(title,url, "96%", "96%");    
     }
+
+
+    // var nWidth=800;
+    // var n=($(window).width());
+    // if(n<nWidth)nWidth=n;
+    // var index=tc2(title,url, nWidth, 450);
+    // // alert("index="+index);
+    // if(n<800){//宽度小于800，则全屏
+    // }
 
     return index;
 }
 //显示窗体，宽度不超过800    20220210  不显示底部的确认和取消按钮
 function showwin2(title,url){
-    var nWidth=800;
-    var n=($(window).width());
-    if(n<nWidth)nWidth=n;
-    // alert('url='+url)
-    return pop_up(title,url, nWidth, 450)
-    // tc3(title,url, nWidth, 450)
+    var screenWidth=$("body").width() 
+    if(screenWidth<800){
+        var index=tc2(title,url, "100%", "100%");    
+        // layer.full(index);//全屏
+    }else{
+        var index=pop_up(title,url, "96%", "96%");    
+    }
+
+
+    // var nWidth=800;
+    // var n=($(window).width());
+    // if(n<nWidth)nWidth=n;
+
+    // return pop_up(title,url, nWidth, 450)
+
+}//显示全屏并缩小百分之10   20240408  不显示底部的确认和取消按钮
+function showwin3(title,url){    
+    var nW=$(window).width()-($(window).width()/100*4);
+    var nH=$(window).height()-($(window).height()/100*4);
+    return pop_up(title,url, nW, nH);
 }
+
+
+
+
+
+  // onmousemove="showBigPic(this.value)" onmouseout="closeimg()"   使用
+function showBigPic(filepath) {
+    var html = "<div id='bigPic' style='position:absolute;display:none; z-index:99999'><img style=\"max-width:300px\" src='' id='pre_view'/><br /></div>";
+
+    $("#form1").append(html);
+    //将文件路径传给img大图
+    document.getElementById('pre_view').src = filepath;
+    //获取大图div是否存在
+    
+    
+    var div = document.getElementById("bigPic");
+    if (!div) {
+        return;
+    }
+    //如果存在则展示
+    document.getElementById("bigPic").style.display="block";
+    //获取鼠标坐标
+    var intX = window.event.clientX;
+    var intY = window.event.clientY;
+    //设置大图左上角起点位置
+    div.style.left = intX +5+ "px";
+    div.style.top = intY + 5+"px";
+}
+//隐藏
+function closeimg(){
+    document.getElementById("bigPic").style.display="none";
+}
+
+
+
+// 粘贴图片20240605  使用  pasteImage("pic");   修改于20250716
+function pasteImage(idName){
+    var imgInputObj;//图片的input对象
+    // var obj=document.getElementById(idName);
+    var obj = document.getElementsByName(idName)[0]; // 获取第一个 name 为 username 的 input 
+    if(!obj)return false;
+    //获得粘贴板内容
+    obj.addEventListener('paste', function (event) {  
+      imgInputObj=$(this);
+      uploadclipboardDataImage(event);
+    })
+
+
+    // let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
+
+    //上传粘贴板里的图片
+    function uploadclipboardDataImage(event){
+        // console.log("粘贴内容") 
+        if (!event || !event.clipboardData) return;
+        let pText = event.clipboardData.getData('text/plain');
+        if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
+            // showCVText(pText);
+        } else if (event.clipboardData.items) {//没有文本内容，判断这个数组，文件可能在这个数组里
+            let blob = null, items = event.clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].kind === 'file') {//类型 是 文件
+                    blob = items[i].getAsFile();
+                    if (items[i].type.indexOf("image") !== -1) {//文件类型是图像
+                        showImage(blob);
+                    } else if (items[i].type.indexOf("text") !== -1) {//文件类型是文本
+                        // showText(blob);
+                    }
+                } 
+            }
+        } else {
+            alert("粘了个寂寞");
+        }
+    }
+
+    function showImage(blob) {
+        getContext(blob).then(res => { //图片数据能直接被img识别
+            // document.getElementById("previewImage").src = res; 
+            jQuery.ajax({
+                url: '/api/upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    'content': res
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest)
+                    console.log(textStatus)
+                    console.log(errorThrown)
+                },
+                success: function(data) { 
+                    // var data=jQuery.parseJSON(result); 
+                    // alert("aa")
+                    switch (data.status) {
+                        case "y": 
+                            // alert(data.info)
+                            imgInputObj.val("/"+data.img)
+                            break;
+                        case "n": 
+                            break;
+                    }
+                }
+            });
+
+
+        })
+    }
+
+ 
+    /**
+     * 把字节转为web识别的base64格式数据
+     * @param blob
+     * @returns {Promise<unknown>}
+     */
+    function getContext(blob) {
+        return new Promise((resolve) => {
+            if (blob == null) resolve();
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                // console.log(event)
+                resolve(event.target.result);
+            }
+            reader.readAsDataURL(blob);
+        });
+    }
+}
+
+
+// 打开标签页函数 20250729
+//     <a href="javascript:;" onclick="openTabsPage('app/test_20250718/list.asp', 'test_20250718')">test_20250718</a>
+//  或   <a href="javascript:openTabsPage('app/test_20250718/list.asp', 'test_20250718');">test_20250718</a>
+function openTabsPage(url, title) {
+    try {
+        // 尝试在父窗口中打开标签页
+        if (window.parent && window.parent.layui) {
+            window.parent.layui.index.openTabsPage(url, title);
+        } else if (window.top && window.top.layui) {
+            window.top.layui.index.openTabsPage(url, title);
+        } else {
+            // 如果无法访问父窗口，则直接跳转
+            window.location.href = url;
+        }
+    } catch (e) {
+        // 如果出错，则直接跳转
+        window.location.href = url;
+    }
+}
+
+
+
+
+
+
+ 
 //显示xiyuetaCMS对应的帮助文档信息20240107
 function xiyuetaCMSHelp(title){
     showwin2('文档', "//xiyueta.com/api/cms/xiyuetacms/?act=help&title="+title) 
+}
+//当前网站帮助文档 20240430
+function thisWebHelp(title){
+    showwin2(title+' 文档', "/api/help/?act=help&title="+title) 
 }
 

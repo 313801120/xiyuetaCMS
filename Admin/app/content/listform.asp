@@ -1,585 +1,508 @@
-<!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.Asp"--><!--#Include File = "../../admin_safe.Asp"--><% 
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><!--#include file="../../../inc/Config.asp"-->
+<!--#Include File = "../../admin_function.asp"-->
+<!--#Include File = "../../admin_safe.Asp"--><% 
 call openconn()  
-dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename,tags,flags,titlecolor
-
-id=request("id")
-parentid=request("parentid")              '大类'
-title=request("title")                    '标题'
-sortrank=request("sortrank")              '排序' 
+dim tableName,winTitle
+tableName=ChrW(97)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(68)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)
+winTitle=ChrW(25991)&ChrW(31456)
+dim msg,isTrue,addSql,id,parentid,title,isthrough,sortrank,smallimage,aboutcontent,bodycontent,author,webtitle,webkeywords,webdescription,bigimage,filename,tags,flags,titlecolor,price,inventory
+id=request(ChrW(105)&ChrW(100))
+parentid=request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100))
+title=request(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+sortrank=request(ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107))
 if sortrank="" then sortrank=0
-isthrough=request("isthrough")            '审核'
-smallimage=request("smallimage")          '缩略图' 
-bigimage=request("bigimage")          '大图' 
-aboutcontent=request("aboutcontent")                    '简要说明'
-bodycontent=request("bodycontent")                    '文章内容
-author=request("author")                    '作者
-webtitle=request("webtitle")            'webtitle'
-webkeywords=request("webkeywords")            'webkeywords'
-webdescription=request("webdescription")            'webdescription'
-filename=request("filename")            'filename'
-tags=request("tags")            '标签'
-tags=replace(replace(replace(phptrim(tags),chr(10),","),chr(13),","),vbtab,",")
-if tags<>"" then tags=","& tags &","  '为搜索做准备'  调用了一个js标签框架
-isthrough=IIF(isthrough="on",1,0)         '处理下'
+isthrough=request(ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104))
+smallimage=request(ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101))
+bigimage=request(ChrW(98)&ChrW(105)&ChrW(103)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101))
+aboutcontent=request(ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+bodycontent=request(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+author=request(ChrW(97)&ChrW(117)&ChrW(116)&ChrW(104)&ChrW(111)&ChrW(114))
+webtitle=request(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+webkeywords=request(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115))
+webdescription=request(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
+filename=request(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+price=request(ChrW(112)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101))
+inventory=request(ChrW(105)&ChrW(110)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(121))
+tags=request(ChrW(116)&ChrW(97)&ChrW(103)&ChrW(115))
+tags=replace(replace(replace(phptrim(tags),chr(10),ChrW(44)),chr(13),ChrW(44)),vbtab,ChrW(44))
+if tags <>"" then tags=ChrW(44)& tags &ChrW(44)
+isthrough=IIF(isthrough=ChrW(111)&ChrW(110),1,0)
 if parentid="" then 
-  parentid=-1
+parentid=-1
 else
-  parentid=int(parentid)
+parentid=int(parentid)
 end if
-flags="|"
-flags=flags & IIF(Request("flags_h")="on","h|","") 
-flags=flags & IIF(Request("flags_c")="on","c|","") 
-flags=flags & IIF(Request("flags_f")="on","f|","") 
-flags=flags & IIF(Request("flags_a")="on","a|","") 
-flags=flags & IIF(Request("flags_s")="on","s|","") 
-flags=flags & IIF(Request("flags_b")="on","b|","") 
-titlecolor=request("titlecolor")            '标题颜色'
+flags=ChrW(124)
+flags=flags & IIF(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(95)&ChrW(104))=ChrW(111)&ChrW(110),ChrW(104)&ChrW(124),"") 
+flags=flags & IIF(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(95)&ChrW(99))=ChrW(111)&ChrW(110),ChrW(99)&ChrW(124),"") 
+flags=flags & IIF(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(95)&ChrW(102))=ChrW(111)&ChrW(110),ChrW(102)&ChrW(124),"") 
+flags=flags & IIF(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(95)&ChrW(97))=ChrW(111)&ChrW(110),ChrW(97)&ChrW(124),"") 
+flags=flags & IIF(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(95)&ChrW(115))=ChrW(111)&ChrW(110),ChrW(115)&ChrW(124),"") 
+flags=flags & IIF(Request(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)&ChrW(95)&ChrW(98))=ChrW(111)&ChrW(110),ChrW(98)&ChrW(124),"") 
+titlecolor=request(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114))
 
- 
+dim en_title,en_aboutcontent,en_bodycontent,en_webtitle,en_webkeywords,en_webdescription
+en_title=request(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+en_aboutcontent=request(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+en_bodycontent=request(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+en_webtitle=request(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+en_webkeywords=request(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115))
+en_webdescription=request(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
 
-'添加修改
-if request("act")="save" then
-  isTrue=true
-  if sortrank="" then    
-    msg="排序不能为空"
-    isTrue=false 
-  end if
-  if isTrue=true then
-    addsql=" where (title='"& title &"' and parentid=" & parentid & ")"  '判断时加上栏目20231012'
-    if id<>"" then
-      addsql=addsql & " and id<>"&id
-    end if
-    rs.open"select * from ["& db_PREFIX &"articleDetail]"&addsql,conn,1,3
-    if not rs.eof then
-      msg="栏目名称已经存在"
-    else
-      if id="" then
-        rs.addnew
-      else
-        rs.close
-        rs.open"select * from ["& db_PREFIX &"articleDetail] where id="&id,conn,1,3
-      end if 
-      rs("parentid")=parentid 
-      rs("title")=title 
-      rs("sortrank")=sortrank 
-      rs("isthrough")=isthrough 
-      rs("smallimage")=smallimage 
-      rs("bigimage")=bigimage 
-      rs("aboutcontent")=aboutcontent 
-      rs("bodycontent")=bodycontent 
-      rs("author")=author 
-      rs("webtitle")=webtitle 
-      rs("webkeywords")=webkeywords 
-      rs("webdescription")=webdescription 
-      rs("filename")=filename 
-      rs("tags")=tags
-      rs("flags")=flags
-      rs("titlecolor")=titlecolor
-      rs.update 
-      response.Write"<script>parent.location.reload();</script>"
-      response.end()
-    end if:rs.close 
-  end if
-'显示
-elseif id<>"" then
-  rs.open"select * from ["& db_PREFIX &"articleDetail] where id="&id,conn,1,1
-  if not rs.eof then
-    parentid=rs("parentid") 
-    id=rs("id") 
-    title=inputCL(rs("title") )  
-    sortrank=inputCL(rs("sortrank") )  
-    isthrough=inputCL(rs("isthrough"))  
-    smallimage=inputCL(rs("smallimage"))   
-    bigimage=inputCL(rs("bigimage"))  
-    aboutcontent=inputCL(rs("aboutcontent"))  
-    bodycontent=inputCL(rs("bodycontent"))  
-    author=inputCL(rs("author"))  
-    webtitle=inputCL(rs("webtitle"))  
-    webkeywords=inputCL(rs("webkeywords"))  
-    webdescription=inputCL(rs("webdescription"))  
-    filename=inputCL(rs("filename"))  
-    tags=inputCL(rs("tags"))  
-    flags=inputCL(rs("flags"))  
-    titlecolor=inputCL(rs("titlecolor"))  
-
-
-    '因为isThrough 为 YesNo 对错类型的
-    if isthrough="True" then 
-      isthrough=1
-    else
-      isthrough=0
-    end if
-
-  end if
+if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101) then
+if id <>"" then
+call showCheckAdminRule(ChrW(32534)&ChrW(36753) & winTitle)
+else
+call showCheckAdminRule(ChrW(28155)&ChrW(21152) & winTitle)
 end if
-  
+isTrue=true
+if isTrue=true then
+addsql=ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(40)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)& title &ChrW(39)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)&ChrW(61) & parentid & ChrW(41)
+if id <>"" then
+addsql=addsql & ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(60)&ChrW(62)&id
+end if
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX & tableName & ChrW(93)&addsql,conn,1,3
+if not rs.eof then
+msg=ChrW(26631)&ChrW(39064)&ChrW(24050)&ChrW(32463)&ChrW(23384)&ChrW(22312)
+else
+if id="" then
+rs.addnew
+else
+rs.close
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX & tableName & ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,3
+end if 
+rs(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100))=parentid 
+rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))=title 
+rs(ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107))=sortrank 
+rs(ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104))=isthrough 
+rs(ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101))=smallimage 
+rs(ChrW(98)&ChrW(105)&ChrW(103)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101))=bigimage 
+rs(ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=aboutcontent 
+rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=bodycontent 
+rs(ChrW(97)&ChrW(117)&ChrW(116)&ChrW(104)&ChrW(111)&ChrW(114))=author 
+rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))=webtitle 
+rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115))=webkeywords 
+rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))=webdescription 
+rs(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=filename 
+rs(ChrW(116)&ChrW(97)&ChrW(103)&ChrW(115))=tags
+rs(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115))=flags
+rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114))=titlecolor
+if price <>"" then rs(ChrW(112)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101))=price
+if inventory <>"" then rs(ChrW(105)&ChrW(110)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(121))=inventory
 
+if checkEnLanguage() then  
+rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))=en_title
+rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=en_aboutcontent
+rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=en_bodycontent
+rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))=en_webtitle
+rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115))=en_webkeywords
+rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))=en_webdescription 
+end if
+rs.update 
+if id <>"" then
+call addSystemLog(tableName,ChrW(32534)&ChrW(36753)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(73)&ChrW(68)&ChrW(40)&id&ChrW(41))
+else
+call addSystemLog(tableName,ChrW(28155)&ChrW(21152)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(73)&ChrW(68)&ChrW(40)&id&ChrW(41))
+end if
+call die(ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(114)&ChrW(101)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(40)&ChrW(41)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62))
+end if:rs.close 
+end if
+
+elseif id <>"" then
+call showCheckAdminRule(ChrW(32534)&ChrW(36753) & winTitle)
+rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX & tableName & ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,1
+if not rs.eof then
+parentid=rs(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)) 
+id=rs(ChrW(105)&ChrW(100)) 
+title=inputCL(rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) )  
+sortrank=inputCL(rs(ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)) )  
+isthrough=inputCL(rs(ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)))  
+smallimage=inputCL(rs(ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)))   
+bigimage=inputCL(rs(ChrW(98)&ChrW(105)&ChrW(103)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)))  
+aboutcontent=inputCL(rs(ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)))  
+bodycontent=inputCL(rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)))  
+author=inputCL(rs(ChrW(97)&ChrW(117)&ChrW(116)&ChrW(104)&ChrW(111)&ChrW(114)))  
+webtitle=inputCL(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))  
+webkeywords=inputCL(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115)))  
+webdescription=inputCL(rs(ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)))  
+filename=inputCL(rs(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))  
+tags=inputCL(rs(ChrW(116)&ChrW(97)&ChrW(103)&ChrW(115)))  
+flags=inputCL(rs(ChrW(102)&ChrW(108)&ChrW(97)&ChrW(103)&ChrW(115)))  
+titlecolor=inputCL(rs(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)))  
+price=inputCL(rs(ChrW(112)&ChrW(114)&ChrW(105)&ChrW(99)&ChrW(101)))  
+inventory=inputCL(rs(ChrW(105)&ChrW(110)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(121)))  
+
+en_title=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+en_aboutcontent=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+en_bodycontent=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+en_webtitle=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+en_webkeywords=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(115))
+en_webdescription =rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
+end if
+else
+call showCheckAdminRule(ChrW(28155)&ChrW(21152) & winTitle)
+end if
 %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>添加修改文章</title> 
- <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  /> 
+<title><%=winTitle%>添加修改</title> 
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" type="text/css"  /> 
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<link href="../../css/nprogress.min.css" rel="stylesheet"/>  
+<script src="../../js/nprogress.min.js"></script>
 </head>
-<body>  
-<script> 
-function showBigPic(filepath) {
-    var html = "<div id='bigPic' style='position:absolute;display:none; z-index:99999'><img style=\"max-width:300px\" src='' id='pre_view'/><br /></div>";
-
-    $("#form1").append(html);
-    //将文件路径传给img大图
-    document.getElementById('pre_view').src = filepath;
-    //获取大图div是否存在
-    
-    
-    var div = document.getElementById("bigPic");
-    if (!div) {
-        return;
-    }
-    //如果存在则展示
-    document.getElementById("bigPic").style.display="block";
-    //获取鼠标坐标
-    var intX = window.event.clientX;
-    var intY = window.event.clientY;
-    //设置大图左上角起点位置
-    div.style.left = intX +5+ "px";
-    div.style.top = intY + 5+"px";
+<style>
+/*关键词*/
+.label {
+display: inline;
+padding: 0.2em 0.6em 0.3em;
+font-size: 75%;
+font-weight: 700;
+line-height: 1; 
+color: #fff;
+text-align: center;
+white-space: nowrap;
+vertical-align: baseline;
+border-radius: 0.25em;
 }
-
-//隐藏
-function closeimg(){
-    document.getElementById("bigPic").style.display="none";
+.label-info {
+background-color: #5bc0de;
 }
-
-</script>
-<%if msg<>"" then  call rw("<blockquote class=""layui-elem-quote"">"& msg &" &nbsp;<a href='javascript:window.history.go(-1); '>返回</a></blockquote>")%>
-
+</style>
+<body>   
+<script src="../../js/jquery.js"></script>
+<%if msg <>"" then  call rw(ChrW(60)&ChrW(98)&ChrW(108)&ChrW(111)&ChrW(99)&ChrW(107)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(109)&ChrW(45)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(34)&ChrW(62)& msg &ChrW(32)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(39)&ChrW(106)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(46)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(111)&ChrW(114)&ChrW(121)&ChrW(46)&ChrW(103)&ChrW(111)&ChrW(40)&ChrW(45)&ChrW(49)&ChrW(41)&ChrW(59)&ChrW(32)&ChrW(39)&ChrW(62)&ChrW(36820)&ChrW(22238)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(108)&ChrW(111)&ChrW(99)&ChrW(107)&ChrW(113)&ChrW(117)&ChrW(111)&ChrW(116)&ChrW(101)&ChrW(62))%>
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save&id=<%=id%>">
-  <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
- 
-
-   <div class="layui-form-item">
-      <label class="layui-form-label">选择分类</label>
-      <div class="layui-input-inline">
-        
-
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 0px 0 0 0;">
+<div class="layui-tab" lay-filter="test-hash">
+<ul class="layui-tab-title">
+<li class="layui-this" lay-id="11">中文设置</li>
+<li lay-id="22">英文设置</li> 
+</ul>
+<div class="layui-tab-content">
+<div class="layui-tab-item layui-show">
+<div class="layui-form-item">
+<label class="layui-form-label">选择分类</label>
+<div class="layui-input-inline">
 <select name="parentid" id="parentid" selected><option value="-1">≡ 作为一级栏目 ≡</option>
+<%
 
-      <%
-      '第二个参数为空，因为在栏目分类里需要用到排除当前自身的选择
-      call rw( columnSubInput(-1,"",parentid) )
-      %>
-    </select>
-
-      </div> 
-    </div>
-        
-    <div class="layui-form-item">
-      <label class="layui-form-label">标题</label>
-      <div class="layui-input-block">
-        <input type="text" name="title" id="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>" style='<%=IIF(titlecolor<>"","color:" & titlecolor & ";","")%><%=IIF(instr(flags,"|b|")>0,"font-weight:bold;","")%>' >
-
+call rw( columnSubInput(-1,"",parentid) )
+%>
+</select>
+</div> 
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">标题</label>
+<div class="layui-input-block">
+<input type="text" name="title" id="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="<%=title%>" style='<%=IIF(titlecolor <>"",ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58) & titlecolor & ChrW(59),"")%><%=IIF(instr(flags,ChrW(124)&ChrW(98)&ChrW(124))>0,ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59),"")%>' >
 <input name="titlecolor" type="hidden" id="titlecolor" value="<%=titlecolor%>" />
 <script language="javascript" type="text/javascript" src="../../js/colorpicker.js?v1"></script>
 <img src="../../Images/colour.png" width="15" height="16" onClick="colorpicker('title_colorpanel','set_title_color');" style="cursor:hand">
 <span id="title_colorpanel" style="position:absolute; z-index:200" class="colorpanel"></span>
 <img src="../../Images/bold.png" width="10" height="10" onClick="input_font_bold()" id="titleb" style="cursor:hand">  
-
-
-      </div>
-    </div>    
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">缩略图</label>
-      <div class="layui-input-inline">
-        <input type="text" name="smallimage" id="smallimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=smallimage%>" onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
-      </div>
-      <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin">上传图片</button>  
-
-<%if isAdminArticleOnPaiZhan then%>
-  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-  onclick="picDomId='smallimage';layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
-
-  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-  onclick="picDomId='smallimage';layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
-<%end if%>
-
-
-    </div>
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">大图</label>
-      <div class="layui-input-inline">
-        <input type="text" name="bigimage" id="bigimage" placeholder="请上传图片" autocomplete="off" class="layui-input" value="<%=bigimage%>" onmousemove="showBigPic(this.value)" onmouseout="closeimg()">
-      </div>
-      <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin2">上传图片</button> 
-
-
-<%if isAdminArticleOnPaiZhan then%>
-  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-  onclick="picDomId='bigimage';layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
-
-  <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-  onclick="picDomId='bigimage';layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
-  <%end if%>
-
-    </div>
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">排序</label> 
-      <div class="layui-input-inline">
-        <input type="text" name="sortrank" lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input" value="<%=sortrank%>">
-      </div>
-    </div>
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">作者</label>
-      <div class="layui-input-inline">
-        <input type="text" name="author"   placeholder="请输入作者" autocomplete="off" class="layui-input" value="<%=author%>">
-      </div>
-    </div>
-    
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">简要说明</label>
-      <div class="layui-input-block">
-        <textarea name="aboutcontent" placeholder="请输入简要说明" class="layui-textarea"><%=aboutcontent%></textarea>
-      </div>
-    </div>
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">文章内容</label>
-      <div class="layui-input-block">
-        <textarea name="bodycontent" <%=IIF(request("editor")<>"no"," id='bodycontent'style='display:none;'"," rows='20'")%> placeholder="请输入文章内容" class="layui-textarea"><%=bodycontent%></textarea><%if request("editor")<>"no" then%><a href="?editor=no&id=<%=id%>">不显示编辑器</a><%end if%>
-      </div>
-    </div>  
-
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">title标题</label>
-                <div class="layui-input-block">
-                    <textarea name="webtitle" class="layui-textarea" placeholder="title标题"><%=webtitle%></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META关键词</label>
-                <div class="layui-input-block">
-                    <textarea name="webkeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><%=webkeywords%></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META描述</label>
-                <div class="layui-input-block">
-                    <textarea name="webdescription" class="layui-textarea"><%=webdescription%></textarea>
-                </div>
-            </div>
-
-
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">自定义文件</label>
-      <div class="layui-input-inline">
-        <input type="text" name="filename"   placeholder="请输入自定义文件" autocomplete="off" class="layui-input" value="<%=filename%>">
-      </div>
-    </div>    
-
-<!--     <div class="layui-form-item">
-      <label class="layui-form-label">标签</label>
-      <div class="layui-input-block">
-        <input type="text" autocomplete="off" class="form-control" data-role="tagsinput" id="tags" value="<%=tags%>" name="tags"  > 
-      </div>
-    </div>  -->
-
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">标签</label>
-      <div class="layui-input-block">
-        <input type="text" name="tags" data-role="tagsinput"  autocomplete="off" class="layui-input" id="tags" value="<%=tags%>">
-      </div>
-    </div>  
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">审核状态</label>
-      <div class="layui-input-inline">
-        <input type="checkbox" lay-filter="switch" name="isThrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isThrough=0,""," checked")%>>
-      </div>
-    </div>   
-
-    <div class="layui-form-item">
-      <label class="layui-form-label">自定义属性</label>
-      <div class="layui-input-block">
-
-       
-
-<div class="layui-form">
-  <input type="checkbox" name="flags_h" title="头条[h]"<%=IIF(instr(flags,"|h|")>0," checked","")%>>
-  <input type="checkbox" name="flags_c" title="推荐[c]"<%=IIF(instr(flags,"|c|")>0," checked","")%>>
-  <input type="checkbox" name="flags_f" title="幻灯[f]"<%=IIF(instr(flags,"|f|")>0," checked","")%>> 
-  <input type="checkbox" name="flags_a" title="特荐[a]"<%=IIF(instr(flags,"|a|")>0," checked","")%>> 
-  <input type="checkbox" name="flags_s" title="滚动[s]"<%=IIF(instr(flags,"|s|")>0," checked","")%>> 
-  <input type="checkbox" name="flags_b" title="加粗[b]"<%=IIF(instr(flags,"|b|")>0," checked","")%> lay-filter="checkboxTest"> 
 </div>
-
-      </div>
-    </div>   
- 
- 
-
-    <div class="layui-form-item layui-hide">
-      <input type="submit" class="layui-btn" value="保存资料" lay-submit="lay-submit" lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" />
-    </div>
-  </div> 
+</div>    
+<div class="layui-form-item">
+<label class="layui-form-label">缩略图</label>
+<div class="layui-input-inline">
+<input type="text" name="smallimage" id="smallimage" placeholder="请上传缩略图" autocomplete="off" class="layui-input" value="<%=smallimage%>" >
+<!-- onmousemove="showBigPic(this.value)" onmouseout="closeimg()"> -->
+</div> 
+<button type="button" class="layui-btn layui-btn-primary" id="layuiadmin-upload-smallimage">
+<i class="layui-icon">&#xe67c;</i>上传图片
+</button><input class="layui-upload-file" type="file" accept="" name="file">
+<button type="button" class="layui-btn layui-btn-primary" layadmin-event="avartatPreviewsmallimage">查看图片</button >
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">大图</label>
+<div class="layui-input-inline">
+<input type="text" name="bigimage" id="bigimage" placeholder="请上传大图" autocomplete="off" class="layui-input" value="<%=bigimage%>" >
+<!-- onmousemove="showBigPic(this.value)" onmouseout="closeimg()"> -->
+</div> 
+<button type="button" class="layui-btn layui-btn-primary" id="layuiadmin-upload-bigimage">
+<i class="layui-icon">&#xe67c;</i>上传图片
+</button><input class="layui-upload-file" type="file" accept="" name="file">
+<button type="button" class="layui-btn layui-btn-primary" layadmin-event="avartatPreviewbigimage">查看图片</button >
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">排序</label> 
+<div class="layui-input-inline">
+<input type="text" name="sortrank" lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input" value="<%=sortrank%>">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">价格</label> 
+<div class="layui-input-inline">
+<input type="text" name="price" lay-verify="number" placeholder="请输入价格" autocomplete="off" class="layui-input" value="<%=price%>">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">库存</label> 
+<div class="layui-input-inline">
+<input type="text" name="inventory" lay-verify="number" placeholder="请输入库存" autocomplete="off" class="layui-input" value="<%=inventory%>">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">作者</label>
+<div class="layui-input-inline">
+<input type="text" name="author"   placeholder="请输入作者" autocomplete="off" class="layui-input" value="<%=author%>">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">简要说明</label>
+<div class="layui-input-block">
+<textarea name="aboutcontent" placeholder="请输入简要说明" class="layui-textarea"><%=aboutcontent%></textarea>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">文章内容</label>
+<div class="layui-input-block">
+<textarea name="bodycontent" <%=IIF(request(ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(111)&ChrW(114)) <>ChrW(110)&ChrW(111),ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(39)&ChrW(32)&ChrW(32),ChrW(32)&ChrW(114)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39))%> placeholder="请输入文章内容" class="layui-textarea"><%=bodycontent%></textarea> 
+</div>
+</div>  
+<div class="layui-form-item layui-form-text">
+<label class="layui-form-label">title标题</label>
+<div class="layui-input-block">
+<textarea name="webtitle" class="layui-textarea" placeholder="title标题"><%=webtitle%></textarea>
+</div>
+</div>
+<div class="layui-form-item layui-form-text">
+<label class="layui-form-label">META关键词</label>
+<div class="layui-input-block">
+<textarea name="webkeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"><%=webkeywords%></textarea>
+</div>
+</div>
+<div class="layui-form-item layui-form-text">
+<label class="layui-form-label">META描述</label>
+<div class="layui-input-block">
+<textarea name="webdescription" class="layui-textarea"><%=webdescription%></textarea>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">自定义文件</label>
+<div class="layui-input-inline">
+<input type="text" name="filename"   placeholder="请输入自定义文件" autocomplete="off" class="layui-input" value="<%=filename%>">
+</div>
+</div>    
+<!--     <div class="layui-form-item">
+<label class="layui-form-label">标签</label>
+<div class="layui-input-block">
+<input type="text" autocomplete="off" class="form-control" data-role="tagsinput" id="tags" value="<%=tags%>" name="tags"  > 
+</div>
+</div>  -->
+<div class="layui-form-item">
+<label class="layui-form-label">标签</label>
+<div class="layui-input-block">
+<input type="text" name="tags" data-role="tagsinput"  autocomplete="off" class="layui-input" id="tags" value="<%=tags%>">
+</div>
+</div>  
+<div class="layui-form-item">
+<label class="layui-form-label">审核状态</label>
+<div class="layui-input-inline">
+<input type="checkbox" lay-filter="switch" name="isthrough" lay-skin="switch" lay-text="通过|待审核" <%=IIF(isthrough=0,"",ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100))%>>
+</div>
+</div>   
+<div class="layui-form-item">
+<label class="layui-form-label">自定义属性</label>
+<div class="layui-input-block">
+<div class="layui-form">
+<input type="checkbox" name="flags_h" title="头条[h]"<%=IIF(instr(flags,ChrW(124)&ChrW(104)&ChrW(124))>0,ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100),"")%>>
+<input type="checkbox" name="flags_c" title="推荐[c]"<%=IIF(instr(flags,ChrW(124)&ChrW(99)&ChrW(124))>0,ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100),"")%>>
+<input type="checkbox" name="flags_f" title="幻灯[f]"<%=IIF(instr(flags,ChrW(124)&ChrW(102)&ChrW(124))>0,ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100),"")%>> 
+<input type="checkbox" name="flags_a" title="特荐[a]"<%=IIF(instr(flags,ChrW(124)&ChrW(97)&ChrW(124))>0,ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100),"")%>> 
+<input type="checkbox" name="flags_s" title="滚动[s]"<%=IIF(instr(flags,ChrW(124)&ChrW(115)&ChrW(124))>0,ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100),"")%>> 
+<input type="checkbox" name="flags_b" title="加粗[b]"<%=IIF(instr(flags,ChrW(124)&ChrW(98)&ChrW(124))>0,ChrW(32)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(100),"")%> lay-filter="checkboxTest"> 
+</div>
+</div>
+</div>   
+</div>
+<div class="layui-tab-item">
+<div class="layui-form-item">
+<label class="layui-form-label">英文标题</label>
+<div class="layui-input-block">
+<input type="text" name="en_title" id="en_title" lay-verify="required" placeholder="请输入英文标题" autocomplete="off" class="layui-input" value="<%=en_title%>" > 
+</div>
+</div>   
+<div class="layui-form-item">
+<label class="layui-form-label">英文简要说明</label>
+<div class="layui-input-block">
+<textarea name="en_aboutcontent" placeholder="请输入英文简要说明" class="layui-textarea"><%=en_aboutcontent%></textarea>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">英文文章内容</label>
+<div class="layui-input-block">
+<textarea name="en_bodycontent" <%=IIF(request(ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(111)&ChrW(114)) <>ChrW(110)&ChrW(111),ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(39)&ChrW(32)&ChrW(32),ChrW(32)&ChrW(114)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(61)&ChrW(39)&ChrW(50)&ChrW(48)&ChrW(39))%> placeholder="请输入英文文章内容" class="layui-textarea" id="en_bodycontent" style="border:0;padding:0"><%=en_bodycontent%></textarea>
+</div>
+</div>  
+<div class="layui-form-item">
+<label class="layui-form-label">英文网站标题</label>
+<div class="layui-input-block">
+<input type="text" name="en_webtitle" value="<%=en_webtitle%>" class="layui-input">
+</div>
+</div> 
+<div class="layui-form-item layui-form-text">
+<label class="layui-form-label">英文META关键词</label>
+<div class="layui-input-block"> 
+<input type="text" autocomplete="off" class="form-control" data-role="tagsinput" id="keyword" value="<%=en_webkeywords%>" name="en_webkeywords"  > 
+</div>
+</div>
+<div class="layui-form-item layui-form-text">
+<label class="layui-form-label">英文META描述</label>
+<div class="layui-input-block">
+<textarea name="en_webdescription" class="layui-textarea"><%=en_webdescription%></textarea>
+</div>
+</div>
+</div>
+<div class="layui-form-item layui-hide">
+<input type="submit" class="layui-btn" value="保存资料" lay-submit="lay-submit" lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" />
+</div>
+</div> 
 </form>
- 
 <script src="../../layuiadmin/layui/layui.js"></script>  
-<script src="../../js/jquery.js"></script>  
+<script type="text/javascript" src="../..//js/pc.js?v6"></script>
 <script>
 layui.config({
-    base: '../../layuiadmin/' //静态资源所在路径
+base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
-    index: 'lib/index' //主入口模块
-}).use(['index', 'form', 'upload', 'laydate','set','layedit'], function() {
-    var $ = layui.$,
-        form = layui.form,
-        upload = layui.upload,
-        laydate = layui.laydate;
-
-    upload.render({
-        elem: '#layuiadmin-upload-useradmin',
-        url: '/api/upload/',
-        done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data[0].src)
-        }
-    });
-    upload.render({
-        elem: '#layuiadmin-upload-useradmin2',
-        url: '/api/upload/',
-        done: function(res) {
-            $(this.item).prev("div").children("input").val(res.data[0].src)
-        }
-    });
-
-    lay('.date').each(function() {
-        laydate.render({
-            elem: this,
-            trigger: 'click',
-            format: 'yyyy/MM/dd'
-
-        });
-    });
-    // //编码器
-    // var layedit = layui.layedit;
-    // layedit.set({
-    //     //暴露layupload参数设置接口 --详细查看layupload参数说明
-    //     uploadImage: {
-    //         url: '/api/upload/'    //上传接口url
-    //         ,type: 'post' //默认post 
-    //     }
-    // });
-    // layedit.build('bodycontent');   //建立编辑器
-
-
-
-
-
-        upload.render({
-            elem: '#layuiadmin-upload-shareico',
-            url: '/api/upload/',
-            done: function(res) {
-                $(this.item).prev("div").children("input").val(res.data[0].src)
-            }
-        }); 
-        
-
-    //编码器 复杂版
-    var layedit = layui.layedit;
-    layedit.set({
-        //暴露layupload参数设置接口 --详细查看layupload参数说明
-        uploadImage: { 
-            url: '/api/upload/?act=one'    //上传接口url
-            ,type: 'post' //默认post 
-        }
-        ,uploadVideo: {
-                    url: '/api/upload/uploadVideo.asp?act=one',
-                    accept: 'video',
-                    acceptMime: 'video/*',
-                    exts: 'mp4|flv|avi|rm|rmvb',
-                    size: '20480'
-                }
-
-        , tool: [
-                    'colorpicker', 'code', 'strong', 'italic', 'underline', 'del', 'addhr', '|', 'fontFomatt', 'face'
-                    , '|', 'left', 'center', 'right', '|', 'link', 'unlink','images', 'image_alt', 'video', 'anchors'
-                    , '|','table', 'fullScreen'
-                ]
-    });
-    layedit.build('bodycontent');   //建立编辑器
-
-
-    //加粗    
-    form.on('checkbox(checkboxTest)', function(data){
-      input_font_bold();
-      // $("span:contains('特荐[a]')").parent().addClass('layui-form-checked');//选中
-
-
-
-
-    }); 
-
-    $("#titleb").click(function(){
-      
-      var s=$("input[name='title']").css("font-weight")+"";
-      if(s=="700"){//700为加粗
-        $("input[name='flags_b']").prop("checked",false);
-      }else{
-
-        $("input[name='flags_b']").prop("checked",true);
-      }
-      form.render('checkbox');
-
-
-    })
-
-
-
-
+index: 'lib/index' //主入口模块
+}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce'], function() {
+var $ = layui.$,
+form = layui.form,
+upload = layui.upload,
+laydate = layui.laydate;
+var a = (layui.laytpl, layui.setter, layui.view, layui.admin);
+//查看图片
+a.events.avartatPreviewsmallimage = function(t) {
+var i = $("#smallimage").val();
+layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
+}
+var b = (layui.laytpl, layui.setter, layui.view, layui.admin);
+//查看图片
+b.events.avartatPreviewbigimage = function(t) {
+var i = $("#bigimage").val();
+layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
+}
+//正常上传图片
+upload.render({
+elem: '#layuiadmin-upload-smallimage',
+url: '/api/upload/',
+done: function(res) { 
+if(res.code!=0){              
+layer.msg(res.msg, {icon: 2}); 
+}else{
+if(typeof(res.data[0])!="undefined"){
+var imgSrc=res.data[0].src;
+}else{
+var imgSrc=res.data.src;
+} 
+$(this.item).prev("div").children("input").val(imgSrc)
+}
+}
+});
+//正常上传图片
+upload.render({
+elem: '#layuiadmin-upload-bigimage',
+url: '/api/upload/',
+done: function(res) {
+if(res.code!=0){              
+layer.msg(res.msg, {icon: 2}); 
+}else{
+if(typeof(res.data[0])!="undefined"){
+var imgSrc=res.data[0].src;
+}else{
+var imgSrc=res.data.src;
+}
+$(this.item).prev("div").children("input").val(imgSrc)
+}
+}
+});
+lay('.date').each(function() {
+laydate.render({
+elem: this,
+trigger: 'click',
+format: 'yyyy-MM-dd'
+});
+});
+lay('.time').each(function() {
+laydate.render({
+elem: this,
+trigger: 'click',
+format: 'yyyy-MM-dd HH:mm:ss'
+});
+});
+//编码器 旧版
+// var layedit = layui.layedit;
+// layedit.set({
+//     //暴露layupload参数设置接口 --详细查看layupload参数说明
+//     uploadImage: { 
+//         url: '/api/upload/?act=one'    //上传接口url
+//         ,type: 'post' //默认post 
+//     }
+//     ,uploadVideo: {
+//                 url: '/api/upload/uploadVideo.asp?act=one',
+//                 accept: 'video',
+//                 acceptMime: 'video/*',
+//                 exts: 'mp4|flv|avi|rm|rmvb',
+//                 size: '20480'
+//             }
+//     , tool: [
+//                 'colorpicker', 'html',  'code', 'strong', 'italic', 'underline', 'del', 'addhr', '|', 'fontFomatt', 'face'
+//                 , '|', 'left', 'center', 'right', '|', 'link', 'unlink','images', 'image_alt', 'video', 'anchors'
+//                 , '|','table', 'fullScreen', 'image'
+//             ]
+// });
+// layedit.build('bodycontent');   //建立编辑器
+//编辑器初始化
+var editor = layui.tinymce;
+var edit = editor.render({
+selector: "#bodycontent",
+images_upload_url: '/api/upload/?act=tinymce',//图片上传接口
+height: 500
+});
+//英文编辑器初始化
+var en_editor = layui.tinymce;
+var en_edit = en_editor.render({
+selector: "#en_bodycontent",
+images_upload_url: '/api/upload/?act=tinymce',//图片上传接口
+height: 500
+});
+//加粗    
+form.on('checkbox(checkboxTest)', function(data){
+input_font_bold();
+// $("span:contains('特荐[a]')").parent().addClass('layui-form-checked');//选中
+}); 
+$("#titleb").click(function(){
+var s=$("input[name='title']").css("font-weight")+"";
+if(s=="700"){//700为加粗
+$("input[name='flags_b']").prop("checked",false);
+}else{
+$("input[name='flags_b']").prop("checked",true);
+}
+form.render('checkbox');
 })
-
-
+})
+pasteImage("pic");
+// 配置nprogress的一些基本选项（可选）  
+NProgress.configure({ showSpinner: true }); // 隐藏加载时的旋转器  
+// 监听页面加载事件  
+document.addEventListener('DOMContentLoaded', startProgress); // DOM 完全加载并解析完成，不包括样式表、图片和子框架的加载  
+window.addEventListener('load', stopProgress); // 页面完全加载完成，包括样式表、图片和子框架  
+function startProgress() {  
+NProgress.start(); // 开始显示进度条  
+}  
+function stopProgress() {  
+NProgress.done(); // 进度条完成  
+}  
 </script>
-    
-<!-- <link rel="stylesheet" href="../../set/system/bootstrap.min.css" media="all">  -->
-<style>
-.label {
-    display: inline;
-    padding: 0.2em 0.6em 0.3em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25em;
-}
-.label-info {
-    background-color: #5bc0de;
-}
-</style>
-<script src="../../js/jquery.js"></script>
-<link rel='stylesheet' href='../../set/system/tagsinput.css'>
+<link rel='stylesheet' href='../../css/tagsinput.css'>
 <style type="text/css">
-  .bootstrap-tagsinput{width:97%;}
+.bootstrap-tagsinput{width:97%;}
 </style>
-<script type='text/javascript' src='../../set/system/tagsinput.min.js'></script>
-
-<script>
-var layuiOpenIndex;
-var picDomId='smallimage';//默认为小图
-function getPaiZhaoImg(src){ 
-  $("input[name='"+picDomId+"']").val(src)
-  layer.close(layuiOpenIndex);
-}
-
-
-
-
-
-
-
-
-
-
-
- var imgInputObj;//图片的input对象
-    //获得粘贴板内容
-    document.getElementById("smallimage").addEventListener('paste', function (event) {  
-      imgInputObj=$(this);
-      uploadclipboardDataImage(event);
-    })
-    document.getElementById("bigimage").addEventListener('paste', function (event) {  
-      imgInputObj=$(this);
-      uploadclipboardDataImage(event);
-    })
-
-    // let pHtml = event.clipboardData.getData('text/html');  为获取网页内容部分20230306
-
-    //上传粘贴板里的图片
-    function uploadclipboardDataImage(event){
-        console.log("粘贴内容22") 
-        if (!event || !event.clipboardData) return;
-        let pText = event.clipboardData.getData('text/plain');
-        if (pText) {//有文本内容的时候才是true   注意：空字符串''是false
-            // showCVText(pText);
-        } else if (event.clipboardData.items) {//没有文本内容，判断这个数组，文件可能在这个数组里
-            let blob = null, items = event.clipboardData.items;
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].kind === 'file') {//类型 是 文件
-                    blob = items[i].getAsFile();
-                    if (items[i].type.indexOf("image") !== -1) {//文件类型是图像
-                        showImage(blob);
-                    } else if (items[i].type.indexOf("text") !== -1) {//文件类型是文本
-                        // showText(blob);
-                    }
-                } 
-            }
-        } else {
-            alert("粘了个寂寞");
-        }
-    }
-
-    function showImage(blob) {
-        getContext(blob).then(res => { //图片数据能直接被img识别
-            // document.getElementById("previewImage").src = res; 
-            jQuery.ajax({
-                url: '/api/upfileClipboardImg.asp?act=submit',//要加个type以判断是否为客服
-                type: 'POST',
-                dataType: "json",
-                data: {
-                    'content': res
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest)
-                    console.log(textStatus)
-                    console.log(errorThrown)
-                },
-                success: function(data) { 
-                    // var data=jQuery.parseJSON(result); 
-                    // alert("aa")
-                    switch (data.status) {
-                        case "y": 
-                            // alert(data.info)
-                            imgInputObj.val("/"+data.img)
-                            break;
-                        case "n": 
-                            break;
-                    }
-                }
-            });
-
-
-        })
-    }
-
- 
-    /**
-     * 把字节转为web识别的base64格式数据
-     * @param blob
-     * @returns {Promise<unknown>}
-     */
-    function getContext(blob) {
-        return new Promise((resolve) => {
-            if (blob == null) resolve();
-            let reader = new FileReader();
-            reader.onload = function (event) {
-                console.log(event)
-                resolve(event.target.result);
-            }
-            reader.readAsDataURL(blob);
-        });
-    }
-
-</script>
-<script type="text/javascript" src="../../js/pc.js"></script> 
+<script type='text/javascript' src='../../js/tagsinput.min.js'></script>
 </body>
 </html>

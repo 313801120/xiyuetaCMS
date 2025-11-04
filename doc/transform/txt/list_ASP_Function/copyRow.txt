@@ -1,0 +1,44 @@
+'复制或批量复制行' 改进20250823
+function copyRow()
+    if checkAdminRule("添加" & winTitle)=false then 
+        call die("{""info"": ""没有【添加"&winTitle&"】权限"",""status"": ""n""}")
+    end if
+    dim  field
+     
+    if id="" then
+        call die("{""info"": ""ID为空"",""status"": ""n""}")
+    end if 
+    sql = "select * from "&thisAddPrefix(tableName)&" where id in("&id&")"
+    rs.open sql, conn, 1, 1
+    if rs.eof then
+        rs.close:set rs=nothing
+        call die("{""info"": ""未找到要复制的数据"",""status"": ""n""}")
+    end if 
+    while not rs.eof
+        for each field in rs.fields
+            if lcase(field.name)<>"id" then
+                fieldValue=rs(field.name)
+                if request("fieldName")=lcase(field.name) then
+                    if phptrim(request("fieldValue"))<>"" then  '不为空'
+                        fieldValue=request("fieldValue")
+                    end if
+                end if		
+				if typeName(fieldValue)="Null" then   '如果为Null 则为null值
+					fieldValue="null" 
+				end if
+                call rsData(field.name,fieldValue)
+            end if
+        next
+        ' rsAddUpdateDebug=true
+        ' call eerr("是否成功",rsAddnew(tableName)) '添加'
+        if rsAddnew_conn(tableName,conn,db_PREFIX,thisDatabaseType)=false then 
+            call addSystemLog(tableName,"复制ID("&id&")失败，错误SQL：" & insertOrUpdateSql)
+            call die("{""info"": ""复制失败，错误SQ："&jsonCL(insertOrUpdateSql)&""",""status"": ""n""}") 
+        end if
+        '{追加代码1}'
+    rs.movenext:wend:rs.close
+    call addSystemLog(tableName,"复制ID("&id&")成功。")
+
+    call die("{""info"": ""复制成功"",""status"": ""y""}")
+
+end function

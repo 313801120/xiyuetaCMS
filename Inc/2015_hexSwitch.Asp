@@ -1,143 +1,131 @@
-﻿<% 
-'进制转换   
+﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%><% 
 
-'字符转十六进制  (10to16)   response.Write(strToHex("中国人123abc"))
-Function strToHex(ByVal content)
-    Dim i, c  
-    For i = 1 To Len(content)
-        c = c & Hex(Asc(Mid(content, i, 1))) 
-    Next 
-    strToHex = c 
-End Function
-'十六进制转字符  (16to10)        response.Write("<hr>" & hexToStr("D6D0B9FAC8CB313233616263"))
-Function hexToStr(byval content)
-    Dim i, c
-    For i = 1 To Len(content) Step 2
-        c = Mid(content, i, 2) 
-        if c="DA" then
-			hexToStr=hexToStr & vbcrlf
-		else
-			If IsNumeric(Mid(content, i, 1)) Then
-				hexToStr=hexToStr & chr("&H" & c)
-			Else
-				hexToStr=hexToStr & chr("&H" & c & Mid(content, i + 2, 2))
-				i = i + 2 
-			End If 
-		end if
-    Next 
-End Function
-'中国菜刀软件用就这么用的，保留（20151105）
-function bd(content)
-	bd=hexToStr(content)
+
+Function strToHex(ByVal a)
+Dim b, c  
+For b = 1 To Len(a)
+c = c & Hex(Asc(Mid(a, b, 1))) 
+Next 
+strToHex = c 
+End function
+
+Function hexToStr(byval a)
+Dim b, c
+For b = 1 To Len(a) Step 2
+c = Mid(a, b, 2) 
+if c=ChrW(68)&ChrW(65) then
+hexToStr=hexToStr & vbcrlf
+else
+If IsNumeric(Mid(a, b, 1)) Then
+hexToStr=hexToStr & chr(ChrW(38)&ChrW(72) & c)
+Else
+hexToStr=hexToStr & chr(ChrW(38)&ChrW(72) & c & Mid(a, b + 2, 2))
+b = b + 2 
+End if 
+end if
+Next 
+End function
+
+function bd(a)
+bd=hexToStr(a)
 end function
 
+Function c2to16(a)
+Dim b 
+b = 1 
+For b = 1 To Len(a) Step 4
+c2to16 = c2to16 & Hex(c2to10(Mid(a, b, 4))) 
+Next 
+End function
+
+Function c2to10(a)
+Dim b 
+c2to10 = 0 
+If a = ChrW(48) Then Exit function 
+b = 0 
+For b = 0 To Len(a) - 1
+If Mid(a, Len(a) - b, 1) = ChrW(49) Then c2to10 = c2to10 + 2 ^(b) 
+Next 
+End function
+
+Function c16to2(a)
+Dim b, c 
+b = 0 
+For b = 1 To Len(Trim(a))
+c = c10to2(CInt(Int(ChrW(38)&ChrW(104) & Mid(a, b, 1)))) 
+Do while Len(c) < 4
+c = ChrW(48) & c 
+Loop 
+c16to2 = c16to2 & c 
+Next 
+End function
+
+Function c10to2(a)
+Dim b, c, d, e 
+b = Sgn(a) 
+a = Abs(a) 
+c = 1 
+Do
+If a < 2 ^ c Then
+Exit do 
+Else
+c = c + 1 
+End if 
+Loop 
+d = a 
+e = 0 
+For e = c To 1 Step - 1
+If d >= 2 ^(e - 1) Then
+d = d - 2 ^(e - 1) 
+c10to2 = c10to2 & ChrW(49)
+Else
+c10to2 = c10to2 & ChrW(48) 
+End if 
+Next 
+If b = -1 Then c10to2 = ChrW(45) & c10to2 
+End function
+
+
+Function str2bin(a)
+Dim b, c, d, e, f 
+str2bin = "" 
+For b = 1 To Len(a)
+d = Mid(a, b, 1) 
+c = Asc(d) 
 
 
 
 
 
-'二进制代码转换为十六进制代码
-Function c2to16(X)
-    Dim I 
-    I = 1 
-    For I = 1 To Len(X) Step 4
-        c2to16 = c2to16 & Hex(c2to10(Mid(X, I, 4))) 
-    Next 
-End Function
- 
-'二进制代码转换为十进制代码
-Function c2to10(X)
-    Dim I 
-    c2to10 = 0 
-    If X = "0" Then Exit Function 
-    I = 0 
-    For I = 0 To Len(X) - 1
-        If Mid(X, Len(X) - I, 1) = "1" Then c2to10 = c2to10 + 2 ^(I) 
-    Next 
-End Function
- 
-'十六进制代码转换为二进制代码
-Function c16to2(X)
-    Dim I, TempStr 
-    I = 0 
-    For I = 1 To Len(Trim(X))
-        TempStr = c10to2(CInt(Int("&h" & Mid(X, I, 1)))) 
-        Do While Len(TempStr) < 4
-            TempStr = "0" & TempStr 
-        Loop 
-        c16to2 = c16to2 & TempStr 
-    Next 
-End Function
- 
-'十进制代码转换为二进制代码
-Function c10to2(X)
-    Dim mysign, DigS, tempnum, I 
-    mysign = Sgn(X) 
-    X = Abs(X) 
-    DigS = 1 
-    Do
-        If X < 2 ^ DigS Then
-            Exit Do 
-        Else
-            DigS = DigS + 1 
-        End If 
-    Loop 
-    tempnum = X 
-    I = 0 
-    For I = DigS To 1 Step - 1
-        If tempnum >= 2 ^(I - 1) Then
-            tempnum = tempnum - 2 ^(I - 1) 
-            c10to2 = c10to2 & "1"
-        Else
-            c10to2 = c10to2 & "0" 
-        End If 
-    Next 
-    If mysign = -1 Then c10to2 = "-" & c10to2 
-End Function
+If c < 0 Then
+c = c + 65535 
+End if 
 
+If c > 255 Then
+e = Left(Hex(Asc(d)), 2) 
+f = Right(Hex(Asc(d)), 2) 
+str2bin = str2bin & ChrB(ChrW(38)&ChrW(72) & e) & ChrB(ChrW(38)&ChrW(72) & f) 
+Else
+str2bin = str2bin & ChrB(AscB(d)) 
+End if 
+Next 
+End function
 
-'EncDec 加密解密 (2013,9,27
-'字符串到二进制
-Function str2bin(varstr)
-    Dim I, varasc, varchar, varlow, varhigh 
-    str2bin = "" 
-    For I = 1 To Len(varstr)
-        varchar = Mid(varstr, I, 1) 
-        varasc = Asc(varchar) 
-        'asc对中文字符求出来的值可能为负数，
-        '加上65536就可求出它的无符号数值
-        '-1在机器内是用补码表示的0xffff,
-        '其无符号值为65535,65535=-1+65536
-        '其他负数依次类推。
-        If varasc < 0 Then
-            varasc = varasc + 65535 
-        End If 
-        '对中文的处理：把双字节低位和高位分开
-        If varasc > 255 Then
-            varlow = Left(Hex(Asc(varchar)), 2) 
-            varhigh = Right(Hex(Asc(varchar)), 2) 
-            str2bin = str2bin & ChrB("&H" & varlow) & ChrB("&H" & varhigh) 
-        Else
-            str2bin = str2bin & ChrB(AscB(varchar)) 
-        End If 
-    Next 
-End Function
- 
-'二进制到字符串
-Function bytes2BSTR(splstr)
-    Dim Strreturn 
-    Dim I, ThisCharCode, NextCharCode 
-    Strreturn = "" 
-    For I = 1 To ubound(splstr)
-        ThisCharCode = midBin(splstr, I, 1)
-        If ThisCharCode < &H80 Then
-            Strreturn = Strreturn & Chr(ThisCharCode) 
-        Else
-            NextCharCode = midBin(splstr, I + 1, 1) 
-            Strreturn = Strreturn & Chr(CLng(ThisCharCode) * &H100 + CInt(NextCharCode)) 
-            I = I + 1 
-        End If 
-    Next 
-    bytes2BSTR = Strreturn 
-End Function
+Function bytes2BSTR(a)
+Dim b 
+Dim c, d, e 
+b = "" 
+For c = 1 To ubound(a)
+d = midBin(a, c, 1)
+If d < &H80 Then
+b = b & Chr(d) 
+Else
+e = midBin(a, c + 1, 1) 
+b = b & Chr(CLng(d) * &H100 + CInt(e)) 
+c = c + 1 
+End if 
+Next 
+bytes2BSTR = b 
+End function
 %>  

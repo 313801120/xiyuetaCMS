@@ -1,0 +1,19 @@
+            },samesortrank: function(){ 
+                layer.confirm('确定要三页排序统一吗？', function(index) { 
+                     $.ajax({
+                        type: "POST",
+                        cache: true,
+                        dataType: "json",
+                        url: "?act=samesortrank&layout_page_id=<%=request("layout_page_id")%>",
+                        data: { },
+                        success: function(data) { 
+                            switch (data.status) {
+                                case "y": 
+                                    layer.msg(data.info); 
+                                    table.reload('testReload');
+                                    break;
+                            }
+                        }
+                    });
+
+                });

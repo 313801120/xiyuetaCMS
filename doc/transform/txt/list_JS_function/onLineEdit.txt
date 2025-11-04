@@ -1,0 +1,32 @@
+
+    // 根据返回数据中某个字段来判断开启该行的编辑
+    var editable = function(d){
+      // console.log('d',d)
+        if(d.editable) return 'text'; // 这里假设以 editable 字段为判断依据
+    };
+
+    //提交在线修改 id，字段，值
+    var submitOnLineEdit = function(id,field,value){ 
+        NProgress.start(); // 开始显示进度条  
+        return new Promise((resolve) => {     //异步操作
+            $.ajax({
+                type: "POST",
+                cache: true,
+                dataType: "json",
+                url: "?act=onlineedit&id="+id,
+                data: { "fieldname":  field,"value":  value  },
+                success: function(data) {
+                    switch (data.status) {
+                        case "y": 
+                          layer.msg(data.info, {icon: 1});
+                            break;
+                        case "n": 
+                            layer.msg(data.info, {icon: 2}); 
+                            break;
+                    }
+                    NProgress.done(); // 进度条完成  
+                    resolve(data);  //返回状态 y或n
+                }
+            }); 
+        });  
+    }

@@ -1,89 +1,567 @@
-﻿【#jump#】true为true则为跳过当前
-【#top#】true为true则为停止全部
+﻿【parentid】-1
+【columnname】四川
+【sortrank】1
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
 -------------------------------
-【#sub#】
-四川【|】sortrank='1' isthrough='1' 
-	成都【|】sortrank='0' isthrough='1' 
-	绵阳【|】sortrank='0' isthrough='1' 
-		盐亭【|】sortrank='0' isthrough='1' 
-		三台【|】sortrank='0' isthrough='1' 
-		梓潼【|】sortrank='0' isthrough='1' 
-		平武【|】sortrank='0' isthrough='1' 
-		北川【|】sortrank='0' isthrough='1'
-	自贡【|】sortrank='0' isthrough='1' 
-	攀枝花【|】sortrank='0' isthrough='1' 
-	泸州【|】sortrank='0' isthrough='1' 
-	德阳【|】sortrank='0' isthrough='1' 
-	广元【|】sortrank='0' isthrough='1' 
-	遂宁【|】sortrank='0' isthrough='1' 
-	内江【|】sortrank='0' isthrough='1' 
-	乐山【|】sortrank='0' isthrough='1' 
-	资阳【|】sortrank='0' isthrough='1' 
-	宜宾【|】sortrank='0' isthrough='1' 
-	南充【|】sortrank='0' isthrough='1' 
-	达州【|】sortrank='0' isthrough='1' 
-		宣汉【|】sortrank='0' isthrough='1' 
-		开江【|】sortrank='0' isthrough='1' 
-		大竹【|】sortrank='0' isthrough='1' 
-		渠县【|】sortrank='0' isthrough='1' 
-		达川【|】sortrank='0' isthrough='1' 
-		万源【|】sortrank='0' isthrough='1' 
-	雅安【|】sortrank='0' isthrough='1' 
-	广安【|】sortrank='0' isthrough='1' 
-	巴中【|】sortrank='0' isthrough='1' 
-	眉山【|】sortrank='0' isthrough='1' 
-	都江堰【|】sortrank='0' isthrough='1' 
-	彭州【|】sortrank='0' isthrough='1' 
-	崇州【|】sortrank='0' isthrough='1' 
-	邛崃【|】sortrank='0' isthrough='1' 
-	简阳【|】sortrank='0' isthrough='1' 
-	广汉【|】sortrank='0' isthrough='1' 
-	什邡【|】sortrank='0' isthrough='1' 
-	绵竹【|】sortrank='0' isthrough='1' 
-	隆昌【|】sortrank='0' isthrough='1' 
-	峨眉山【|】sortrank='0' isthrough='1' 
-	阆中【|】sortrank='0' isthrough='1' 
-	万源【|】sortrank='0' isthrough='1' 
-	马尔康【|】sortrank='0' isthrough='1' 
-	康定【|】sortrank='0' isthrough='1' 
-	西昌【|】sortrank='0' isthrough='1' 
-	射洪【|】sortrank='0' isthrough='1' 
-	什邡【|】sortrank='0' isthrough='1' 
-	绵竹【|】sortrank='0' isthrough='1' 
-	隆昌【|】sortrank='0' isthrough='1' 
-	峨眉山【|】sortrank='0' isthrough='1' 
-	阆中【|】sortrank='0' isthrough='1' 
-	万源【|】sortrank='0' isthrough='1' 
-	马尔康【|】sortrank='0' isthrough='1' 
-	康定【|】sortrank='0' isthrough='1' 
-	西昌【|】sortrank='0' isthrough='1'  
-
-
-重庆【|】sortrank='2' isthrough='1' 
-	万州【|】sortrank='0' isthrough='1' 
-	黔江【|】sortrank='0' isthrough='1' 
-	涪陵【|】sortrank='0' isthrough='1' 
-	渝中【|】sortrank='0' isthrough='1' 
-	大渡口【|】sortrank='0' isthrough='1' 
-	江北【|】sortrank='0' isthrough='1' 
-	沙坪坝【|】sortrank='0' isthrough='1' 
-	九龙坡【|】sortrank='0' isthrough='1' 
-	南岸【|】sortrank='0' isthrough='1' 
-	北碚【|】sortrank='0' isthrough='1' 
-	渝北【|】sortrank='0' isthrough='1' 
-	巴南【|】sortrank='0' isthrough='1' 
-	长寿【|】sortrank='0' isthrough='1' 
-	江津【|】sortrank='0' isthrough='1' 
-	合川【|】sortrank='0' isthrough='1' 
-	南川【|】sortrank='0' isthrough='1' 
-	綦江【|】sortrank='0' isthrough='1' 
-	大足【|】sortrank='0' isthrough='1' 
-	璧山【|】sortrank='0' isthrough='1' 
-	铜梁【|】sortrank='0' isthrough='1' 
-	潼南【|】sortrank='0' isthrough='1' 
-	荣昌【|】sortrank='0' isthrough='1' 
-	开州【|】sortrank='0' isthrough='1' 
-	梁平【|】sortrank='0' isthrough='1' 
-	武隆【|】sortrank='0' isthrough='1' 
- 
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】成都
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】绵阳
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]绵阳
+【columnname】盐亭
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]绵阳
+【columnname】三台
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]绵阳
+【columnname】梓潼
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]绵阳
+【columnname】平武
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]绵阳
+【columnname】北川
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】自贡
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】攀枝花
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】泸州
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】德阳
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】广元
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】遂宁
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】内江
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】乐山
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】资阳
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】宜宾
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】南充
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】达州
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]达州
+【columnname】宣汉
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]达州
+【columnname】开江
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]达州
+【columnname】大竹
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]达州
+【columnname】渠县
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]达州
+【columnname】达川
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川[-->>]达州
+【columnname】万源
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】雅安
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】广安
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】巴中
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】眉山
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】都江堰
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】彭州
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】崇州
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】邛崃
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】简阳
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】广汉
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】什邡
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】绵竹
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】隆昌
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】峨眉山
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】阆中
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】万源
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】马尔康
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】康定
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】西昌
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】射洪
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】什邡
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】绵竹
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】隆昌
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】峨眉山
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】阆中
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】万源
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】马尔康
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】康定
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]四川
+【columnname】西昌
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】-1
+【columnname】重庆
+【sortrank】2
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】万州
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】黔江
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】涪陵
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】渝中
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】大渡口
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】江北
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】沙坪坝
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】九龙坡
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】南岸
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】北碚
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】渝北
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】巴南
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】长寿
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】江津
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】合川
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】南川
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】綦江
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】大足
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】璧山
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】铜梁
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】潼南
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】荣昌
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】开州
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】梁平
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
+-------------------------------
+【parentid】sheshi[==>>]parentid[==>>]id[==>>]columnname[==>>]重庆
+【columnname】武隆
+【sortrank】0
+【isthrough】1
+【createtime】2025/7/23 9:30:21
+【updatetime】2025/7/23 9:30:21
 -------------------------------

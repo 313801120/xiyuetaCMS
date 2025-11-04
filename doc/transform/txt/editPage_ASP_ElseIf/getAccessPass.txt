@@ -1,0 +1,9 @@
+'获得Access密码'
+elseif request("act")="getAccessPass" then 
+    if checkFile(request("databaseippath"))=false then
+        call die("{""info"": ""获得Access密码失败，文件不存在。"",""pass"": """",""status"": ""n""}")
+    elseif checkMdbPositionSafe(request("databaseippath"))=false then
+        call die("{""info"": ""获得Access密码失败，数据库位置不在/uploadfiles/mdb/里"",""pass"": """",""status"": ""n""}")
+    else
+        call die("{""info"": ""获得Access密码成功！"",""pass"": """&getAccessPass(request("databaseippath"))&""",""status"": ""y""}")
+    end if

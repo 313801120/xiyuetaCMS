@@ -1,0 +1,10 @@
+'导入相关配置 20251028 001
+elseif request("act")="layoutPageImportAllConfig" then
+    dim content,importResult
+    content=request("content")
+    if content="" then
+        call die("{""info"": ""内容为空"",""status"": ""n""}")
+    end if
+    databaseType=thisDatabaseType '处理当前数据库类型'
+    importResult=layoutPageImportAllConfig(db_PREFIX,conn,content)
+    call die("{""info"": """&jsonCL2(importResult)&""",""status"": ""y""}")

@@ -1,0 +1,58 @@
+
+'复制多级菜单数据'20250824
+function batchCopySubTableData(id,tableName,findFeild,newTableId) 
+    dim field,sql,newID
+    'call echo("提示","newTableId为空")
+    if newTableId="" then exit function
+    'call echo("提示","batchCopySubTableData")
+    sql= "select * from ["& db_PREFIX & tableName &"] where "&findFeild&"="&id & " and parentid=-1"
+    rsx.open sql,conn,1,1
+    while not rsx.eof
+        sql= "select * from ["& db_PREFIX & tableName &"] order by id desc"
+        rst.open sql,conn,1,3
+        rst.addnew
+        for each field in rsx.fields
+            if lcase(field.name)<>"id" then
+                if lcase(field.name)=findFeild then
+                    'call echo("field.name",field.name):doevents
+                    rst(field.name)=newTableId  '使用新页id'
+                else
+                    rst(field.name)=rsx(field.name)
+                end if
+            end if
+        next
+        rst.update:rst.close
+        sql= "select * from ["& db_PREFIX & tableName &"] order by id desc"
+        rst.open sql,conn,1,1
+        if not rst.eof then
+            newID=rst("id")
+        end if:rst.close
+        if newID<>"" then
+            'call echo("newID",newID)
+            sql= "select * from ["& db_PREFIX & tableName &"] where "&findFeild&"="&id & " and parentid=" & rsx("id")
+                rst.open sql,conn,1,1
+                while not rst.eof 
+                sql= "select * from ["& db_PREFIX & tableName &"] order by id desc"
+                rsd.open sql,conn,1,3
+                rsd.addnew
+                for each field in rst.fields
+                    if lcase(field.name)<>"id" then
+                        if lcase(field.name)=findFeild then
+                            'call echo("field.name",field.name):doevents
+                            rsd(field.name)=newTableId  '使用新页id'
+                        elseif lcase(field.name)="parentid" then
+                            rsd(field.name)=newID                            
+                        else
+                            rsd(field.name)=rst(field.name)
+                        end if
+                    end if
+                next
+                rsd.update:rsd.close
+
+                rst.movenext:wend:rst.close 
+        end if
+
+         
+    rsx.movenext:wend:rsx.close   
+end function
+ 

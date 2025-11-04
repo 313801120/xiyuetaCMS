@@ -1,14 +1,59 @@
-﻿【#jump#】true为true则为跳过当前
-【#top#】true为true则为停止全部
+﻿【parentid】-1
+【columnname】管理员(admin)
+【sortrank】0
+【isthrough】1
+【sex】1
+【createtime】2025/7/23 9:30:14
+【updatetime】2025/7/4
 -------------------------------
-【#sub#】
-
-
-
-后台用户分组【|】sortrank='8' isthrough='1'
-	技术部【|】sortrank='10' isthrough='1'
-	服务部【|】sortrank='20' isthrough='1' 
-	其它部【|】sortrank='20' isthrough='1' 
-
+【parentid】-1
+【columnname】小云
+【columnenname】xiaoyun
+【sortrank】1
+【isthrough】0
+【sex】2
+【createtime】2025/7/25 14:58:48
+【updatetime】2025/7/3
 -------------------------------
-
+【parentid】-1
+【columnname】aaa
+【sortrank】2
+【isthrough】1
+【sex】0
+【createtime】2025/7/25 14:59:26
+【updatetime】2025/7/25 15:39:27
+-------------------------------
+【parentid】xiyuetaclass[==>>]parentid[==>>]id[==>>]columnname[==>>]管理员(admin)
+【columnname】角色
+【sortrank】1
+【isthrough】1
+【createtime】2025/9/6 12:11:50
+【updatetime】2025/9/6 12:11:50
+-------------------------------
+【parentid】xiyuetaclass[==>>]parentid[==>>]id[==>>]columnname[==>>]管理员(admin)[-->>]角色
+【columnname】技术部
+【sortrank】10
+【isthrough】1
+【sex】0
+【createtime】2025/7/23 9:30:14
+【updatetime】2025/7/23 9:30:14
+-------------------------------
+【parentid】xiyuetaclass[==>>]parentid[==>>]id[==>>]columnname[==>>]管理员(admin)[-->>]角色
+【columnname】服务部
+【columnenname】333
+【sortrank】20
+【isthrough】1
+【sex】2
+【createtime】2025/7/23 9:30:14
+【updatetime】2025/7/23 9:30:14
+-------------------------------
+【parentid】xiyuetaclass[==>>]parentid[==>>]id[==>>]columnname[==>>]管理员(admin)[-->>]角色
+【columnname】其它部
+【columnenname】111
+【sortrank】20
+【isthrough】1
+【sex】0
+【scolor】#a33e3e
+【createtime】2025/7/23 9:30:14
+【updatetime】2025/7/23 9:30:14
+-------------------------------

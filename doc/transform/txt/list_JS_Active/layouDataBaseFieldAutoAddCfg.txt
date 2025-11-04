@@ -1,0 +1,48 @@
+            },layouDataBaseFieldAutoAddCfg: function(){    // edit 20250907 1
+                layer.confirm('是否要执行字段自动创建配置？', function(index) { 
+                    // 关闭确认弹窗
+                    layer.close(index);
+                    
+                    // 显示加载提示弹窗，不可关闭
+                    var loadingIndex = layer.msg('正在处理中，请等待...', {
+                        icon: 16,
+                        shade: 0.3,
+                        time: 0, // 不自动关闭
+                        shadeClose: false // 不允许点击遮罩关闭
+                    });
+                    
+                    // 禁用按钮，防止重复点击
+                    $('#layouDataBaseFieldAutoAddCfg').addClass('layui-btn-disabled').prop('disabled', true);
+                    
+                     $.ajax({
+                        type: "POST",
+                        cache: true,
+                        dataType: "json",
+                        url: "?act=layouDataBaseFieldAutoAddCfg&layout_database_table_id=<%=request("layout_database_table_id")%>",
+                        data: { },
+                        success: function(data) { 
+                            // 关闭加载提示
+                            layer.close(loadingIndex);
+                            
+                            // 恢复按钮状态
+                            $('#layouDataBaseFieldAutoAddCfg').removeClass('layui-btn-disabled').prop('disabled', false);
+                            
+                            switch (data.status) {
+                                case "y": 
+                                    layer.msg(data.info); 
+                                    table.reload('testReload');
+                                    break;
+                            }
+                        },
+                        error: function() {
+                            // 关闭加载提示
+                            layer.close(loadingIndex);
+                            
+                            // 恢复按钮状态
+                            $('#layouDataBaseFieldAutoAddCfg').removeClass('layui-btn-disabled').prop('disabled', false);
+                            
+                            layer.msg('请求失败，请重试');
+                        }
+                    });
+
+                });
