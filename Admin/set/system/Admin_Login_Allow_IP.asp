@@ -48,8 +48,14 @@ end if
 </div>
 <div class="layui-form-item">
 <div class="layui-input-block">
+<%
+if isLoginIPAllow=false then
+call rw(ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)&ChrW(39)&ChrW(62)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(25991)&ChrW(20214)&ChrW(37324)&ChrW(27809)&ChrW(26377)&ChrW(24320)&ChrW(21551)&ChrW(30331)&ChrW(24405)&ChrW(21518)&ChrW(21488)&ChrW(73)&ChrW(80)&ChrW(38480)&ChrW(21046)&ChrW(65292)&ChrW(19981)&ChrW(21487)&ChrW(20462)&ChrW(25913)&ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62))
+else
+%>
 <input type="submit" class="layui-btn" value="确认保存" lay-submit="lay-submit" />
 <%=msg%>
+<%end if%>
 </div>
 </div>
 </div>
