@@ -984,6 +984,10 @@ if r=ChrW(39)&ChrW(67)&ChrW(85)&ChrW(82)&ChrW(82)&ChrW(69)&ChrW(78)&ChrW(84)&Chr
 r=ChrW(78)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)
 end if
 end if
+
+if o=ChrW(73)&ChrW(110)&ChrW(116) and (r="" or r=ChrW(34)&ChrW(34)&ChrW(34)&ChrW(34)) then
+r=""
+end if
 if r <>"" then 
 r = ChrW(32)&ChrW(68)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(32)& r
 end if
