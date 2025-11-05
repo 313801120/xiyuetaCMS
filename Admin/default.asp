@@ -273,14 +273,19 @@ if not rsx.eof then
 <dd><a lay-href="system/count.asp">访问统计</a></dd>
 <dd><a lay-href="system/pic.asp">上传图片管理</a></dd>
 <!-- <dd><a lay-href="system/adminlog.asp">后台日志</a></dd> -->
-<dd><a lay-href="app/test_systemlog/list.asp">后台日志</a></dd>
-<dd><a lay-href="system/backupDatabase.asp">备份恢复数据</a></dd>
-<dd><a lay-href="system/updatelog.asp">更新日志</a></dd>
+<dd><a lay-href="app/test_systemlog/list.asp">后台日志</a></dd> 
+<%if getip()=ChrW(49)&ChrW(50)&ChrW(55)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(49) then%>
 <dd><a lay-href="app/iislog/list.asp">IIS日志</a></dd> 
 <dd><a lay-href="app/iislog/iisipstat_list.asp">IIS统计IP</a></dd> 
 <dd><a lay-href="app/iislog/iisURLstat_list.asp">IIS统计URL</a></dd> 
 <dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap.xml</a></dd> 
+<%end if%>
+<%if databaseType = ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115) then%>
+<dd><a lay-href="system/backupDatabase.asp">备份恢复数据</a></dd>
+<%elseif databaseType = ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then%>
 <dd><a lay-href="app/database/list.asp">SqlServer维护</a></dd> 
+<%end if%>
+<dd><a lay-href="system/updatelog.asp">更新日志</a></dd>
 </dl>
 </li>
 <%if getip()=ChrW(49)&ChrW(50)&ChrW(55)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(49) then%>

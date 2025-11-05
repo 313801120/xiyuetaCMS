@@ -636,7 +636,11 @@ end function
 function getUpDownPageUrl(a,b)
 if asporhtml=true and request(ChrW(107))="" then
 if instr(a,ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))>0 then
+if b>1 then
 getUpDownPageUrl=left(a,len(a)-5) & ChrW(95) & b & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+else
+getUpDownPageUrl=a
+end if
 else
 getUpDownPageUrl=b & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)
 end if
