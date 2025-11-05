@@ -1,0 +1,11 @@
+'获得管理员ID对应会员的名称和id' 20251101
+Function getAdminIdToInfo(rs,id)
+    dim rsTemp,s,sql
+    Set rsTemp = CreateObject("Adodb.RecordSet")
+    sql="select * from " & db_PREFIX & "admin Where id="&id
+    rsTemp.open sql ,conn,1,1
+    if not rsTemp.eof then
+        s=rsTemp("username")&"("&id&")"
+    end if:rsTemp.close 
+    getAdminIdToInfo = s 
+End Function

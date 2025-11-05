@@ -86,7 +86,7 @@ function batchCreateNavHtml(idList,nCreateHtmlOKCount)
                     call echo("每页显示",rs("npagesize"))
                     call echo("页数totalPages",totalPages)
                     if totalPages>1 then
-                        for j=1 to totalPages
+                        for j=2 to totalPages                   '从第二页开始生成'
                             nLen=instrrev(htmlFile,".")
                             pageHtmlFile=mid(htmlFile,1,nLen-1) & "_"&j&mid(htmlFile,nLen)
                             call echo("pageHtmlFile",pageHtmlFile)

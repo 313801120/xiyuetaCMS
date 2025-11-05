@@ -3,16 +3,27 @@
 <%
 dim dbport
 if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110) then
-if trim(request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)))=ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109) then
+call checkLogin()
+end if 
+
+function checkLogin()
+dim a,b,c 
+c=ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)
+a=ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
+if checkFile(a) then  
+b=readfile(a,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))   
+c=phptrim(getStrCut(b,ChrW(105)&ChrW(110)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0)) 
+end if
+if trim(request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)))=c then
 session(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115))=ChrW(109)&ChrW(105)&ChrW(109)&ChrW(97)
 else
 call echo(ChrW(25552)&ChrW(31034),ChrW(23494)&ChrW(30721)&ChrW(38169)&ChrW(35823))
 end if
-end if 
+end function
 call checkInstallLogin()
 
 function checkInstallLogin()
-if session(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115))="" and getip() <>ChrW(49)&ChrW(50)&ChrW(55)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(49) then
+if session(ChrW(105)&ChrW(110)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115))="" then
 call die(ChrW(60)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(49)&ChrW(39)&ChrW(32)&ChrW(109)&ChrW(101)&ChrW(116)&ChrW(104)&ChrW(111)&ChrW(100)&ChrW(61)&ChrW(39)&ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(39)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(39)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(39)&ChrW(62)&ChrW(23494)&ChrW(30721)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(39)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(39)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(39)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(30331)&ChrW(24405)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(62))   
 end if 
 end function

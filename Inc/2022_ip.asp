@@ -70,26 +70,27 @@ if i >= 2130706432 and i <= 2147483647 then
 ipToAddr2022 = ChrW(20445)&ChrW(30041)&ChrW(22320)&ChrW(22336) 
 exit function 
 end if 
-dim x,y,z,a1,a2
+dim x,y,z,a1
 set x = createObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
 set y = createObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
 set z = createObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116)) 
-dim a3,a4
-a3=ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116)
-if checkFile(a3) then 
-dim a5,a6,a7,a8
-a2=readfile(a3,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-a1=split(a2&ChrW(44)&ChrW(44)&ChrW(44),ChrW(44))
+dim a2,a3
+dim a4,a5,a6,a7
+a2=ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
+if checkFile(a2) then 
+a1=readfile(a2,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)) 
+a4=getStrCut(a1,ChrW(115)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(72)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(73)&ChrW(80)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0)
+a5=getStrCut(a1,ChrW(115)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(85)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0)
+a6=getStrCut(a1,ChrW(115)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0)
+a7=getStrCut(a1,ChrW(115)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(112)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0)
+end if
+if a6 <>"" then
 if w then call echo(ChrW(25552)&ChrW(31034),ChrW(20351)&ChrW(29992)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(25968)&ChrW(25454)&ChrW(24211)) 
-a5=a1(0)
-a6=a1(1)
-a7=a1(2)
-a8=a1(3)
-a4=ChrW(105)&ChrW(112)
-if a5="" then a5 = ChrW(108)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(104)&ChrW(111)&ChrW(115)&ChrW(116) 
-if a6=""  then a6=ChrW(115)&ChrW(97)
-if a8="" then a8=ChrW(49)&ChrW(52)&ChrW(51)&ChrW(51)
-l = ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a6&ChrW(59)&ChrW(32)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(61)&a7&ChrW(59)&ChrW(32)&ChrW(73)&ChrW(110)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(97)&ChrW(108)&ChrW(32)&ChrW(67)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(32)&ChrW(61)&ChrW(105)&ChrW(112)&ChrW(59)&ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(117)&ChrW(114)&ChrW(99)&ChrW(101)&ChrW(32)&ChrW(61) & a5 & ChrW(44)&a8&ChrW(59)&ChrW(80)&ChrW(114)&ChrW(111)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(111)&ChrW(108)&ChrW(101)&ChrW(100)&ChrW(98)&ChrW(59)
+a3=ChrW(105)&ChrW(112)
+if a4="" then a4 = ChrW(108)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(104)&ChrW(111)&ChrW(115)&ChrW(116) 
+if a5=""  then a5=ChrW(115)&ChrW(97)
+if a7="" then a7=ChrW(49)&ChrW(52)&ChrW(51)&ChrW(51)
+l = ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a5&ChrW(59)&ChrW(32)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(61)&a6&ChrW(59)&ChrW(32)&ChrW(73)&ChrW(110)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(97)&ChrW(108)&ChrW(32)&ChrW(67)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(32)&ChrW(61)&ChrW(105)&ChrW(112)&ChrW(59)&ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(117)&ChrW(114)&ChrW(99)&ChrW(101)&ChrW(32)&ChrW(61) & a4 & ChrW(44)&a7&ChrW(59)&ChrW(80)&ChrW(114)&ChrW(111)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(111)&ChrW(108)&ChrW(101)&ChrW(100)&ChrW(98)&ChrW(59)
 if checkSqlServer(l) = false then
 call eerr(ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(38142)&ChrW(25509)&ChrW(20986)&ChrW(38169), l) 
 end if 
@@ -97,10 +98,10 @@ set x = createObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&Ch
 x.open l 
 else
 call selectOpenConn(x)
-a4=db_PREFIX & ChrW(105)&ChrW(112)
+a3=db_PREFIX & ChrW(105)&ChrW(112)
 if w then call echo(ChrW(25552)&ChrW(31034),ChrW(20351)&ChrW(29992)&ChrW(24403)&ChrW(21069)&ChrW(25968)&ChrW(25454)&ChrW(24211))
 end if 
-k = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&a4&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & i & ChrW(62)&ChrW(61)&ChrW(91)&ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32) & i & ChrW(60)&ChrW(61)&ChrW(91)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) 
+k = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&a3&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & i & ChrW(62)&ChrW(61)&ChrW(91)&ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32) & i & ChrW(60)&ChrW(61)&ChrW(91)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) 
 if w then call echo(ChrW(115)&ChrW(113)&ChrW(108),k):doevents
 y.open k, x, 1, 1 
 j = false 
@@ -109,8 +110,8 @@ j = true
 else
 if w then call echo(ChrW(25552)&ChrW(31034),ChrW(27809)&ChrW(26377)&ChrW(35760)&ChrW(24405))
 
-dim a9, a10, a11, a12 
-a12 = false 
+dim a8, a9, a10, a11 
+a11 = false 
 h = v & ChrW(47)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(47) & a & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
 
 if checkFile(h) then
@@ -121,17 +122,17 @@ elseif pubIsDownIPJson = false then
 ipToAddr2022 = look_ip(a)
 exit function 
 else
-a9 = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)&ChrW(105)&ChrW(112)&ChrW(49)&ChrW(51)&ChrW(56)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47)&ChrW(105)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(117)&ChrW(112)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)&ChrW(105)&ChrW(112)&ChrW(61) & a & ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(50) 
-a10 = v & ChrW(47)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(47) & a & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
-if checkFile(a10) = false then
-call saveRemoteFile_WinHttp(a9, a10, a9) 
+a8 = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(119)&ChrW(119)&ChrW(119)&ChrW(46)&ChrW(105)&ChrW(112)&ChrW(49)&ChrW(51)&ChrW(56)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47)&ChrW(105)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(111)&ChrW(107)&ChrW(117)&ChrW(112)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)&ChrW(105)&ChrW(112)&ChrW(61) & a & ChrW(38)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(61)&ChrW(50) 
+a9 = v & ChrW(47)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(47) & a & ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108) 
+if checkFile(a9) = false then
+call saveRemoteFile_WinHttp(a8, a9, a8) 
 
 end if 
-a11 = readfile(a10, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)) 
-e = strCut(a11, ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(112)&ChrW(95)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(32)&ChrW(61)&ChrW(32), ChrW(125)&ChrW(59), 0) 
+a10 = readfile(a9, ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)) 
+e = strCut(a10, ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(112)&ChrW(95)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(32)&ChrW(61)&ChrW(32), ChrW(125)&ChrW(59), 0) 
 if e <> "" then e = e & ChrW(125) 
 end if 
-dim a13, a14, a15, a16, a17, a18, a19, a20, a21 
+dim a12, a13, a14, a15, a16, a17, a18, a19, a20 
 
 if e = "" then
 ipToAddr2022 = look_ip(a) 
@@ -140,30 +141,30 @@ exit function
 end if 
 if w then call echo(ChrW(25552)&ChrW(31034),ChrW(27491)&ChrW(24120)) 
 if w then call echo(ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(83)&ChrW(116)&ChrW(114), e) : doevents 
-set a14 = new aspJSON
-a14.loadjson(e) 
+set a13 = new aspJSON
+a13.loadjson(e) 
 
 if checkFile(v&ChrW(47)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(47) & a & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116)) = false then
 call writeToFile(v&ChrW(47)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(47) & a & ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116), e, ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)) 
 end if 
-for each r in a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))
+for each r in a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))
 
-m = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(99)&ChrW(116)) 
-n = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(112)&ChrW(114)&ChrW(111)&ChrW(118)) 
-o = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(99)&ChrW(105)&ChrW(116)&ChrW(121)) 
-s = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97))
-t = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(121)&ChrW(117)&ChrW(110)&ChrW(121)&ChrW(105)&ChrW(110))
-u = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(110)&ChrW(101)&ChrW(116))
-p = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)) 
-q = a14.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(101)&ChrW(110)&ChrW(100)) 
-
-
+m = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(99)&ChrW(116)) 
+n = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(112)&ChrW(114)&ChrW(111)&ChrW(118)) 
+o = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(99)&ChrW(105)&ChrW(116)&ChrW(121)) 
+s = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97))
+t = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(121)&ChrW(117)&ChrW(110)&ChrW(121)&ChrW(105)&ChrW(110))
+u = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(110)&ChrW(101)&ChrW(116))
+p = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)) 
+q = a13.data(ChrW(105)&ChrW(112)&ChrW(95)&ChrW(99)&ChrW(95)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))(r)(ChrW(101)&ChrW(110)&ChrW(100)) 
 
 
 
 
 
-z.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&a4&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & p & ChrW(62)&ChrW(61)&ChrW(91)&ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32) & q & ChrW(60)&ChrW(61)&ChrW(91)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93), x, 1, 3
+
+
+z.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&a3&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & p & ChrW(62)&ChrW(61)&ChrW(91)&ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32) & q & ChrW(60)&ChrW(61)&ChrW(91)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93), x, 1, 3
 if z.eof then
 if w then call echo(ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110),p):doevents
 z.addnew 
@@ -183,7 +184,7 @@ end if
 
 if j = false then
 y.close 
-k = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&a4&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & i & ChrW(62)&ChrW(61)&ChrW(91)&ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32) & i & ChrW(60)&ChrW(61)&ChrW(91)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) 
+k = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&a3&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32) & i & ChrW(62)&ChrW(61)&ChrW(91)&ChrW(98)&ChrW(101)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32) & i & ChrW(60)&ChrW(61)&ChrW(91)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(93) 
 
 y.open k, x, 1, 1 
 end if 
