@@ -108,6 +108,27 @@ call addSystemLog(ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110), a)
 call die(a &ChrW(32)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(32)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(34)& adminDir &ChrW(47)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(34)&ChrW(62)&ChrW(30331)&ChrW(24405)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
 end if
 
+dim c,d,e
+c=ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
+if checkFile(c) then  
+d=readfile(c,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))   
+
+e=lcase(phptrim(phptrim(getStrCut(d,ChrW(105)&ChrW(115)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(80)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0))))
+if e <>"" then
+isLoginIPAllow=IIF( (e=ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) or e=ChrW(49)),true,false)
+end if
+
+e=lcase(phptrim(phptrim(getStrCut(d,ChrW(105)&ChrW(115)&ChrW(79)&ChrW(110)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(79)&ChrW(110)&ChrW(108)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(100)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0))))
+if e <>"" then
+isOnAdminLoginOnlyAddress=IIF( (e=ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) or e=ChrW(49)),true,false)
+end if
+
+e=lcase(phptrim(phptrim(getStrCut(d,ChrW(105)&ChrW(115)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(79)&ChrW(110)&ChrW(67)&ChrW(82)&ChrW(77)&ChrW(83)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0))))
+if e <>"" then
+isAdminOnCRMShow=IIF( (e=ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) or e=ChrW(49)),true,false)
+end if  
+end if
+
 if isLoginIPAllow then 
 if checkAdminLoginIPAllow(getIP())=false then
 a=ChrW(30331)&ChrW(24405)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(105)&ChrW(112)&ChrW(40)&getip()&ChrW(41)&ChrW(65292)&ChrW(19981)&ChrW(22312)&ChrW(20801)&ChrW(35768)&ChrW(30331)&ChrW(24405)&ChrW(21015)&ChrW(34920)
@@ -118,7 +139,7 @@ end if
 call addSystemLog(ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110), a) 
 call die(a &ChrW(32)&ChrW(38)&ChrW(110)&ChrW(98)&ChrW(115)&ChrW(112)&ChrW(59)&ChrW(32)&ChrW(60)&ChrW(97)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(34)& adminDir &ChrW(47)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(34)&ChrW(62)&ChrW(30331)&ChrW(24405)&ChrW(60)&ChrW(47)&ChrW(97)&ChrW(62)) 
 end if 
-end if
+end if 
 
 if isOnAdminLoginOnlyAddress then
 if userrs(ChrW(117)&ChrW(112)&ChrW(105)&ChrW(112)) <>getip() then

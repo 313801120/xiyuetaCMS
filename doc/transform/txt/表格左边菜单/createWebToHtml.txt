@@ -11,9 +11,9 @@
                         '</div>' +
                         '<div style="flex: 1; border: 1px solid #ddd;">' +
                         '<div style="padding: 5px; background: #f5f5f5; font-weight: bold;">生成文章HTML</div>' +
-                        '<iframe src="../test_webcolumn/list.asp?act=batchCreateAllArticleHtml" style="width: 100%; height: calc(100% - 30px); border: none;"></iframe>' +
+                        '<iframe src="../test_articledetail/list.asp?act=batchCreateAllArticleHtml" style="width: 100%; height: calc(100% - 30px); border: none;"></iframe>' +
                         '</div>' +
-                        '</div>';
+                        '</div>'; 
                     layer.open({
                         type: 1,
                         title: '生成网站html',

@@ -38,11 +38,15 @@ end if:rs.close
 <i class="layui-icon layui-icon-website"></i>
 </a>
 </li>
+<%
+if isAdminOnCRMShow then
+%>
 <li class="layui-nav-item layui-hide-xs" lay-unselect>
 <a href="../crm" target="_blank" title="CRM页面">
 <i class="layui-icon layui-icon-chrome"></i>
 </a>
 </li>
+<%end if%>
 <li class="layui-nav-item" lay-unselect>
 <a href="javascript:;" layadmin-event="refresh" title="刷新">
 <i class="layui-icon layui-icon-refresh-3"></i>

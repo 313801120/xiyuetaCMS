@@ -142,6 +142,22 @@ call addSystemLog(ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110), msg&ChrW(65
 call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&msg&ChrW(65292)&ChrW(35831)&ChrW(32852)&ChrW(31995)&ChrW(31649)&ChrW(29702)&ChrW(21592)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(111)&ChrW(34)&ChrW(125))  
 end if
 
+dim configFilePath,configContent,s
+configFilePath=ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
+if checkFile(configFilePath) then  
+configContent=readfile(configFilePath,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))   
+
+s=lcase(phptrim(phptrim(getStrCut(configContent,ChrW(105)&ChrW(115)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(73)&ChrW(80)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(111)&ChrW(119)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0))))
+if s <>"" then                
+isLoginIPAllow=IIF( (s=ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) or s=ChrW(49)),true,false)
+end if
+
+s=lcase(phptrim(phptrim(getStrCut(configContent,ChrW(105)&ChrW(115)&ChrW(79)&ChrW(110)&ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(79)&ChrW(110)&ChrW(108)&ChrW(121)&ChrW(65)&ChrW(100)&ChrW(100)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34),ChrW(34),0))))
+if s <>"" then
+isOnAdminLoginOnlyAddress=IIF( (s=ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101) or s=ChrW(49)),true,false)
+end if
+end if
+
 if isLoginIPAllow then 
 if checkAdminLoginIPAllow(getIP())=false then
 msg=ChrW(30331)&ChrW(24405)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(105)&ChrW(112)&ChrW(40)&getip()&ChrW(41)&ChrW(65292)&ChrW(19981)&ChrW(22312)&ChrW(20801)&ChrW(35768)&ChrW(30331)&ChrW(24405)&ChrW(21015)&ChrW(34920)

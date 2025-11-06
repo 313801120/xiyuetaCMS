@@ -96,6 +96,7 @@ leftQuote=ChrW(91):rightQuote=ChrW(93)
 if databaseType = "my"&ChrW(115)&ChrW(113)&ChrW(108) then
 leftQuote=ChrW(96):rightQuote=ChrW(96)
 end if
+dim isAdminOnCRMShow:isAdminOnCRMShow=false
 
 function addPrefix(a)  
 addPrefix=leftQuote&db_PREFIX&a&rightQuote

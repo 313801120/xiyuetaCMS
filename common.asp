@@ -343,7 +343,11 @@ b=e(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(116)&ChrW(12
 end if:e.close
 end if
 if b=ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101) then
+if asporhtml=true then
+c=urlAddDiQu(ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))
+else
 c=urlAddDiQu(WEB_VIEWURL)
+end if
 elseif b=ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116) then
 if asporhtml=true then
 c=urlAddDiQu(ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95) & d &  ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))
