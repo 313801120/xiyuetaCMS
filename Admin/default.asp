@@ -284,7 +284,7 @@ if not rsx.eof then
 <%elseif databaseType = ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then%>
 <dd><a lay-href="app/database/list.asp">SqlServer维护</a></dd> 
 <%end if%>
-<dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap.xml</a></dd> 
+<dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap</a></dd> 
 <dd><a lay-href="system/updatelog.asp">更新日志</a></dd>
 </dl>
 </li>

@@ -52,7 +52,14 @@ call echoRed(ChrW(25991)&ChrW(20214)&ChrW(19981)&ChrW(23384)&ChrW(22312),b)
 end if
 doevents
 end if
-next 
+next
+
+b=ChrW(47)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(112)&ChrW(46)&ChrW(120)&ChrW(109)&ChrW(108)
+if checkFile(b) then
+call deleteFile(b)
+call echoB(ChrW(21024)&ChrW(38500)&ChrW(25991)&ChrW(20214)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(112)&ChrW(46)&ChrW(120)&ChrW(109)&ChrW(108),b)
+f=f+1
+end if
 
 b=ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(109)&ChrW(100)&ChrW(98)
 h=ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(112)&ChrW(95)&format_Time(now(),6)&ChrW(95)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(109)&ChrW(100)&ChrW(98)

@@ -6,8 +6,8 @@ call openconn()
 dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)
-winTitle = ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)
-excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
+winTitle = ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(31649)&ChrW(29702)
+excludeAdminIDLIst=ChrW(51)
 dim msg,isTrue,sql,addSql,id,stype,htmlfilepath,npage,createtime,updatetime,status
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 stype=request(ChrW(115)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))

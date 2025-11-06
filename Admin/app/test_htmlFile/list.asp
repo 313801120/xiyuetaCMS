@@ -10,9 +10,9 @@ dim isMobile:isMobile=checkMobile()
 dim fieldName,fieldValue,tableName,winTitle,delver
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)
-winTitle = ChrW(31649)&ChrW(29702)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)
+winTitle = ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(31649)&ChrW(29702)
 delver = ChrW(110)&ChrW(111)
-excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
+excludeAdminIDLIst=ChrW(51)
 fieldName=phptrim(request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))
 fieldValue=request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101))
 id=hanldeSccessIdArrayList(request(ChrW(105)&ChrW(100)))
@@ -350,8 +350,9 @@ font-weight: bold;
 <div class="layui-btn-container"> 
 <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="batchdel"><i class="layui-icon layui-icon-delete" title=""></i>批量删除</button>
 <button class="layui-btn layui-btn-sm layui-bg-blue" lay-event="batchCopy"><i class="layui-icon layui-icon-add-1" title=""></i>批量复制</button>
-<button class="layui-btn layui-btn-sm layui-bg-red" lay-event="customize-batchDelHtml">批量删除html</button>
-<button class="layui-btn layui-btn-sm layui-bg-red" lay-event="customize-batchDelAllHtml">一键删除html</button>
+<button class="layui-btn layui-btn-sm layui-bg-red" lay-event="customize-batchDelHtml"><i class="layui-icon layui-icon-delete" title=""></i>批量删除html</button>
+<button class="layui-btn layui-btn-sm layui-bg-red" lay-event="customize-batchDelAllHtml"><i class="layui-icon layui-icon-delete" title=""></i>一键删除html</button>
+<button class="layui-btn layui-btn-sm layui-bg-normal" lay-event="customize-createWebToHtml"><i class="layui-icon layui-icon-website" title=""></i>生成网站html</button>
 <button class="layui-btn layui-btn-sm layui-bg-normal" lay-event="add"><i class="layui-icon layui-icon-add-circle" title=""></i>添加新的</button>
 </div>
 </script>
@@ -694,7 +695,6 @@ style: 'box-shadow: 1px 1px 10px rgb(0 0 0 / 12%);' // 设置额外样式
 })
 }else if (obj.event === 'click_htmlfilepath') {       //html文件路径
 window.open(data.htmlfilepath, '_blank');
-//3333333//
 }
 }); 
 // 工具栏事件
@@ -745,6 +745,35 @@ title: '确认生成'
 layer.close(index); // 关闭输入弹窗
 showwin2('删除全部html', "?act=batchDelAllHtml");  
 });
+break;
+case 'customize-createWebToHtml':
+layer.confirm('是否要生成网站到html', {   //20251106
+icon: 3,
+title: '确认生成'
+}, function(index) {
+layer.close(index); // 关闭输入弹窗
+// 创建包含两个iframe的弹窗
+var content = '<div style="display: flex; flex-direction: column; gap: 10px; height: 800px;">' +
+'<div style="flex: 1; border: 1px solid #ddd;">' +
+'<div style="padding: 5px; background: #f5f5f5; font-weight: bold;">生成导航HTML</div>' +
+'<iframe src="../test_webcolumn/list.asp?act=batchCreateAllNavHtml" style="width: 100%; height: calc(100% - 30px); border: none;"></iframe>' +
+'</div>' +
+'<div style="flex: 1; border: 1px solid #ddd;">' +
+'<div style="padding: 5px; background: #f5f5f5; font-weight: bold;">生成文章HTML</div>' +
+'<iframe src="../test_webcolumn/list.asp?act=batchCreateAllArticleHtml" style="width: 100%; height: calc(100% - 30px); border: none;"></iframe>' +
+'</div>' +
+'</div>';
+layer.open({
+type: 1,
+title: '生成网站html',
+area: ['90%', '90%'],
+content: content,
+btn: ['关闭'],
+yes: function(index) {
+layer.close(index);
+}
+});
+}); 
 break;
 case 'add':
 showwin('添加<%=winTitle%>','listform.asp?')
