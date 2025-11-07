@@ -9,7 +9,7 @@
 
 call openconn()
 dim nav,i,j,webtitle,webkeywords,webdescription,weblogo,webbiglogo,webqrcode,id,aboutcontent,bodycontent,parentid,webcopyright,webfoot,pageUrl,columnType,thisUrlFileName,navId,title,createTime,author,n,idList,columnName,columnEnName,bigimage,smallImage,views,webqq,webphone,webtel,webfax,webweixin,webemail,webaddress,webFileName,pageType,ennav,cssName,resurl,webcompany,weburl,websql
-dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags,detailPagingTypeList,sUrl
+dim addSql,bannerimage,asporhtml,onAutoAddDataToAccess,fabulous,tags,detailPagingTypeList,sUrl,webPageSize
 asporhtml=true
 onAutoAddDataToAccess=true
 detailPagingTypeList=ChrW(44)&ChrW(44)
@@ -223,6 +223,7 @@ columntype=rs(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(11
 webfilename=rs(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 aboutcontent=rs(ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
 bodycontent=rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
+webPageSize=rs(ChrW(110)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101))
 if language=ChrW(101)&ChrW(110) then
 columnname=rs(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 aboutcontent=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
@@ -344,7 +345,7 @@ end if:e.close
 end if
 if b=ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101) then
 if asporhtml=true then
-c=urlAddDiQu(ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(46)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))
+c=urlAddDiQu(ChrW(47))
 else
 c=urlAddDiQu(WEB_VIEWURL)
 end if

@@ -1,6 +1,7 @@
 '生成导航html' 20251014
 function batchCreateNavHtml(idList,nCreateHtmlOKCount)  
     dim url,htmlFile,isGenerate,content,navtype,newUrl,newHtmlFile,viewUrl,nMaxPage,totalPages,totalRecords,i,pageUrl,sql,addSql,pageHtmlFile,nLen,defaultLanguage,splxx,languageList,nMax,j
+    dim npagesize,s
     if idList<>"" then
         addSql=" where isthrough=1 and ishtml=1"  '生成html要为真'
         if idList<>"*" then  '为*生成全部文章'
@@ -79,11 +80,24 @@ function batchCreateNavHtml(idList,nCreateHtmlOKCount)
                     sql="select count(*)as ct from ["&db_PREFIX&"articledetail]"&addSql
                     rsx.open sql ,conn,1,1
                     totalRecords=IIF(isnull(rsx("ct"))=true,0,rsx("ct")):rsx.close
-                    totalPages=calculateTotalPages(totalRecords,rs("npagesize"))
+
+                    npagesize=rs("npagesize")
+                    if rs("npagesize")<=0 then
+                        pageUrl=url&IIF(instr(url,"?")=false,"?","&")&"getwebPageSize=1"
+                        content=gethttpurl(pageUrl,"utf-8") 
+                        s=getStrCut(content,"<webPageSize>","</webPageSize>",0)
+                        if s<>"" then
+                            npagesize=cint(s)
+                            ' call eerr("npagesize",npagesize)
+                        end if
+                        ' call eerr("处理",pageUrl)
+                    end if
+
+                    totalPages=calculateTotalPages(totalRecords,npagesize)
 
                     call echo("sql",sql)
                     call echo("条数",totalRecords)
-                    call echo("每页显示",rs("npagesize"))
+                    call echo("每页显示",npagesize)
                     call echo("页数totalPages",totalPages)
                     if totalPages>1 then
                         for j=2 to totalPages                   '从第二页开始生成'

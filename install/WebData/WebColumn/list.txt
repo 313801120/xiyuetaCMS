@@ -5,10 +5,10 @@
 【parentid】-1
 【sortrank】1
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【ishtml】1
-【createhtmltime】2025/10/26 9:04:14
+【createhtmltime】2025/11/6 20:06:41
 【isthrough】1
 【createtime】2025/8/1 20:09:18
 【updatetime】2025/8/1 20:09:18
@@ -21,7 +21,7 @@
 【sortrank】2
 【views】0
 【bannerimage】/UploadFiles/testpic/ad-aboutus.jpg
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【en_bodycontent】<p>Personal introduction of the author<br />1. Entered the Internet in 2006 and focused on website development for 10 years<br />2. Proficient in ASP/HTML5/CSS3/JS/Jquery/Canvas/Flash/PHP/VB/etc.<br />3. Master DotNet/Android/JSP/nodeJS/python/BootStrop/PS/PR/FTP/linux, etc.<br />4. Be good at simplifying complex things and independently develop a set of PAAJCMS content management system<br />5. Publish [xiyuetaCMS]/[online ASP to PHP]/[online format ASP] [online site imitation] Open source projects<br />6. Engaged in website development in Shanghai, Nanjing and other cities for many years</p>
 【ishtml】1
@@ -37,7 +37,7 @@
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
 【sortrank】1
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【en_bodycontent】XiyuetaCMS content management system, a universal backend permission management framework that keeps up with the trend and is ready to use out of the box. It has multiple versions to choose from and can be used with any combination.
 Product advantages:
@@ -115,7 +115,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
 【sortrank】2
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【en_bodycontent】test。。。
 【ishtml】1
@@ -131,7 +131,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
 【sortrank】3
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【en_bodycontent】test。。。
 【ishtml】1
@@ -147,7 +147,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]关于我们
 【sortrank】4
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【en_bodycontent】test。。。
 【ishtml】1
@@ -165,13 +165,14 @@ HTML5响应式设计
 【sortrank】3
 【views】0
 【bannerimage】/UploadFiles/testpic/ad-news.jpg
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【ishtml】1
-【createhtmltime】2025/10/24 13:27:11
+【createhtmltime】2025/11/6 21:28:35
 【isthrough】1
+【ip】127.0.0.1
 【createtime】2025/8/1 20:09:18
-【updatetime】2025/8/1 20:09:18
+【updatetime】2025/11/6 20:35:15
 -------------------------------
 【columnname】公司新闻
 【columnenname】company news
@@ -179,13 +180,14 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]新闻资讯
 【sortrank】1
 【views】0
-【npagesize】10
-【flags】top|foot
+【npagesize】0
+【flags】|top|foot|
 【ishtml】1
 【createhtmltime】2025/10/24 13:27:05
 【isthrough】1
+【ip】127.0.0.1
 【createtime】2025/8/1 20:09:18
-【updatetime】2025/8/1 20:09:18
+【updatetime】2025/11/6 20:35:30
 -------------------------------
 【columnname】行业新闻
 【columnenname】industry news
@@ -193,7 +195,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]新闻资讯
 【sortrank】2
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:27:03
@@ -207,7 +209,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]新闻资讯
 【sortrank】3
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:27:01
@@ -223,13 +225,14 @@ HTML5响应式设计
 【sortrank】4
 【views】0
 【bannerimage】/UploadFiles/testpic/ad-products.jpg
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【ishtml】1
-【createhtmltime】2025/10/24 13:27:41
+【createhtmltime】2025/11/6 21:17:33
 【isthrough】1
+【ip】127.0.0.1
 【createtime】2025/8/1 20:09:18
-【updatetime】2025/8/1 20:09:18
+【updatetime】2025/11/6 20:34:32
 -------------------------------
 【columnname】响应式模板
 【columnenname】Responsive Template
@@ -237,13 +240,14 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】5
 【views】0
-【npagesize】10
-【flags】top|foot
+【npagesize】0
+【flags】|top|foot|
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:11
 【isthrough】1
+【ip】127.0.0.1
 【createtime】2025/8/1 20:09:18
-【updatetime】2025/8/1 20:09:18
+【updatetime】2025/11/6 20:35:08
 -------------------------------
 【columnname】企业模板
 【columnenname】Enterprise Template
@@ -251,7 +255,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】10
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:13
@@ -265,7 +269,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】20
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:14
@@ -279,7 +283,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】30
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:16
@@ -293,7 +297,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】40
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:33
@@ -307,7 +311,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】50
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:20
@@ -321,7 +325,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】60
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:27:45
@@ -335,7 +339,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】70
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:22
@@ -349,7 +353,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]产品中心
 【sortrank】80
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:24
@@ -365,7 +369,7 @@ HTML5响应式设计
 【sortrank】5
 【views】0
 【bannerimage】/UploadFiles/testpic/ad-contactus.jpg
-【npagesize】10
+【npagesize】0
 【flags】|top|foot|
 【en_bodycontent】<div>In 2006, he entered the Internet and focused on website development for 10 years. He is proficient in ASP/HTML/CSS/JS/Jquery/PHP/VB/VB.NET, and is good at simplifying complex things.</div>
 <ul>
@@ -404,7 +408,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]联系我们
 【sortrank】5
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:28
@@ -418,7 +422,7 @@ HTML5响应式设计
 【parentid】webcolumn[==>>]parentid[==>>]id[==>>]columnname[==>>]联系我们
 【sortrank】10
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】top|foot
 【ishtml】1
 【createhtmltime】2025/10/24 13:28:31
@@ -433,7 +437,7 @@ HTML5响应式设计
 【sortrank】10
 【views】0
 【bannerimage】/UploadFiles/testpic/ad-guestbook2.jpg
-【npagesize】10
+【npagesize】0
 【ishtml】0
 【createhtmltime】2025/10/23 9:44:48
 【isthrough】1
@@ -447,7 +451,7 @@ HTML5响应式设计
 【sortrank】100
 【views】0
 【bannerimage】/UploadFiles/testpic/ad-products.jpg
-【npagesize】10
+【npagesize】0
 【ishtml】0
 【createhtmltime】2025/10/23 9:44:48
 【isthrough】1
@@ -460,7 +464,7 @@ HTML5响应式设计
 【parentid】-1
 【sortrank】998
 【views】0
-【npagesize】10
+【npagesize】0
 【flags】|
 【ishtml】0
 【createhtmltime】2025/10/23 9:44:48
@@ -475,7 +479,7 @@ HTML5响应式设计
 【parentid】-1
 【sortrank】999
 【views】0
-【npagesize】10
+【npagesize】0
 【ishtml】0
 【createhtmltime】2025/10/23 9:44:48
 【isthrough】0

@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)
 winTitle = ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)
-excludeAdminIDLIst=ChrW(51)
+excludeAdminIDLIst=ChrW(48)
 dim msg,isTrue,sql,addSql,id,parentid,columntype,npagesize,columnname,columnenname,sortrank,aboutcontent,bodycontent,flags,httpurl,filename,bannerimage,smallimage,webtitle,webkeywords,webdescription,isthrough,ishtml,en_aboutcontent,en_bodycontent,en_webtitle,en_webkeywords,en_webdescription,createhtmltime
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 parentid=getStrToNumber(request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
@@ -271,7 +271,8 @@ end function
 <label class='layui-form-label'>每页显示</label>
 <div class='layui-input-inline layui-input-wrap'>
 <input step="1" lay-affix="number" type='number' name='npagesize' placeholder='请输入每页显示' autocomplete='off' class='layui-input' value="<%=inputCL(npagesize)%>" >
-</div><!--npagesize-->
+</div>
+<div class="layui-form-mid layui-text-em">小于等于0则为模板里自定义默认数</div><!--npagesize-->
 </div>
 </div>
 </div>    
