@@ -1,20 +1,24 @@
 ﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
-'官方网站：www.xiyueta.com   QQ：313801120%><%
-%><!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"-->
+'官方网站：www.xiyueta.com   QQ：313801120%><!--#include file="../../../inc/Config.asp"--><!--#Include File = "../../admin_function.asp"--><!--#Include File = "../../admin_safe.Asp"-->
 <!--#Include File = "merge.asp"-->
 <!--#Include File = "function.asp"--><%
+
 call showCheckAdminRule(ChrW(27169)&ChrW(26495)&ChrW(24211))
 call openconn() 
 dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,id,title,isDebug,s,tplname,url,thisV
 thisV=2
 isDebug=false
+
 dim serverUrl,webinfo 
+
 call readWebsiteServerUrl(serverUrl,tplname,webinfo)
+
 function useTplAction(a,b)
 dim c,d,e,f,g,h,i,j
 call echo(ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(85)&ChrW(114)&ChrW(108),serverUrl):doevents
 call createFolder(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108))
 j=serverUrl & ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(63)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(100)&ChrW(61)&a&ChrW(38)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(61)&webinfo
+
 c=gethttpurl(j,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
 if instr(c,ChrW(91)&ChrW(36)&ChrW(93))>0 then
 e=split(c,ChrW(91)&ChrW(36)&ChrW(93))
@@ -50,6 +54,7 @@ if isDebug then call echo(ChrW(19979)&ChrW(36733)&ChrW(32553)&ChrW(27983)&ChrW(2
 call saveRemoteFile(j,k)
 end if
 call echo(ChrW(109)&ChrW(101)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(67)&ChrW(115)&ChrW(115)&ChrW(83)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101),ChrW(109)&ChrW(101)&ChrW(114)&ChrW(103)&ChrW(101)&ChrW(67)&ChrW(115)&ChrW(115)&ChrW(83)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101))
+
 call mergeCssStyle(a)
 if isDebug then 
 useTplAction = c
@@ -57,6 +62,7 @@ else
 useTplAction = ChrW(23436)&ChrW(25104)&ChrW(65292)&ChrW(35843)&ChrW(35797)&ChrW(20026)&ChrW(20551)&ChrW(65292)&ChrW(19981)&ChrW(26174)&ChrW(31034)&ChrW(35814)&ChrW(32454)&ChrW(20449)&ChrW(24687)&ChrW(65292)&ChrW(21487)&ChrW(25163)&ChrW(21160)&ChrW(20462)&ChrW(25913)&ChrW(21518)&ChrW(26597)&ChrW(30475)&ChrW(22238)&ChrW(26174)&ChrW(20449)&ChrW(24687)
 end if
 end function
+
 function downServerRes(a)
 dim b,c,d,e,f
 b=split(a,vbcrlf)
@@ -78,6 +84,7 @@ end if
 end if
 next
 end function
+
 function forActionList(a,b,c,d)
 dim e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u
 if b=ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119) then
@@ -127,6 +134,7 @@ f=split(g&ChrW(32)&ChrW(32)&ChrW(32),ChrW(32))
 h=h & getTplModle(u,f(0),f(1),f(2),k,l,n,o,p,q,r,s,t) & vbcrlf
 end if
 next
+h=h & ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(73)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(117)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(70)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(34)&ChrW(45)&ChrW(45)&ChrW(62) & vbcrlf
 if b <>ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119) then
 i=ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47) & c
 if checkfile(i)=false then
@@ -142,6 +150,7 @@ h=f(0) & ChrW(60)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(62) & vbcrlf & h &
 call writetofile(i,h,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
 if isDebug then call echo(ChrW(29983)&ChrW(25104)&ChrW(32593)&ChrW(39029),i)
 else
+
 i=ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47) & a & ChrW(47) & c
 if checkfile(i)=false then
 if checkfile(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112))=false then
@@ -158,6 +167,7 @@ call writetofile(i,h,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
 if isDebug then call echo(ChrW(29983)&ChrW(25104)&ChrW(39044)&ChrW(35272)&ChrW(32593)&ChrW(39029),i)
 end if 
 end function
+
 function showThisWebAuthorInfo2022()
 dim a,b,c,d
 a=authorInfo2()
@@ -166,6 +176,7 @@ d=ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62)& 
 showThisWebAuthorInfo2022=ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)& vbcrlf & a &ChrW(45)&ChrW(45)&ChrW(62) & vbcrlf & d
 end function
 dim modleUrlList
+
 function getTplModle(a,b,c,d,e,f,g,h,i,j,k,l,m)
 dim n
 d=d & ""
@@ -174,6 +185,7 @@ if d=ChrW(48) or d=ChrW(49) then d=""
 if c="" then c=ChrW(48)&ChrW(48)&ChrW(49)
 n=b & ChrW(95) & c 
 if d <>"" then n=n & ChrW(95) & d
+
 if lcase(right(n,4)) <>ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112) then
 n=n & ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)
 end if
@@ -188,6 +200,7 @@ if j <>"" then p=p & ChrW(38)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(50)&ChrW(61)&es
 if k <>"" then p=p & ChrW(38)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(51)&ChrW(61)&escape(k)
 if l <>"" then p=p & ChrW(38)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(52)&ChrW(61)&escape(l)
 if m <>"" then p=p & ChrW(38)&ChrW(115)&ChrW(116)&ChrW(114)&ChrW(53)&ChrW(61)&escape(m)
+
 if instr(ChrW(12304)& modleUrlList &ChrW(12305),ChrW(12304)& p &ChrW(12305))>0 then
 getTplModle=ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(73)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(117)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)& n &ChrW(34)&ChrW(45)&ChrW(45)&ChrW(62)
 exit function
@@ -199,13 +212,17 @@ call writetofile(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&
 if isDebug then call echo(ChrW(33719)&ChrW(24471)&ChrW(27169)&ChrW(26495)&ChrW(22359),n)
 getTplModle=ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(73)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(117)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)& n &ChrW(34)&ChrW(45)&ChrW(45)&ChrW(62)
 end function
+
 If Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) Then
 dim updateusername,sListStr,splVersion
+
 sListStr=gethttpurl(serverUrl & ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(47)&ChrW(63)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(61)&webinfo&ChrW(38)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&tplname&ChrW(38)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(118)&ChrW(61)& thisV &ChrW(38)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(61)&escape(request(ChrW(107)&ChrW(101)&ChrW(121)))&ChrW(38)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(61)&escape(request(ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(66)&ChrW(121)))&ChrW(38)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61)&request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+
 if instr(sListStr,ChrW(99)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(34)&ChrW(58))=false then
 serverUrl=getServerUrl()
 sListStr=gethttpurl(serverUrl & ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(47)&ChrW(63)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(61)&webinfo&ChrW(38)&ChrW(107)&ChrW(101)&ChrW(121)&ChrW(61)&escape(request(ChrW(107)&ChrW(101)&ChrW(121))),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
 end if
+
 if instr(sListStr,ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(34))>0 then
 updateusername=strcut(sListStr,ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(34),ChrW(34),0)
 if updateusername <>"" then
@@ -214,6 +231,7 @@ end if
 end if
 call die(sListStr)
 elseIf Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(117)&ChrW(115)&ChrW(101) Then
+
 s= useTplAction(request(ChrW(116)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(100)),ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119))
 call useTpl2022(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47),request(ChrW(116)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(100)))
 call die(s)
@@ -226,6 +244,8 @@ call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&Chr
 elseIf Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101) Then
 url=serverUrl & ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(38)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(61)&webinfo&ChrW(38)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&escape(request(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))
 s=gethttpurl(url,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+
+
 if left(s,4)=ChrW(91)&ChrW(79)&ChrW(75)&ChrW(93) then 
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101) ,conn,1,3
 if not rs.eof then
@@ -244,6 +264,7 @@ dim a
 a=ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)
 if checkfile(a)=false then
 url=serverUrl & ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)
+
 call saveRemoteFile(url,a)
 end if
 if checkfile(a) then

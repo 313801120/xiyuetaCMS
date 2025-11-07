@@ -170,6 +170,11 @@ else
 b=f & ChrW(45) 
 end if
 else   
+
+b=ChrW(47)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)
+if defaultLanguage <>language then 
+b=b & ChrW(63)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61) & language & ""
+end if
 b=getUrlAddToParam(b,ChrW(63)&ChrW(100)&ChrW(105)&ChrW(113)&ChrW(117)&ChrW(61)&f&"",ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101))    
 end if 
 getSheShiUrl=b

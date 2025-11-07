@@ -394,12 +394,13 @@ y=a1(ChrW(110)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(105)&ChrW(1
 if a1(ChrW(110)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)) <=0 then
 o=c&IIF(instr(c,ChrW(63))=false,ChrW(63),ChrW(38))&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(61)&ChrW(49)
 f=gethttpurl(o,ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56)) 
-z=getStrCut(f,ChrW(60)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(62),ChrW(60)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(62),0)
+z=getStrCut(f,ChrW(60)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(62),ChrW(60)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(62),0)                    
 if z <>"" then
-y=cint(z)
-
+y=cint(z) 
+call echo(ChrW(33719)&ChrW(24471)&ChrW(40664)&ChrW(35748)&ChrW(27169)&ChrW(26495)&ChrW(37324)&ChrW(27599)&ChrW(39029)&ChrW(25968),y)
+else
+call echoRed(ChrW(33719)&ChrW(24471)&ChrW(40664)&ChrW(35748)&ChrW(27169)&ChrW(26495)&ChrW(37324)&ChrW(39029)&ChrW(25968)&ChrW(22833)&ChrW(36133),o)
 end if
-
 end if
 l=calculateTotalPages(m,y)
 call echo(ChrW(115)&ChrW(113)&ChrW(108),p)

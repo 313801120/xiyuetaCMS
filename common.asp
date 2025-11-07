@@ -280,12 +280,16 @@ end if:b.close
 end function
 
 function isFocusNav(a) 
+dim b
 if a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))=ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101) and nav="" then
 isFocusNav=true
 elseif language=ChrW(101)&ChrW(110) and nav=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))  then
 isFocusNav=true
-elseif language=ChrW(102)&ChrW(116) and nav=jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))  then 
+elseif language=ChrW(102)&ChrW(116) then 
+b=jtToft(nav)
+if b=jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))) then
 isFocusNav=true
+end if
 elseif language=ChrW(99)&ChrW(110) and nav=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))  then 
 isFocusNav=true
 end if 
@@ -345,8 +349,12 @@ end if:e.close
 end if
 if b=ChrW(104)&ChrW(111)&ChrW(109)&ChrW(101) then
 if asporhtml=true then
-c=urlAddDiQu(ChrW(47))
-else
+c=ChrW(47)
+if defaultLanguage <>language then
+c=c&language & ChrW(47)
+end if
+c=urlAddDiQu(c)
+else 
 c=urlAddDiQu(WEB_VIEWURL)
 end if
 elseif b=ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116) then
@@ -755,8 +763,12 @@ end if
 end function  
 
 function get_columnNameBJ(a,b)
+dim c
 if language=ChrW(101)&ChrW(110) then
-get_columnNameBJ=IIF(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=columnname,b,"")
+get_columnNameBJ=IIF(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=columnname,b,"") 
+elseif language=ChrW(102)&ChrW(116) then
+c=jtToft(columnname)
+get_columnNameBJ=IIF(jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))=c,b,"")
 else
 get_columnNameBJ=IIF(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=columnname,b,"")
 end if

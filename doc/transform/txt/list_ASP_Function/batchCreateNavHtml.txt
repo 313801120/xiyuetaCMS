@@ -85,12 +85,13 @@ function batchCreateNavHtml(idList,nCreateHtmlOKCount)
                     if rs("npagesize")<=0 then
                         pageUrl=url&IIF(instr(url,"?")=false,"?","&")&"getwebPageSize=1"
                         content=gethttpurl(pageUrl,"utf-8") 
-                        s=getStrCut(content,"<webPageSize>","</webPageSize>",0)
+                        s=getStrCut(content,"<webPageSize>","</webPageSize>",0)                    
                         if s<>"" then
-                            npagesize=cint(s)
-                            ' call eerr("npagesize",npagesize)
+                            npagesize=cint(s) 
+                            call echo("获得默认模板里每页数",npagesize)
+                        else
+                            call echoRed("获得默认模板里页数失败",s)   '20251107'
                         end if
-                        ' call eerr("处理",pageUrl)
                     end if
 
                     totalPages=calculateTotalPages(totalRecords,npagesize)
