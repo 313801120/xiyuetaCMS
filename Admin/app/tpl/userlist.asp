@@ -134,7 +134,7 @@ f=split(g&ChrW(32)&ChrW(32)&ChrW(32),ChrW(32))
 h=h & getTplModle(u,f(0),f(1),f(2),k,l,n,o,p,q,r,s,t) & vbcrlf
 end if
 next
-h=h & ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(73)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(117)&ChrW(100)&ChrW(101)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(70)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(34)&ChrW(45)&ChrW(45)&ChrW(62) & vbcrlf
+h=h & ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(118)&ChrW(105)&ChrW(114)&ChrW(116)&ChrW(117)&ChrW(97)&ChrW(108)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(70)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(34)&ChrW(45)&ChrW(45)&ChrW(62) & vbcrlf
 if b <>ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119) then
 i=ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47) & c
 if checkfile(i)=false then
@@ -232,10 +232,18 @@ end if
 call die(sListStr)
 elseIf Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(117)&ChrW(115)&ChrW(101) Then
 
+if isAdminPermission(ChrW(32534)&ChrW(36753)&ChrW(27169)&ChrW(26495)&ChrW(24211))=false then
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(27809)&ChrW(26377)&ChrW(26435)&ChrW(38480)&ChrW(65292)&ChrW(19981)&ChrW(21487)&ChrW(20999)&ChrW(25442)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
+end if
+
 s= useTplAction(request(ChrW(116)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(100)),ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119))
 call useTpl2022(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47),request(ChrW(116)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(100)))
 call die(s)
 elseIf Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119) Then
+
+if isAdminPermission(ChrW(32534)&ChrW(36753)&ChrW(27169)&ChrW(26495)&ChrW(24211))=false then
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(27809)&ChrW(26377)&ChrW(26435)&ChrW(38480)&ChrW(65292)&ChrW(19981)&ChrW(21487)&ChrW(26597)&ChrW(30475)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
+end if
 s= useTplAction(request(ChrW(116)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(100)),ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119))
 call die(s)
 elseIf Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(109)&ChrW(121)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114) Then
@@ -543,18 +551,37 @@ dataType: "html",
 url: "?act=use",
 data: { "tplid": obj.data["tplid"] },
 success: function(data) {  
+// 检查返回的是否是JSON错误信息（服务器权限检查返回）
+try {
+var jsonData = JSON.parse(data);
+if (jsonData.status === "n") {
+layer.close(winObj);
+layer.msg(jsonData.info, {icon: 2});
+return;
+}
+} catch(e) {
+// 不是JSON，继续原有处理
+}
 var splxx=data.split("[$]");
 if(splxx.length==3){
+layer.close(winObj);
 layer.open({
 title: '提示'
 ,content: splxx[1]
 });  
 }else{ 
+layer.close(winObj);
 layer.msg("处理应该模板完成。"+aTplHtml, {
 icon: 1,
-time: 4000 //2秒关闭（如果不配置，默认是3秒）
+time: 6000 //2秒关闭
 });
+// 刷新表格
+table.reload('testReload');
 }
+},
+error: function() {
+layer.close(winObj);
+layer.msg('操作失败', {icon: 2});
 }
 });
 layer.close(index);
@@ -573,8 +600,20 @@ dataType: "html",
 url: "?act=view",
 data: { "tplid": obj.data["tplid"] },
 success: function(data) { 
+// 检查返回的是否是JSON错误信息（服务器权限检查返回）
+try {
+var jsonData = JSON.parse(data);
+if (jsonData.status === "n") {
+layer.close(winObj);
+layer.msg(jsonData.info, {icon: 2});
+return;
+}
+} catch(e) {
+// 不是JSON，继续原有处理
+}
 var splxx=data.split("[$]");
 if(splxx.length==3){
+layer.close(winObj);
 layer.open({
 title: '提示'
 ,content: splxx[1]
@@ -582,11 +621,16 @@ title: '提示'
 }else{
 // layer.msg('查找模板成功' +tplid);
 // window.open('/tpl/'+tplid,"xiyueta.com"+tplid)
+layer.close(winObj);
 layer.msg("处理预览模板完成。"+aTplHtml, {
 icon: 1,
 time: 4000 //2秒关闭（如果不配置，默认是3秒）
 });
 }
+},
+error: function() {
+layer.close(winObj);
+layer.msg('操作失败', {icon: 2});
 }
 });
 layer.close(index);

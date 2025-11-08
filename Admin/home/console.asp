@@ -6,6 +6,11 @@
 call openconn() 
 dim totalVisits,dayVisits,sql,chatTotalVisits,chatDayVisits,activeUser,totalUser,i,sSel,narticlM,naritcleCount,tplname
 if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(117)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(112)&ChrW(108) then 
+
+if isAdminPermission(ChrW(32534)&ChrW(36753)&ChrW(27169)&ChrW(26495)&ChrW(24211))=false then
+response.write ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(27809)&ChrW(26377)&ChrW(26435)&ChrW(38480)&ChrW(65292)&ChrW(19981)&ChrW(21487)&ChrW(20999)&ChrW(25442)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125)
+Response.end()
+end if
 call useTpl2022(ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47),request(ChrW(116)&ChrW(112)&ChrW(108))) 
 response.write ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(24212)&ChrW(29992)&ChrW(25104)&ChrW(21151)&ChrW(33)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(121)&ChrW(34)&ChrW(125)
 Response.end()
@@ -357,6 +362,10 @@ totalUser=conn.execute(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116
 </div>
 </div>
 </div>
+<%
+
+if isAdminPermission(ChrW(27169)&ChrW(26495)&ChrW(24211))=true then
+%>
 <div class="layui-col-sm12">
 <div class="layui-card">
 <div class="layui-card-header">本地模板 
@@ -411,6 +420,9 @@ end if
 </div>
 </div>
 </div>
+<%
+end if
+%>
 <div class="layui-col-sm12">
 <div class="layui-card">
 <div class="layui-card-header">
@@ -582,8 +594,13 @@ success: function(data) {
 switch (data.status) {
 case "y": 
 layer.msg(data.info); 
-$("div[class='cmdlist-container']").css("background","#fff");
-$(thisObj).parent().parent().parent().css("background","#fbe9e9");
+// 移除所有模板的选中状态
+$(".cmdlist-container").removeClass("active");
+// 给当前选中的模板添加选中状态
+$(thisObj).closest(".cmdlist-container").addClass("active");
+break;
+case "n":
+layer.msg(data.info, {icon: 2});
 break;
 }
 }

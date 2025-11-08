@@ -201,8 +201,10 @@ if not rsx.eof then
 <cite>用户</cite>
 </a>
 <dl class="layui-nav-child">
-<dd><a lay-href="user/user/list.asp">会员列表</a></dd>
-<dd><a lay-href="user/administrators/list.asp">后台管理员</a></dd>
+<!-- <dd><a lay-href="user/user/list.asp">会员列表</a></dd>
+<dd><a lay-href="user/administrators/list.asp">后台管理员</a></dd> -->
+<dd><a lay-href="app/test_member/list.asp">会员列表</a></dd>
+<dd><a lay-href="app/test_admin/list.asp">后台管理员</a></dd>
 </dl>
 </li> 
 <li data-name="app" class="layui-nav-item">
