@@ -2,12 +2,12 @@
 	position:absolute;
 	top:50px;
 	left:50%;
-	z-index:9996;
+	z-index:2147483647;
 	display:none;
 	width:120px;
 	
  	background-color: #EEFFEC;
- 	background-image:url(http://xiyueta.com/js/online/mmenubg.gif);
+ 	background-image:url(/js/online/mmenubg.gif);
  	margins:	0px;
  	padding:	1px;
  	border: 1px solid #E0E7C9;
@@ -16,7 +16,7 @@
 	color:#000000;
 	font-size:14px;
 	line-height:30px; 
-	font-family:"Î¢ÈíÑÅºÚ", "ºÚÌå", "ËÎÌå";
+	font-family:"微软雅黑", "黑体", "宋体";
 	text-decoration: none;
 	display:block;
 	padding:0 0 0 16px;

@@ -174,11 +174,11 @@ If IsNumeric(Trim(b)) Then
 c = CDbl(Trim(b))
 
 If c < 1 Then
-c = 1
+c = 0
 End if
 Else
 
-c = 1
+c = 0
 End if
 End if
 ensurePositiveValue = c

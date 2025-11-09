@@ -1,0 +1,8 @@
+'字符转拼音2025版'20251109
+function strToPinYin2025(rs,s)
+	s=phptrim(s)   '拼音为空，则把栏目名转成拼音'
+	if s="" then
+		s=lcase(pinYin2(columnname))
+	end if
+	strToPinYin2025=s
+end function

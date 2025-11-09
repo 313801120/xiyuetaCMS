@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(115)&ChrW(104)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(105)
 winTitle = ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)
-excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
+excludeAdminIDLIst=ChrW(48)
 dim msg,isTrue,sql,addSql,id,parentid,columnname,columnenname,sortrank,bodycontent,isthrough
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 parentid=getStrToNumber(request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))

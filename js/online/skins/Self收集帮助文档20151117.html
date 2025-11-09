@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>提示信息</title>
+<script type="text/javascript" src="Jquery/Jquery.Min.js"></script>
+<script type="text/javascript" src="jquery/lhgdialog.min.js"></script>
+</head>
+<body>
+
+<script language="javascript">
+/*用法一：显示网页*/
+//$.dialog({title:'aaa',width:300+'px',height:400+'px',content:'url:'+'1aaa.asp',fixed:false}); 
+
+/*用法一 弹窗(自定icon，点击后N秒关闭)*/
+/*
+var dialog = $.dialog({title: '欢迎',content: '欢迎使用lhgdialog对话框组件！',icon: '32X32/succ.png',ok: function(){
+        this.title('警告').content('请注意lhgdialog两秒后将关闭！').lock().time(2);
+        return false;
+    }
+})
+*/
+/*正在加载*/
+//$.dialog({title:'我是新标题'});
+//$.dialog({content: '我支持HTML'});
+//$.dialog({content: 'url:web/test.html'});
+/* 确定取消按钮 [ok & cancel]
+$.dialog({
+    content: '如果定义了回调函数才会出现相应的按钮',
+    ok: function(){
+        this.title('3秒后自动关闭').time(3);
+        return false;
+    },
+    cancelVal: '关闭',
+    cancel: true //为true等价于function(){}
+})
+*/
+/*最大化最小化按钮 [max & min]
+$.dialog({
+    content: '不显示最大化和最小化按钮',
+    max: false,
+    min: false
+})
+*/
+/*自定义按钮 [button]
+$.dialog({
+    id: 'testID',
+    content: 'hello world!',
+    button: [
+        {
+            name: '同意',
+            callback: function () {
+                this.content('你同意了').time(2);
+                return false;
+            },
+            focus: true
+        },
+        {
+            name: '不同意',
+            callback: function () {
+                alert('你不同意')
+            }
+        },
+        {
+            name: '无效按钮',
+            disabled: true
+        },
+        {
+            name: '关闭我'
+        }
+    ]
+})
+*/
+
+/*设置大小 [width & height] 备注：尺寸可以带单位或使用百分比%
+$.dialog({
+    width: '700px',
+    height: 500,
+    content: 'url:http://www.baidu.com'
+})
+*/
+
+//静止定位 [fixed]
+/*
+$.dialog({
+    fixed: true,
+    content: '请拖动滚动条查看'
+})
+*/
+
+//自定义坐标 [left & top] 备注：尺寸可以带单位或使用百分比%
+/*
+$.dialog({
+    left: 100,
+    top: '60%',
+    content: '我改变坐标了'
+})
+*/
+
+//创建一个右下角浮动的消息窗口
+/*
+$.dialog({
+    id: 'msg',
+    title: '公告',
+    content: '欢迎使用lhgdialog窗口!',
+    width: 200,
+    height: 100,
+    left: '100%',
+    top: '100%',
+    fixed: true,
+    drag: false,
+    resize: false
+})
+*/
+
+//锁屏 [lock & background & opacity]备注：background & opacity是一个会影响到全局的配置，后续出现的对话框再设置这2个参数将不再起作用
+/*
+$.dialog({
+    lock: true,
+    background: '#000',  
+    opacity: 0.5,        
+    content: '中断用户在对话框以外的交互，展示重要操作与消息',
+    icon: 'error.gif',
+    ok: function () {
+        // 这里要注意多层锁屏一定要加parent参数
+        $.dialog({content: '再来一个锁屏', lock: true, parent:this});
+        return false;
+    },
+    cancel: true
+})
+*/
+
+
+//定义消息图标和标题栏图村 [icon & titleIcon]
+/*
+$.dialog({
+    icon: 'success.gif',
+    titleIcon: 'lhgcore.gif',
+    content: '我可以定义消息图标哦'
+})
+*/
+
+//内容与边界填充边距 [padding] 备注：注意图片加上width和height，否则出现位置偏移
+/*
+$.dialog({
+    id: 'a15',
+    title: 'Android4.0照片',
+    lock: true,
+    content: '<img src="/images/android.jpg" width="600" height="404" />',
+    padding: 0
+})
+*/
+
+//定时关闭的消息 [time]			 
+/*
+$.dialog({
+    time: 2,
+    content: '两秒后关闭'
+})
+*/
+
+//不许拖拽 [drag & resize]
+/*
+$.dialog({
+    drag: false,
+    resize: false,
+    content: '禁止拖拽'
+})
+*/
+
+//防止重复弹出 [id]
+/*
+$.dialog({
+    id: 'testID2',
+    content: '再次点击运行看看'
+});
+$.dialog({id: 'testID2'}).title('3秒后关闭').time(3);
+$.dialog({id: 'testID2'}).title('2秒后关闭').time(3);
+*/
+
+
+//初始化和关闭回调函数 [init & close] 备注：回调函数中this指向窗口实例对象本身  暂时不知何用(20151117)
+/*
+$.dialog({
+    content: '初始化函数执行前窗口的内容',
+    left: '20%',
+    init: function(){
+        alert('正在执行初始化函数，此时你可看到窗口内容没有发生变化');
+        this.content('我是初始化函数执行后的窗口中的内容');
+    },
+    close: function(){
+        alert('我是窗口关闭前执行的函数，如果返回false将阻止窗口关闭');
+    }
+})
+*/
+
+//父窗口对象 [parent]备注：此参数只用在打开多层窗口都使用遮罩层时才会用到此参数，注意多层窗口锁屏时一定要加此参数  待继续测
+/*
+$.dialog({
+    id: 'LHG1976D',
+    // ifrst.html 和 second.html 中的代码请自行查看
+    content: 'url:content/first.html',
+    lock:true
+})
+*/
+
+//扩展方法演示 备注：扩展方法支持链式操作 直接引用返回 [content() & title()]  =等同于更新
+/*
+var api = $.dialog({
+    title: '我是对话框',
+    content: '我是初始化的内容'
+});
+api.content('对话框内容被扩展方法改变了').title('提示')
+*/
+
+//刷新跳转页面 [reload()]		 
+/*
+$.dialog({
+    content: '点确定按钮后将刷新窗口调用页面',
+    ok: function(){
+        this.reload();
+    }
+})
+*/
+
+//按钮接口演示 [button()]备注：回调函数如果返回false将阻止对话框关闭
+/*
+var dialog = $.dialog({
+    title: '警告',
+    content: '点击管理按钮将让删除按钮可用',
+    width: '20em',
+    button: [{
+        name: '管理',
+        callback: function () {
+            this
+            .content('我更改了删除按钮')
+            .button({
+                name: '删除',
+                disabled: false
+            })
+            .lock();
+            return false;
+        },
+        focus: true
+    }]
+})
+dialog.button(
+    {
+        name: '删除',
+        callback: function () {
+            alert('delect')
+        },
+        disabled: true
+    }
+)
+*/
+
+
+//通过对话框ID引用 [get()]
+/*
+var api1 = $.dialog({
+    content: '我是窗口中的内容',
+    id: 'LHG76D'
+});
+api1.get('LHG76D',1).content('我改变了窗口内容，并在2秒后关闭').time(2);
+*/
+
+
+//最大化和最小化 [max() & min()]			 
+/*
+$.dialog({
+    content: '我现在是最大化窗口，点确定按钮最小化窗口',
+    id: 'LHG78D',
+    ok: function(){
+        this.min(); // 这里调用了最小化方法
+        return false;
+    }
+}).max();
+*/
+
+//标题倒计时
+/*
+var timer;
+$.dialog({
+    content: '时间越来越少，越来越少..',
+    init: function () {
+        var that = this, i = 5;
+        var fn = function () {
+            that.title(i + '秒后关闭');
+            !i && that.close();
+            i --;
+        };
+        timer = setInterval(fn, 1000);
+        fn();
+    },
+    close: function () {
+        clearInterval(timer);
+    }
+})
+*/
+
+//关闭不删除内容 [hide() & show()]
+/*		 
+$.dialog({
+    id: 'show-hide',
+    content: '关闭后阻止对话框被删除，只隐藏对话框',
+    close: function () {
+        this.hide();
+        return false;
+    }
+})
+*/
+//加载内容   不好用
+/*
+var api = $.dialog({id:'L1360',title:false});
+$.ajax({
+    url:'2.html',
+    success:function(data){
+        api.content(data);
+    },
+    cache:false
+})
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<div style="height:2900px; display:none"></div>
+</body>
+</html>

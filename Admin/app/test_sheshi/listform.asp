@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(115)&ChrW(104)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(105)
 winTitle = ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)
-excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
+excludeAdminIDLIst=ChrW(48)
 dim msg,isTrue,sql,addSql,id,parentid,columnname,columnenname,sortrank,bodycontent,isthrough
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 parentid=getStrToNumber(request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
@@ -46,7 +46,7 @@ rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW
 end if 
 rs(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100))=parentid
 rs(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=columnname
-rs(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(101)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=columnenname
+rs(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(101)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=strToPinYin2025(rs,columnenname)
 rs(ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107))=sortrank
 rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=bodycontent
 rs(ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104))=isthrough
@@ -91,6 +91,14 @@ thisAddPrefix=ChrW(96)&db_PREFIX&a&ChrW(96)
 else
 thisAddPrefix=ChrW(91)&db_PREFIX&a&ChrW(93)
 end if
+end function
+
+function strToPinYin2025(a,b)
+b=phptrim(b)
+if b="" then
+b=lcase(pinYin2(columnname))
+end if
+strToPinYin2025=b
 end function
 
 function columnClass_sheshi_SubInput(a,b,c,d)
@@ -161,8 +169,9 @@ end function
 <div class='layui-form-item'>
 <label class='layui-form-label'>拼音名</label>
 <div class='layui-input-inline layui-input-wrap'>
-<input type='text' name='columnenname' placeholder='请输入拼音名' autocomplete='off' class='layui-input' value="<%=inputCL(columnenname)%>"  lay-verify='required'>
-</div><!--columnenname-->
+<input type='text' name='columnenname' placeholder='请输入拼音名' autocomplete='off' class='layui-input' value="<%=inputCL(columnenname)%>" >
+</div>
+<div class="layui-form-mid layui-text-em">为空则使用名称转成拼音</div><!--columnenname-->
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>排序</label>

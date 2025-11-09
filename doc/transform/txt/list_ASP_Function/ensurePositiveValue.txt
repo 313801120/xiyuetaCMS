@@ -13,11 +13,11 @@ Function ensurePositiveValue(rs,inputValue)
             resultValue = CDbl(Trim(inputValue))
             ' 如果结果小于1，则设为1（确保大于等于1）
             If resultValue < 1 Then
-                resultValue = 1
+                resultValue = 0   '0为使用模板里自定义'
             End If
         Else
             ' 非数字字符串设为1
-            resultValue = 1
+            resultValue = 0    '0为使用模板里自定义'
         End If
     End If
     
