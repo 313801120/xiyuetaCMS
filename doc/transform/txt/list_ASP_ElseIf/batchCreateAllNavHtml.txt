@@ -1,4 +1,8 @@
 '批量生成全部导航到html
-elseif request("act")="batchCreateAllNavHtml" then    
+elseif request("act")="batchCreateAllNavHtml" then  
+    if checkAdminRule("网站栏目生成html")=false then
+        call addSystemLog(tableName,"一键生成导航html失败，没有【网站栏目生成html】权限")
+        call die("{""info"": ""一键生成导航html失败，没有【网站栏目生成html】权限"",""status"": ""n""}")
+    end if  
     call echoB("一键生成导航html完成","共 "&batchCreateNavHtml("*",0) & " 条")
     call die(getTimer())

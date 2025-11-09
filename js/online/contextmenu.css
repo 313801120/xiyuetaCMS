@@ -1,0 +1,31 @@
+﻿.sysmenuwrap{
+	position:absolute;
+	top:50px;
+	left:50%;
+	z-index:9996;
+	display:none;
+	width:120px;
+	
+ 	background-color: #EEFFEC;
+ 	background-image:url(http://xiyueta.com/js/online/mmenubg.gif);
+ 	margins:	0px;
+ 	padding:	1px;
+ 	border: 1px solid #E0E7C9;
+}
+.sysmenuwrap a{
+	color:#000000;
+	font-size:14px;
+	line-height:30px; 
+	font-family:"Î¢ÈíÑÅºÚ", "ºÚÌå", "ËÎÌå";
+	text-decoration: none;
+	display:block;
+	padding:0 0 0 16px;
+}
+.sysmenuwrap a:hover{
+	background-color:#B5D5FF;
+	color:#FF0000;
+}
+.sysmenuwrap a:active{
+	color:#A9011F;
+	font-weight:bold;
+}

@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(109)&ChrW(111)&ChrW(114)&ChrW(101)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)
 winTitle = ChrW(27979)&ChrW(35797)&ChrW(22810)&ChrW(32423)&ChrW(20998)&ChrW(31867)
-excludeAdminIDLIst=ChrW(48)
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
 dim msg,isTrue,sql,addSql,smid,ntop,sname,npeixu,isthrough,id
 smid=getStrToNumber(request(ChrW(109)&ChrW(105)&ChrW(100)))
 ntop=getStrToNumber(request(ChrW(110)&ChrW(116)&ChrW(111)&ChrW(112)))
@@ -19,7 +19,7 @@ isthrough=request(ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&Ch
 isthrough=IIF(isthrough=ChrW(111)&ChrW(110),1,0) 
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 if id <>"" then
-call showCheckAdminRule(ChrW(32534)&ChrW(36753) & winTitle)
+call showCheckAdminRule(ChrW(26597)&ChrW(30475) & winTitle) 
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&thisAddPrefix(tableName)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(109)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,1
 if not rs.eof then
 smid=rs(ChrW(109)&ChrW(105)&ChrW(100))

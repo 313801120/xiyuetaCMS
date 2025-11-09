@@ -135,6 +135,7 @@ h=h & getTplModle(u,f(0),f(1),f(2),k,l,n,o,p,q,r,s,t) & vbcrlf
 end if
 next
 h=h & ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(35)&ChrW(118)&ChrW(105)&ChrW(114)&ChrW(116)&ChrW(117)&ChrW(97)&ChrW(108)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(34)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(47)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(70)&ChrW(111)&ChrW(111)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(34)&ChrW(45)&ChrW(45)&ChrW(62) & vbcrlf
+h=h & ChrW(60)&ChrW(37)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(32)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(79)&ChrW(110)&ChrW(76)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(69)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(40)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)&ChrW(41)&ChrW(37)&ChrW(62) & vbcrlf
 if b <>ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119) then
 i=ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47) & c
 if checkfile(i)=false then

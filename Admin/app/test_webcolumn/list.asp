@@ -12,7 +12,7 @@ dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)
 winTitle = ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)
 delver = ChrW(110)&ChrW(111)
-excludeAdminIDLIst=ChrW(48)
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
 fieldName=phptrim(request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))
 fieldValue=request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101))
 id=hanldeSccessIdArrayList(request(ChrW(105)&ChrW(100)))
@@ -163,10 +163,18 @@ elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(101)&ChrW(100)&ChrW(105)&ChrW(1
 call editRow()
 
 elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(98)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(67)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(118)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108) then
+if checkAdminRule(ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))=false then
+call addSystemLog(tableName,ChrW(25209)&ChrW(37327)&ChrW(29983)&ChrW(25104)&ChrW(23548)&ChrW(33322)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(12305)&ChrW(26435)&ChrW(38480))  
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(25209)&ChrW(37327)&ChrW(29983)&ChrW(25104)&ChrW(23548)&ChrW(33322)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
+end if
 call echoB(ChrW(25209)&ChrW(37327)&ChrW(29983)&ChrW(25104)&ChrW(23548)&ChrW(33322)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(23436)&ChrW(25104),ChrW(20849)&ChrW(32)&batchCreateNavHtml(id,0) & ChrW(32)&ChrW(26465))
 call die(getTimer())
 
-elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(98)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(67)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(78)&ChrW(97)&ChrW(118)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108) then    
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(98)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(67)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(78)&ChrW(97)&ChrW(118)&ChrW(72)&ChrW(116)&ChrW(109)&ChrW(108) then  
+if checkAdminRule(ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108))=false then
+call addSystemLog(tableName,ChrW(19968)&ChrW(38190)&ChrW(29983)&ChrW(25104)&ChrW(23548)&ChrW(33322)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(12305)&ChrW(26435)&ChrW(38480))
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(19968)&ChrW(38190)&ChrW(29983)&ChrW(25104)&ChrW(23548)&ChrW(33322)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)&ChrW(29983)&ChrW(25104)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
+end if  
 call echoB(ChrW(19968)&ChrW(38190)&ChrW(29983)&ChrW(25104)&ChrW(23548)&ChrW(33322)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(23436)&ChrW(25104),ChrW(20849)&ChrW(32)&batchCreateNavHtml(ChrW(42),0) & ChrW(32)&ChrW(26465))
 call die(getTimer())
 
@@ -399,7 +407,7 @@ if z <>"" then
 y=cint(z) 
 call echo(ChrW(33719)&ChrW(24471)&ChrW(40664)&ChrW(35748)&ChrW(27169)&ChrW(26495)&ChrW(37324)&ChrW(27599)&ChrW(39029)&ChrW(25968),y)
 else
-call echoRed(ChrW(33719)&ChrW(24471)&ChrW(40664)&ChrW(35748)&ChrW(27169)&ChrW(26495)&ChrW(37324)&ChrW(39029)&ChrW(25968)&ChrW(22833)&ChrW(36133),o)
+call echoRed(ChrW(33719)&ChrW(24471)&ChrW(40664)&ChrW(35748)&ChrW(27169)&ChrW(26495)&ChrW(37324)&ChrW(39029)&ChrW(25968)&ChrW(22833)&ChrW(36133),z)
 end if
 end if
 l=calculateTotalPages(m,y)

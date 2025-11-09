@@ -12,7 +12,7 @@ dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(115)&ChrW(104)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(105)
 winTitle = ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)
 delver = ChrW(110)&ChrW(111)
-excludeAdminIDLIst=ChrW(51)
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
 fieldName=phptrim(request(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)))
 fieldValue=request(ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101))
 id=hanldeSccessIdArrayList(request(ChrW(105)&ChrW(100)))
@@ -742,7 +742,6 @@ showwin2('查看详细', 'listview.asp?id=' + obj.data["id"])
 align: 'right', // 右对齐弹出
 style: 'box-shadow: 1px 1px 10px rgb(0 0 0 / 12%);' // 设置额外样式
 })
-//3333333//
 }
 }); 
 // 工具栏事件

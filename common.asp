@@ -68,6 +68,17 @@ webaddress=jtToft(webaddress)
 webcompany=jtToft(webcompany)
 webcopyright=jtToft(webcopyright)
 end if
+
+webqq=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webqq)
+webphone=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webphone)
+webtel=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webtel)
+webfax=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webfax)
+webweixin=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webweixin)
+webemail=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webemail)
+webaddress=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webaddress)
+webcompany=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webcompany)
+webcopyright=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webcopyright)
+webfoot=handleOnLine(ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622),rsWeb,webfoot)
 end if
 end function
 call loadWebConfig()
@@ -224,6 +235,7 @@ webfilename=rs(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(1
 aboutcontent=rs(ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
 bodycontent=rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
 webPageSize=rs(ChrW(110)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101))
+
 if language=ChrW(101)&ChrW(110) then
 columnname=rs(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 aboutcontent=rs(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(97)&ChrW(98)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
@@ -408,9 +420,13 @@ a=replace(a,ChrW(47)&ChrW(68)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&C
 end if
 end if
 
+if request(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)) <>"" then 
+a=getUrlAddToParam(a,ChrW(63)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(61)&request(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)),ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101))   
+end if
+
 if defaultLanguage=language or asporhtml=true then
 a=getUrlAddToParam(a,ChrW(63)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61),ChrW(100)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(116)&ChrW(101))   
-else
+else 
 a=getUrlAddToParam(a,ChrW(63)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(103)&ChrW(117)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(61)&language,ChrW(114)&ChrW(101)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101))   
 end if  
 urlWanZhen=a   
@@ -612,28 +628,31 @@ getOnePageBody=getOnePageBodyPlus(a,b,"")
 end function
 
 function getOnePageBodyPlus(a,b,c)  
-dim d:Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
-d.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(111)&ChrW(110)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)& a &ChrW(39),conn,1,3
-if not d.eof then
-b=d(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))  
-c=d(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)) 
+dim d
+dim e:Set e = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))   
+e.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(111)&ChrW(110)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)& a &ChrW(39),conn,1,3
+if not e.eof then
+b=e(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))  
+c=e(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)) 
 else
 if b <>"" or c <>"" and onAutoAddDataToAccess=true then
-d.addnew
-d(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))=a
-d(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=b
-d(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=c
-d.update
+e.addnew
+e(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))=a
+e(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=b
+e(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))=c
+e.update
 
 end if
-end if:d.close
-if language=ChrW(101)&ChrW(110) then
-getOnePageBodyPlus=c
-elseif language=ChrW(102)&ChrW(116) then  
-getOnePageBodyPlus=jtToft(b) 
-else
-getOnePageBodyPlus=b
 end if
+if language=ChrW(101)&ChrW(110) then
+d=c
+elseif language=ChrW(102)&ChrW(116) then  
+d=jtToft(b) 
+else
+d=b
+end if 
+getOnePageBodyPlus=handleOnLine(ChrW(21333)&ChrW(39029),e,d)
+e.close
 end function
 
 function getOnePageImage(a)  
@@ -665,8 +684,11 @@ end function
 
 function displayOnLineEdit(a)
 if a=true then
-if request(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)) <>"" then
-call rw(ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(39)&ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47)&ChrW(120)&ChrW(105)&ChrW(121)&ChrW(117)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(47)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(47)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62))
+if request(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)) <>"" then 
+call rw(ChrW(60)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(114)&ChrW(101)&ChrW(108)&ChrW(61)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(101)&ChrW(101)&ChrW(116)&ChrW(34)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(99)&ChrW(115)&ChrW(115)&ChrW(34)&ChrW(32)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(61)&ChrW(34)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(47)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(47)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(46)&ChrW(99)&ChrW(115)&ChrW(115)&ChrW(34)&ChrW(62))
+
+call rw(ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(39)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(47)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(47)&ChrW(108)&ChrW(104)&ChrW(103)&ChrW(100)&ChrW(105)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(46)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(106)&ChrW(115)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62))
+call rw(ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(39)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(47)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(47)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(46)&ChrW(106)&ChrW(115)&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62))
 end if
 end if
 end function
@@ -724,42 +746,74 @@ end if:b.close
 end function
 
 function get_WebColumName(a)
+dim b,c
 if language=ChrW(101)&ChrW(110) then
-get_WebColumName=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
+b=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(69)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
 elseif language=ChrW(102)&ChrW(116) then
-get_WebColumName=jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))
+b=jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))
 else
-get_WebColumName=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
+b=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
 end if
+get_WebColumName=handleOnLine(ChrW(26639)&ChrW(30446),a,b)
 end function  
+function handleOnLine(a,b,c)
+dim d,e
+
+if request(ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)) <>"" then
+if a=ChrW(26639)&ChrW(30446) then
+e=ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)
+elseif a=ChrW(25991)&ChrW(31456) then
+e=ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(105)&ChrW(99)&ChrW(108)&ChrW(101)&ChrW(100)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(105)&ChrW(108)
+elseif a=ChrW(30465)&ChrW(24066)&ChrW(21517) then
+e=ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(115)&ChrW(104)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(105)
+elseif a=ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509) then
+e=ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(114)&ChrW(105)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)
+elseif a=ChrW(21333)&ChrW(39029) then
+e=ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)
+elseif a=ChrW(32593)&ChrW(31449)&ChrW(37197)&ChrW(32622) then
+e=ChrW(116)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(101)    
+end if
+d=adminDir & ChrW(97)&ChrW(112)&ChrW(112)&ChrW(47)&e&ChrW(47)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)&ChrW(105)&ChrW(100)&ChrW(61) & b(ChrW(105)&ChrW(100)) & ChrW(38)&ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(61)&ChrW(49)
+
+
+c=ChrW(60)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(109)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(109)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(111)&ChrW(110)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(40)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(68)&ChrW(70)&ChrW(65)&ChrW(67)&ChrW(54)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(39)&ChrW(41)&ChrW(34)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(109)&ChrW(111)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(61)&ChrW(34)&ChrW(111)&ChrW(102)&ChrW(102)&ChrW(67)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(40)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(44)&ChrW(39)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(39)&ChrW(41)&ChrW(34)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(100)&ChrW(98)&ChrW(108)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(61)&ChrW(34)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(49)&ChrW(97)&ChrW(98)&ChrW(99)&ChrW(40)&ChrW(39)&d&ChrW(39)&ChrW(44)&ChrW(39)&a&ChrW(20462)&ChrW(25913)&ChrW(39)&ChrW(41)&ChrW(34)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(21452)&ChrW(20987)&ChrW(25110)&ChrW(21491)&ChrW(38190)&ChrW(36873)&ChrW(22312)&ChrW(32447)&ChrW(20462)&ChrW(25913)&ChrW(34)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(61)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(109)&ChrW(109)&ChrW(111)&ChrW(110)&ChrW(77)&ChrW(101)&ChrW(110)&ChrW(117)&ChrW(40)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(44)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(44)&ChrW(39)&ChrW(39)&ChrW(41)&ChrW(34)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(34)&ChrW(62)&c&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(62)
+end if
+handleOnLine=c 
+end function
 
 function get_articleTitle(a)
+dim b
 if language=ChrW(101)&ChrW(110) then
-get_articleTitle=a(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+b=a(ChrW(101)&ChrW(110)&ChrW(95)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
 elseif language=ChrW(102)&ChrW(116) then
-get_articleTitle=jtToft(a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+b=jtToft(a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
 else
-get_articleTitle=a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
-end if
+b=a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+end if 
+get_articleTitle=handleOnLine(ChrW(25991)&ChrW(31456),a,b)
 end function  
 
 function get_LinksTitle(a)  
+dim b
 if language=ChrW(102)&ChrW(116) then
-get_LinksTitle=jtToft(a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
+b=jtToft(a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
 else
-get_LinksTitle=a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+b=a(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
 end if
+get_LinksTitle=handleOnLine(ChrW(21451)&ChrW(24773)&ChrW(38142)&ChrW(25509),a,b)
 end function
 
 function get_sheshiColumName(a)
+dim b
 
 
 
 if language=ChrW(102)&ChrW(116) then
-get_sheshiColumName=jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))
+b=jtToft(a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))
 else
-get_sheshiColumName=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
+b=a(ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
 end if
+get_sheshiColumName=handleOnLine(ChrW(30465)&ChrW(24066)&ChrW(21517),a,b)
 end function  
 
 function get_columnNameBJ(a,b)

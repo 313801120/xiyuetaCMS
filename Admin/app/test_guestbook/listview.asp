@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(103)&ChrW(117)&ChrW(101)&ChrW(115)&ChrW(116)&ChrW(98)&ChrW(111)&ChrW(111)&ChrW(107)
 winTitle = ChrW(22312)&ChrW(32447)&ChrW(30041)&ChrW(35328)
-excludeAdminIDLIst=ChrW(51)
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
 dim msg,isTrue,sql,addSql,id,title,guestname,tel,email,address,bodycontent,reply,replydatetime,isthrough,createtime,updatetime,ip,tsfield_addr
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 title=request(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
@@ -27,7 +27,7 @@ updatetime=request(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&Ch
 if updatetime="" then updatetime=null
 ip=request(ChrW(105)&ChrW(112))
 if id <>"" then
-call showCheckAdminRule(ChrW(32534)&ChrW(36753) & winTitle)
+call showCheckAdminRule(ChrW(26597)&ChrW(30475) & winTitle) 
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&thisAddPrefix(tableName)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,1
 if not rs.eof then
 id=rs(ChrW(105)&ChrW(100))

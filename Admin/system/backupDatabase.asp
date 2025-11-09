@@ -2,12 +2,16 @@
 '官方网站：www.xiyueta.com   QQ：313801120%><!--#include file="../../inc/Config.asp"-->
 <!--#Include File = "../admin_function.asp"-->
 <!--#Include File = "../admin_safe.Asp"--><% 
-call showCheckAdminRule(ChrW(22791)&ChrW(20221)&ChrW(24674)&ChrW(22797)&ChrW(25968)&ChrW(25454))
 call openconn() 
 dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,n,sS,sHr,totalrec,c,s,splstr,cList,filePath,nFileSize,nSize,isHandle,mdbFilePath,accessPath,content,configFilePath,startStr,endStr,findStr,replaceStr
+dim winTitle:winTitle=ChrW(22791)&ChrW(20221)&ChrW(24674)&ChrW(22797)&ChrW(25968)&ChrW(25454)&ChrW(24211) 
+dim tableName
 mdbFilePath=handlePath(MDBPath)
 
-If Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) Then  
+If Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) Then 
+if checkAdminRule(winTitle & ChrW(21015)&ChrW(34920))=false then
+call die(ChrW(123)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(91)&ChrW(93)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(34)&ChrW(58)&ChrW(48)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(52)&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(34)&ChrW(60)&ChrW(98)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(39)&ChrW(62)&ChrW(27809)&ChrW(26377)&ChrW(12304)& winTitle & ChrW(21015)&ChrW(34920) &ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(65281)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(62)&ChrW(34)&ChrW(125))
+end if
 num = Request(ChrW(108)&ChrW(105)&ChrW(109)&ChrW(105)&ChrW(116))
 page = Request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101))
 stemp = ChrW(123)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(91) 
@@ -25,6 +29,10 @@ stemp = stemp & cList & ChrW(93)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(117)&
 call die(stemp)
 
 elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(114)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(114) then
+if checkAdminRule(ChrW(24674)&ChrW(22797) & winTitle)=false then 
+call addSystemLog(tableName,ChrW(24674)&ChrW(22797)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(24674)&ChrW(22797)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480))
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(24674)&ChrW(22797)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(24674)&ChrW(22797)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))    
+end if
 if userrs(ChrW(112)&ChrW(119)&ChrW(100)) <>mymd5(request(ChrW(112)&ChrW(119)&ChrW(100))) then
 call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(39564)&ChrW(35777)&ChrW(23494)&ChrW(30721)&ChrW(38169)&ChrW(35823)&ChrW(65292)&ChrW(21024)&ChrW(38500)&ChrW(22833)&ChrW(36133)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
 elseif userrs(ChrW(108)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(108)) <>1 then
@@ -41,13 +49,21 @@ replaceStr = startStr & accessPath & endStr
 content = replace(content, findStr, replaceStr) 
 call writeToFile(configFilePath, content, "") 
 end if 
-call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(22791)&ChrW(20221)&ChrW(25968)&ChrW(25454)&ChrW(25104)&ChrW(21151)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(121)&ChrW(34)&ChrW(125)) 
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(24674)&ChrW(22797)&ChrW(25968)&ChrW(25454)&ChrW(25104)&ChrW(21151)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(121)&ChrW(34)&ChrW(125)) 
 
 elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(112) then
+if checkAdminRule(ChrW(22791)&ChrW(20221) & winTitle)=false then 
+call addSystemLog(tableName,ChrW(22791)&ChrW(20221)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(22791)&ChrW(20221)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480))
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(22791)&ChrW(20221)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(22791)&ChrW(20221)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))    
+end if
 call copyfile(mdbFilePath,ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(47)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(112)&ChrW(95) & format_Time(now(),6) & ChrW(46)&ChrW(109)&ChrW(100)&ChrW(98))
 call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(22791)&ChrW(20221)&ChrW(25968)&ChrW(25454)&ChrW(25104)&ChrW(21151)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(121)&ChrW(34)&ChrW(125))
 
 elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(100)&ChrW(101)&ChrW(108) then
+if checkAdminRule(ChrW(21024)&ChrW(38500) & winTitle)=false then 
+call addSystemLog(tableName,ChrW(21024)&ChrW(38500)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(21024)&ChrW(38500)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480))
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(21024)&ChrW(38500)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(21024)&ChrW(38500)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))    
+end if
 if userrs(ChrW(112)&ChrW(119)&ChrW(100)) <>mymd5(request(ChrW(112)&ChrW(119)&ChrW(100))) then
 call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(39564)&ChrW(35777)&ChrW(23494)&ChrW(30721)&ChrW(38169)&ChrW(35823)&ChrW(65292)&ChrW(21024)&ChrW(38500)&ChrW(22833)&ChrW(36133)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))
 elseif userrs(ChrW(108)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(108)) <>1 then
@@ -59,6 +75,10 @@ call moveFile(filePath,filePath & ChrW(46)&ChrW(100)&ChrW(101)&ChrW(108)&ChrW(10
 call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(21024)&ChrW(38500)&ChrW(25968)&ChrW(25454)&ChrW(25104)&ChrW(21151)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(121)&ChrW(34)&ChrW(125))
 
 elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(122)&ChrW(105)&ChrW(112) then     
+if checkAdminRule(ChrW(21387)&ChrW(32553) & winTitle)=false then 
+call addSystemLog(tableName,ChrW(21387)&ChrW(32553)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(21387)&ChrW(32553)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480))
+call die(ChrW(123)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(21387)&ChrW(32553)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(27809)&ChrW(26377)&ChrW(12304)&ChrW(21387)&ChrW(32553)&winTitle&ChrW(12305)&ChrW(26435)&ChrW(38480)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(110)&ChrW(34)&ChrW(125))    
+end if
 nFileSize=getfSize(mdbFilePath)
 call compactDB(mdbFilePath, False) 
 nSize=nFileSize-getfSize(mdbFilePath)
@@ -73,8 +93,13 @@ End if
 <script type="text/javascript" src="../js/jquery.js"></script>
 <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" type="text/css"  />
 <script type="text/javascript" src="../layuiadmin/layui/layui.js"></script>
+<style>
+.layui-table, .layui-table-view {margin: 10px 0;}
+.layui-table thead tr {background-color: #f2f2f2}/*表格头背景颜色*/
+body{padding:10px 6px 30px 6px;background: #FFF}
+</style>
 </head>
-<body style="padding:10px 6px 30px 6px;background: #FFF">  
+<body>  
 <div class="layui-form "> 
 <div class="layui-inline">
 <div class="layui-input-inline" style="width: 100px;">
@@ -107,7 +132,7 @@ elem: '#table',
 url: '?act=list',
 cols: [
 [
-{ field: 'i', title: '序号', width: 70, sort: true }
+{ field: 'i', title: '序号', width: 70, sort: false }
 , { field: 'name', title: '名称', minWidth: 120, sort: false } 
 , { field: 'size', title: '文件大小', width: 120, sort: false } 
 , { field: 'time', title: '最后修改时间', width: 160, sort: false } 
@@ -156,12 +181,17 @@ dataType: "json",
 url: "?act=del",
 data: { "name": name,"pwd":value }, 
 success: function(data) {                  
-layer.msg(data.info);
 switch (data.status) {
 case "y":
-obj.del();
+if(obj){
+obj.del();   
+}else{
+table.reload('testReload');
+}                                                
+layer.msg(data.info,{icon: 1});
 break;
-case "n":                   
+case "n":                                    
+layer.msg(data.info,{icon: 2});
 break;
 }
 }
@@ -182,15 +212,20 @@ cache: true,
 dataType: "json",
 url: "?act=recover",
 data: { "name": name,"pwd":value }, 
-success: function(data) {  
-layer.msg(data.info);
+success: function(data) {   
 switch (data.status) {
 case "y":
-location.reload(true);
+if(obj){
+obj.del();   
+}else{
+table.reload('testReload');
+}                                                
+layer.msg(data.info,{icon: 1});
 break;
-case "n":                   
+case "n":                                    
+layer.msg(data.info,{icon: 2});
 break;
-}  
+} 
 }
 });
 layer.close(index);
@@ -206,8 +241,20 @@ type: "POST",
 cache: false,
 dataType: "json",
 url: "?act=backup",  
-success: function() {
-location.reload(true);
+success: function(data) {
+switch (data.status) {
+case "y":
+if(obj){
+obj.del();   
+}else{
+table.reload('testReload');
+}                                                
+layer.msg(data.info,{icon: 1});
+break;
+case "n":                                    
+layer.msg(data.info,{icon: 2});
+break;
+}
 }
 });
 layer.close(index);
@@ -221,7 +268,19 @@ cache: false,
 dataType: "json",
 url: "?act=zip",  
 success: function(data) {
-layer.msg(data.info, {icon: 1});
+switch (data.status) {
+case "y":
+if(obj){
+obj.del();   
+}else{
+table.reload('testReload');
+}                                                
+layer.msg(data.info,{icon: 1});
+break;
+case "n":                                    
+layer.msg(data.info,{icon: 2});
+break;
+}
 }
 });
 layer.close(index);

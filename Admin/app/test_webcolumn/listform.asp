@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(119)&ChrW(101)&ChrW(98)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)
 winTitle = ChrW(32593)&ChrW(31449)&ChrW(26639)&ChrW(30446)
-excludeAdminIDLIst=ChrW(48)
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
 dim msg,isTrue,sql,addSql,id,parentid,columntype,npagesize,columnname,columnenname,sortrank,aboutcontent,bodycontent,flags,httpurl,filename,bannerimage,smallimage,webtitle,webkeywords,webdescription,isthrough,ishtml,en_aboutcontent,en_bodycontent,en_webtitle,en_webkeywords,en_webdescription,createhtmltime
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 parentid=getStrToNumber(request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
@@ -112,7 +112,7 @@ end if:rs.close
 end if
 
 elseif id <>"" then
-call showCheckAdminRule(ChrW(32534)&ChrW(36753) & winTitle)
+call showCheckAdminRule(ChrW(26597)&ChrW(30475) & winTitle) 
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&thisAddPrefix(tableName)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,1
 if not rs.eof then
 id=rs(ChrW(105)&ChrW(100))
@@ -420,7 +420,7 @@ end function
 </div>
 <%end if%>
 <!-- 提交按钮需要，外部调用 -->
-<div class="layui-form-item layui-hide">
+<div class="layui-form-item<%=IIF(request(ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(115)&ChrW(117)&ChrW(98)&ChrW(109)&ChrW(105)&ChrW(116))=ChrW(49),"",ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(104)&ChrW(105)&ChrW(100)&ChrW(101))%>">
 <input type="submit" class="layui-btn" value="保存资料" lay-submit="lay-submit" lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" />
 </div>
 </div>

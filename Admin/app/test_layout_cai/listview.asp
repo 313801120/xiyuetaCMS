@@ -7,8 +7,8 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)
 winTitle = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)
-excludeAdminIDLIst=ChrW(48)
-dim msg,isTrue,sql,addSql,id,title,tsfield_layoutcaiaction,isthrough,isaspnote,isdebugcode,isruntime,loginurl,loginsuccess,cailoginurlfun,userfieldname,passfieldname,username,password,httpurl,httpurlsuccess,caiurlfun,setchar,poststr,ndjs,sortrank,caiaction,contenttype,djsurlparame,locltxtfile1,locltxtfile2,locltxtfile3,caisavelocalfilename,saveerrinfofilename,bodycontent,savecratefilepath,gotofilepathtest,postsavetoserver,stablename
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
+dim msg,isTrue,sql,addSql,id,title,tsfield_layoutcaiaction,isthrough,isaspnote,isdebugcode,isruntime,loginurl,loginsuccess,cailoginurlfun,userfieldname,passfieldname,httpurl,httpurlsuccess,caiurlfun,username,setchar,password,poststr,ndjs,sortrank,caiaction,contenttype,djsurlparame,locltxtfile1,locltxtfile2,locltxtfile3,caisavelocalfilename,saveerrinfofilename,bodycontent,savecratefilepath,gotofilepathtest,postsavetoserver,stablename
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 title=request(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
 title=handleAspStrSafe(title)
@@ -34,10 +34,6 @@ userfieldname=request(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(102)&ChrW(105
 userfieldname=handleAspStrSafe(userfieldname)
 passfieldname=request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 passfieldname=handleAspStrSafe(passfieldname)
-username=request(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
-username=handleAspStrSafe(username)
-password=request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))
-password=handleAspStrSafe(password)
 httpurl=request(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108))
 httpurl=handleAspStrSafe(httpurl)
 httpurlsuccess=request(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(117)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115))
@@ -45,8 +41,12 @@ httpurlsuccess=handleAspStrSafe(httpurlsuccess)
 caiurlfun=getStrToNumber(request(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110)))
 if caiurlfun="" then caiurlfun=null
 caiurlfun=handleAspStrSafe(caiurlfun)
+username=request(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
+username=handleAspStrSafe(username)
 setchar=request(ChrW(115)&ChrW(101)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114))
 setchar=handleAspStrSafe(setchar)
+password=request(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))
+password=handleAspStrSafe(password)
 poststr=request(ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(115)&ChrW(116)&ChrW(114))
 poststr=handleAspStrSafe(poststr)
 ndjs=getStrToNumber(request(ChrW(110)&ChrW(100)&ChrW(106)&ChrW(115)))
@@ -80,7 +80,7 @@ postsavetoserver=request(ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(115)&ChrW(
 postsavetoserver=handleAspStrSafe(postsavetoserver)
 stablename=request(ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 if id <>"" then
-call showCheckAdminRule(ChrW(32534)&ChrW(36753) & winTitle)
+call showCheckAdminRule(ChrW(26597)&ChrW(30475) & winTitle) 
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&thisAddPrefix(tableName)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,1
 if not rs.eof then
 id=rs(ChrW(105)&ChrW(100))
@@ -95,12 +95,12 @@ loginsuccess=rs(ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(115)&ChrW
 cailoginurlfun=rs(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110))
 userfieldname=rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 passfieldname=rs(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
-username=rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
-password=rs(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))
 httpurl=rs(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108))
 httpurlsuccess=rs(ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(115)&ChrW(117)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115))
 caiurlfun=rs(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110))
+username=rs(ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 setchar=rs(ChrW(115)&ChrW(101)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114))
+password=rs(ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(119)&ChrW(111)&ChrW(114)&ChrW(100))
 poststr=rs(ChrW(112)&ChrW(111)&ChrW(115)&ChrW(116)&ChrW(115)&ChrW(116)&ChrW(114))
 ndjs=rs(ChrW(110)&ChrW(100)&ChrW(106)&ChrW(115))
 sortrank=rs(ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107))
@@ -252,18 +252,6 @@ end function
 </div>
 </div>    
 <div class='layui-form-item'>
-<label class='layui-form-label'>账号：</label>
-<div class='layui-input-block layui-input-wrap'>
-<%=username%>
-</div><!--username-->
-</div>
-<div class='layui-form-item'>
-<label class='layui-form-label'>密码：</label>
-<div class='layui-input-block layui-input-wrap'>
-<%=password%>
-</div><!--password-->
-</div>
-<div class='layui-form-item'>
 <label class='layui-form-label'>网址：</label>
 <div class='layui-input-block layui-input-wrap'>
 <%=httpurl%>
@@ -288,10 +276,22 @@ end function
 </div>
 </div>    
 <div class='layui-form-item'>
+<label class='layui-form-label'>账号：</label>
+<div class='layui-input-block layui-input-wrap'>
+<%=username%>
+</div><!--username-->
+</div>
+<div class='layui-form-item'>
 <label class='layui-form-label'>编码：</label>
 <div class='layui-input-block layui-input-wrap'>
 <%=getOnLineSelectValue(ChrW(115)&ChrW(101)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(97)&ChrW(114)&ChrW(45)&ChrW(103)&ChrW(98)&ChrW(50)&ChrW(51)&ChrW(49)&ChrW(50)&ChrW(45)&ChrW(117)&ChrW(116)&ChrW(102)&ChrW(92)&ChrW(45)&ChrW(56),setchar)%>
 </div><!--setchar-->
+</div>
+<div class='layui-form-item'>
+<label class='layui-form-label'>密码：</label>
+<div class='layui-input-block layui-input-wrap'>
+<%=password%>
+</div><!--password-->
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>post参数集：</label>

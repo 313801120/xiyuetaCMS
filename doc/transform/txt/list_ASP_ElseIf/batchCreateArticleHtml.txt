@@ -1,4 +1,8 @@
 '批量生成文章到html 20251016
 elseif request("act")="batchCreateArticleHtml" then    
+    if checkAdminRule("文章生成html")=false then
+        call addSystemLog(tableName,"批量生成文章html失败，没有【文章生成html】权限")  
+        call die("{""info"": ""批量生成文章html失败，没有【文章生成html】权限"",""status"": ""n""}")
+    end if
     call echoB("批量生成文章html完成","共 "&batchCreateArticleHtml(id,0) & " 条")
     call die(getTimer())

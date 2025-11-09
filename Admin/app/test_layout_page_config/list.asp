@@ -1463,7 +1463,6 @@ style: 'box-shadow: 1px 1px 10px rgb(0 0 0 / 12%);' // 设置额外样式
 showwin('布局页ID', '/admin/app/test_layout_page/listform.asp?id='+data.tsfield_layout_page_id)   
 }else if (obj.event === 'click_layout_field_id') {       //配置字段ID
 showwin('配置字段ID', '/admin/app/test_layout_field/listform.asp?id='+data.tsfield_layout_field_id)   
-//3333333//
 }
 }); 
 // 工具栏事件

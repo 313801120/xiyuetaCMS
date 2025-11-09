@@ -1223,7 +1223,6 @@ showwin3('列表右菜单 - '+obj.data["pagename"], '/admin/app/test_layout_tabl
 showwin3('列表项菜单 - '+obj.data["pagename"], '/admin/app/test_layout_table_action/list.asp?layout_page_id='+pid)   
 }else if (obj.event === 'click_tsfield_layouaction') {       //布局页动作
 showwin3('布局页动作 - '+obj.data["pagename"], '/admin/app/test_layout_action/list.asp?layout_page_id='+pid)   
-//3333333//
 }
 }); 
 // 工具栏事件

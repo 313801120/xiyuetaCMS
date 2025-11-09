@@ -66,7 +66,7 @@ if request("act")="save" then
 
 '显示
 elseif id<>"" then
-    call showCheckAdminRule("编辑" & winTitle)
+    call showCheckAdminRule("查看" & winTitle) 
     rs.open"select * from "&thisAddPrefix(tableName)&" where id="&id,conn,1,1
     if not rs.eof then
 
@@ -126,7 +126,7 @@ end function
             <%end if%>
 
             <!-- 提交按钮需要，外部调用 -->
-            <div class="layui-form-item layui-hide">
+            <div class="layui-form-item<%=IIF(request("showsubmit")="1",""," layui-hide")%>">
               <input type="submit" class="layui-btn" value="保存资料" lay-submit="lay-submit" lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" />
             </div>
  

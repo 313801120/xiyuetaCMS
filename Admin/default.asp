@@ -87,6 +87,7 @@ if isAdminOnCRMShow then
 <dl class="layui-nav-child">
 <dd><a lay-href="set/user/info.asp">基本资料</a></dd>
 <dd><a lay-href="set/user/password.asp">修改密码</a></dd>
+<dd><a lay-href="<%=WEB_VIEWURL & ChrW(63)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(61)&ChrW(49)%>">网站在线修改</a></dd>
 <hr>
 <dd style="text-align: center;"><a href="<%=adminDir & ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(76)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)%>">退出</a></dd>
 </dl>
@@ -398,6 +399,14 @@ window.location.href = url;
 }
 }
 /*只有备份表使用，暂时留着*/
+//刷新当前tab的表格并保持当前页码 20251109
+function reloadTable(){ 
+// 备用方案：触发刷新按钮
+var refreshBtn = document.querySelector('a[layadmin-event="refresh"]');
+if (refreshBtn) {
+refreshBtn.click();
+}
+}
 </script><%=getServerVersion()%>
 </body>
 </html>

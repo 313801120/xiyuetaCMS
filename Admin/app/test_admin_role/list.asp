@@ -691,7 +691,6 @@ showwin2('查看详细', 'listview.asp?id=' + obj.data["id"])
 align: 'right', // 右对齐弹出
 style: 'box-shadow: 1px 1px 10px rgb(0 0 0 / 12%);' // 设置额外样式
 })
-//3333333//
 }
 }); 
 // 工具栏事件
