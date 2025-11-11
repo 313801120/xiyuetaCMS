@@ -378,7 +378,7 @@ end function
 function checkMdbPositionSafe(a)
 dim b
 checkMdbPositionSafe=true
-if userrs(ChrW(108)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(108))=1 then
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))=-999 then
 exit function
 end if    
 b=phptrim(lcase(handlePath(a)))
@@ -386,7 +386,7 @@ if instr(b,ChrW(92)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&C
 
 checkMdbPositionSafe=false
 end if
-end function
+end function 
 
 function importTableToLayouPage() 
 dim a,b,c,d,e,f,g,h,i

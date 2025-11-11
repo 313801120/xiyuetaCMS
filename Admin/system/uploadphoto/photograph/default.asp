@@ -35,10 +35,9 @@ hm.src = "https://hm.baidu.com/hm.js?9e75428c7b3992dd93bd71098a1f9dc3";
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
 })();
-</script>
-<script src="../../../layuiadmin/layui/layui.js"></script>
-<script src="../../../js/jquery.js"></script>
+</script> 
 <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css">
+<script src="../../../js/jquery.js"></script> 
 </head>
 <body>
 <div class="layui-form ">
@@ -107,7 +106,7 @@ error: function(XMLHttpRequest, textStatus, errorThrown) {
 //alert(errorThrown)
 },
 success: function(result) { 
-window.parent.getPaiZhaoImg(result)
+window.parent.getPaiZhaoImg(result,"保存拍照成功！")
 $("body").append("<img src='" + result + "'>");
 }
 });

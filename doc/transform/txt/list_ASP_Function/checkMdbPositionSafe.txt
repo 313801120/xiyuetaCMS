@@ -2,7 +2,7 @@
 function checkMdbPositionSafe(mdbPath)
     dim s
     checkMdbPositionSafe=true
-    if userrs("level")=1 then   '为超级管理员，不检测为真'        
+    if session("adminid")=-999 then   '为超级管理员，不检测为真'        
         exit function
     end if    
     s=phptrim(lcase(handlePath(mdbPath)))
@@ -11,4 +11,4 @@ function checkMdbPositionSafe(mdbPath)
         'call eerr("s",s)
         checkMdbPositionSafe=false
     end if
-end function
+end function 

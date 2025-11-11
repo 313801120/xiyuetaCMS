@@ -399,7 +399,7 @@ end function
 <div class='layui-input-inline layui-input-wrap'>
 <input type='text' name='locltxtfile1' placeholder='请输入本地文件1' autocomplete='off' class='layui-input' value="<%=inputCL(locltxtfile1)%>" >
 </div><!--locltxtfile1-->
-<button type="button" class="layui-btn layui-btn-primary" id="upload-locltxtfile1"><i class="layui-icon">&#xe67c;</i>上传txt\|json\|xml文件1</button>
+<button type="button" class="layui-btn layui-btn-primary" id="upload-locltxtfile1"><i class="layui-icon">&#xe67c;</i>上传txt|json|xml文件1</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
 </div>
 <div class='layui-form-item'>
@@ -407,7 +407,7 @@ end function
 <div class='layui-input-inline layui-input-wrap'>
 <input type='text' name='locltxtfile2' placeholder='请输入本地文件2' autocomplete='off' class='layui-input' value="<%=inputCL(locltxtfile2)%>" >
 </div><!--locltxtfile2-->
-<button type="button" class="layui-btn layui-btn-primary" id="upload-locltxtfile2"><i class="layui-icon">&#xe67c;</i>上传txt\|json\|xml文件2</button>
+<button type="button" class="layui-btn layui-btn-primary" id="upload-locltxtfile2"><i class="layui-icon">&#xe67c;</i>上传txt|json|xml文件2</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
 </div>
 <div class='layui-form-item'>
@@ -415,7 +415,7 @@ end function
 <div class='layui-input-inline layui-input-wrap'>
 <input type='text' name='locltxtfile3' placeholder='请输入本地文件3' autocomplete='off' class='layui-input' value="<%=inputCL(locltxtfile3)%>" >
 </div><!--locltxtfile3-->
-<button type="button" class="layui-btn layui-btn-primary" id="upload-locltxtfile3"><i class="layui-icon">&#xe67c;</i>上传txt\|json\|xml文件3</button>
+<button type="button" class="layui-btn layui-btn-primary" id="upload-locltxtfile3"><i class="layui-icon">&#xe67c;</i>上传txt|json|xml文件3</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
 </div>
 <div class='layui-form-item'>
@@ -486,28 +486,23 @@ layui.config({
 base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
 index: 'lib/index' //主入口模块
-}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer'], function() {
+}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer','croppers'], function() {
 var $ = layui.$,
 form = layui.form,
 upload = layui.upload,
 laydate = layui.laydate,
-colorpicker = layui.colorpicker;
-var a = (layui.laytpl, layui.setter, layui.view, layui.admin);
-//查看图片
-a.events.avartatPreview = function(t) { 
-var i = $(this).parent().find("input").val();
-layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
-} 
-// 上传txt\|json\|xml文件1 for locltxtfile1
+colorpicker = layui.colorpicker; 
+// 上传txt/json/xml文件 for locltxtfile1
 upload.render({
 elem: '#upload-locltxtfile1',
-url: '/api/upload/upload_txtJsonXml.asp',
+url: '/api/upload/?act=txtjsonxml',
 accept: 'file',
 exts: 'txt|json|xml',
 done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 }else{
@@ -518,16 +513,17 @@ $("input[name='locltxtfile1']").val(imgSrc) //用下面这种，因为有注释�
 }
 }
 });
-// 上传txt\|json\|xml文件2 for locltxtfile2
+// 上传txt/json/xml文件 for locltxtfile2
 upload.render({
 elem: '#upload-locltxtfile2',
-url: '/api/upload/upload_txtJsonXml.asp',
+url: '/api/upload/?act=txtjsonxml',
 accept: 'file',
 exts: 'txt|json|xml',
 done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 }else{
@@ -538,16 +534,17 @@ $("input[name='locltxtfile2']").val(imgSrc) //用下面这种，因为有注释�
 }
 }
 });
-// 上传txt\|json\|xml文件3 for locltxtfile3
+// 上传txt/json/xml文件 for locltxtfile3
 upload.render({
 elem: '#upload-locltxtfile3',
-url: '/api/upload/upload_txtJsonXml.asp',
+url: '/api/upload/?act=txtjsonxml',
 accept: 'file',
 exts: 'txt|json|xml',
 done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 }else{

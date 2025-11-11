@@ -157,9 +157,9 @@ while not rs.eof
 </div>
 <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-useradmin">上传图片</button> 
 <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-onclick="layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
+onclick="layuiOpenIndex=showwin('拍照', '../../system/uploadphoto/photograph/');">拍照</button>
 <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-onclick="layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
+onclick="layuiOpenIndex=showwin3('签名', '../../system/uploadphoto/tuya/');">签名</button>
 </div>
 <div class="layui-form-item">
 <label class="layui-form-label">图片2</label>
@@ -168,9 +168,9 @@ onclick="layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
 </div>
 <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-pic2">上传图片</button> 
 <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-onclick="picDomId='pic2';layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
+onclick="picDomId='pic2';layuiOpenIndex=showwin('拍照', '../../system/uploadphoto/photograph/');">拍照</button>
 <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-onclick="picDomId='pic2';layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
+onclick="picDomId='pic2';layuiOpenIndex=showwin3('签名', '../../system/uploadphoto/tuya/');">签名</button>
 </div>
 <div class="layui-form-item">
 <label class="layui-form-label">图片3</label>
@@ -179,9 +179,9 @@ onclick="picDomId='pic2';layuiOpenIndex=showwin('签名', 'tuya/');">签名</but
 </div>
 <button style="float: left;" type="button" class="layui-btn" id="layuiadmin-upload-pic3">上传图片</button> 
 <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-onclick="picDomId='pic3';layuiOpenIndex=showwin('拍照', 'photograph/');">拍照</button>
+onclick="picDomId='pic3';layuiOpenIndex=showwin('拍照', '../../system/uploadphoto/photograph/');">拍照</button>
 <button  style="float: left;margin-left:10px" type="button" class="layui-btn" 
-onclick="picDomId='pic3';layuiOpenIndex=showwin('签名', 'tuya/');">签名</button>
+onclick="picDomId='pic3';layuiOpenIndex=showwin3('签名', '../../system/uploadphoto/tuya/');">签名</button>
 </div>
 <div class="layui-form-item">
 <label class="layui-form-label">内容</label>
@@ -238,9 +238,10 @@ layedit.build('bodycontent');   //建立编辑器
 })
 var layuiOpenIndex;
 var picDomId='smallimage';//默认为小图
-function getPaiZhaoImg(src){ 
+function getPaiZhaoImg(src,msg){ 
 $("input[name='"+picDomId+"']").val(src)
 layer.close(layuiOpenIndex);
+layer.msg(msg, {icon: 1});
 }
 var imgInputObj;//图片的input对象
 //获得粘贴板内容

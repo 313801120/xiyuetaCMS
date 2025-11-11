@@ -50,7 +50,7 @@ end function
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
 <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
-</head>
+</head> 
 <body>
 <form id="form1" name="form1" class="layui-form"  method="post" action="?act=save">
 <div class="layui-fluid">
@@ -158,7 +158,12 @@ upload.render({
 elem: '#LAY_avatarUpload',
 url: '/api/upload/',
 done: function(res) {              
-$("input[name=pic]").val(res.data[0].src) 
+if(typeof(res.data[0])!="undefined"){
+var imgSrc=res.data[0].src;
+}else{
+var imgSrc=res.data.src;
+}
+$("input[name=pic]").val(imgSrc) 
 }
 }), a.events.avartatPreview = function(t) {
 var i = layui.$("#LAY_avatarSrc").val();
@@ -174,7 +179,12 @@ elem: '#LAY_avatarUpload'
 ,area:'900px'  //弹窗宽度
 ,url: "/api/upload/"  //图片上传接口返回和（layui 的upload 模块）返回的JOSN一样
 ,done: function(res){ //上传完毕回调
-$("input[name=pic]").val(res.data[0].src) 
+if(typeof(res.data[0])!="undefined"){
+var imgSrc=res.data[0].src;
+}else{
+var imgSrc=res.data.src;
+}
+$("input[name=pic]").val(imgSrc) 
 layer.closeAll('page');
 }
 }), a.events.avartatPreview = function(t) {

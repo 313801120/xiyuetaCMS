@@ -6,7 +6,7 @@ dim e,f,g,h,i,j,k,l,m,n
 f=split(encTsStrReplace2(b,ChrW(45)&ChrW(95))&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95),ChrW(95)) 
 f=split(mid(b,10),ChrW(45))
 for i=0 to ubound(f)
-h=phptrim(f(i))
+h=phptrim(f(i)) 
 h=replace(h,ChrW(39),ChrW(92)&ChrW(39))
 if h <>"" then
 call echo(i & ChrW(44)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49)&ChrW(49),h)
@@ -545,48 +545,232 @@ if e="" then e=ChrW(105)&ChrW(112)
 eidtPage_getipaddr=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)& c &ChrW(61)&ChrW(105)&ChrW(112)&ChrW(84)&ChrW(111)&ChrW(65)&ChrW(100)&ChrW(100)&ChrW(114)&ChrW(50)&ChrW(48)&ChrW(50)&ChrW(50)&ChrW(40)&ChrW(114)&ChrW(115)&ChrW(40)&ChrW(34)&e&ChrW(34)&ChrW(41)&ChrW(44)&ChrW(34)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(34)&ChrW(41)&vbcrlf
 end function
 function editpage_handle_layuiadminUploadPicJsCode(a,b)
-dim c,d,e,f,g,h,i,j,k,l,m
-dim n
+dim c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v
+dim w,x,y
 d=split(encTsStrReplace2(b,ChrW(45)&ChrW(95))&ChrW(45),ChrW(45))      
 m=decTsStrReplace(d(1),ChrW(124)&ChrW(44))
-h=split(m&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95),ChrW(95))
+h=split(m&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95)&ChrW(95),ChrW(95))
 e=h(0)
-
-if e <>ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(105)&ChrW(109)&ChrW(103) then
-g=h(1)
+p=h(1)
 i=h(2)
-j=h(3)
-k=h(4)
-l=h(5)
-end if
+o=phptrim(h(3))
+call echo(ChrW(115)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101),b)
+call echo(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101),e)
+call echo(ChrW(108)&ChrW(105)&ChrW(109)&ChrW(105)&ChrW(116)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101),i)
+call echo(ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(76)&ChrW(105)&ChrW(115)&ChrW(116),o)
 f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)    
-if e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112) 
+if e=ChrW(116)&ChrW(120)&ChrW(116) then
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(116)&ChrW(120)&ChrW(116) 
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(39)&ChrW(44) & vbcrlf
+if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(25991)&ChrW(20214)
+elseif e=ChrW(116)&ChrW(120)&ChrW(116)&ChrW(74)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(88)&ChrW(109)&ChrW(108) then
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(120)&ChrW(109)&ChrW(108) 
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(124)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(39)&ChrW(44) & vbcrlf 
+if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(25991)&ChrW(20214)
+elseif e=ChrW(109)&ChrW(100)&ChrW(98) then
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(109)&ChrW(100)&ChrW(98)&ChrW(39)&ChrW(44) & vbcrlf
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(109)&ChrW(100)&ChrW(98) 
 if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(25968)&ChrW(25454)&ChrW(24211)
-elseif e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(95)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112) 
-if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(25991)&ChrW(20214)
-elseif e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(74)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(88)&ChrW(109)&ChrW(108)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(95)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(74)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(88)&ChrW(109)&ChrW(108)&ChrW(46)&ChrW(97)&ChrW(115)&ChrW(112) 
-if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(124)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(25991)&ChrW(20214)
+elseif e=ChrW(120)&ChrW(108)&ChrW(115) then
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(120)&ChrW(108)&ChrW(115)&ChrW(124)&ChrW(120)&ChrW(108)&ChrW(115)&ChrW(120)&ChrW(39)&ChrW(44) & vbcrlf
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(120)&ChrW(108)&ChrW(115) 
+elseif e=ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111) then
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111) 
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(109)&ChrW(112)&ChrW(52)&ChrW(124)&ChrW(109)&ChrW(111)&ChrW(118)&ChrW(39)&ChrW(44) & vbcrlf
+s=ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)
+if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(35270)&ChrW(39057)
+elseif e=ChrW(122)&ChrW(105)&ChrW(112) then
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(124)&ChrW(114)&ChrW(97)&ChrW(114)&ChrW(39)&ChrW(44) & vbcrlf 
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(63)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(61)&ChrW(122)&ChrW(105)&ChrW(112) 
+s=ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110)
+if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(21387)&ChrW(32553)&ChrW(25991)&ChrW(20214)
 else
+r=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(98)&ChrW(109)&ChrW(112)&ChrW(124)&ChrW(103)&ChrW(105)&ChrW(102)&ChrW(124)&ChrW(106)&ChrW(112)&ChrW(103)&ChrW(124)&ChrW(106)&ChrW(112)&ChrW(101)&ChrW(103)&ChrW(124)&ChrW(112)&ChrW(110)&ChrW(103)&ChrW(124)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(112)&ChrW(39)&ChrW(44) & vbcrlf
+f=ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47) 
+s=ChrW(105)&ChrW(109)&ChrW(103)
 if g="" then g=ChrW(19978)&ChrW(20256)&ChrW(22270)&ChrW(29255)
 end if
+
+if o="" then 
+o=ChrW(19978)&ChrW(20256)&ChrW(61) & g
+
+if e=ChrW(109)&ChrW(112)&ChrW(52) then  
+o=o&ChrW(42)&ChrW(26597)&ChrW(30475)&ChrW(61)&ChrW(26597)&ChrW(30475)&ChrW(35270)&ChrW(39057)
+elseif e=""  then  
+o=o&ChrW(42)&ChrW(26597)&ChrW(30475)&ChrW(61)&ChrW(26597)&ChrW(30475)&ChrW(22270)&ChrW(29255)
+end if
+end if 
+c=""  
+w=split(o,ChrW(42))
+for each m in w
+if m <>"" then
+y=split(m&ChrW(61)&ChrW(61)&ChrW(61),ChrW(61))
+
+if y(0)=ChrW(26597)&ChrW(30475)&ChrW(35270)&ChrW(39057) then 
+y(0)=ChrW(26597)&ChrW(30475)
+s=ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)  
+elseif y(0)=ChrW(26597)&ChrW(30475)&ChrW(22270)&ChrW(29255) then 
+y(0)=ChrW(26597)&ChrW(30475)
+s=ChrW(105)&ChrW(109)&ChrW(103)  
+elseif y(0)=ChrW(19979)&ChrW(36733)&ChrW(25991)&ChrW(20214) then 
+y(0)=ChrW(26597)&ChrW(30475)
+s=ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110)   
+end if
+if y(0)=ChrW(31614)&ChrW(21517) then
+c=c &cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(73)&ChrW(100)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(59)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(79)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(61)&ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(51)&ChrW(40)&ChrW(39)&y(1)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(116)&ChrW(111)&ChrW(47)&ChrW(116)&ChrW(117)&ChrW(121)&ChrW(97)&ChrW(47)&ChrW(39)&ChrW(41)&ChrW(59)&ChrW(34)&ChrW(62)&y(1)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(62) & vbcrlf
+elseif y(0)=ChrW(25293)&ChrW(29031) then
+c=c &cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(32)&ChrW(111)&ChrW(110)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(73)&ChrW(100)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(59)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(79)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(61)&ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(51)&ChrW(40)&ChrW(39)&y(1)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(116)&ChrW(111)&ChrW(47)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(116)&ChrW(111)&ChrW(103)&ChrW(114)&ChrW(97)&ChrW(112)&ChrW(104)&ChrW(47)&ChrW(39)&ChrW(41)&ChrW(59)&ChrW(34)&ChrW(62)&y(1)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(62) & vbcrlf
+elseif y(0)=ChrW(19978)&ChrW(20256) then
+c =c&cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(45)&a&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(105)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(62)&ChrW(38)&ChrW(35)&ChrW(120)&ChrW(101)&ChrW(54)&ChrW(55)&ChrW(99)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(105)&ChrW(62)&y(1)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(62)&vbcrlf&cfg_tabAdd1&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(45)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(61)&ChrW(34)&ChrW(34)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(62)&vbcrlf
+if e=ChrW(109)&ChrW(100)&ChrW(98) then
+j=y(2)
+end if
+elseif y(0)=ChrW(26597)&ChrW(30475) then
+c=c & cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(45)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(61)&ChrW(34)&s&ChrW(80)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(34)&ChrW(62)&y(1)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(62)&vbcrlf
+x=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(97)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(40)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(116)&ChrW(112)&ChrW(108)&ChrW(44)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(44)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(44)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(41)&ChrW(59) & vbcrlf
+if instr(public_layuiadminUploadPicJsCode,x)=false then
+public_layuiadminUploadPicJsCode=public_layuiadminUploadPicJsCode & x
+end if
+if s=ChrW(105)&ChrW(109)&ChrW(103) then
+x=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(26597)&ChrW(30475)&ChrW(22270)&ChrW(29255) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(46)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(115)&ChrW(46)&s&ChrW(80)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(116)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(41)&ChrW(46)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(40)&ChrW(41)&ChrW(46)&ChrW(102)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(116)&ChrW(111)&ChrW(115)&ChrW(40)&ChrW(123)&ChrW(32)&ChrW(112)&ChrW(104)&ChrW(111)&ChrW(116)&ChrW(111)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(26597)&ChrW(30475)&ChrW(22270)&ChrW(29255)&ChrW(34)&ChrW(44)&ChrW(32)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(58)&ChrW(32)&ChrW(91)&ChrW(123)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(58)&ChrW(32)&ChrW(105)&ChrW(32)&ChrW(125)&ChrW(93)&ChrW(32)&ChrW(125)&ChrW(44)&ChrW(32)&ChrW(115)&ChrW(104)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(46)&ChrW(48)&ChrW(49)&ChrW(44)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(66)&ChrW(116)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(44)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(105)&ChrW(109)&ChrW(58)&ChrW(32)&ChrW(53)&ChrW(32)&ChrW(125)&ChrW(41) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(32) & vbcrlf
+if instr(public_layuiadminUploadPicJsCode,x)=false then
+public_layuiadminUploadPicJsCode=public_layuiadminUploadPicJsCode & x
+end if
+elseif s=ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111) then
+x=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(26597)&ChrW(30475)&ChrW(35270)&ChrW(39057) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(46)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(115)&ChrW(46)&s&ChrW(80)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(116)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(41)&ChrW(46)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(40)&ChrW(41)&ChrW(46)&ChrW(102)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(105)&ChrW(102)&ChrW(40)&ChrW(33)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(41)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(39)&ChrW(35831)&ChrW(20808)&ChrW(22635)&ChrW(20889)&ChrW(25110)&ChrW(19978)&ChrW(20256)&ChrW(35270)&ChrW(39057)&ChrW(25991)&ChrW(20214)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(48)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(40)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(44)&ChrW(32)&ChrW(32)&ChrW(32) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(26597)&ChrW(30475)&ChrW(35270)&ChrW(39057)&ChrW(39)&ChrW(44) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(104)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(67)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(116)&ChrW(114)&ChrW(117)&ChrW(101)&ChrW(44) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(104)&ChrW(97)&ChrW(100)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(48)&ChrW(46)&ChrW(56)&ChrW(44) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(58)&ChrW(32)&ChrW(91)&ChrW(39)&ChrW(57)&ChrW(48)&ChrW(37)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(57)&ChrW(48)&ChrW(37)&ChrW(39)&ChrW(93)&ChrW(44) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(112)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(105)&ChrW(110)&ChrW(103)&ChrW(58)&ChrW(32)&ChrW(50)&ChrW(48)&ChrW(112)&ChrW(120)&ChrW(59)&ChrW(32)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(45)&ChrW(97)&ChrW(108)&ChrW(105)&ChrW(103)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(99)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(114)&ChrW(59)&ChrW(32)&ChrW(98)&ChrW(97)&ChrW(99)&ChrW(107)&ChrW(103)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(58)&ChrW(32)&ChrW(35)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(59)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)&ChrW(32)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(34)&ChrW(39)&ChrW(32)&ChrW(43)&ChrW(32)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(32)&ChrW(43)&ChrW(32)&ChrW(39)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(114)&ChrW(111)&ChrW(108)&ChrW(115)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(109)&ChrW(97)&ChrW(120)&ChrW(45)&ChrW(119)&ChrW(105)&ChrW(100)&ChrW(116)&ChrW(104)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(37)&ChrW(59)&ChrW(32)&ChrW(109)&ChrW(97)&ChrW(120)&ChrW(45)&ChrW(104)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(32)&ChrW(56)&ChrW(48)&ChrW(118)&ChrW(104)&ChrW(59)&ChrW(34)&ChrW(32)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(109)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62)&ChrW(39) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(32) & vbcrlf
+if instr(public_layuiadminUploadPicJsCode,x)=false then
+public_layuiadminUploadPicJsCode=public_layuiadminUploadPicJsCode & x
+end if
+elseif s=ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110) then
+x=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(19979)&ChrW(36733)&ChrW(25991)&ChrW(20214) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(46)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(115)&ChrW(46)&s&ChrW(80)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(116)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(41)&ChrW(46)&ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(40)&ChrW(41)&ChrW(46)&ChrW(102)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(105)&ChrW(102)&ChrW(40)&ChrW(33)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(41)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(39)&ChrW(35831)&ChrW(20808)&ChrW(19978)&ChrW(20256)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(25991)&ChrW(20214)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(48)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(114)&ChrW(101)&ChrW(116)&ChrW(117)&ChrW(114)&ChrW(110)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(33719)&ChrW(21462)&ChrW(25991)&ChrW(20214)&ChrW(21517) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(46)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(116)&ChrW(40)&ChrW(39)&ChrW(47)&ChrW(39)&ChrW(41)&ChrW(46)&ChrW(112)&ChrW(111)&ChrW(112)&ChrW(40)&ChrW(41)&ChrW(32)&ChrW(124)&ChrW(124)&ChrW(32)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(46)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(116)&ChrW(40)&ChrW(39)&ChrW(92)&ChrW(92)&ChrW(39)&ChrW(41)&ChrW(46)&ChrW(112)&ChrW(111)&ChrW(112)&ChrW(40)&ChrW(41)&ChrW(32)&ChrW(124)&ChrW(124)&ChrW(32)&ChrW(39)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(46)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(39)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(24377)&ChrW(20986)&ChrW(30830)&ChrW(35748)&ChrW(26694) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(114)&ChrW(109)&ChrW(40)&ChrW(39)&ChrW(30830)&ChrW(35748)&ChrW(35201)&ChrW(19979)&ChrW(36733)&ChrW(25991)&ChrW(20214)&ChrW(32)&ChrW(34)&ChrW(39)&ChrW(32)&ChrW(43)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(32)&ChrW(43)&ChrW(32)&ChrW(39)&ChrW(34)&ChrW(32)&ChrW(21527)&ChrW(65311)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(51)&ChrW(44) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(19979)&ChrW(36733)&ChrW(30830)&ChrW(35748)&ChrW(39)&ChrW(44) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(91)&ChrW(39)&ChrW(30830)&ChrW(35748)&ChrW(19979)&ChrW(36733)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(21462)&ChrW(28040)&ChrW(39)&ChrW(93) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(44)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(29992)&ChrW(25143)&ChrW(28857)&ChrW(20987)&ChrW(30830)&ChrW(35748)&ChrW(19979)&ChrW(36733) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(40)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(116)&ChrW(114)&ChrW(121)&ChrW(32)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(21019)&ChrW(24314)&ChrW(38544)&ChrW(34255)&ChrW(30340)&ChrW(97)&ChrW(26631)&ChrW(31614)&ChrW(35302)&ChrW(21457)&ChrW(19979)&ChrW(36733) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(69)&ChrW(108)&ChrW(101)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(40)&ChrW(39)&ChrW(97)&ChrW(39)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(46)&ChrW(104)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(46)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(110)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(46)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(46)&ChrW(100)&ChrW(105)&ChrW(115)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)&ChrW(110)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(39)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(46)&ChrW(97)&ChrW(112)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(67)&ChrW(104)&ChrW(105)&ChrW(108)&ChrW(100)&ChrW(40)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(40)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(24310)&ChrW(36831)&ChrW(21024)&ChrW(38500)&ChrW(65292)&ChrW(30830)&ChrW(20445)&ChrW(19979)&ChrW(36733)&ChrW(24320)&ChrW(22987) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(84)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(40)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(41)&ChrW(32)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(100)&ChrW(111)&ChrW(99)&ChrW(117)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(46)&ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(46)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(111)&ChrW(118)&ChrW(101)&ChrW(67)&ChrW(104)&ChrW(105)&ChrW(108)&ChrW(100)&ChrW(40)&ChrW(108)&ChrW(105)&ChrW(110)&ChrW(107)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(44)&ChrW(32)&ChrW(49)&ChrW(48)&ChrW(48)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(39)&ChrW(24320)&ChrW(22987)&ChrW(19979)&ChrW(36733)&ChrW(25991)&ChrW(20214)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(44)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(32)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(99)&ChrW(104)&ChrW(40)&ChrW(101)&ChrW(41)&ChrW(32)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(22914)&ChrW(26524)&ChrW(97)&ChrW(26631)&ChrW(31614)&ChrW(26041)&ChrW(24335)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(20351)&ChrW(29992)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(46)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(26041)&ChrW(24335) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(46)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(40)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(39)&ChrW(24320)&ChrW(22987)&ChrW(19979)&ChrW(36733)&ChrW(25991)&ChrW(20214)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(44)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(50)&ChrW(48)&ChrW(48)&ChrW(48)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(44)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(123) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&ChrW(29992)&ChrW(25143)&ChrW(28857)&ChrW(20987)&ChrW(21462)&ChrW(28040) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(40)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(32) & vbcrlf
+if instr(public_layuiadminUploadPicJsCode,x)=false then
+public_layuiadminUploadPicJsCode=public_layuiadminUploadPicJsCode & x
+end if
+end if
+elseif y(0)=ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115) then
+q=IIF(y(2)="",j,y(2))
+c=c & handle_uploadMdbFile(y(0),y(1),a,q) 
+elseif y(0)=ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115) then
+q=IIF(y(2)="",j,y(2))
+c=c & handle_uploadMdbFile(y(0),y(1),a,q)
+end if
+
+if y(0)=ChrW(31614)&ChrW(21517) or y(0)=ChrW(25293)&ChrW(29031) then
+
+x=ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(79)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(59) & vbcrlf
+x=x&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(73)&ChrW(100)&ChrW(61)&ChrW(39)&ChrW(115)&ChrW(109)&ChrW(97)&ChrW(108)&ChrW(108)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(39)&ChrW(59)&ChrW(47)&ChrW(47)&ChrW(40664)&ChrW(35748)&ChrW(20026)&ChrW(23567)&ChrW(22270) & vbcrlf
+x=x&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(105)&ChrW(90)&ChrW(104)&ChrW(97)&ChrW(111)&ChrW(73)&ChrW(109)&ChrW(103)&ChrW(40)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(44)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(41)&ChrW(123)&ChrW(32) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(91)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&ChrW(34)&ChrW(43)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(68)&ChrW(111)&ChrW(109)&ChrW(73)&ChrW(100)&ChrW(43)&ChrW(34)&ChrW(39)&ChrW(93)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(41) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(40)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(79)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(73)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
+x=x&ChrW(125) & vbcrlf    
+if instr(public_paste_update_image_js_code,x)=false then
+public_paste_update_image_js_code=public_paste_update_image_js_code&x
+end if
+end if 
+end if
+next 
+editpage_handle_layuiadminUploadPicJsCode=c
+if left(e,8)=ChrW(99)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(115) then
+t=phptrim(mid(e,10))
+u=""
+v=""
+if t <>"" then
+h=split(t,ChrW(42))
+u=h(0)
+if ubound(h) >=1 then
+v=h(1)
+end if
+
+end if
+c=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(19978)&ChrW(20256)&ChrW(24102)&ChrW(25130)&ChrW(22270) &ChrW(32)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(32)&a&"" & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(46)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(115)&ChrW(46)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(40)&ChrW(123) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(109)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(35)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(45)&a&ChrW(39) & vbcrlf
+if u <>"" then
+if v="" then v=u
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101)&ChrW(87)&ChrW(58)&u&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(20445)&ChrW(23384)&ChrW(23485)&ChrW(24230) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101)&ChrW(72)&ChrW(58)&v&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(20445)&ChrW(23384)&ChrW(39640)&ChrW(24230) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(107)&ChrW(58)&ChrW(49)&ChrW(47)&ChrW(49)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(36873)&ChrW(21462)&ChrW(27604)&ChrW(20363)&ChrW(65306)&ChrW(78)&ChrW(97)&ChrW(78)&ChrW(32)&ChrW(34920)&ChrW(31034)&ChrW(33258)&ChrW(30001)&ChrW(35009)&ChrW(20999) & vbcrlf
+else
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(107)&ChrW(58)&ChrW(78)&ChrW(97)&ChrW(78)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(36873)&ChrW(21462)&ChrW(27604)&ChrW(20363)&ChrW(65306)&ChrW(78)&ChrW(97)&ChrW(78)&ChrW(32)&ChrW(34920)&ChrW(31034)&ChrW(33258)&ChrW(30001)&ChrW(35009)&ChrW(20999) & vbcrlf
+end if
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(97)&ChrW(58)&ChrW(39)&ChrW(57)&ChrW(48)&ChrW(48)&ChrW(112)&ChrW(120)&ChrW(39)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(24377)&ChrW(31383)&ChrW(23485)&ChrW(24230) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(58)&ChrW(32)&ChrW(34)&ChrW(47)&ChrW(97)&ChrW(112)&ChrW(105)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(47)&ChrW(34)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(22270)&ChrW(29255)&ChrW(19978)&ChrW(20256)&ChrW(25509)&ChrW(21475)&ChrW(36820)&ChrW(22238)&ChrW(21644)&ChrW(65288)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(32)&ChrW(30340)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(32)&ChrW(27169)&ChrW(22359)&ChrW(65289)&ChrW(36820)&ChrW(22238)&ChrW(30340)&ChrW(74)&ChrW(79)&ChrW(83)&ChrW(78)&ChrW(19968)&ChrW(26679) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(44)&ChrW(100)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(58)&ChrW(32)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(41)&ChrW(123)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(19978)&ChrW(20256)&ChrW(23436)&ChrW(27605)&ChrW(22238)&ChrW(35843) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(105)&ChrW(102)&ChrW(40)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(111)&ChrW(102)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(91)&ChrW(48)&ChrW(93)&ChrW(41)&ChrW(33)&ChrW(61)&ChrW(34)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(100)&ChrW(34)&ChrW(41)&ChrW(123) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(91)&ChrW(48)&ChrW(93)&ChrW(46)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(59) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(101)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(123) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(59) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(91)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(93)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(41)&ChrW(32) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101)&ChrW(65)&ChrW(108)&ChrW(108)&ChrW(40)&ChrW(39)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(39)&ChrW(41)&ChrW(59) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(41) & vbcrlf
+else
+c=""
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(32)&g&ChrW(32)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(32)&a&"" & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(46)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(40)&ChrW(123) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(109)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(35)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(45)&a&ChrW(39)&ChrW(44) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(58)&ChrW(32)&ChrW(39)&f&ChrW(39)&ChrW(44) & vbcrlf
-
-if e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(39)&ChrW(44) & vbcrlf 
-c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(109)&ChrW(100)&ChrW(98)&ChrW(39)&ChrW(44) & vbcrlf
-elseif e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(39)&ChrW(44) & vbcrlf
-c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(39)&ChrW(44) & vbcrlf
-elseif e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(74)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(88)&ChrW(109)&ChrW(108)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(39)&ChrW(44) & vbcrlf
-c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(115)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(116)&ChrW(120)&ChrW(116)&ChrW(124)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(124)&ChrW(120)&ChrW(109)&ChrW(108)&ChrW(39)&ChrW(44) & vbcrlf 
-end if
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(39)&ChrW(44) & vbcrlf & r
 if i <>"" then
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(105)&ChrW(122)&ChrW(101)&ChrW(58)&ChrW(32)&i&ChrW(44) & vbcrlf
 end if
@@ -594,69 +778,72 @@ c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(105)&ChrW(102)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(33)&ChrW(61)&ChrW(48)&ChrW(41)&ChrW(123)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(50)&ChrW(125)&ChrW(41)&ChrW(59)&ChrW(32) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(101)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(123) & vbcrlf
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(101)&ChrW(114)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(44)&ChrW(32)&ChrW(123)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(58)&ChrW(32)&ChrW(49)&ChrW(125)&ChrW(41)&ChrW(59)&ChrW(32) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(105)&ChrW(102)&ChrW(40)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(111)&ChrW(102)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(91)&ChrW(48)&ChrW(93)&ChrW(41)&ChrW(33)&ChrW(61)&ChrW(34)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(100)&ChrW(34)&ChrW(41)&ChrW(123) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(91)&ChrW(48)&ChrW(93)&ChrW(46)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(59) & vbcrlf 
 
-if e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) and j <>"" then
+if e=ChrW(109)&ChrW(100)&ChrW(98) and j <>"" then
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(91)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&j&ChrW(39)&ChrW(93)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(91)&ChrW(48)&ChrW(93)&ChrW(46)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(41)&ChrW(32) & vbcrlf
 end if
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(101)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(123) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(61)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(59) & vbcrlf
+
+if e=ChrW(109)&ChrW(100)&ChrW(98) and j <>"" then
+c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(91)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&j&ChrW(39)&ChrW(93)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(114)&ChrW(101)&ChrW(115)&ChrW(46)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(46)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(41)&ChrW(32) & vbcrlf
+end if
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(36)&ChrW(40)&ChrW(116)&ChrW(104)&ChrW(105)&ChrW(115)&ChrW(46)&ChrW(105)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(41)&ChrW(46)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(40)&ChrW(34)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(99)&ChrW(104)&ChrW(105)&ChrW(108)&ChrW(100)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(41) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(36)&ChrW(40)&ChrW(34)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(91)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(93)&ChrW(34)&ChrW(41)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(40)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(83)&ChrW(114)&ChrW(99)&ChrW(41)&ChrW(32)&ChrW(47)&ChrW(47)&ChrW(29992)&ChrW(19979)&ChrW(38754)&ChrW(36825)&ChrW(31181)&ChrW(65292)&ChrW(22240)&ChrW(20026)&ChrW(26377)&ChrW(27880)&ChrW(37322)&ChrW(30340)&ChrW(35805)&ChrW(65292)&ChrW(19978)&ChrW(38754)&ChrW(36825)&ChrW(31181)&ChrW(23601)&ChrW(19981)&ChrW(34892)&ChrW(39) & vbcrlf 
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125) & vbcrlf
 c=c&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(125)&ChrW(41)&ChrW(59) & vbcrlf
-public_layuiadminUploadPicJsCode=public_layuiadminUploadPicJsCode&c
-
-c =cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(45)&a&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(105)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(105)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(62)&ChrW(38)&ChrW(35)&ChrW(120)&ChrW(101)&ChrW(54)&ChrW(55)&ChrW(99)&ChrW(59)&ChrW(60)&ChrW(47)&ChrW(105)&ChrW(62)&g&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(62)&vbcrlf&cfg_tabAdd1&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(45)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(112)&ChrW(116)&ChrW(61)&ChrW(34)&ChrW(34)&ChrW(32)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(62)&vbcrlf
-if e=ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)  then
-c=c & handle_uploadMdbFile(k)
-c=c & handle_uploadMdbFile(l) 
-
-
-elseif e <>ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) and e <>ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(84)&ChrW(120)&ChrW(116)&ChrW(74)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(88)&ChrW(109)&ChrW(108)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101) then
-c=c & cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(45)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(61)&ChrW(34)&ChrW(97)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(80)&ChrW(114)&ChrW(101)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(34)&ChrW(62)&ChrW(26597)&ChrW(30475)&ChrW(22270)&ChrW(29255)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(62)&vbcrlf
 end if
-editpage_handle_layuiadminUploadPicJsCode=c
+public_layuiadminUploadPicJsCode=public_layuiadminUploadPicJsCode&c
 end function
 
-function handle_uploadMdbFile(a)
-dim b,c,d
-if instr(a,ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115))>0 then
-c=split(a&ChrW(61)&ChrW(26597)&ChrW(30475)&ChrW(23494)&ChrW(30721),ChrW(61))
-d=cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(62)&c(1)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(62) & vbcrlf
-b=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(69)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(102)&ChrW(92)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-if instr(public_editPage_add_elseif_asp,b)=false then              
-public_editPage_add_elseif_asp=public_editPage_add_elseif_asp & b & vbcrlf
+function handle_uploadMdbFile(a,b,c,d)
+dim e,f
+if b="" then b=a
+if a=ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115) then 
+f=cfg_tabAdd1&ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&c&ChrW(45)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(62) & vbcrlf
+e=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(69)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(102)&ChrW(92)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+if instr(public_editPage_add_elseif_asp,e)=false then              
+public_editPage_add_elseif_asp=public_editPage_add_elseif_asp & e & vbcrlf
 end if 
-b=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(74)&ChrW(83)&ChrW(95)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(92)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-if instr(public_editPage_jsCode,b)=false then              
-public_editPage_jsCode=public_editPage_jsCode & b & vbcrlf
+e=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(74)&ChrW(83)&ChrW(95)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(92)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+e=replace(e,ChrW(39)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(105)&ChrW(112)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(39),ChrW(39)&c&ChrW(39))
+e=replace(e,ChrW(39)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39),ChrW(39)&d&ChrW(39))
+e=replace(e,ChrW(39)&ChrW(35)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39),ChrW(39)&ChrW(35)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&c&ChrW(45)&ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39))
+if instr(public_editPage_jsCode,e)=false then              
+public_editPage_jsCode=public_editPage_jsCode & e & vbcrlf
 end if 
-b=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(92)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(80)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(83)&ChrW(97)&ChrW(102)&ChrW(101)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-if instr(public_editPage_asp_function,b)=false then              
-public_editPage_asp_function=public_editPage_asp_function & b & vbcrlf
-end if 
-end if
-if instr(a,ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115))>0 then            
-c=split(a&ChrW(61)&ChrW(20462)&ChrW(25913)&ChrW(23494)&ChrW(30721),ChrW(61))
-d=cfg_tabAdd1& ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(62)&c(1)&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(62)&vbcrlf
-b=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(69)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(102)&ChrW(92)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-if instr(public_editPage_add_elseif_asp,b)=false then              
-public_editPage_add_elseif_asp=public_editPage_add_elseif_asp & b & vbcrlf
-end if 
-b=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(74)&ChrW(83)&ChrW(95)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(92)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-if instr(public_editPage_jsCode,b)=false then              
-public_editPage_jsCode=public_editPage_jsCode & b & vbcrlf
-end if 
-b=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(92)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(80)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(83)&ChrW(97)&ChrW(102)&ChrW(101)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
-if instr(public_editPage_asp_function,b)=false then              
-public_editPage_asp_function=public_editPage_asp_function & b & vbcrlf
+e=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(92)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(80)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(83)&ChrW(97)&ChrW(102)&ChrW(101)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+if instr(public_editPage_asp_function,e)=false then              
+public_editPage_asp_function=public_editPage_asp_function & e & vbcrlf
 end if 
 end if
-handle_uploadMdbFile=d
+if a=ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115) then            
+f=cfg_tabAdd1& ChrW(60)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&c&ChrW(45)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(34)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(112)&ChrW(114)&ChrW(105)&ChrW(109)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(117)&ChrW(116)&ChrW(116)&ChrW(111)&ChrW(110)&ChrW(32)&ChrW(62)&vbcrlf
+e=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(69)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(102)&ChrW(92)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+if instr(public_editPage_add_elseif_asp,e)=false then              
+public_editPage_add_elseif_asp=public_editPage_add_elseif_asp & e & vbcrlf
+end if 
+e=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(80)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(74)&ChrW(83)&ChrW(95)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(92)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+if instr(e,ChrW(39)&ChrW(35)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39))=false then
+call eerr(ChrW(25552)&ChrW(31034),ChrW(39)&ChrW(35)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39)&ChrW(19981)&ChrW(23384)&ChrW(22312)&ChrW(65292)&ChrW(20026)&ChrW(20160)&ChrW(20040))
+end if
+e=replace(e,ChrW(39)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(105)&ChrW(112)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(39),ChrW(39)&c&ChrW(39))
+e=replace(e,ChrW(39)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39),ChrW(39)&d&ChrW(39))
+e=replace(e,ChrW(39)&ChrW(35)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39),ChrW(39)&ChrW(35)&ChrW(98)&ChrW(116)&ChrW(110)&ChrW(45)&c&ChrW(45)&ChrW(101)&ChrW(100)&ChrW(105)&ChrW(116)&ChrW(45)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(39))
+if instr(public_editPage_jsCode,e)=false then              
+public_editPage_jsCode=public_editPage_jsCode & e & vbcrlf
+end if 
+e=readfile(ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(92)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(99)&ChrW(107)&ChrW(77)&ChrW(100)&ChrW(98)&ChrW(80)&ChrW(111)&ChrW(115)&ChrW(105)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(83)&ChrW(97)&ChrW(102)&ChrW(101)&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116),ChrW(117)&ChrW(116)&ChrW(102)&ChrW(45)&ChrW(56))
+if instr(public_editPage_asp_function,e)=false then              
+public_editPage_asp_function=public_editPage_asp_function & e & vbcrlf
+end if 
+end if
+handle_uploadMdbFile=f
 end function
 
 function editpage_colorpickerJS(a,b)

@@ -307,6 +307,7 @@ body{padding:10px 6px 30px 6px;background: #FFF}
 <option value="">≡ 选择搜索字段 ≡</option>
 <option value="title">标题title</option>
 <option value="fieldtitle">字段标题(fieldtitle)</option>
+<option value="fieldtype">字段类型(fieldtype)</option>
 </select>
 </div>
 <div class="layui-inline">

@@ -225,7 +225,7 @@ end function
 </div><!--logo-->
 <button type="button" class="layui-btn layui-btn-primary" id="upload-logo"><i class="layui-icon">&#xe67c;</i>上传图片</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
-<button type="button" class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button >
+<button type="button" class="layui-btn layui-btn-primary" layadmin-event="imgPreview">查看图片</button >
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>Logo(大)</label>
@@ -234,7 +234,7 @@ end function
 </div><!--biglogo-->
 <button type="button" class="layui-btn layui-btn-primary" id="upload-biglogo"><i class="layui-icon">&#xe67c;</i>上传图片</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
-<button type="button" class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button >
+<button type="button" class="layui-btn layui-btn-primary" layadmin-event="imgPreview">查看图片</button >
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>二维码</label>
@@ -243,7 +243,7 @@ end function
 </div><!--qrcode-->
 <button type="button" class="layui-btn layui-btn-primary" id="upload-qrcode"><i class="layui-icon">&#xe67c;</i>上传图片</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
-<button type="button" class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button >
+<button type="button" class="layui-btn layui-btn-primary" layadmin-event="imgPreview">查看图片</button >
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>网站域名</label>
@@ -385,15 +385,15 @@ layui.config({
 base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
 index: 'lib/index' //主入口模块
-}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer'], function() {
+}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer','croppers'], function() {
 var $ = layui.$,
 form = layui.form,
 upload = layui.upload,
 laydate = layui.laydate,
-colorpicker = layui.colorpicker;
+colorpicker = layui.colorpicker; 
 var a = (layui.laytpl, layui.setter, layui.view, layui.admin);
 //查看图片
-a.events.avartatPreview = function(t) { 
+a.events.imgPreview = function(t) { 
 var i = $(this).parent().find("input").val();
 layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
 } 
@@ -401,10 +401,13 @@ layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shad
 upload.render({
 elem: '#upload-logo',
 url: '/api/upload/',
+accept: 'file',
+exts: 'bmp|gif|jpg|jpeg|png|webp',
 done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 }else{
@@ -419,10 +422,13 @@ $("input[name='logo']").val(imgSrc) //用下面这种，因为有注释的话，
 upload.render({
 elem: '#upload-biglogo',
 url: '/api/upload/',
+accept: 'file',
+exts: 'bmp|gif|jpg|jpeg|png|webp',
 done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 }else{
@@ -437,10 +443,13 @@ $("input[name='biglogo']").val(imgSrc) //用下面这种，因为有注释的话
 upload.render({
 elem: '#upload-qrcode',
 url: '/api/upload/',
+accept: 'file',
+exts: 'bmp|gif|jpg|jpeg|png|webp',
 done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 }else{

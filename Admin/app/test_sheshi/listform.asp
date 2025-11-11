@@ -7,7 +7,7 @@ dim tableName,winTitle
 dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(115)&ChrW(104)&ChrW(101)&ChrW(115)&ChrW(104)&ChrW(105)
 winTitle = ChrW(30465)&ChrW(24066)&ChrW(20998)&ChrW(31867)
-excludeAdminIDLIst=ChrW(48)
+excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
 dim msg,isTrue,sql,addSql,id,parentid,columnname,columnenname,sortrank,bodycontent,isthrough
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 parentid=getStrToNumber(request(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100)))
@@ -207,18 +207,12 @@ layui.config({
 base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
 index: 'lib/index' //主入口模块
-}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer'], function() {
+}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer','croppers'], function() {
 var $ = layui.$,
 form = layui.form,
 upload = layui.upload,
 laydate = layui.laydate,
-colorpicker = layui.colorpicker;
-var a = (layui.laytpl, layui.setter, layui.view, layui.admin);
-//查看图片
-a.events.avartatPreview = function(t) { 
-var i = $(this).parent().find("input").val();
-layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
-} 
+colorpicker = layui.colorpicker; 
 })
 // pasteImage("pic");
 // 配置 nprogress 的基本选项（可选）  

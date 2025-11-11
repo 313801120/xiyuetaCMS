@@ -235,7 +235,7 @@ end function
 function checkMdbPositionSafe(a)
 dim b
 checkMdbPositionSafe=true
-if userrs(ChrW(108)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(108))=1 then
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))=-999 then
 exit function
 end if    
 b=phptrim(lcase(handlePath(a)))
@@ -243,7 +243,7 @@ if instr(b,ChrW(92)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&C
 
 checkMdbPositionSafe=false
 end if
-end function
+end function 
 %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -508,10 +508,10 @@ end function
 <div class='layui-input-inline layui-input-wrap'>
 <input type='text' name='databaseippath' placeholder='请输入数据库' autocomplete='off' class='layui-input' value="<%=inputCL(databaseippath)%>" >
 </div><!--databaseippath-->
-<button type="button" class="layui-btn layui-btn-primary" id="upload-databaseippath"><i class="layui-icon">&#xe67c;</i>上传Access文件</button>
+<button type="button" class="layui-btn layui-btn-primary" id="upload-databaseippath"><i class="layui-icon">&#xe67c;</i>上传Access数据库</button>
 <input class="layui-upload-file" type="file" accept="" name="file">
-<button type="button" id="btn-view-pass" class="layui-btn layui-btn-primary">查看Access密码</button >
-<button type="button" id="btn-edit-pass" class="layui-btn layui-btn-primary">修改Access密码</button >
+<button type="button" id="btn-databaseippath-view-pass" class="layui-btn layui-btn-primary">查看access密码</button >
+<button type="button" id="btn-databaseippath-edit-pass" class="layui-btn layui-btn-primary">修改access密码</button >
 </div>
 <div class='layui-form-item' id="databasename">
 <label class='layui-form-label'>数据库名</label>
@@ -547,22 +547,16 @@ layui.config({
 base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
 index: 'lib/index' //主入口模块
-}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer'], function() {
+}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer','croppers'], function() {
 var $ = layui.$,
 form = layui.form,
 upload = layui.upload,
 laydate = layui.laydate,
-colorpicker = layui.colorpicker;
-var a = (layui.laytpl, layui.setter, layui.view, layui.admin);
-//查看图片
-a.events.avartatPreview = function(t) { 
-var i = $(this).parent().find("input").val();
-layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
-} 
-// 上传Access文件 for databaseippath
+colorpicker = layui.colorpicker; 
+// 上传Access数据库 for databaseippath
 upload.render({
 elem: '#upload-databaseippath',
-url: '/api/upload/upload_access.asp',
+url: '/api/upload/?act=mdb',
 accept: 'file',
 exts: 'mdb',
 size: 10485760,
@@ -570,11 +564,13 @@ done: function(res) {
 if(res.code!=0){              
 layer.msg(res.msg, {icon: 2}); 
 }else{
+layer.msg(res.msg, {icon: 1}); 
 if(typeof(res.data[0])!="undefined"){
 var imgSrc=res.data[0].src;
 $("input[name='databasepass']").val(res.data[0].pass) 
 }else{
 var imgSrc=res.data.src;
+$("input[name='databasepass']").val(res.data.pass) 
 }
 //$(this.item).prev("div").children("input").val(imgSrc)
 $("input[name='databaseippath']").val(imgSrc) //用下面这种，因为有注释的话，上面这种就不行'
@@ -649,7 +645,7 @@ var currentType = $('#databasetype').val();
 toggleDatabaseFields(currentType);
 });
 // 查看密码：带上 databaseippath 请求服务器
-$('#btn-view-pass').on('click', function(){
+$('#btn-databaseippath-view-pass').on('click', function(){
 var dbPath = $("input[name='databaseippath']").val();
 if(!dbPath){
 layer.msg('请先填写或选择 Access 数据库路径', {icon: 0});
@@ -680,7 +676,7 @@ layer.msg('请求失败，请重试');
 });
 });
 // 修改密码：弹窗输入后提交到服务器
-$('#btn-edit-pass').on('click', function(){
+$('#btn-databaseippath-edit-pass').on('click', function(){
 var dbPath = $("input[name='databaseippath']").val();
 if(!dbPath){
 layer.msg('请先填写或选择 Access 数据库路径', {icon: 0});

@@ -118,18 +118,12 @@ layui.config({
 base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
 index: 'lib/index' //主入口模块
-}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer'], function() {
+}).use(['index', 'form', 'upload', 'laydate','layedit','tinymce','colorpicker','rate','transfer','croppers'], function() {
 var $ = layui.$,
 form = layui.form,
 upload = layui.upload,
 laydate = layui.laydate,
-colorpicker = layui.colorpicker;
-var a = (layui.laytpl, layui.setter, layui.view, layui.admin);
-//查看图片
-a.events.avartatPreview = function(t) { 
-var i = $(this).parent().find("input").val();
-layui.layer.photos({ photos: { title: "查看图片", data: [{ src: i }] }, shade: .01, closeBtn: 1, anim: 5 })
-} 
+colorpicker = layui.colorpicker; 
 //{编辑页上传图片JS块}
 //{编辑器JS代码}
 //{编辑页颜色选择器JS块}

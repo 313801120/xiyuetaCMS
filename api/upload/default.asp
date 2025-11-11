@@ -1,76 +1,20 @@
 ﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
-'官方网站：www.xiyueta.com   QQ：313801120%><%@LANGUAGE=ChrW(86)&ChrW(66)&ChrW(83)&ChrW(67)&ChrW(82)&ChrW(73)&ChrW(80)&ChrW(84) CODEPAGE=ChrW(54)&ChrW(53)&ChrW(48)&ChrW(48)&ChrW(49)%>
+'官方网站：www.xiyueta.com   QQ：313801120%> <!--#include file="upload_function.asp"-->
 <%
-Server.ScriptTimeOut=5000
-Response.AddHeader ChrW(67)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(84)&ChrW(121)&ChrW(112)&ChrW(101), ChrW(97)&ChrW(112)&ChrW(112)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)
-%>
-<!--#include file="UpLoadClass.asp"-->
-<%
-
-
-
-dim request2,formPath,formName,intCount,intTemp,act,newfilePath
-act=request(ChrW(97)&ChrW(99)&ChrW(116))
-
-set request2=new UpLoadClass
-
-request2.FileType=ChrW(98)&ChrW(109)&ChrW(112)&ChrW(47)&ChrW(103)&ChrW(105)&ChrW(102)&ChrW(47)&ChrW(106)&ChrW(112)&ChrW(103)&ChrW(47)&ChrW(112)&ChrW(110)&ChrW(103)&ChrW(47)&ChrW(106)&ChrW(112)&ChrW(101)&ChrW(103)&ChrW(47)&ChrW(114)&ChrW(97)&ChrW(114)&ChrW(47)&ChrW(122)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(109)&ChrW(112)&ChrW(52)
-
-request2.SavePath=ChrW(46)&ChrW(46)&ChrW(47)&ChrW(46)&ChrW(46)&ChrW(47)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(47)
-
-request2.Charset=ChrW(85)&ChrW(84)&ChrW(70)&ChrW(45)&ChrW(56)
-
-request2.Open() 
-
-intCount=0
-for intTemp=1 to Ubound(request2.FileItem)
-
-formName=request2.FileItem(intTemp)
-
-file_path=request2.form(formName&ChrW(95)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))
-file_name=request2.form(formName&ChrW(95)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))
-
-file_size=request2.form(formName&ChrW(95)&ChrW(83)&ChrW(105)&ChrW(122)&ChrW(101))
-file_error=request2.form(formName&ChrW(95)&ChrW(69)&ChrW(114)&ChrW(114))
-file_msg=Error2Info(request2.form(formName&ChrW(95)&ChrW(69)&ChrW(114)&ChrW(114)))
-if file_url <>"" then file_url=file_url&ChrW(44)
-
-newfilePath=ChrW(47)&ChrW(85)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(70)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(105)&ChrW(109)&ChrW(103)&ChrW(47)&formPath&request2.form(formName)
-file_url=file_url&ChrW(123)&ChrW(34)&ChrW(115)&ChrW(114)&ChrW(99)&ChrW(34)&ChrW(58)&ChrW(34)& newfilePath &ChrW(34)&ChrW(44)&ChrW(34)&ChrW(102)&ChrW(117)&ChrW(108)&ChrW(108)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(34)&ChrW(58)&ChrW(34)& webDoMain & newfilePath &ChrW(34)&ChrW(44)&ChrW(34)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(34)& request2.form(formName) &ChrW(34)&ChrW(125)
-if request2.form(formName&ChrW(95)&ChrW(69)&ChrW(114)&ChrW(114))=0 then intCount=intCount+1
-next
-if act=ChrW(111)&ChrW(110)&ChrW(101) then
-str=ChrW(123)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&file_msg&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(32)&file_url&ChrW(125)
+if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(116)&ChrW(120)&ChrW(116) then
+call loadUpload(false,ChrW(116)&ChrW(120)&ChrW(116),ChrW(116)&ChrW(120)&ChrW(116),1)  
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(116)&ChrW(120)&ChrW(116)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(120)&ChrW(109)&ChrW(108) then
+call loadUpload(false,ChrW(116)&ChrW(120)&ChrW(116),ChrW(116)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(47)&ChrW(120)&ChrW(109)&ChrW(108),1) 
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(109)&ChrW(100)&ChrW(98) then
+call loadUpload(false,ChrW(109)&ChrW(100)&ChrW(98),ChrW(109)&ChrW(100)&ChrW(98),1)  
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(120)&ChrW(108)&ChrW(115) then
+call loadUpload(false,ChrW(120)&ChrW(108)&ChrW(115),ChrW(120)&ChrW(108)&ChrW(115)&ChrW(47)&ChrW(120)&ChrW(108)&ChrW(115)&ChrW(120),1)  
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111) then
+call loadUpload(false,ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(111),ChrW(109)&ChrW(112)&ChrW(52)&ChrW(47)&ChrW(109)&ChrW(111)&ChrW(118),1)  
+elseif request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(122)&ChrW(105)&ChrW(112) then
+call loadUpload(false,ChrW(122)&ChrW(105)&ChrW(112),ChrW(122)&ChrW(105)&ChrW(112)&ChrW(47)&ChrW(114)&ChrW(97)&ChrW(114),1) 
 else
-str=ChrW(123)&ChrW(34)&ChrW(115)&ChrW(116)&ChrW(97)&ChrW(116)&ChrW(117)&ChrW(115)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&file_error&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(34)&file_msg&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(32)&ChrW(91)&file_url&ChrW(93)&ChrW(125)
+
+call loadUpload(false,ChrW(105)&ChrW(109)&ChrW(103),ChrW(109)&ChrW(112)&ChrW(47)&ChrW(103)&ChrW(105)&ChrW(102)&ChrW(47)&ChrW(106)&ChrW(112)&ChrW(103)&ChrW(47)&ChrW(106)&ChrW(112)&ChrW(101)&ChrW(103)&ChrW(47)&ChrW(112)&ChrW(110)&ChrW(103)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(112),1)  
 end if
-if request.QueryString(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(109)&ChrW(100) then
-response.Write mdstr  
-else
-response.Write str  
-end if  
-
-set request2=nothing
-
-function getPort()
-dim a 
-a = CStr(request.serverVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(80)&ChrW(79)&ChrW(82)&ChrW(84))) 
-if a <> ChrW(56)&ChrW(48) and a <> ChrW(56)&ChrW(48)&ChrW(56)&ChrW(48) and a <> ChrW(52)&ChrW(52)&ChrW(51) and a <>"" then
-a = ChrW(58) & a 
-else
-a = "" 
-end if 
-getPort = a 
-end function 
-function getHttpOrHttps()
-if CStr(request.serverVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(80)&ChrW(79)&ChrW(82)&ChrW(84)))  =ChrW(52)&ChrW(52)&ChrW(51) then
-getHttpOrHttps = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(115)&ChrW(58)&ChrW(47)&ChrW(47) 
-else
-getHttpOrHttps = ChrW(104)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(58)&ChrW(47)&ChrW(47) 
-end if 
-end function
-
-function webDoMain()
-webDoMain=getHttpOrHttps() &  request.serverVariables(ChrW(83)&ChrW(69)&ChrW(82)&ChrW(86)&ChrW(69)&ChrW(82)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)) & getPort()  
-end function 
 %>

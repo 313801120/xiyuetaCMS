@@ -17,7 +17,7 @@ layui.config({
         "            </label>\n" +
         "            <input class=\"layui-upload-file\" id=\"cropper_avatarImgUpload\" type=\"file\" value=\"选择图片\" name=\"file\">\n" +
         "        </div>\n" +
-        "        <div class=\"layui-form-mid layui-word-aux\">头像的尺寸限定150x150px,大小在50kb以内(<font color=red>可直接粘贴图片</font>)</div>\n" +
+        "        <div class=\"layui-form-mid layui-word-aux\"><span class=\"cropper-tip-text\">头像的尺寸限定150x150px,大小在50kb以内</span><span style=\"margin-left:8px;color:#FF5722;\">(可直接粘贴图片)</span></div>\n" +
         "    </div>\n" +
         "    <div class=\"layui-row layui-col-space15\">\n" +
         "        <div class=\"layui-col-xs9\">\n" +
@@ -55,7 +55,10 @@ layui.config({
         "</div>";
     var obj = {
         render: function(e){
-            $('body').append(html);
+            // 仅注入一次模板，避免多处调用重复插入导致ID/Class冲突
+            if ($('.showImgEdit').length === 0) {
+                $('body').append(html);
+            }
             var self = this,
                 elem = e.elem,
                 saveW = e.saveW,
@@ -71,6 +74,20 @@ layui.config({
                 ,file = $(".showImgEdit input[name='file']")
                 , options = {aspectRatio: mark,preview: preview,viewMode:1};
 
+            // 根据传入配置或默认规则设置提示文本
+            var defaultTip;
+            if (typeof mark === 'number' && !isNaN(mark)) {
+                if (saveW && saveH) {
+                    defaultTip = "头像的尺寸限定" + saveW + "x" + saveH + "px,大小在50kb以内";
+                } else {
+                    defaultTip = "按固定比例裁切，建议控制图片大小在50kb以内";
+                }
+            } else {
+                defaultTip = "自由裁切，保存按选区尺寸输出，建议控制图片大小在50kb以内";
+            }
+            var tipText = e.tip || defaultTip;
+            content.find('.cropper-tip-text').text(tipText);
+
             $(elem).on('click',function () {
                 layer.open({
                     type: 1
@@ -85,7 +102,8 @@ layui.config({
                     }
                 });
             });
-            $(".layui-btn").on('click',function () {
+            // 事件改为作用域绑定，避免影响全局其它 .layui-btn
+            content.on('click',"[cropper-event]",function () {
                 var event = $(this).attr("cropper-event");
                 //监听确认保存图像
                 if(event === 'confirmSave'){
@@ -136,16 +154,15 @@ layui.config({
                 }else if(event === 'zoomsmall'){ 
                     image.cropper('zoom',-0.1);
                 }
-                //文件选择
-                file.change(function () {
-                    var r= new FileReader();
-                    var f=this.files[0];
-                    r.readAsDataURL(f);
-                    r.onload=function (e) {
-                        // console.log('this.result',this.result)
-                        image.cropper('destroy').attr('src', this.result).cropper(options);
-                    }; 
-                });
+            });
+            // 文件选择（作用域绑定，防重复绑定）
+            content.off('change', "input[name='file']").on('change', "input[name='file']", function () {
+                var r= new FileReader();
+                var f=this.files[0];
+                r.readAsDataURL(f);
+                r.onload=function (e) {
+                    image.cropper('destroy').attr('src', r.result).cropper(options);
+                };
             });
         }
 

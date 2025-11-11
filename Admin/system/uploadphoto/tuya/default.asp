@@ -100,10 +100,10 @@ border: 0;
 <![endif]-->
 </head>
 <body>
-<div id="head">
+<!-- <div id="head"> -->
 <!-- <a href="home.html" data-ajax="false" style="left: 12px;">主页</a> -->
-<span style="font-weight: bolder;">涂鸦</span>
-</div>
+<!-- <span style="font-weight: bolder;">涂鸦</span> -->
+<!-- </div> -->
 <div class="htmleaf-container">
 <div id="main_content_wrap" class="outer">
 <section id="main_content" class="inner">
@@ -119,7 +119,7 @@ border: 0;
 </div>
 <!-- <button id="recover-button" onclick="recover()">预览</button> -->
 <button id="b3" onclick="animateSketchpad()">欣赏</button>
-<button id="recover-button" onclick="restore()">保存</button>
+<button id="recover-button" onclick="restore()">上传</button>
 <!-- <button id="recover-button" onclick="loadTuYa()">加载</button> -->
 </div>
 </section>
@@ -128,8 +128,7 @@ border: 0;
 <script>
 window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')
 </script>
-<script src="js/sketchpad.js?v12"></script>
-<script src="../../../layuiadmin/layui/layui.all.js"></script>
+<script src="js/sketchpad.js?v12"></script> 
 <script type="text/javascript">
 var sketchpad;
 $(document).ready(function() {
@@ -185,14 +184,7 @@ data: { "id": id,
 "picdata":convertCanvasToImage(document.getElementById("sketchpad"))
 },
 success: function(data) {
-// alert(data.msg)
-// layer.open({
-//   title: '提示'
-//   ,content: '保存成功',
-//   icon:1
-// });    
-window.parent.getPaiZhaoImg(data.pic);//执行父窗体动作
-layer.msg('<font color=#000>保存成功</font>', {icon: 1});
+window.parent.getPaiZhaoImg(data.pic,"保存签名成功!");//执行父窗体动作
 }
 });
 }

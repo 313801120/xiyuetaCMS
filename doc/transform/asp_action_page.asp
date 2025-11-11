@@ -102,7 +102,7 @@ end function
 
 function getLayoutTableAction(a)
 dim b,c,d,e,f,g,h,i,j,k,l,m,n,o,p
-dim q 
+dim q,r
 k=30
 
 b = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&addPrefix(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(102)&ChrW(105)&ChrW(103))&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(49)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(115)&ChrW(104)&ChrW(111)&ChrW(119)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(61)&ChrW(49)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(95)&ChrW(105)&ChrW(100)&ChrW(61)&a(ChrW(105)&ChrW(100)) & ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99)
@@ -190,6 +190,10 @@ while not rst.eof
 b = ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&addPrefix(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100))&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(49)&ChrW(32)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&rst(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(95)&ChrW(105)&ChrW(100))
 rsd.open b,thisConn,1,1
 if not rsd.eof then  
+if phptrim(rst(ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(114)&ChrW(108)))="" then
+r=ChrW(34920)&this_TableName&ChrW(44)&ChrW(23383)&ChrW(27573) & rsd(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)) & ChrW(28857)&ChrW(20987)&ChrW(24320)&ChrW(21551)&ChrW(65292)&ChrW(20294)&ChrW(27809)&ChrW(26377)&ChrW(37197)&ChrW(32622)
+call echoRedB(ChrW(101)&ChrW(114)&ChrW(114)&ChrW(111)&ChrW(114)&ChrW(25552)&ChrW(31034)&r,ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62)&ChrW(97)&ChrW(108)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(40)&ChrW(39)&r&ChrW(39)&ChrW(41)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62))
+else
 
 g=g&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&IIF(g <>"",ChrW(125)&ChrW(101)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(32),"")&ChrW(105)&ChrW(102)&ChrW(32)&ChrW(40)&ChrW(111)&ChrW(98)&ChrW(106)&ChrW(46)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(61)&ChrW(61)&ChrW(61)&ChrW(32)&ChrW(39)&ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(95)& lcase(rsd(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))&ChrW(39)&ChrW(41)&ChrW(32)&ChrW(123)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(47)&ChrW(47) & rsd(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)) & vbcrlf
 o=ChrW(39)&rsd(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))&ChrW(39)
@@ -205,10 +209,14 @@ if l(0) <>"" then m=l(0)
 if l(1) <>"" then o=replace(l(1),ChrW(42),rsd(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)))
 n=l(2)
 end if
+call echo(ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101),rsd(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)))
+call echo(ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(114)&ChrW(108),rst(ChrW(99)&ChrW(108)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(117)&ChrW(114)&ChrW(108)))
+doevents
 if l(0)=ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107) then
 g=g&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(119)&ChrW(105)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(119)&ChrW(46)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(110)&ChrW(40)&n&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(95)&ChrW(98)&ChrW(108)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(39)&ChrW(41)&ChrW(59) & vbcrlf 
 else
 g=g&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&m&ChrW(40)&o&ChrW(44)&ChrW(32)&n&ChrW(41)&ChrW(32)&ChrW(32)&ChrW(32) & vbcrlf
+end if
 end if
 end if:rsd.close
 rst.movenext:wend 
@@ -600,18 +608,28 @@ function openUseDatabase()
 dim a,b,c
 if rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(80)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)) <>"" then 
 a=split(rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(80)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)),ChrW(46))    
+
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)) <>-999 then 
 c=ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32) & db_PREFIX & ChrW(65)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(32)&ChrW(87)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)& session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100))
 call echo(ChrW(115)&ChrW(113)&ChrW(108),c):doevents
 userRs.open c,conn,1,1
 if userRs.eof then
-call eerr(ChrW(25552)&ChrW(31034),ChrW(38656)&ChrW(35201)&ChrW(30331)&ChrW(24405)&ChrW(21518)&ChrW(38754)&ChrW(65281))
-end if 
-if userRs(ChrW(108)&ChrW(101)&ChrW(118)&ChrW(101)&ChrW(108)) <>1 then 
+call eerr(ChrW(25552)&ChrW(31034),ChrW(38656)&ChrW(35201)&ChrW(30331)&ChrW(24405)&ChrW(21518)&ChrW(38754)&ChrW(65281) & ession(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)))
+end if :userRs.close
+end if
+if session(ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)) <>-999 then 
+
+if rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))=ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115) then
 b=phptrim(lcase(handlePath(rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(80)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104))))) 
 if instr(b,ChrW(92)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(92)&ChrW(109)&ChrW(100)&ChrW(98)&ChrW(92))=false then
-call eerr(ChrW(25552)&ChrW(31034),ChrW(23548)&ChrW(20837)&ChrW(22833)&ChrW(36133)&ChrW(65306)&ChrW(23548)&ChrW(20837)&ChrW(34920)&ChrW(21040)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(20301)&ChrW(32622)&ChrW(19981)&ChrW(22312)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(109)&ChrW(100)&ChrW(98)&ChrW(47)&ChrW(37324))
+call eerr(ChrW(25552)&ChrW(31034),ChrW(23548)&ChrW(20837)&ChrW(22833)&ChrW(36133)&ChrW(65306)&ChrW(23548)&ChrW(20837)&ChrW(34920)&ChrW(21040)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(22833)&ChrW(36133)&ChrW(65292)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(20301)&ChrW(32622)&ChrW(19981)&ChrW(22312)&ChrW(47)&ChrW(117)&ChrW(112)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(100)&ChrW(102)&ChrW(105)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(47)&ChrW(109)&ChrW(100)&ChrW(98)&ChrW(47)&ChrW(37324))
 end if 
-end if:userRs.close
+else
+if phptrim(lcase(rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(105)&ChrW(112)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104))))=ChrW(108)&ChrW(111)&ChrW(99)&ChrW(97)&ChrW(108)&ChrW(104)&ChrW(111)&ChrW(115)&ChrW(116) or phptrim(rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(105)&ChrW(112)&ChrW(112)&ChrW(97)&ChrW(116)&ChrW(104)))=ChrW(49)&ChrW(50)&ChrW(55)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(48)&ChrW(46)&ChrW(49) then
+call eerr(ChrW(25552)&ChrW(31034),ChrW(23548)&ChrW(20837)&ChrW(22833)&ChrW(36133)&ChrW(65306)&ChrW(23548)&ChrW(20837)&ChrW(34920)&ChrW(21040)&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(22833)&ChrW(36133)&ChrW(65292)&rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))&ChrW(25968)&ChrW(25454)&ChrW(24211)&ChrW(19981)&ChrW(33021)&ChrW(20351)&ChrW(29992)&ChrW(26412)&ChrW(22320)&ChrW(25968)&ChrW(25454)&ChrW(24211))
+end if
+end if
+end if
 Set conn = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(67)&ChrW(111)&ChrW(110)&ChrW(110)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))
 if rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))=ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) or rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101))=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then 
 call handle_selectOpenConn(conn,rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)) ,rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(73)&ChrW(80)&ChrW(80)&ChrW(97)&ChrW(116)&ChrW(104)),rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)),rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(85)&ChrW(115)&ChrW(101)&ChrW(114)),rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)),"","")

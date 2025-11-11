@@ -325,6 +325,32 @@ while not rs.eof
 </dl>
 </li>
 <%end if%>
+<li data-name="layoutmanage" class="layui-nav-item">
+<a href="javascript:;" lay-tips="界面管理" lay-direction="2">
+<i class="layui-icon layui-icon-user"></i>
+<cite>界面管理</cite>
+</a>
+<dl class="layui-nav-child"> 
+<dd><a lay-href="app/test_layout_page/list.asp">布局页</a></dd> 
+<dd><a lay-href="app/test_layout_page_config/list.asp">布局页配置</a></dd>  
+<dd><a lay-href="app/test_layout_table_button/list.asp">表格顶部按钮</a></dd> 
+<dd><a lay-href="app/test_layout_table_action/list.asp">表格里项目动作</a></dd> 
+<dd><a lay-href="app/test_layout_table_toolbar/list.asp">表格顶部工具栏</a></dd> 
+<dd><a lay-href="app/test_layout_listPage_form/list.asp">列表页搜索表单</a></dd> 
+<dd><a lay-href="app/test_layout_action/list.asp">布局生成动作</a></dd> 
+<dd><a lay-href="app/test_layout_field/list.asp">字段配置</a></dd> </dd> 
+<dd style="padding:0; background:transparent;">
+<hr style="border:none;border-top:1px dashed #444;margin:8px 0 8px 10px;width:85%;opacity:0.5;">
+</dd>
+<dd><a lay-href="app/test_layout_database/list.asp">布局数据库</a>
+<dd><a lay-href="app/test_layout_database_table/list.asp">布局数据库表</a>
+<dd><a lay-href="app/test_layout_database_field/list.asp">布局数据库字段</a>
+<!-- 
+<dd><a lay-href="app/test_layout_cai/list.asp">采集</a>
+<dd><a lay-href="app/test_layout_cai_action/list.asp">采集动作</a>
+-->
+</dl>
+</li> 
 </ul>
 </div>
 </div>
