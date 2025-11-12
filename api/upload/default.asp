@@ -1,5 +1,4 @@
-﻿<%'严禁反编译、逆向等任何形式的破解侵权行为
-'官方网站：www.xiyueta.com   QQ：313801120%> <!--#include file="upload_function.asp"-->
+﻿ <!--#include file="upload_function.asp"-->
 <%
 if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(116)&ChrW(120)&ChrW(116) then
 call loadUpload(false,ChrW(116)&ChrW(120)&ChrW(116),ChrW(116)&ChrW(120)&ChrW(116),1)  
@@ -18,3 +17,5 @@ else
 call loadUpload(false,ChrW(105)&ChrW(109)&ChrW(103),ChrW(109)&ChrW(112)&ChrW(47)&ChrW(103)&ChrW(105)&ChrW(102)&ChrW(47)&ChrW(106)&ChrW(112)&ChrW(103)&ChrW(47)&ChrW(106)&ChrW(112)&ChrW(101)&ChrW(103)&ChrW(47)&ChrW(112)&ChrW(110)&ChrW(103)&ChrW(47)&ChrW(119)&ChrW(101)&ChrW(98)&ChrW(112),1)  
 end if
 %>
+<%'严禁反编译、逆向等任何形式的破解侵权行为
+'官方网站：www.xiyueta.com   QQ：313801120%>
