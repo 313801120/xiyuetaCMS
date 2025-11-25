@@ -355,6 +355,42 @@ Set d = c.openschema(4, Array(Empty, Empty, a, b))
 getFieldDefaltValue_Conn = d(ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(68)&ChrW(69)&ChrW(70)&ChrW(65)&ChrW(85)&ChrW(76)&ChrW(84))  
 end function
 
+function getFieldNullable(a,b)  
+getFieldNullable = getFieldNullable_Conn(a,b,conn)
+end function
+
+function getFieldNullable_Conn(a,b,c)  
+on error resume next
+Dim d 
+Set d = c.openschema(4, Array(Empty, Empty, a, b))
+if databaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+getFieldNullable_Conn = IIF(d(ChrW(73)&ChrW(83)&ChrW(95)&ChrW(78)&ChrW(85)&ChrW(76)&ChrW(76)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69))=ChrW(89)&ChrW(69)&ChrW(83),ChrW(89)&ChrW(69)&ChrW(83),ChrW(78)&ChrW(79))
+else
+getFieldNullable_Conn = IIF(d(ChrW(78)&ChrW(85)&ChrW(76)&ChrW(76)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69))=True,ChrW(89)&ChrW(69)&ChrW(83),ChrW(78)&ChrW(79))
+end if
+if Err.Number <> 0 then getFieldNullable_Conn = ChrW(78)&ChrW(79)
+end function
+
+function getFieldAutoIncrement(a,b)  
+getFieldAutoIncrement = getFieldAutoIncrement_Conn(a,b,conn)
+end function
+
+function getFieldAutoIncrement_Conn(a,b,c)  
+on error resume next
+Dim d, e
+Set d = c.openschema(4, Array(Empty, Empty, a, b))
+if databaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+e = d(ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(75)&ChrW(69)&ChrW(89))
+getFieldAutoIncrement_Conn = IIF(InStr(d(ChrW(69)&ChrW(88)&ChrW(84)&ChrW(82)&ChrW(65)),ChrW(97)&ChrW(117)&ChrW(116)&ChrW(111)&ChrW(95)&ChrW(105)&ChrW(110)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))>0,ChrW(97)&ChrW(117)&ChrW(116)&ChrW(111)&ChrW(95)&ChrW(105)&ChrW(110)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116),"")
+else
+
+e = d(ChrW(65)&ChrW(85)&ChrW(84)&ChrW(79)&ChrW(95)&ChrW(73)&ChrW(78)&ChrW(67)&ChrW(82)&ChrW(69)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84))
+if IsNull(e) then e = False
+getFieldAutoIncrement_Conn = IIF(e=True,ChrW(97)&ChrW(117)&ChrW(116)&ChrW(111)&ChrW(95)&ChrW(105)&ChrW(110)&ChrW(99)&ChrW(114)&ChrW(101)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116),"")
+end if
+if Err.Number <> 0 then getFieldAutoIncrement_Conn = ""
+end function
+
 function getTableList_Conn(a) 
 dim b, c, d 
 set d = a.openschema(20)
@@ -1264,7 +1300,69 @@ accessDataToSqlServerData=f
 end function
 
 function getTableComment(a)
+
 dim b,c,d
+dim e,f,g
+dim h,i
+
+if databaseType = ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)  then
+d=lcase(a)
+on error resume next
+
+dim j, k, l, m 
+
+
+
+
+j = Array(ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(49)&ChrW(50)&ChrW(48), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(51)&ChrW(54), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101))
+for k = 0 to UBound(j)
+Err.Clear
+set l = CreateObject(j(k))
+if Err.Number = 0 then
+Err.Clear
+set m = l.opendatabase(handlePath(MDBPath), False, True, ChrW(59)&ChrW(80)&ChrW(87)&ChrW(68)&ChrW(61) & accessPass)
+if Err.Number = 0 then
+Err.Clear
+set i = m.tabledefs(a)
+if Err.Number = 0 then
+Err.Clear
+getTableComment = i.properties(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)).Value
+if Err.Number <> 0 then getTableComment = ""
+m.close
+set i = nothing
+set m = nothing
+set l = nothing
+exit function
+end if
+m.close
+set m = nothing
+end if
+set l = nothing
+end if
+next
+Err.Clear
+
+
+getTableComment=""
+exit function
+end if
+
+if databaseType = ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+on error resume next
+d=lcase(a)
+Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+b=ChrW(83)&ChrW(69)&ChrW(76)&ChrW(69)&ChrW(67)&ChrW(84)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(67)&ChrW(79)&ChrW(77)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84)&ChrW(32)&ChrW(70)&ChrW(82)&ChrW(79)&ChrW(77)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(95)&ChrW(115)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(46)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(83)&ChrW(32)&ChrW(87)&ChrW(72)&ChrW(69)&ChrW(82)&ChrW(69)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(65)&ChrW(83)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(32)&ChrW(65)&ChrW(78)&ChrW(68)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)& replace(a,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)
+c.open b,conn,1,1
+if not c.eof then
+getTableComment=c(ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(67)&ChrW(79)&ChrW(77)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84))
+if isnull(getTableComment) then getTableComment=""
+else
+getTableComment=""
+end if
+c.close
+exit function
+end if
+
 d=lcase(a)
 Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
 b=ChrW(83)&ChrW(69)&ChrW(76)&ChrW(69)&ChrW(67)&ChrW(84)&ChrW(32)
@@ -1282,22 +1380,139 @@ c.open b,conn,1,1
 while not c.eof
 if a = lcase(c(ChrW(84)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101))) then
 getTableComment=c(ChrW(67)&ChrW(111)&ChrW(109)&ChrW(109)&ChrW(101)&ChrW(110)&ChrW(116))
+c.close
 exit function
 end if
 c.movenext:wend:c.close
+getTableComment=""
 end function
 
 function editTableComment(a,b)
 on error resume next
 dim c
+dim d,e
+dim f, g, h, i, j, k
+
+if databaseType = ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)  then
+
+f = Array(ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(49)&ChrW(50)&ChrW(48), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(51)&ChrW(54), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101))
+for g = 0 to UBound(f)
+Err.Clear
+set h = CreateObject(f(g))
+if Err.Number = 0 then
+Err.Clear
+set i = h.opendatabase(handlePath(MDBPath), False, False, ChrW(59)&ChrW(80)&ChrW(87)&ChrW(68)&ChrW(61) & accessPass)
+if Err.Number = 0 then
+Err.Clear
+set j = i.tabledefs(a)
+if Err.Number = 0 then
+Err.Clear
+j.properties(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)).Value = b
+if Err.Number <> 0 then
+
+Err.Clear
+set k = i.createproperty(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), 10, b)
+j.properties.append k
+end if
+i.close
+set j = nothing
+set i = nothing
+set h = nothing
+exit function
+end if
+i.close
+set i = nothing
+end if
+set h = nothing
+end if
+next
+Err.Clear
+
+set d=server.createobject(ChrW(97)&ChrW(100)&ChrW(111)&ChrW(120)&ChrW(46)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103))
+d.activeconnection = conn
+For each e In d.tables
+if lcase(e.name)=lcase(a) then
+call setAdoDescription(e,b)
+exit for
+end if
+Next
+set d = nothing
+exit function
+end if
+
+if databaseType = ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+on error resume next
+c=ChrW(65)&ChrW(76)&ChrW(84)&ChrW(69)&ChrW(82)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(32)&ChrW(96)& replace(a,ChrW(96),ChrW(96)&ChrW(96)) &ChrW(96)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(77)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)& replace(b,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)
+conn.execute(c)
+exit function
+end if
+
 c=ChrW(69)&ChrW(88)&ChrW(69)&ChrW(67)&ChrW(32)&ChrW(115)&ChrW(112)&ChrW(95)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(100)&ChrW(112)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(32)&ChrW(39)&ChrW(77)&ChrW(83)&ChrW(95)&ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& b &ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(100)&ChrW(98)&ChrW(111)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& a &ChrW(39)&ChrW(59) 
 conn.execute(c) 
-c=ChrW(69)&ChrW(88)&ChrW(69)&ChrW(67)&ChrW(32)&ChrW(115)&ChrW(112)&ChrW(95)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(100)&ChrW(112)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(32)&ChrW(39)&ChrW(77)&ChrW(83)&ChrW(95)&ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& b &ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(100)&ChrW(98)&ChrW(111)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& a &ChrW(39)
+c=ChrW(69)&ChrW(88)&ChrW(69)&ChrW(67)&ChrW(32)&ChrW(115)&ChrW(112)&ChrW(95)&ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(100)&ChrW(112)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(32)&ChrW(39)&ChrW(77)&ChrW(83)&ChrW(95)&ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& b &ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(100)&ChrW(98)&ChrW(111)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& a &ChrW(39) 
 conn.execute(c)
 end function
 
 function getTableFieldComment(a,b)
-dim c,d    
+on error resume next
+dim c,d
+dim e,f,g,h
+dim i, j, k, l, m, n
+
+if databaseType = ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)  then
+
+i = Array(ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(49)&ChrW(50)&ChrW(48), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(51)&ChrW(54), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101))
+for j = 0 to UBound(i)
+Err.Clear
+set k = CreateObject(i(j))
+if Err.Number = 0 then
+Err.Clear
+set l = k.opendatabase(handlePath(MDBPath), False, True, ChrW(59)&ChrW(80)&ChrW(87)&ChrW(68)&ChrW(61) & accessPass)
+if Err.Number = 0 then
+Err.Clear
+set m = l.tabledefs(a)
+if Err.Number = 0 then
+Err.Clear
+set n = m.fields(b)
+if Err.Number = 0 then
+Err.Clear
+getTableFieldComment = n.properties(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)).Value
+if Err.Number <> 0 then getTableFieldComment = ""
+l.close
+set n = nothing
+set m = nothing
+set l = nothing
+set k = nothing
+exit function
+end if
+end if
+l.close
+set l = nothing
+end if
+set k = nothing
+end if
+next
+Err.Clear
+
+getTableFieldComment=""
+exit function
+end if
+
+if databaseType = ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+on error resume next
+Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+c=ChrW(83)&ChrW(69)&ChrW(76)&ChrW(69)&ChrW(67)&ChrW(84)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(67)&ChrW(79)&ChrW(77)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84)&ChrW(32)&ChrW(70)&ChrW(82)&ChrW(79)&ChrW(77)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(95)&ChrW(115)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(46)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(83)&ChrW(32)&ChrW(87)&ChrW(72)&ChrW(69)&ChrW(82)&ChrW(69)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(65)&ChrW(83)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(32)&ChrW(65)&ChrW(78)&ChrW(68)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)& replace(a,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)&ChrW(32)&ChrW(65)&ChrW(78)&ChrW(68)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)& replace(b,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)
+d.open c,conn,1,1
+if not d.eof then
+getTableFieldComment=d(ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(67)&ChrW(79)&ChrW(77)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84))
+if isnull(getTableFieldComment) then getTableFieldComment=""
+else
+getTableFieldComment=""
+end if
+d.close
+exit function
+end if
+
 Set d = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
 c=ChrW(83)&ChrW(69)&ChrW(76)&ChrW(69)&ChrW(67)&ChrW(84)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(112)&ChrW(46)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(32)&ChrW(65)&ChrW(83)&ChrW(32)&ChrW(80)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(78)&ChrW(97)&ChrW(109)&ChrW(101)&ChrW(44)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(101)&ChrW(112)&ChrW(46)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(32)&ChrW(65)&ChrW(83)&ChrW(32)&ChrW(80)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(86)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(32)&ChrW(32)
 c=c&ChrW(32)&ChrW(70)&ChrW(82)&ChrW(79)&ChrW(77)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(46)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(115)&ChrW(32)&ChrW(116)&ChrW(32)&ChrW(32)&ChrW(73)&ChrW(78)&ChrW(78)&ChrW(69)&ChrW(82)&ChrW(32)&ChrW(74)&ChrW(79)&ChrW(73)&ChrW(78)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(115)&ChrW(121)&ChrW(115)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(117)&ChrW(109)&ChrW(110)&ChrW(115)&ChrW(32)&ChrW(99)&ChrW(32)&ChrW(79)&ChrW(78)&ChrW(32)&ChrW(116)&ChrW(46)&ChrW(111)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(95)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(99)&ChrW(46)&ChrW(111)&ChrW(98)&ChrW(106)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(95)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(32)
@@ -1309,11 +1524,110 @@ d.open c,conn,1,1
 if not d.eof then
 getTableFieldComment=d(ChrW(80)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(86)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101))
 end if:d.close
+getTableFieldComment=""
 end function
 
 function editTableFieldComment(a,b,c)
 on error resume next
 dim d
+dim e,f,g
+dim h, i, j, k, l, m, n
+
+if databaseType = ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)  then
+
+h = Array(ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(49)&ChrW(50)&ChrW(48), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101)&ChrW(46)&ChrW(51)&ChrW(54), ChrW(68)&ChrW(65)&ChrW(79)&ChrW(46)&ChrW(68)&ChrW(66)&ChrW(69)&ChrW(110)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(101))
+for i = 0 to UBound(h)
+Err.Clear
+set j = CreateObject(h(i))
+if Err.Number = 0 then
+Err.Clear
+set k = j.opendatabase(handlePath(MDBPath), False, False, ChrW(59)&ChrW(80)&ChrW(87)&ChrW(68)&ChrW(61) & accessPass)
+if Err.Number = 0 then
+Err.Clear
+set l = k.tabledefs(a)
+if Err.Number = 0 then
+Err.Clear
+set m = l.fields(b)
+if Err.Number = 0 then
+Err.Clear
+m.properties(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)).Value = c
+if Err.Number <> 0 then
+
+Err.Clear
+set n = k.createproperty(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110), 10, c)
+m.properties.append n
+end if
+k.close
+set m = nothing
+set l = nothing
+set k = nothing
+set j = nothing
+exit function
+end if
+end if
+k.close
+set k = nothing
+end if
+set j = nothing
+end if
+next
+Err.Clear
+
+set e=server.createobject(ChrW(97)&ChrW(100)&ChrW(111)&ChrW(120)&ChrW(46)&ChrW(99)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103))
+e.activeconnection = conn
+For each f In e.tables
+if lcase(f.name)=lcase(a) then
+For each g In f.columns 
+if lcase(g.name)=lcase(b) then
+call setAdoDescription(g,c)
+exit for
+end if
+Next
+exit for
+end if
+Next
+set e = nothing
+exit function
+end if
+
+if databaseType = ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+on error resume next
+
+dim o, p, q, r, s
+Set o = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))
+d=ChrW(83)&ChrW(69)&ChrW(76)&ChrW(69)&ChrW(67)&ChrW(84)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69)&ChrW(44)&ChrW(32)&ChrW(73)&ChrW(83)&ChrW(95)&ChrW(78)&ChrW(85)&ChrW(76)&ChrW(76)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(44)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(68)&ChrW(69)&ChrW(70)&ChrW(65)&ChrW(85)&ChrW(76)&ChrW(84)&ChrW(44)&ChrW(32)&ChrW(69)&ChrW(88)&ChrW(84)&ChrW(82)&ChrW(65)&ChrW(32)&ChrW(70)&ChrW(82)&ChrW(79)&ChrW(77)&ChrW(32)&ChrW(105)&ChrW(110)&ChrW(102)&ChrW(111)&ChrW(114)&ChrW(109)&ChrW(97)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(95)&ChrW(115)&ChrW(99)&ChrW(104)&ChrW(101)&ChrW(109)&ChrW(97)&ChrW(46)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(83)&ChrW(32)&ChrW(87)&ChrW(72)&ChrW(69)&ChrW(82)&ChrW(69)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(68)&ChrW(65)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(65)&ChrW(83)&ChrW(69)&ChrW(40)&ChrW(41)&ChrW(32)&ChrW(65)&ChrW(78)&ChrW(68)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)& replace(a,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)&ChrW(32)&ChrW(65)&ChrW(78)&ChrW(68)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(78)&ChrW(65)&ChrW(77)&ChrW(69)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39)& replace(b,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)
+o.open d,conn,1,1
+if not o.eof then
+p = o(ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(84)&ChrW(89)&ChrW(80)&ChrW(69))
+q = o(ChrW(73)&ChrW(83)&ChrW(95)&ChrW(78)&ChrW(85)&ChrW(76)&ChrW(76)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69))
+r = o(ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(95)&ChrW(68)&ChrW(69)&ChrW(70)&ChrW(65)&ChrW(85)&ChrW(76)&ChrW(84))
+s = o(ChrW(69)&ChrW(88)&ChrW(84)&ChrW(82)&ChrW(65))
+o.close
+
+d=ChrW(65)&ChrW(76)&ChrW(84)&ChrW(69)&ChrW(82)&ChrW(32)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(32)&ChrW(96)& replace(a,ChrW(96),ChrW(96)&ChrW(96)) &ChrW(96)&ChrW(32)&ChrW(77)&ChrW(79)&ChrW(68)&ChrW(73)&ChrW(70)&ChrW(89)&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(32)&ChrW(96)& replace(b,ChrW(96),ChrW(96)&ChrW(96)) &ChrW(96)&ChrW(32)& p
+if q = ChrW(78)&ChrW(79) then
+d=d&ChrW(32)&ChrW(78)&ChrW(79)&ChrW(84)&ChrW(32)&ChrW(78)&ChrW(85)&ChrW(76)&ChrW(76)
+else
+d=d&ChrW(32)&ChrW(78)&ChrW(85)&ChrW(76)&ChrW(76)
+end if
+if r <> "" and not isnull(r) then
+if isnumeric(r) then
+d=d&ChrW(32)&ChrW(68)&ChrW(69)&ChrW(70)&ChrW(65)&ChrW(85)&ChrW(76)&ChrW(84)&ChrW(32)& r
+else
+d=d&ChrW(32)&ChrW(68)&ChrW(69)&ChrW(70)&ChrW(65)&ChrW(85)&ChrW(76)&ChrW(84)&ChrW(32)&ChrW(39)& replace(r,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)
+end if
+end if
+if s <> "" and not isnull(s) then
+d=d&ChrW(32)& s
+end if
+d=d&ChrW(32)&ChrW(67)&ChrW(79)&ChrW(77)&ChrW(77)&ChrW(69)&ChrW(78)&ChrW(84)&ChrW(32)&ChrW(39)& replace(c,ChrW(39),ChrW(39)&ChrW(39)) &ChrW(39)
+conn.execute(d)
+else
+o.close
+end if
+exit function
+end if
+
 d=ChrW(69)&ChrW(88)&ChrW(69)&ChrW(67)&ChrW(32)&ChrW(115)&ChrW(112)&ChrW(95)&ChrW(97)&ChrW(100)&ChrW(100)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(100)&ChrW(101)&ChrW(100)&ChrW(112)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121)&ChrW(32)&ChrW(39)&ChrW(77)&ChrW(83)&ChrW(95)&ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)& c &ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(83)&ChrW(67)&ChrW(72)&ChrW(69)&ChrW(77)&ChrW(65)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(100)&ChrW(98)&ChrW(111)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(84)&ChrW(65)&ChrW(66)&ChrW(76)&ChrW(69)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&a&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&ChrW(67)&ChrW(79)&ChrW(76)&ChrW(85)&ChrW(77)&ChrW(78)&ChrW(39)&ChrW(44)&ChrW(32)&ChrW(39)&b&ChrW(39)&ChrW(59)
 
 conn.execute(d) 
@@ -1321,6 +1635,60 @@ d=ChrW(69)&ChrW(88)&ChrW(69)&ChrW(67)&ChrW(32)&ChrW(115)&ChrW(112)&ChrW(95)&ChrW
 
 conn.execute(d)
 end function
+
+
+
+
+
+Function renameAccessTable(a, b)
+On error resume next
+Dim c, d
+
+
+d = ChrW(80)&ChrW(114)&ChrW(111)&ChrW(118)&ChrW(105)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(61)&ChrW(77)&ChrW(105)&ChrW(99)&ChrW(114)&ChrW(111)&ChrW(115)&ChrW(111)&ChrW(102)&ChrW(116)&ChrW(46)&ChrW(74)&ChrW(101)&ChrW(116)&ChrW(46)&ChrW(79)&ChrW(76)&ChrW(69)&ChrW(68)&ChrW(66)&ChrW(46)&ChrW(52)&ChrW(46)&ChrW(48)&ChrW(59)&ChrW(74)&ChrW(101)&ChrW(116)&ChrW(32)&ChrW(79)&ChrW(76)&ChrW(69)&ChrW(68)&ChrW(66)&ChrW(58)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(32)&ChrW(80)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(87)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(39) & accessPass & ChrW(39)&ChrW(59)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(32)&ChrW(83)&ChrW(111)&ChrW(117)&ChrW(114)&ChrW(99)&ChrW(101)&ChrW(32)&ChrW(61)&ChrW(32) & handlePath(MDBPath)  
+
+Set c = Server.CreateObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(88)&ChrW(46)&ChrW(67)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(108)&ChrW(111)&ChrW(103))
+If Err.Number <> 0 Then
+renameAccessTable = False
+Exit function
+End if
+
+c.activeconnection = d
+If Err.Number <> 0 Then
+renameAccessTable = False
+Set c = Nothing
+Exit function
+End if
+
+c.tables(a).Name = b
+
+If Err.Number = 0 Then
+renameAccessTable = True
+Else
+renameAccessTable = False
+End if
+
+Set c = Nothing
+On error goto 0
+End function  
+
+
+
+
+Sub setAdoDescription(a, b)
+Dim c
+
+a.properties(ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)).Value = b
+If Err.Number <> 0 Then
+Err.Clear
+Set c = CreateObject(ChrW(65)&ChrW(68)&ChrW(79)&ChrW(88)&ChrW(46)&ChrW(80)&ChrW(114)&ChrW(111)&ChrW(112)&ChrW(101)&ChrW(114)&ChrW(116)&ChrW(121))
+c.name = ChrW(68)&ChrW(101)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)
+c.type = 203
+c.value = b
+a.properties.append c
+Err.Clear
+End if
+End sub
 function getSql2(a)
 dim b,c
 

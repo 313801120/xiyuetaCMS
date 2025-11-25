@@ -1,0 +1,91 @@
+
+dim yiyan_ok:yiyan_ok=0     '成功数'
+dim yiyan_err:yiyan_err=0    '失败数'
+dim yiyan_count:yiyan_count=0  '总数'
+
+'下载一言josn到本地 20251113 
+'  处理逻辑都在函数内部，从request获取版本号
+function downYiYanJson(version)
+	dim url,c,filePath,splstr,s,dirPath,downCount,existCount,content
+	
+	'从request获取版本号并清除两边空格
+	version = phptrim(version)
+	
+	'判断版本号是否为空
+	if version = "" then
+		call rw("<div style='padding:20px;color:red;'><h3>错误</h3><p>版本号不能为空！</p></div>")
+		exit function
+	end if
+	
+	'版本对应网址  https://cdn.jsdelivr.net/gh/hitokoto-osc/sentences-bundle@latest/'
+	dirPath="json/" & version
+	downCount=0
+	existCount=0
+
+
+	call rw("<div style='padding:20px;'>" & _
+		"<h3>下载一言json到本地</h3>" & _
+		"<p><strong>版本号：</strong>" & server.htmlEncode(version) & "</p>" & _
+		"<hr style='margin:15px 0;'/>" & _
+		"<p><strong>处理下载</strong></p>")
+	doevents
+
+		
+	call createFolder("json")  '创建文件夹' 															
+	call createFolder(dirPath)  '创建文件夹'   使用createDirFolder创建一组文件夹失败，因为文件夹里有.了
+	splstr=split("a,b,c,d,e,f,g,h,i,j,k,l",",")
+	for each s in splstr
+		if s<>"" then		  
+            filePath=dirPath&"/"&s&".json"
+			if checkFile(filePath)=false then
+				url="https://cdn.jsdelivr.net/gh/hitokoto-osc/sentences-bundle@"&version&"/sentences/"&s&".json"
+				c=gethttpurl(url,"utf-8")
+				call saveRemoteFile(url,filePath)
+				downCount=downCount+1
+				call rw("<p style='color:green;'>✓ 下载成功：" & server.htmlEncode(s&".json") & "</p>")
+			else
+				existCount=existCount+1
+				call rw("<p style='color:gray;'>○ 已存在：" & server.htmlEncode(s&".json") & "</p>")
+			end if:doevents
+
+		    content=readfile(filePath,"utf-8")
+		    call printJson(content)  '处理导入到数据库里'
+
+
+		end if
+	next
+	call rw("<p>新下载：" & downCount & " 个文件，已存在：" & existCount & " 个文件，共 " & (downCount+existCount) & " 个文件</p>")
+	if yiyan_count>0 then
+		call rw("共有数据项 "& yiyan_count &" 个，")
+	end if
+	if yiyan_ok>0 then
+		call rw("成功添加 "& yiyan_ok &" 个，")
+	end if
+	if yiyan_err>0 and 1=2 then
+		call rw("成功失败 "& yiyan_err &" 个，")
+	end if
+	call rw("</div>")
+end function
+'写入到数据库的yibu表里'
+function addYiYan(stype,creator,hitokoto,sfrom,uuid) 
+    dim sql
+    'sql="select * from "&db_PREFIX&"yiyan where stype='"& stype &"' and creator='"& creator &"' and hitokoto='"& hitokoto &"'"
+    sql="select * from "&db_PREFIX&"yiyan where uuid='"& uuid &"'"
+    rs.open sql,conn,1,3
+    if rs.eof then
+        rs.addnew 
+            rs("stype")=stype
+            rs("creator")=creator
+            rs("hitokoto")=hitokoto
+            rs("sfrom")=sfrom
+            rs("uuid")=uuid
+            rs("isthrough")=1   '通过为真'
+            call echoB("添加成功", hitokoto) 
+        rs.update
+        yiyan_ok=yiyan_ok+1
+    else
+      	call echoRedB("已经存在", hitokoto)
+      	yiyan_err=yiyan_err+1
+    end if:rs.close
+    yiyan_count=yiyan_count+1   '总数'
+end function

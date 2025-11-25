@@ -1,0 +1,261 @@
+        },money_tongJiPingJunInfo: function(){    // 记账表里统计处理   edit20251118 2
+            // 直接使用 table.render 已加载的数据，不重新请求
+            var tableData = table.cache['testReload'] || [];
+            
+            // 过滤出 isthrough 为 " checked" 的记录（已审核的记录）
+            var filteredData = [];
+            for (var i = 0; i < tableData.length; i++) {
+                var item = tableData[i];
+                // 检查 isthrough 字段是否包含 "checked"
+                if (item.isthrough && item.isthrough.indexOf('checked') !== -1) {
+                    filteredData.push(item);
+                }
+            }
+            
+            if (filteredData.length > 0) {
+                // 计算总金额
+                var totalAmount = 0;
+                var totalIncome = 0;  // 纯收入（正数）
+                var totalExpense = 0; // 纯支出（负数，显示时为绝对值）
+                var earliestDate = null;
+                var earliestDateStr = "";
+                
+                // 遍历已审核的数据
+                for (var i = 0; i < filteredData.length; i++) {
+                    var item = filteredData[i];
+                    
+                    // 累加 tsfield_price 字段
+                    var priceValue = item.tsfield_price;
+                    // 统一转换为数字：如果是字符串先转，如果是数字直接使用
+                    var price = parseFloat(priceValue);
+                    // 如果解析失败或为 NaN，则设为 0
+                    if (isNaN(price)) {
+                        price = 0;
+                    }
+                    
+                    totalAmount += price;
+                    
+                    // 计算纯收入和纯支出
+                    // 严格判断：大于0为收入，小于0为支出，等于0不处理
+                    if (price > 0) {
+                        totalIncome += price;  // 正数累加到收入
+                    } else if (price < 0) {
+                        totalExpense += Math.abs(price);  // 负数取绝对值累加到支出
+                    }
+                    // price === 0 的情况不处理
+                    
+                    // 找到最早的 daytime（最远的一条记录的时间）
+                    if (item.daytime) {
+                        // 兼容多种日期格式：2025/11/14 18:02:41 或 2025-11-14 18:02:41 或 2025/11/14
+                        var dateStr = item.daytime.replace(/-/g, '/');
+                        var dayDate = new Date(dateStr);
+                        // 检查日期是否有效
+                        if (!isNaN(dayDate.getTime())) {
+                            // 初始化或找到更早的日期
+                            if (earliestDate === null) {
+                                earliestDate = dayDate;
+                                earliestDateStr = item.daytime;
+                            } else if (dayDate < earliestDate) {
+                                earliestDate = dayDate;
+                                earliestDateStr = item.daytime;
+                            }
+                        }
+                    }
+                }
+                        
+                // 计算天数（从最早记录到现在）
+                var now = new Date();
+                var daysDiff = 1; // 默认为1天
+                if (earliestDate) {
+                    // 计算时间差（毫秒）
+                    var timeDiff = now.getTime() - earliestDate.getTime();
+                    // 转换为天数
+                    daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                    // 确保至少为1天，避免除以0
+                    if (daysDiff <= 0) {
+                        daysDiff = 1;
+                    }
+                }
+                
+                // 计算每天平均金额
+                var dailyAverage = totalAmount / daysDiff;
+                
+                // 格式化数字显示（类似ASP的printNumberValue_plus函数）
+                function printNumberValue(num) {
+                    if (num == null || num === '' || isNaN(num)) {
+                        return '0';
+                    }
+                    
+                    // 处理负数
+                    var isNegative = false;
+                    var numStr = String(num);
+                    if (numStr.charAt(0) === '-') {
+                        isNegative = true;
+                        numStr = numStr.substring(1);
+                    }
+                    
+                    // 移除小数部分
+                    var dotIndex = numStr.indexOf('.');
+                    if (dotIndex > 0) {
+                        numStr = numStr.substring(0, dotIndex);
+                    }
+                    
+                    // 如果小于1万，直接返回
+                    if (numStr.length <= 4) {
+                        return isNegative ? '-' + numStr : numStr;
+                    }
+                    
+                    var result = '';
+                    // 亿以上
+                    if (numStr.length > 8) {
+                        var yi = numStr.substring(0, numStr.length - 8);
+                        var remainStr = numStr.substring(numStr.length - 8);
+                        var wan = parseFloat(remainStr.substring(0, 4) + '.' + remainStr.substring(4, 6));
+                        
+                        result = yi + '亿';
+                        if (parseFloat(remainStr) > 0) {
+                            if (wan < 1000) {
+                                result += wan.toFixed(2);
+                            } else {
+                                result += wan;
+                            }
+                            result += '万';
+                        }
+                    } else {
+                        // 万以上亿以下
+                        var wanNum = parseFloat(numStr.substring(0, numStr.length - 4) + '.' + numStr.substring(numStr.length - 4, numStr.length - 2));
+                        result = wanNum.toFixed(2) + '万';
+                    }
+                    
+                    // 清理格式
+                    result = result.replace(/,/g, '');
+                    result = result.replace(/\.00/g, '');
+                    
+                    return isNegative ? '-' + result : result;
+                }
+                
+                // 正负颜色快捷显示（类似ASP的printMoneySignColor函数）
+                function printMoneySignColor(nMoney) {
+                    var s = printNumberValue(nMoney);
+                    var colorStyle = '';
+                    
+                    if (nMoney > 0) {
+                        colorStyle = 'color:#28a745;font-weight:bold;';  // 正数绿色加粗
+                    } else if (nMoney < 0) {
+                        colorStyle = 'color:#dc3545;font-weight:bold;';  // 负数红色加粗
+                    } else {
+                        colorStyle = 'color:#000000;';  // 0为黑色
+                    }
+                    
+                    return '<span style="' + colorStyle + '" title="' + nMoney + '">' + s + '</span>';
+                }
+                
+                // 打印金币中文信息显示（类似ASP的printMoneyCnInfo函数）
+                function printMoneyCnInfo(nMoney) {
+                    var s = printNumberValue(nMoney);
+                    var absMoney = Math.abs(nMoney);
+                    var colorStyle = '';
+                    
+                    // 根据金额绝对值大小和正负值设置颜色
+                    if (absMoney >= 100000000) {  // 亿级：最醒目
+                        colorStyle = nMoney >= 0 ? 
+                            'color:#d4af37;font-weight:bold;' :  // 金色（正数大额）
+                            'color:#dc3545;font-weight:bold;';   // 深红色（负数大额）
+                    } else if (absMoney >= 10000000) {  // 千万级：次醒目
+                        colorStyle = nMoney >= 0 ? 
+                            'color:#28a745;font-weight:bold;' :  // 深绿色（正数）
+                            'color:#c82333;font-weight:bold;';   // 红色（负数）
+                    } else if (absMoney >= 1000000) {  // 百万级：中等醒目
+                        colorStyle = nMoney >= 0 ? 
+                            'color:#5cb85c;font-weight:bold;' :  // 绿色（正数）
+                            'color:#e74c3c;font-weight:bold;';   // 浅红色（负数）
+                    } else if (absMoney >= 100000) {  // 十万级：轻微强调
+                        colorStyle = 'color:#6c757d;font-weight:bold;';  // 灰色加粗
+                    } else {  // 小于十万：默认显示
+                        colorStyle = 'color:#6c757d;';  // 灰色（小额不强调）
+                    }
+                    
+                    return '<span style="' + colorStyle + '" title="' + nMoney + '">' + s + '</span>';
+                }
+                
+                // 将天数转换为年、月、天格式的函数
+                function formatDaysToYMD(days) {
+                    if (days <= 0) {
+                        return '0天';
+                    }
+                    
+                    var years = Math.floor(days / 365);
+                    var remainingDays = days % 365;
+                    var months = Math.floor(remainingDays / 30);
+                    var finalDays = remainingDays % 30;
+                    
+                    var result = '';
+                    if (years > 0) {
+                        result += years + '年';
+                    }
+                    if (months > 0) {
+                        result += months + '月';
+                    }
+                    if (finalDays > 0 || result === '') {
+                        result += finalDays + '天';
+                    }
+                    
+                    return result;
+                }
+                
+                // 构建统计信息HTML
+                var html = '<div style="padding: 20px; line-height: 2;">';
+                html += '<h3 style="margin-bottom: 15px; color: #1E9FFF;">统计信息（仅统计已审核数据）</h3>';
+                html += '<div style="margin-bottom: 10px;"><strong>数据条数：</strong><span style="color: #333;">' + filteredData.length + ' 条</span></div>';
+                html += '<div style="margin-bottom: 10px;"><strong>总金额：</strong>' + printMoneySignColor(totalAmount) + ' <span style="color: #999; font-size: 12px;">(' + totalAmount.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')</span></div>';
+                html += '<div style="margin-bottom: 10px; display: flex; gap: 30px;"><span><strong>纯收入：</strong>' + printMoneySignColor(totalIncome) + ' <span style="color: #999; font-size: 12px;">(' + totalIncome.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')</span></span><span><strong>纯支出：</strong>' + printMoneySignColor(-totalExpense) + ' <span style="color: #999; font-size: 12px;">(' + totalExpense.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')</span></span></div>';
+                html += '<div style="margin-bottom: 10px;"><strong>最早记录：</strong><span style="color: #333;">' + (earliestDateStr || '无') + '</span></div>';
+                html += '<div style="margin-bottom: 10px;"><strong>距今天数：</strong><span style="color: #333;">' + formatDaysToYMD(daysDiff) + '(' + daysDiff + ')</span></div>';
+                html += '<div style="margin-bottom: 10px;"><strong>每天平均：</strong>' + printMoneySignColor(dailyAverage) + ' <span style="color: #999; font-size: 12px;">(' + dailyAverage.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')</span></div>';
+
+                                
+                // 计算每次平均金额
+                var eachAverage = filteredData.length > 0 ? totalAmount / filteredData.length : 0;
+                html += '<div style="margin-bottom: 10px;"><strong>每次平均：</strong>' + printMoneySignColor(eachAverage) + ' <span style="color: #999; font-size: 12px;">(' + eachAverage.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')</span></div>';
+                
+                // 调试信息：显示计算详情
+                if (earliestDate) {
+                    // 格式化日期（兼容旧浏览器）
+                    function padZero(n) {
+                        return n < 10 ? '0' + n : n;
+                    }
+                    var earliestDateFormatted = earliestDate.getFullYear() + '/' + 
+                        padZero(earliestDate.getMonth() + 1) + '/' + 
+                        padZero(earliestDate.getDate()) + ' ' +
+                        padZero(earliestDate.getHours()) + ':' +
+                        padZero(earliestDate.getMinutes()) + ':' +
+                        padZero(earliestDate.getSeconds());
+                    var nowFormatted = now.getFullYear() + '/' + 
+                        padZero(now.getMonth() + 1) + '/' + 
+                        padZero(now.getDate()) + ' ' +
+                        padZero(now.getHours()) + ':' +
+                        padZero(now.getMinutes()) + ':' +
+                        padZero(now.getSeconds());
+                    html += '<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; font-size: 12px; color: #999;">';
+                    html += '<div><strong>计算详情：</strong></div>';
+                    html += '<div>最早记录时间：' + earliestDateFormatted + '</div>';
+                    html += '<div>当前时间：' + nowFormatted + '</div>';
+                    html += '</div>';
+                }
+                
+                html += '</div>';
+                
+                // 显示统计结果
+                layer.open({
+                    type: 1,
+                    title: '统计详情',
+                    area: ['500px', 'auto'],
+                    content: html,
+                    btn: ['关闭'],
+                    yes: function(index) {
+                        layer.close(index);
+                    }
+                });
+            } else {
+                layer.msg('暂无已审核数据可统计', {icon: 0});
+            }

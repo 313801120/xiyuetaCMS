@@ -1,0 +1,9 @@
+'获得某会员今年总金额
+function getMemberThisYearMoney(rs)
+	dim sql,rsx,thisYearPrice
+	Set rsx = CreateObject("Adodb.RecordSet")
+	sql="select sum(price) as totalMoney from "& getTableFieldFuHao(db_PREFIX&"money") &" where isthrough=1 and userid="&rs("id")&" AND YEAR(daytime)=YEAR("&sqlAorS("now()")&")"
+	rsx.open sql,conn,1,1
+	thisYearPrice=IIF(isnull(rsx("totalMoney"))=true,0,rsx("totalMoney")):rsx.close
+	getMemberThisYearMoney=thisYearPrice
+end function

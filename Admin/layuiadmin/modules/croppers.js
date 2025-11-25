@@ -76,16 +76,19 @@ layui.config({
 
             // 根据传入配置或默认规则设置提示文本
             var defaultTip;
-            if (typeof mark === 'number' && !isNaN(mark)) {
+            // 判断 mark 是否为有效的数字（不是 NaN）
+            if (typeof mark === 'number' && !isNaN(mark) && mark !== null) {
                 if (saveW && saveH) {
-                    defaultTip = "头像的尺寸限定" + saveW + "x" + saveH + "px,大小在50kb以内";
+                    defaultTip = "尺寸限定" + saveW + "x" + saveH + "px,大小在50kb以内";
                 } else {
                     defaultTip = "按固定比例裁切，建议控制图片大小在50kb以内";
                 }
             } else {
+                // mark 为 NaN、null、undefined 或其他值时，表示自由裁切
                 defaultTip = "自由裁切，保存按选区尺寸输出，建议控制图片大小在50kb以内";
             }
             var tipText = e.tip || defaultTip;
+            // 立即更新提示文本
             content.find('.cropper-tip-text').text(tipText);
 
             $(elem).on('click',function () {
@@ -94,6 +97,8 @@ layui.config({
                     , content: content
                     , area: area
                     , success: function () {
+                        // 弹窗打开时再次更新提示文本，确保显示正确
+                        content.find('.cropper-tip-text').text(tipText);
                         image.cropper(options);
                     }
                     , cancel: function (index) {

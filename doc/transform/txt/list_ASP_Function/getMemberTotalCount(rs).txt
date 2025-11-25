@@ -1,0 +1,9 @@
+'统计用户对应的金额
+function getMemberTotalCount(rs)
+    dim sql,rsx
+    Set rsx = CreateObject("Adodb.RecordSet")
+    sql="select count(*)as totalCount from "& getTableFieldFuHao(db_PREFIX&"money") &" where isthrough=1 and userid="&rs("id") 
+    rsx.open sql,conn,1,1
+    ' 返回总条数 
+    getMemberTotalCount=IIF(isnull(rsx("totalCount"))=true,0,rsx("totalCount")):rsx.close
+end function

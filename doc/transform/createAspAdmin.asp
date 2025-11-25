@@ -81,13 +81,18 @@ dim public_listPage_json_done_foritem
 dim public_viewPage_jsCode
 dim public_listPage_style
 dim public_listPage_include_fileList
-dim cfg_tab,cfg_tabAdd1,cfg_tabAdd2,cfg_tabAdd3,tab1,tab2
+dim public_listPage_loadAspFunction_isJsCode
+dim public_listpage_addto_dim_list
+dim public_listpage_header_aspCode
+dim public_listpage_ajax_url
+dim cfg_tab,cfg_tabAdd0,cfg_tabAdd1,cfg_tabAdd2,cfg_tabAdd3,cfg_tabAdd4,tab1,tab2
 tab1=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)
 tab2=tab1&tab1
 cfg_tab=ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32) 
 cfg_tabAdd1=cfg_tab&tab1
 cfg_tabAdd2=cfg_tab&tab2
 cfg_tabAdd3=cfg_tab&tab2&tab1
+cfg_tabAdd4=cfg_tabAdd3&tab1
 
 
 function htmlStartAddTab(a,b)
@@ -104,7 +109,7 @@ getListHeadSortShow=IIF(instr(ChrW(44)&public_listHeadSortShow&ChrW(44), ChrW(44
 end function
 
 function getFormInputElseAspcode(a,b)
-dim c,d,e,f,g,h,i,j
+dim c,d,e,f,g,h,i,j,k
 d=split(b,ChrW(44))
 for each f in d
 if instr(f,ChrW(61)) then
@@ -114,6 +119,7 @@ i=decTsStrReplace(e(1),ChrW(44)&ChrW(61))
 i=replace(replace(replace(i,ChrW(34),ChrW(34)&ChrW(34)),ChrW(60),ChrW(38)&ChrW(108)&ChrW(116)&ChrW(59)),ChrW(62),ChrW(38)&ChrW(103)&ChrW(116)&ChrW(59))
 
 
+k=false
 if i=ChrW(97)&ChrW(117)&ChrW(116)&ChrW(111) or left(i,5)=ChrW(97)&ChrW(117)&ChrW(116)&ChrW(111)&ChrW(43) then  
 if left(i,5)=ChrW(97)&ChrW(117)&ChrW(116)&ChrW(111)&ChrW(43) then
 i=mid(i,6)
@@ -125,10 +131,22 @@ j=j & copystr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32),1) & ChrW(114)&ChrW(115)&ChrW(
 j=j & copystr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32),1) & ChrW(105)&ChrW(102)&ChrW(32)&ChrW(110)&ChrW(111)&ChrW(116)&ChrW(32)&ChrW(114)&ChrW(115)&ChrW(46)&ChrW(101)&ChrW(111)&ChrW(102)&ChrW(32)&ChrW(116)&ChrW(104)&ChrW(101)&ChrW(110) & vbcrlf
 j=j & copystr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32),2) & ""&h&ChrW(61)&ChrW(114)&ChrW(115)&ChrW(40)&ChrW(34)&h&ChrW(34)&ChrW(41)&ChrW(43) & h & vbcrlf 
 j=j & copystr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32),1) & ChrW(101)&ChrW(110)&ChrW(100)&ChrW(32)&ChrW(105)&ChrW(102)&ChrW(58)&ChrW(114)&ChrW(115)&ChrW(46)&ChrW(99)&ChrW(108)&ChrW(111)&ChrW(115)&ChrW(101) & vbcrlf 
+elseif i=ChrW(110)&ChrW(111)&ChrW(119) or i=ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41) or i=ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101) or i=ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(40)&ChrW(41) then  
+i=ChrW(110)&ChrW(111)&ChrW(119)&ChrW(40)&ChrW(41)
+k=true
+elseif i=ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101) or i=ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(40)&ChrW(41) then  
+i=ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(40)&ChrW(41)
+k=true
+elseif i=ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101) or i=ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(41) then  
+i=ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(41)
+k=true       
 end if 
+
+if k=false then
 g=getFieldAlt(db_PREFIX & a,h)
 if g <>ChrW(73)&ChrW(110)&ChrW(116) and g <>ChrW(89)&ChrW(101)&ChrW(115)&ChrW(78)&ChrW(111) and g <>ChrW(70)&ChrW(108)&ChrW(111)&ChrW(97)&ChrW(116) then
 i=ChrW(34)& i &ChrW(34)
+end if
 end if
 c=c & copystr(ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32),1) & h & ChrW(61) & i & vbcrlf
 end if
@@ -436,6 +454,7 @@ end if
 x=strCut(glabolJSonIfConfig,i&ChrW(61)&ChrW(123),ChrW(125),0)
 
 t=getLEVPageRunAction(ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101),i,t)
+call echo(ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(86)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(49)&ChrW(50)&ChrW(51)&ChrW(52)&ChrW(53),t)
 v=getQXVal(i)
 if  v <>"" and v <>ChrW(124) then 
 t=ChrW(97)&ChrW(81)&ChrW(88)&ChrW(40)&t&ChrW(44)&ChrW(34)&v&ChrW(34)&ChrW(41)
@@ -1514,7 +1533,7 @@ d=d&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW
 public_laydateJSCode=public_laydateJSCode&d&vbcrlf
 d=""
 d=d&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(84)&ChrW(80)&ChrW(76)&ChrW(45)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(45)&a&ChrW(34)&ChrW(62) & vbcrlf
-d=d&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(45)&a&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(104)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(61)&ChrW(34)&ChrW(36873)&ChrW(25321)&ChrW(26085)&ChrW(26399)&ChrW(34)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(123)&ChrW(123)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(46)&a&ChrW(32)&ChrW(124)&ChrW(124)&ChrW(32)&ChrW(39)&ChrW(39)&ChrW(32)&ChrW(125)&ChrW(125)&ChrW(34)&ChrW(62) & vbcrlf
+d=d&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(117)&ChrW(105)&ChrW(45)&ChrW(105)&ChrW(110)&ChrW(112)&ChrW(117)&ChrW(116)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(45)&a&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(34)&ChrW(32)&ChrW(112)&ChrW(108)&ChrW(97)&ChrW(99)&ChrW(101)&ChrW(104)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(61)&ChrW(34)&ChrW(36873)&ChrW(25321)&ChrW(26085)&ChrW(26399)&ChrW(34)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(123)&ChrW(123)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(46)&a&ChrW(32)&ChrW(124)&ChrW(124)&ChrW(32)&ChrW(39)&ChrW(39)&ChrW(32)&ChrW(125)&ChrW(125)&ChrW(34)&ChrW(62) & vbcrlf
 d=d&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62) & vbcrlf
 public_laydateHtmlCode=public_laydateHtmlCode&d&vbcrlf
 end sub
@@ -1545,8 +1564,8 @@ public_colorpickerJSCode=public_colorpickerJSCode & b & vbcrlf
 b=""
 b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(33)&ChrW(45)&ChrW(45)&ChrW(32)&ChrW(39068)&ChrW(33394)&ChrW(36873)&ChrW(25321)&ChrW(22120)&a&ChrW(32)&ChrW(45)&ChrW(45)&ChrW(62) & vbcrlf
 b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(61)&ChrW(34)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116)&ChrW(47)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(34)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&ChrW(34)&ChrW(84)&ChrW(80)&ChrW(76)&ChrW(45)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(114)&ChrW(45)&a&ChrW(34)&ChrW(62) & vbcrlf
-b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(123)&ChrW(123)&ChrW(35)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(124)&ChrW(124)&ChrW(32)&ChrW(91)&ChrW(39)&ChrW(35)&ChrW(49)&ChrW(54)&ChrW(98)&ChrW(97)&ChrW(97)&ChrW(97)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(49)&ChrW(54)&ChrW(98)&ChrW(55)&ChrW(55)&ChrW(55)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(49)&ChrW(69)&ChrW(57)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(53)&ChrW(55)&ChrW(50)&ChrW(50)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(66)&ChrW(56)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(51)&ChrW(57)&ChrW(51)&ChrW(68)&ChrW(52)&ChrW(57)&ChrW(39)&ChrW(93)&ChrW(91)&ChrW(77)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(46)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(40)&ChrW(77)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(46)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(40)&ChrW(41)&ChrW(42)&ChrW(53)&ChrW(41)&ChrW(93)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(125) & vbcrlf
-b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(114)&ChrW(45)&a&ChrW(34)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(45)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(123)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(123)&ChrW(123)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(46)&a&ChrW(32)&ChrW(125)&ChrW(125)&ChrW(39)&ChrW(125)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62) & vbcrlf
+b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(123)&ChrW(123)&ChrW(35)&ChrW(32)&ChrW(32)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(46)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(32)&ChrW(124)&ChrW(124)&ChrW(32)&ChrW(91)&ChrW(39)&ChrW(35)&ChrW(49)&ChrW(54)&ChrW(98)&ChrW(97)&ChrW(97)&ChrW(97)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(49)&ChrW(54)&ChrW(98)&ChrW(55)&ChrW(55)&ChrW(55)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(49)&ChrW(69)&ChrW(57)&ChrW(70)&ChrW(70)&ChrW(70)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(53)&ChrW(55)&ChrW(50)&ChrW(50)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(70)&ChrW(70)&ChrW(66)&ChrW(56)&ChrW(48)&ChrW(48)&ChrW(39)&ChrW(44)&ChrW(39)&ChrW(35)&ChrW(51)&ChrW(57)&ChrW(51)&ChrW(68)&ChrW(52)&ChrW(57)&ChrW(39)&ChrW(93)&ChrW(91)&ChrW(77)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(46)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(100)&ChrW(40)&ChrW(77)&ChrW(97)&ChrW(116)&ChrW(104)&ChrW(46)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(100)&ChrW(111)&ChrW(109)&ChrW(40)&ChrW(41)&ChrW(42)&ChrW(53)&ChrW(41)&ChrW(93)&ChrW(59)&ChrW(32)&ChrW(125)&ChrW(125) & vbcrlf
+b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(32)&ChrW(99)&ChrW(108)&ChrW(97)&ChrW(115)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(112)&ChrW(105)&ChrW(99)&ChrW(107)&ChrW(101)&ChrW(114)&ChrW(45)&a&ChrW(34)&ChrW(32)&ChrW(108)&ChrW(97)&ChrW(121)&ChrW(45)&ChrW(111)&ChrW(112)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(115)&ChrW(61)&ChrW(34)&ChrW(123)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(32)&ChrW(39)&ChrW(123)&ChrW(123)&ChrW(61)&ChrW(32)&ChrW(100)&ChrW(46)&a&ChrW(32)&ChrW(125)&ChrW(125)&ChrW(39)&ChrW(125)&ChrW(34)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(100)&ChrW(105)&ChrW(118)&ChrW(62) & vbcrlf
 b=b&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(32)&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(99)&ChrW(114)&ChrW(105)&ChrW(112)&ChrW(116)&ChrW(62) & vbcrlf
 public_colorpickerHtmlCode=public_colorpickerHtmlCode & b & vbcrlf
 end sub
@@ -1775,6 +1794,8 @@ elseif c=ChrW(51) then
 c=ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(40)&ChrW(41)
 elseif c=ChrW(52) then
 c=ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101)&ChrW(40)&ChrW(41)
+elseif c=ChrW(53) then
+c=ChrW(115)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(40)&ChrW(34)&ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&ChrW(105)&ChrW(100)&ChrW(34)&ChrW(41)
 end if
 getAddNewUpdateValue=c
 end function
@@ -1822,6 +1843,9 @@ d=phptrim(d)
 
 if left(lcase(d),15)=ChrW(115)&ChrW(121)&ChrW(115)&ChrW(116)&ChrW(101)&ChrW(109)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(45) then
 c=mid(d,16)&ChrW(40)&c&ChrW(41)
+
+elseif left(lcase(d),4)=ChrW(100)&ChrW(105)&ChrW(109)&ChrW(45) Or left(lcase(d),4)=ChrW(100)&ChrW(105)&ChrW(109)&ChrW(32) then
+c=phptrim(mid(d,5))
 elseif d <>"" then 
 e=ChrW(116)&ChrW(120)&ChrW(116)&ChrW(92)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(95)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(95)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(92)&d&ChrW(46)&ChrW(116)&ChrW(120)&ChrW(116) 
 if checkfile(e)=false then
@@ -1842,8 +1866,32 @@ if instr(public_viewPage_asp_function,f)=false then
 public_viewPage_asp_function=public_viewPage_asp_function&f&vbcrlf
 end if 
 end if
+
+if instr(d,ChrW(40))>0 then
+c=replace(d,ChrW(42),c)
+else
 c=d&ChrW(40)&ChrW(114)&ChrW(115)&ChrW(44)&c&ChrW(41)
 end if
+end if
 getLEVPageRunAction=c
+end function
+
+function addDimToList(a,b)
+dim c,d
+c=split(b,ChrW(44))
+for each d in c
+d=phptrim(d)
+if d <>"" then
+if instr(ChrW(44)&lcase(a)&ChrW(44), ChrW(44)&lcase(d)&ChrW(44))=false then
+if a <>"" then 
+a=a&ChrW(44)
+else
+a=ChrW(100)&ChrW(105)&ChrW(109)&ChrW(32)
+end if
+a=a&d
+end if
+end if
+next
+addDimToList=a
 end function
 %> 

@@ -140,6 +140,20 @@ totalUser=conn.execute(ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116
 </div>
 </div>
 </div>
+<!--             <div class="layui-col-sm12">
+<div class="layui-card">
+<div class="layui-card-header">每日一言
+<div class="layui-btn-group layuiadmin-btn-group">
+<a href="javascript:;" id="refresh-yiyan" class="layui-btn layui-btn-primary layui-btn-xs">刷新</a>
+</div>
+</div>
+<div class="layui-card-body">
+<div id="yiyan-content" style="padding: 20px; text-align: center; font-size: 16px; line-height: 1.8; color: #666;">
+<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i> 加载中...
+</div>
+</div>
+</div>
+</div> -->
 <div class="layui-col-sm12">
 <div class="layui-card">
 <div class="layui-card-header">快速导航 
@@ -608,6 +622,35 @@ break;
 layer.close(index);
 });
 })
+// 一言功能
+function loadHitokoto() {
+$("#yiyan-content").html('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i> 加载中...');
+$.ajax({
+type: "GET",
+url: "../../api/yiyan/default.asp",
+data: {
+_t: new Date().getTime()
+},
+dataType: "json",
+cache: false,
+success: function(res) {
+var hit = res.hitokoto || "今晚星光真好";
+var from = res.from || "一言";
+var content = '<div style="font-size: 18px; color: #333; margin-bottom: 10px;">' + hit + '</div>';
+content += '<div style="font-size: 14px; color: #999;">—— ' + from + '</div>';
+$("#yiyan-content").html(content);
+},
+error: function() {
+$("#yiyan-content").html('<div style="color: #999;">晚上好！去聊吧找友友聊聊？</div>');
+}
+});
+}
+// 页面加载时获取一言
+loadHitokoto();
+// 点击刷新按钮
+$(document).on("click", "#refresh-yiyan", function() {
+loadHitokoto();
+});
 });
 </script>
 </body>

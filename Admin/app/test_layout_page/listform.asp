@@ -8,7 +8,7 @@ dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)
 winTitle = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)
 excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
-dim msg,isTrue,sql,addSql,id,pagename,pagetablename,tsfield_listpagelistpageform,tsfield_listpagetablebutton,tsfield_listpagerightmenu,tsfield_listpagetableitemmanage,tsfield_layouaction,pagefolder,sortrank,npagesize,aspcodezip,isdelinputpass,isshowupdownpage,isbatchdelete,isshowsearch,isshowaddbutton,isshowprint,isshowoperate,isdblclickviewpage,isthrough,addedittip,listsearch,listqueryfield,formviewmaohao,formeditmaohao,listorderby,idindexname,bodycontent,listpagereplace,editpagereplace,viewpagereplace,helpcontent,tsfield_addr,sdatabasetype,databaseippath,databasename,databaseuser,databasepass
+dim msg,isTrue,sql,addSql,id,pagename,pagetablename,tsfield_listpagelistpageform,tsfield_listpagetablebutton,tsfield_listpagerightmenu,tsfield_listpagetableitemmanage,tsfield_layouaction,pagefolder,sortrank,npagesize,aspcodezip,isdelinputpass,isshowupdownpage,isbatchdelete,isshowsearch,isshowaddbutton,isshowprint,isshowoperate,isdblclickviewpage,isthrough,addedittip,listsearch,listqueryfield,formviewmaohao,formeditmaohao,listorderby,idindexname,bodycontent,listpagereplace,editpagereplace,viewpagereplace,helpcontent,tsfield_addr,sdatabasetype,databaseippath,databasename,databaseuser,databasepass,databasetableprefix
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 pagename=request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 pagetablename=request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
@@ -74,6 +74,8 @@ databaseuser=request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&Chr
 databaseuser=handleAspStrSafe(databaseuser)
 databasepass=request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115))
 databasepass=handleAspStrSafe(databasepass)
+databasetableprefix=request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(120))
+databasetableprefix=handleAspStrSafe(databasetableprefix)
 
 if request(ChrW(97)&ChrW(99)&ChrW(116))=ChrW(115)&ChrW(97)&ChrW(118)&ChrW(101) then
 if id <>"" then
@@ -134,6 +136,7 @@ rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&C
 rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))=databasename
 rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114))=databaseuser
 rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115))=databasepass
+rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(120))=databasetableprefix
 rs(ChrW(117)&ChrW(112)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(101)&ChrW(116)&ChrW(105)&ChrW(109)&ChrW(101))=now()
 
 if checkEnLanguage() then
@@ -209,6 +212,7 @@ databaseippath=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(1
 databasename=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 databaseuser=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114))
 databasepass=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115))
+databasetableprefix=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(120))
 end if
 else
 sortrank=10
@@ -229,6 +233,22 @@ if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
 thisAddPrefix=ChrW(96)&db_PREFIX&a&ChrW(96)
 else
 thisAddPrefix=ChrW(91)&db_PREFIX&a&ChrW(93)
+end if
+end function 
+
+function getTimeFuHao()
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) or thisDatabaseType=ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then
+getTimeFuHao=ChrW(39)
+else
+getTimeFuHao=ChrW(35)
+end if
+end function
+
+function getTableFieldFuHao(a)
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+getTableFieldFuHao=ChrW(96)&a&ChrW(96)
+else
+getTableFieldFuHao=ChrW(91)&a&ChrW(93)
 end if
 end function
 
@@ -499,9 +519,9 @@ end function
 <div class='layui-form-item'>
 <label class='layui-form-label'>数据库类型</label>
 <div class='layui-input-inline layui-input-wrap'>
-<%=showOnLineSelectHtml(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(45)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(77)&ChrW(121)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(95)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108),sdatabasetype)%>
+<%=showOnLineSelectHtml(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(26080)&ChrW(95)&ChrW(45)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(45)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(77)&ChrW(121)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(95)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108),sdatabasetype)%>
 </div>
-<div class="layui-form-mid layui-text-em">选择mysql数据库，需要配置dsn的</div><!--databasetype-->
+<div class="layui-form-mid layui-text-em">连接外部数据库，选择mysql数据库，需要配置dsn的</div><!--databasetype-->
 </div>
 <div class='layui-form-item' id="databaseippath">
 <label class='layui-form-label'>数据库<i class="layui-icon icon-wenhao" data-txt="为IP地址则为sqlserver数据库，为路径则为access数据库">&#xe607;</i> </label>
@@ -530,6 +550,12 @@ end function
 <div class='layui-input-inline layui-input-wrap'>
 <input type='password' name='databasepass' placeholder='请输入数据库密码' lay-affix="eye" autocomplete='off' class='layui-input' value="<%=inputCL(databasepass)%>" >
 </div><!--databasepass-->
+</div>
+<div class='layui-form-item' id="databasetableprefix">
+<label class='layui-form-label'>表前缀</label>
+<div class='layui-input-inline layui-input-wrap'>
+<input type='text' name='databasetableprefix' placeholder='请输入表前缀' autocomplete='off' class='layui-input' value="<%=inputCL(databasetableprefix)%>" >
+</div><!--databasetableprefix-->
 </div>
 </div>
 <!-- 提交按钮需要，外部调用 -->
@@ -603,22 +629,24 @@ tips: [1, '#000'] //还可配置颜色
 },function(){
 layer.closeAll('tips');
 })
-// 数据库类型选择变化时的处理函数
+// 数据库类型选择变化时的处理函数  edit20251118
 function toggleDatabaseFields(databaseType) {
 var databaseippathDiv = $('#databaseippath');
 var databasenameDiv = $('#databasename');
 var databaseuserDiv = $('#databaseuser');
 var databasepassDiv = $('#databasepass');
+var databasetableprefixDiv = $('#databasetableprefix');  //表前缀
 // Access相关按钮
 var uploadBtn = $('#upload-databaseippath');
-var viewPassBtn = $('#btn-view-pass');
-var editPassBtn = $('#btn-edit-pass');
+var viewPassBtn = $('#btn-databaseippath-view-pass');
+var editPassBtn = $('#btn-databaseippath-edit-pass');
 if (databaseType === 'access') {
 // Access选择时：显示数据库和数据库密码，隐藏数据库名和数据库账号
 databaseippathDiv.show();
 databasenameDiv.hide();
 databaseuserDiv.hide();
 databasepassDiv.show();
+databasetableprefixDiv.show();
 // 显示Access相关按钮
 uploadBtn.show();
 viewPassBtn.show();
@@ -629,10 +657,17 @@ databaseippathDiv.show();
 databasenameDiv.show();
 databaseuserDiv.show();
 databasepassDiv.show();
+databasetableprefixDiv.show();
 // 隐藏Access相关按钮
 uploadBtn.hide();
 viewPassBtn.hide();
-editPassBtn.hide();
+editPassBtn.hide(); 
+} else if (databaseType === '') {
+databaseippathDiv.hide();
+databasenameDiv.hide();
+databaseuserDiv.hide();
+databasepassDiv.hide();
+databasetableprefixDiv.hide();
 }
 }
 // 监听数据库类型选择变化

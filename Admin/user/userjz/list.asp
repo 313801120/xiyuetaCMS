@@ -86,7 +86,7 @@ call rw(jsTiming(ChrW(63),6))
 call eerr(ChrW(25552)&ChrW(31034),ChrW(23548)&ChrW(20986)&ChrW(25104)&ChrW(84)&ChrW(88)&ChrW(84)&ChrW(25104)&ChrW(21151)&ChrW(65292)&ChrW(26377)&ChrW(109)&ChrW(101)&ChrW(109)&ChrW(98)&ChrW(101)&ChrW(114)&ChrW(34920)&ChrW(21644)&ChrW(109)&ChrW(111)&ChrW(110)&ChrW(101)&ChrW(121)&ChrW(34920)&ChrW(21644)&ChrW(100)&ChrW(105)&ChrW(97)&ChrW(114)&ChrW(121)&ChrW(34920))
 end if
 dim num,page,stemp,sql,currentPage,perpage,page_count,i,n,totalrec,isthrough,id,price,ncount,pinjuiMonery,bodycontent
-dim thisYearPrice,lastYearPrice,beforeLastYearPrice,threeYearsAgoPrice
+dim thisYearPrice,lastYearPrice,beforeLastYearPrice,threeYearsAgoPrice,mysql
 
 If Request(ChrW(97)&ChrW(99)&ChrW(116)) = ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116) Then
 num = UCase(Request(ChrW(108)&ChrW(105)&ChrW(109)&ChrW(105)&ChrW(116))) 
@@ -106,6 +106,7 @@ sql =  sql & IIF(instr(sql,ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW
 End if 
 sql=sql & ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99) 
 
+mysql=sql
 rs.Open sql, conn, 1, 1 
 If Not rs.EOF Then
 If Request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)) = "" Then
@@ -169,7 +170,7 @@ end if
 rs.MoveNext 
 Wend 
 End if 
-stemp = ChrW(123)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(91) & stemp & ChrW(93)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(34)&ChrW(58)&ChrW(34) & rs.RecordCount & ChrW(34)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(34)&ChrW(48)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(34)&ChrW(34)&ChrW(125) 
+stemp = ChrW(123)&ChrW(34)&ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(34)&ChrW(58)&ChrW(91) & stemp & ChrW(93)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(117)&ChrW(110)&ChrW(116)&ChrW(34)&ChrW(58)&ChrW(34) & rs.RecordCount & ChrW(34)&ChrW(44)&ChrW(34)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101)&ChrW(34)&ChrW(58)&ChrW(34)&ChrW(48)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(115)&ChrW(103)&ChrW(34)&ChrW(58)&ChrW(34)&ChrW(34)&ChrW(44)&ChrW(34)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(34)&ChrW(58)&ChrW(34)& jsonCL(mysql) &ChrW(34)&ChrW(125) 
 Response.Write stemp 
 rs.Close 
 Response.end()

@@ -1,6 +1,6 @@
 <!--#include file="../../../inc/Config.asp"-->
 <!--#Include File = "../../admin_function.asp"-->
-<!--#Include File = "../../admin_safe.Asp"--><!--列表页加载外部asp文件--><%
+<!--#Include File = "../../admin_safe.Asp"--><!--列表页加载外部asp文件--><!--列表页导入ASP函数用javascript写的--><%
 '#禁止自动更新当前文件'  #号去掉代表此文件不被程序自动更新替换掉
 call openconn() 
 dim num,page,stemp,sql1,sql,mysql,currentPage,perpage,page_count,i,totalrec,id,title,idlist
@@ -10,6 +10,7 @@ dim isMobile:isMobile=checkMobile()  '是否为手机端'20240814
 
 dim fieldName,fieldValue,tableName,winTitle,delver
 dim thisDatabaseType:thisDatabaseType=databaseType  '当前数据库类型'
+'listpage addto dim list'
 tableName = "member" '表名称'
 winTitle = "会员"
 delver = "yes"  ' delete verification 删除是否需要输入密码   yes no  
@@ -19,7 +20,7 @@ excludeAdminIDLIst=""   '排除权限限制的管理id列表，如 1,2,3'
 fieldName=phptrim(request("fieldname"))  '字段名'
 fieldValue=request("value")              '字段要修改内容'
 id=hanldeSccessIdArrayList(request("id"))         'ID'
-
+ 
 keyword=replace(phptrim(request("key")),"'","")   '去掉'号，防注入
 
 dim dataOrderyBy '排序顺序'
@@ -32,6 +33,7 @@ if nCount<>"" then  nCount=clng(nCount)
 
 ' nCount="" '为空则自动统计总数'
  
+ 'listpage header aspcode'
  
 '列表查询
 If Request("act") = "list" Then
@@ -110,11 +112,13 @@ If Request("act") = "list" Then
             nCount=IIF(isnull(rs("ct"))=true,0,rs("ct")):rs.close
             msg="mysql有统计总记录，"
         end if 
-        mysql=mysql & " LIMIT "&((page-1)*num)&", "&num
+        mysql=mysql & " LIMIT "&((currentPage-1)*num)&", "&num
     end if
 
-    'call die(mysql)
-    rs.Open mysql, conn, 1, 1 
+
+    call getHandleRs(rs,mysql)
+    ' 'call die(mysql)
+    ' rs.Open mysql, conn, 1, 1 
  
 
     If Not rs.EOF Then
@@ -126,7 +130,7 @@ If Request("act") = "list" Then
             nCount=rs.recordcount  '总条数'
             maxpage=rs.PageCount 
 
-            if page=maxpage then
+            if currentPage=maxpage then    '使用 currentPage  而不用 page'
                 x=nCount-(maxpage-1)*iPageSize
             else
                 x=iPageSize
@@ -134,22 +138,22 @@ If Request("act") = "list" Then
         else
             x=num 
         end if 
-
+ 
  
         For i=1 To x 
             if rs.eof then exit for'在最后退出    
  
-            if stemp<>"" then stemp=stemp & ","
             'jsonCStart'
+            if stemp<>"" then stemp=stemp & ","
             stemp = stemp & handleJsonRs(i,rs) 
             'jsonCEnd'
  
-            rs.MoveNext 
+            if i<>x then rs.MoveNext   '大于则还有下一条20251122，不这样写搜索时会有问题，晕'
         next 
     End If 
  
  
-    stemp ="{""data"":[" & stemp & "],""count"":""" & nCount & """,""code"":""0"",""page"":"&page&",""msg"":"""& msg & vbEchoTimer() &""",""mysql"":"""& jsonCL(mysql) &"""}" 
+    stemp ="{""data"":[" & stemp & "],""count"":""" & nCount & """,""code"":""0"",""page"":"&currentPage&",""msg"":"""& msg & vbEchoTimer() &""",""mysql"":"""& jsonCL(mysql) &"""}" 
     
     rs.close
     stemp=replace(stemp,"\","\\")
@@ -176,7 +180,7 @@ function thisAddPrefix(tableName)
 end function
 '获得时间符号'
 function getTimeFuHao()
-    if thisDatabaseType="mysql" then
+    if thisDatabaseType="mysql" or thisDatabaseType="sqlserver" then
         getTimeFuHao="'"
     else
         getTimeFuHao="#"
@@ -190,6 +194,14 @@ function getTableFieldFuHao(s)
         getTableFieldFuHao="["&s&"]"
     end if
 end function
+'获得Rs打开判断
+function getHandleRs(rs,sql)
+    on error resume next
+    rs.open sql,conn,1,1
+    if err<>0 then
+        call die("{""data"":[],""count"":0,""code"":4,""msg"":""<b style='color:red'>sql="&sql&"<br>错误="&err.description&"</b>""}")
+    end if
+end function 
 '{列表页ASP函数块}
 
 %>

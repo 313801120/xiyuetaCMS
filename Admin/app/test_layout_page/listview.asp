@@ -8,7 +8,7 @@ dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)
 winTitle = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)
 excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
-dim msg,isTrue,sql,addSql,id,pagename,pagetablename,tsfield_listpagelistpageform,tsfield_listpagetablebutton,tsfield_listpagerightmenu,tsfield_listpagetableitemmanage,tsfield_layouaction,pagefolder,sortrank,npagesize,aspcodezip,isdelinputpass,isshowupdownpage,isbatchdelete,isshowsearch,isshowaddbutton,isshowprint,isshowoperate,isdblclickviewpage,isthrough,addedittip,listsearch,listqueryfield,formviewmaohao,formeditmaohao,listorderby,idindexname,bodycontent,listpagereplace,editpagereplace,viewpagereplace,helpcontent,ip,tsfield_addr,sdatabasetype,databaseippath,databasename,databaseuser,databasepass
+dim msg,isTrue,sql,addSql,id,pagename,pagetablename,tsfield_listpagelistpageform,tsfield_listpagetablebutton,tsfield_listpagerightmenu,tsfield_listpagetableitemmanage,tsfield_layouaction,pagefolder,sortrank,npagesize,aspcodezip,isdelinputpass,isshowupdownpage,isbatchdelete,isshowsearch,isshowaddbutton,isshowprint,isshowoperate,isdblclickviewpage,isthrough,addedittip,listsearch,listqueryfield,formviewmaohao,formeditmaohao,listorderby,idindexname,bodycontent,listpagereplace,editpagereplace,viewpagereplace,helpcontent,ip,tsfield_addr,sdatabasetype,databaseippath,databasename,databaseuser,databasepass,databasetableprefix
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 pagename=request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 pagetablename=request(ChrW(112)&ChrW(97)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
@@ -69,6 +69,8 @@ databaseuser=request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&Chr
 databaseuser=handleAspStrSafe(databaseuser)
 databasepass=request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115))
 databasepass=handleAspStrSafe(databasepass)
+databasetableprefix=request(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(120))
+databasetableprefix=handleAspStrSafe(databasetableprefix)
 if id <>"" then
 call showCheckAdminRule(ChrW(26597)&ChrW(30475) & winTitle) 
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&thisAddPrefix(tableName)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&id,conn,1,1
@@ -113,6 +115,7 @@ databaseippath=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(1
 databasename=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(110)&ChrW(97)&ChrW(109)&ChrW(101))
 databaseuser=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(117)&ChrW(115)&ChrW(101)&ChrW(114))
 databasepass=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(112)&ChrW(97)&ChrW(115)&ChrW(115))
+databasetableprefix=rs(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(108)&ChrW(101)&ChrW(112)&ChrW(114)&ChrW(101)&ChrW(102)&ChrW(105)&ChrW(120))
 end if
 else
 sortrank=10
@@ -133,6 +136,22 @@ if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
 thisAddPrefix=ChrW(96)&db_PREFIX&a&ChrW(96)
 else
 thisAddPrefix=ChrW(91)&db_PREFIX&a&ChrW(93)
+end if
+end function 
+
+function getTimeFuHao()
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) or thisDatabaseType=ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then
+getTimeFuHao=ChrW(39)
+else
+getTimeFuHao=ChrW(35)
+end if
+end function
+
+function getTableFieldFuHao(a)
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+getTableFieldFuHao=ChrW(96)&a&ChrW(96)
+else
+getTableFieldFuHao=ChrW(91)&a&ChrW(93)
 end if
 end function
 
@@ -396,7 +415,7 @@ end function
 <div class='layui-form-item'>
 <label class='layui-form-label'>数据库类型：</label>
 <div class='layui-input-block layui-input-wrap'>
-<%=getOnLineSelectValue(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(45)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(77)&ChrW(121)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(95)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108),databasetype)%>
+<%=getOnLineSelectValue(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(26080)&ChrW(95)&ChrW(45)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(45)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(77)&ChrW(121)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(95)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108),databasetype)%>
 </div><!--databasetype-->
 </div>
 <div class='layui-form-item' id="databaseippath">
@@ -422,6 +441,12 @@ end function
 <div class='layui-input-block layui-input-wrap'>
 <%=databasepass%>
 </div><!--databasepass-->
+</div>
+<div class='layui-form-item' id="databasetableprefix">
+<label class='layui-form-label'>表前缀：</label>
+<div class='layui-input-block layui-input-wrap'>
+<%=databasetableprefix%>
+</div><!--databasetableprefix-->
 </div>
 </div>
 </div>

@@ -1,0 +1,32 @@
+'统计用户对应的平均金额
+function getMemberTotalAverage(rs)        
+    dim sql,rsx,nMoney,nCount,nAverage
+    Set rsx = CreateObject("Adodb.RecordSet")
+
+   
+    sql="select sum(price)as totalMoney from "& getTableFieldFuHao(db_PREFIX&"money") &" where isthrough=1 and userid="&rs("id")  
+    rsx.open sql,conn,1,1
+    ' 返回总金额 
+    nMoney=IIF(isnull(rsx("totalMoney"))=true,0,rsx("totalMoney")):rsx.close
+
+
+    sql="select count(*)as totalCount from "& getTableFieldFuHao(db_PREFIX&"money") &" where isthrough=1 and userid="&rs("id") 
+    rsx.open sql,conn,1,1
+    ' 返回总条数 
+    nCount=IIF(isnull(rsx("totalCount"))=true,0,rsx("totalCount")):rsx.close
+    
+    ' 计算平均金额：总金额/条数
+    if nCount > 0 then
+        nAverage = nMoney / nCount
+        ' 判断是否为整数，整数显示整数，小数显示2位小数
+        if nAverage = Int(nAverage) then
+            ' 整数，直接显示整数
+            getMemberTotalAverage = CStr(Int(nAverage))
+        else
+            ' 有小数，显示2位小数
+            getMemberTotalAverage = FormatNumber(nAverage, 2, -1, 0, 0)
+        end if
+    else
+        getMemberTotalAverage = "0"
+    end if
+end function

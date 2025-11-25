@@ -1,14 +1,15 @@
-    // 数据库类型选择变化时的处理函数
+    // 数据库类型选择变化时的处理函数  edit20251118
     function toggleDatabaseFields(databaseType) {
       var databaseippathDiv = $('#databaseippath');
       var databasenameDiv = $('#databasename');
       var databaseuserDiv = $('#databaseuser');
       var databasepassDiv = $('#databasepass');
+      var databasetableprefixDiv = $('#databasetableprefix');  //表前缀
       
       // Access相关按钮
       var uploadBtn = $('#upload-databaseippath');
-      var viewPassBtn = $('#btn-view-pass');
-      var editPassBtn = $('#btn-edit-pass');
+      var viewPassBtn = $('#btn-databaseippath-view-pass');
+      var editPassBtn = $('#btn-databaseippath-edit-pass');
       
       if (databaseType === 'access') {
         // Access选择时：显示数据库和数据库密码，隐藏数据库名和数据库账号
@@ -16,6 +17,7 @@
         databasenameDiv.hide();
         databaseuserDiv.hide();
         databasepassDiv.show();
+        databasetableprefixDiv.show();
         
         // 显示Access相关按钮
         uploadBtn.show();
@@ -27,11 +29,19 @@
         databasenameDiv.show();
         databaseuserDiv.show();
         databasepassDiv.show();
+        databasetableprefixDiv.show();
         
         // 隐藏Access相关按钮
         uploadBtn.hide();
         viewPassBtn.hide();
-        editPassBtn.hide();
+        editPassBtn.hide(); 
+      } else if (databaseType === '') {
+        databaseippathDiv.hide();
+        databasenameDiv.hide();
+        databaseuserDiv.hide();
+        databasepassDiv.hide();
+        databasetableprefixDiv.hide();
+
       }
     }
 

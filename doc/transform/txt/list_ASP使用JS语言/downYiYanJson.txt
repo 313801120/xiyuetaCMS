@@ -1,0 +1,80 @@
+<script  language="javascript" runat="server">
+function formatValue(val, indent) {
+  indent = indent || 0;
+  var spaces = "";
+  for (var i = 0; i < indent; i++) {
+    spaces += "  ";
+  }
+  
+  if (val === null) {
+    return "null";
+  } else if (typeof val === "string") {
+    return '"' + val + '"';
+  } else if (typeof val === "number" || typeof val === "boolean") {
+    return String(val);
+  } else if (val instanceof Array) {
+    var result = "[\n";
+    for (var i = 0; i < val.length; i++) {
+      result += spaces + "  " + formatValue(val[i], indent + 1);
+      if (i < val.length - 1) result += ",";
+      result += "\n";
+    }
+    result += spaces + "]";
+    return result;
+  } else if (typeof val === "object") {
+    var result = "{\n";
+    var keys = [];
+    for (var key in val) {
+      if (val.hasOwnProperty(key)) {
+        keys.push(key);
+      }
+    }
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      result += spaces + "  \"" + key + "\": " + formatValue(val[key], indent + 1);
+      if (i < keys.length - 1) result += ",";
+      result += "\n";
+    }
+    result += spaces + "}";
+    return result;
+  }
+  return String(val);
+}
+
+function printJson(str){
+  try {
+    var jsonObj = eval("(" + str + ")");
+    
+    if (jsonObj instanceof Array) {
+      console.log("JSON数组，共 " + jsonObj.length + " 项");
+      for (var i = 0; i < jsonObj.length; i++) {
+        var item = jsonObj[i];
+        //console.log("第 " + (i + 1) + " 项:");
+        //console.log(formatValue(item, 0));
+        
+        // 调用 addYiYan 函数写入数据库
+        var stype = item.type || "";
+        var creator = item.creator || "";
+        var hitokoto = item.hitokoto || "";
+        var sfrom = item.from || "";
+        var uuid = item.uuid || "";
+        
+        if (stype && creator && hitokoto) {
+          addYiYan(stype, creator, hitokoto,sfrom,uuid);
+        }
+      }
+    } else if (typeof jsonObj === 'object' && jsonObj !== null) {
+      console.log("JSON对象:");
+      for (var key in jsonObj) {
+        if (jsonObj.hasOwnProperty(key)) {
+          //console.log(key + ":");
+          //console.log(formatValue(jsonObj[key], 0));
+        }
+      }
+    }
+  } catch (e) {
+    console.log("JSON解析错误:", e.message);
+  }
+  return str;    
+}
+</script>

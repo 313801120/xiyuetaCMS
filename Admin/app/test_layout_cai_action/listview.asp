@@ -8,7 +8,7 @@ dim thisDatabaseType:thisDatabaseType=databaseType
 tableName = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)
 winTitle = ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)
 excludeAdminIDLIst=ChrW(45)&ChrW(57)&ChrW(57)&ChrW(57)
-dim msg,isTrue,sql,addSql,id,layout_cai_id,parentid,title,sortrank,usevar,dimname,isthrough,isaspnote,isdebugcode,isruntime,isvbcrlf,ishr,actiontype,cuttype,startstr,endstr,forstr,findstr,replacestr,isaddforstr,selectfieldlist,stablename,saddsql,fieldaddstrlist,ifcheck,varleftaddstr,varrightaddstr,nitem,customizeaction,addvar,addvardefaultvalue,aspcode,functionlist,bodycontent
+dim msg,isTrue,sql,addSql,id,layout_cai_id,parentid,title,sortrank,usevar,dimname,isthrough,isaspnote,isdebugcode,isruntime,isvbcrlf,ishr,actiontype,cuttype,startstr,endstr,forstr,findstr,replacestr,isaddforstr,selectfieldlist,stablename,saddsql,fieldaddstrlist,ifcheck,varleftaddstr,varrightaddstr,nitem,customizeaction,addvar,addvardefaultvalue,aspcode,functionlist,viewtitle,viewsql,viewfieldlist,bodycontent
 id=getStrToNumber(request(ChrW(105)&ChrW(100)))
 layout_cai_id=getStrToNumber(request(ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(95)&ChrW(105)&ChrW(100)))
 if layout_cai_id="" then layout_cai_id=null
@@ -82,6 +82,12 @@ aspcode=request(ChrW(97)&ChrW(115)&ChrW(112)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(1
 aspcode=handleAspStrSafe(aspcode)
 functionlist=request(ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))
 functionlist=handleAspStrSafe(functionlist)
+viewtitle=request(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+viewtitle=handleAspStrSafe(viewtitle)
+viewsql=request(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(115)&ChrW(113)&ChrW(108))
+viewsql=handleAspStrSafe(viewsql)
+viewfieldlist=request(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))
+viewfieldlist=handleAspStrSafe(viewfieldlist)
 bodycontent=request(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
 bodycontent=handleAspStrSafe(bodycontent)
 if id <>"" then
@@ -122,6 +128,9 @@ addvar=rs(ChrW(97)&ChrW(100)&ChrW(100)&ChrW(118)&ChrW(97)&ChrW(114))
 addvardefaultvalue=rs(ChrW(97)&ChrW(100)&ChrW(100)&ChrW(118)&ChrW(97)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(102)&ChrW(97)&ChrW(117)&ChrW(108)&ChrW(116)&ChrW(118)&ChrW(97)&ChrW(108)&ChrW(117)&ChrW(101))
 aspcode=rs(ChrW(97)&ChrW(115)&ChrW(112)&ChrW(99)&ChrW(111)&ChrW(100)&ChrW(101))
 functionlist=rs(ChrW(102)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))
+viewtitle=rs(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
+viewsql=rs(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(115)&ChrW(113)&ChrW(108))
+viewfieldlist=rs(ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(102)&ChrW(105)&ChrW(101)&ChrW(108)&ChrW(100)&ChrW(108)&ChrW(105)&ChrW(115)&ChrW(116))
 bodycontent=rs(ChrW(98)&ChrW(111)&ChrW(100)&ChrW(121)&ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116))
 end if
 else
@@ -146,13 +155,29 @@ thisAddPrefix=ChrW(96)&db_PREFIX&a&ChrW(96)
 else
 thisAddPrefix=ChrW(91)&db_PREFIX&a&ChrW(93)
 end if
+end function 
+
+function getTimeFuHao()
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) or thisDatabaseType=ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then
+getTimeFuHao=ChrW(39)
+else
+getTimeFuHao=ChrW(35)
+end if
+end function
+
+function getTableFieldFuHao(a)
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+getTableFieldFuHao=ChrW(96)&a&ChrW(96)
+else
+getTableFieldFuHao=ChrW(91)&a&ChrW(93)
+end if
 end function
 
 function get_layout_cai_oneClassColumnName(a) 
 if isnul(a) then exit function
 dim b
 dim c:Set c = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))  
-c.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+c.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)& getTableFieldFuHao(db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105))&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
 if not c.eof then
 b=c(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))
 end if:c.close 
@@ -165,7 +190,7 @@ dim b,c,d
 if isnul(a) then exit function
 dim e:Set e = CreateObject(ChrW(65)&ChrW(100)&ChrW(111)&ChrW(100)&ChrW(98)&ChrW(46)&ChrW(82)&ChrW(101)&ChrW(99)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(83)&ChrW(101)&ChrW(116))  
 for b=1 to 10
-e.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110)&ChrW(93)&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
+e.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)& getTableFieldFuHao(db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110))&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(61)&a,conn,1,1
 if not e.eof then
 a=e(ChrW(112)&ChrW(97)&ChrW(114)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(105)&ChrW(100))
 d=e(ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101))& ChrW(40)&e(ChrW(105)&ChrW(100))&ChrW(41)
@@ -203,6 +228,8 @@ elseif a=ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(106)&C
 a=ChrW(26381)&ChrW(21153)&ChrW(22120)&ChrW(74)&ChrW(83)
 elseif a=ChrW(105)&ChrW(109)&ChrW(112)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(65)&ChrW(115)&ChrW(112)&ChrW(70)&ChrW(117)&ChrW(110)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110) then
 a=ChrW(23548)&ChrW(20837)&ChrW(65)&ChrW(83)&ChrW(80)&ChrW(20989)&ChrW(25968)
+elseif a=ChrW(118)&ChrW(105)&ChrW(101)&ChrW(119)&ChrW(68)&ChrW(97)&ChrW(116)&ChrW(97) then
+a=ChrW(27983)&ChrW(35272)&ChrW(25968)&ChrW(25454)
 elseif a=ChrW(97)&ChrW(99)&ChrW(116)&ChrW(105)&ChrW(111)&ChrW(110) then
 a=ChrW(21160)&ChrW(20316)
 end if
@@ -442,6 +469,24 @@ end function
 <div class='layui-input-block layui-input-wrap'>
 <%=functionlist%>
 </div><!--functionlist-->
+</div>
+<div class='layui-form-item' id="viewtitle">
+<label class='layui-form-label'>浏览标题：</label>
+<div class='layui-input-block layui-input-wrap'>
+<%=viewtitle%>
+</div><!--viewtitle-->
+</div>
+<div class='layui-form-item' id="viewsql">
+<label class='layui-form-label'>浏览追加SQL：</label>
+<div class='layui-input-block layui-input-wrap'>
+<%=viewsql%>
+</div><!--viewsql-->
+</div>
+<div class='layui-form-item' id="viewfieldlist">
+<label class='layui-form-label'>浏览显示字段：</label>
+<div class='layui-input-block layui-input-wrap'>
+<%=viewfieldlist%>
+</div><!--viewfieldlist-->
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>备注：</label>

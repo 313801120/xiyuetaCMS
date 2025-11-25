@@ -121,6 +121,22 @@ thisAddPrefix=ChrW(96)&db_PREFIX&a&ChrW(96)
 else
 thisAddPrefix=ChrW(91)&db_PREFIX&a&ChrW(93)
 end if
+end function 
+
+function getTimeFuHao()
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) or thisDatabaseType=ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then
+getTimeFuHao=ChrW(39)
+else
+getTimeFuHao=ChrW(35)
+end if
+end function
+
+function getTableFieldFuHao(a)
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+getTableFieldFuHao=ChrW(96)&a&ChrW(96)
+else
+getTableFieldFuHao=ChrW(91)&a&ChrW(93)
+end if
 end function
 
 function checkMdbPositionSafe(a)
@@ -163,7 +179,7 @@ end function
 <div class='layui-form-item'>
 <label class='layui-form-label'>数据库类型</label>
 <div class='layui-input-inline layui-input-wrap'>
-<%=showOnLineSelectHtml(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(45)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(77)&ChrW(121)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(95)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108),sdatabasetype)%>
+<%=showOnLineSelectHtml(ChrW(100)&ChrW(97)&ChrW(116)&ChrW(97)&ChrW(98)&ChrW(97)&ChrW(115)&ChrW(101)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(26080)&ChrW(95)&ChrW(45)&ChrW(65)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(95)&ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115)&ChrW(45)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(83)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(95)&ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114)&ChrW(45)&ChrW(77)&ChrW(121)&ChrW(83)&ChrW(113)&ChrW(108)&ChrW(95)&ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108),sdatabasetype)%>
 </div><!--databasetype-->
 </div>
 <div class='layui-form-item'>
@@ -268,22 +284,24 @@ tips: [1, '#000'] //还可配置颜色
 },function(){
 layer.closeAll('tips');
 })
-// 数据库类型选择变化时的处理函数
+// 数据库类型选择变化时的处理函数  edit20251118
 function toggleDatabaseFields(databaseType) {
 var databaseippathDiv = $('#databaseippath');
 var databasenameDiv = $('#databasename');
 var databaseuserDiv = $('#databaseuser');
 var databasepassDiv = $('#databasepass');
+var databasetableprefixDiv = $('#databasetableprefix');  //表前缀
 // Access相关按钮
 var uploadBtn = $('#upload-databaseippath');
-var viewPassBtn = $('#btn-view-pass');
-var editPassBtn = $('#btn-edit-pass');
+var viewPassBtn = $('#btn-databaseippath-view-pass');
+var editPassBtn = $('#btn-databaseippath-edit-pass');
 if (databaseType === 'access') {
 // Access选择时：显示数据库和数据库密码，隐藏数据库名和数据库账号
 databaseippathDiv.show();
 databasenameDiv.hide();
 databaseuserDiv.hide();
 databasepassDiv.show();
+databasetableprefixDiv.show();
 // 显示Access相关按钮
 uploadBtn.show();
 viewPassBtn.show();
@@ -294,10 +312,17 @@ databaseippathDiv.show();
 databasenameDiv.show();
 databaseuserDiv.show();
 databasepassDiv.show();
+databasetableprefixDiv.show();
 // 隐藏Access相关按钮
 uploadBtn.hide();
 viewPassBtn.hide();
-editPassBtn.hide();
+editPassBtn.hide(); 
+} else if (databaseType === '') {
+databaseippathDiv.hide();
+databasenameDiv.hide();
+databaseuserDiv.hide();
+databasepassDiv.hide();
+databasetableprefixDiv.hide();
 }
 }
 // 监听数据库类型选择变化

@@ -1,0 +1,3 @@
+'下载一言josn到本地 20251113
+elseif request("act")="downYiYanJson" then
+    call die(downYiYanJson(request("version")))

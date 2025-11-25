@@ -45,20 +45,37 @@ getFindIdToTableCount=replace(d,ChrW(42),g.recordcount)
 g.close
 end function 
 
+
 function printMoneyCnInfo(a)
-dim b
+dim b, c, d
 b=printNumberValue(a)
-if a >=100000000 or a <=-100000000 then
-b=ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(114)&ChrW(101)&ChrW(100)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(98)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62)
-elseif a >=10000000 or a <=-10000000 then
-b=ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(35)&ChrW(101)&ChrW(49)&ChrW(99)&ChrW(54)&ChrW(50)&ChrW(57)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(98)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62)
-elseif a >=1000000 or a <=-1000000 then
-b=ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(61)&ChrW(39)&ChrW(98)&ChrW(108)&ChrW(117)&ChrW(101)&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(62)&ChrW(60)&ChrW(98)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(62)&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62)
-elseif a >=100000 or a <=-100000 then
-b=ChrW(60)&ChrW(98)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(98)&ChrW(62)
+c = abs(a)
+
+if c >= 100000000 then
+if a >= 0 then
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(100)&ChrW(52)&ChrW(97)&ChrW(102)&ChrW(51)&ChrW(55)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
 else
-b=ChrW(60)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(62)
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(100)&ChrW(99)&ChrW(51)&ChrW(53)&ChrW(52)&ChrW(53)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
 end if
+elseif c >= 10000000 then
+if a >= 0 then
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(50)&ChrW(56)&ChrW(97)&ChrW(55)&ChrW(52)&ChrW(53)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
+else
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(99)&ChrW(56)&ChrW(50)&ChrW(51)&ChrW(51)&ChrW(51)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
+end if
+elseif c >= 1000000 then
+if a >= 0 then
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(53)&ChrW(99)&ChrW(98)&ChrW(56)&ChrW(53)&ChrW(99)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
+else
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(101)&ChrW(55)&ChrW(52)&ChrW(99)&ChrW(51)&ChrW(99)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
+end if
+elseif c >= 100000 then
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(54)&ChrW(99)&ChrW(55)&ChrW(53)&ChrW(55)&ChrW(100)&ChrW(59)&ChrW(102)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(45)&ChrW(119)&ChrW(101)&ChrW(105)&ChrW(103)&ChrW(104)&ChrW(116)&ChrW(58)&ChrW(98)&ChrW(111)&ChrW(108)&ChrW(100)&ChrW(59)
+else
+d = ChrW(99)&ChrW(111)&ChrW(108)&ChrW(111)&ChrW(114)&ChrW(58)&ChrW(35)&ChrW(54)&ChrW(99)&ChrW(55)&ChrW(53)&ChrW(55)&ChrW(100)&ChrW(59)
+end if
+
+b=ChrW(60)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(32)&ChrW(115)&ChrW(116)&ChrW(121)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&d&ChrW(39)&ChrW(32)&ChrW(116)&ChrW(105)&ChrW(116)&ChrW(108)&ChrW(101)&ChrW(61)&ChrW(39)&a&ChrW(39)&ChrW(62)&b&ChrW(60)&ChrW(47)&ChrW(115)&ChrW(112)&ChrW(97)&ChrW(110)&ChrW(62)
 printMoneyCnInfo=b
 end function 
 %>

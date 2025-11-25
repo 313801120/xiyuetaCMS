@@ -1,0 +1,16 @@
+
+'正负颜色快捷显示（正数绿色加粗、负数红色加粗、0为黑色） 20250702
+function printMoneySignColor(rs,nMoney)
+    dim s, colorStyle
+    s=printNumberValue(nMoney)
+    
+    if nMoney>0 then
+        colorStyle="color:#28a745;font-weight:bold;"  '正数绿色加粗
+    elseif nMoney<0 then
+        colorStyle="color:#dc3545;font-weight:bold;"  '负数红色加粗
+    else
+        colorStyle="color:#000000;"  '0为黑色
+    end if
+    
+    printMoneySignColor="<span style='"&colorStyle&"' title='"&nMoney&"'>"&s&"</span>"
+end function

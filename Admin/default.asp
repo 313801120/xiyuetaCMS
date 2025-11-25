@@ -218,22 +218,22 @@ if not rsx.eof then
 <dd class="layui-nav-itemed">
 <a href="javascript:;">内容系统</a>
 <dl class="layui-nav-child">
-<dd><a lay-href="app/content/list.asp">文章管理</a></dd>
-<!-- <dd><a lay-href="app/articlepic/list.asp">文章图片</a></dd> -->
-<dd><a lay-href="app/articlecount/list.asp">文章统计</a></dd> 
-<dd><a lay-href="app/articlemessage/list.asp">文章留言</a></dd>
-<dd><a lay-href="app/tags/list.asp">文章标签</a></dd>
-<dd><a lay-href="app/articlesearch/list.asp">文章搜索</a></dd>
+<dd><a lay-href="app/test_webcolumn/list.asp">分类管理</a></dd>
+<dd><a lay-href="app/test_articledetail/list.asp">文章管理</a></dd>
+<dd><a lay-href="app/test_articlepic/list.asp">文章图片</a></dd>
+<dd><a lay-href="app/test_articlecount/list.asp">文章统计</a></dd> 
+<dd><a lay-href="app/test_articlemessage/list.asp">文章留言</a></dd>
+<!-- <dd><a lay-href="app/tags/list.asp">文章标签</a></dd> -->
+<dd><a lay-href="app/test_articlesearch/list.asp">文章搜索</a></dd>
 </dl>
 </dd>
-<dd><a lay-href="app/order/list.asp">订单管理</a></dd>
-<dd><a lay-href="app/order_buy_detail/list.asp">订单详细</a></dd>
-<dd><a lay-href="app/content/tags.asp">分类管理</a></dd>
-<dd><a lay-href="app/guestBook/list.asp">留言管理</a></dd>
-<dd><a lay-href="app/OnePage/list.asp">单页管理</a></dd>
-<dd><a lay-href="app/friendLink/list.asp">友情管理</a></dd> 
-<dd><a lay-href="app/sheshi/list2.asp">省市县</a></dd>
-<dd><a lay-href="app/xiyuetaclass/list.asp">分类</a></dd>
+<!-- <dd><a lay-href="app/test_order/list.asp">订单管理</a></dd>
+<dd><a lay-href="app/test_order_buy_detail/list.asp">订单详细</a></dd> -->
+<dd><a lay-href="app/test_guestBook/list.asp">留言管理</a></dd>
+<dd><a lay-href="app/test_onePage/list.asp">单页管理</a></dd>
+<dd><a lay-href="app/test_friendLink/list.asp">友情管理</a></dd> 
+<dd><a lay-href="app/test_sheshi/list.asp">省市县</a></dd>
+<!-- <dd><a lay-href="app/test_xiyuetaclass/list.asp">分类</a></dd> -->
 <!-- 
 <dd><a lay-href="app/xiyueta/list.asp">xiyueta测试表</a></dd> 
 <dd><a lay-href="app/test_1/list.asp">test_1</a></dd>  -->
@@ -288,10 +288,13 @@ if not rsx.eof then
 <dd><a lay-href="app/iislog/iisURLstat_list.asp">IIS统计URL</a></dd> 
 <%end if%>
 <%if databaseType = ChrW(97)&ChrW(99)&ChrW(99)&ChrW(101)&ChrW(115)&ChrW(115) then%>
+<dd><a lay-href="app/database/list.asp">Access维护</a></dd> 
 <dd><a lay-href="system/backupDatabase.asp">备份恢复数据</a></dd>
 <%elseif databaseType = ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then%>
 <dd><a lay-href="app/database/list.asp">SqlServer维护</a></dd> 
-<%end if%>
+<%elseif databaseType = ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then%>
+<dd><a lay-href="app/database/list.asp">MySql维护</a></dd> 
+<%end if%> 
 <dd><a lay-href="app/sitemap/sitemap.asp">生成sitemap</a></dd> 
 <dd><a lay-href="system/updatelog.asp">更新日志</a></dd>
 </dl>
@@ -307,6 +310,8 @@ if not rsx.eof then
 <dd><a lay-href="home/console_dashboard.asp" style="color:#7ad337">新版控制台</a></dd>
 <dd><a lay-href="app/money/list.asp">收入支出</a></dd>
 <dd><a lay-href="user/userjz/list.asp">会员统计</a></dd>
+<dd><a lay-href="app/test_money_member/list.asp" style="color:#7ad337">会员统计(新)</a></dd>
+<dd><a lay-href="app/test_money/list.asp" style="color:#7ad337">收入支出(新)</a></dd>
 <dd><a lay-href="app/diary/list.asp">工作日记</a></dd> 
 <%
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&leftQuote&db_PREFIX &ChrW(97)&ChrW(100)&ChrW(109)&ChrW(105)&ChrW(110)&rightQuote&ChrW(32)&ChrW(119)&ChrW(104)&ChrW(101)&ChrW(114)&ChrW(101)&ChrW(32)&ChrW(105)&ChrW(115)&ChrW(116)&ChrW(104)&ChrW(114)&ChrW(111)&ChrW(117)&ChrW(103)&ChrW(104)&ChrW(61)&ChrW(49)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(105)&ChrW(100)&ChrW(32)&ChrW(97)&ChrW(115)&ChrW(99),conn,1,1
@@ -318,7 +323,9 @@ while not rs.eof
 <dd><a lay-href="home/console_jz.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>">控制台</a></dd>
 <dd><a lay-href="home/console_dashboard.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>" style="color:#7ad337">新版控制台</a></a></dd>
 <dd><a lay-href="app/money/list.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>">收入支出</a></dd>  
-<dd><a lay-href="user/userjz/list.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>">会员统计</a></dd>
+<dd><a lay-href="user/userjz/list.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>">会员统计</a></dd> 
+<dd><a lay-href="app/test_money_member/list.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>" style='color:#7ad337;'>会员统计(新)</a></dd>
+<dd><a lay-href="app/test_money/list.asp?inadminid=<%=rs(ChrW(105)&ChrW(100))%>" style='color:#7ad337;'>收入支出(新)</a></dd>  
 </dl>
 </dd>
 <%rs.movenext:wend:rs.close%>

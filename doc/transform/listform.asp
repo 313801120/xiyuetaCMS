@@ -84,6 +84,22 @@ function thisAddPrefix(tableName)
     else
         thisAddPrefix="["&db_PREFIX&tableName&"]"
     end if
+end function 
+'获得时间符号'
+function getTimeFuHao()
+    if thisDatabaseType="mysql" or thisDatabaseType="sqlserver" then
+        getTimeFuHao="'"
+    else
+        getTimeFuHao="#"
+    end if
+end function
+'当前表和字段加符号，区分mysql' 20250924
+function getTableFieldFuHao(s)
+    if thisDatabaseType="mysql" then
+        getTableFieldFuHao="`"&s&"`"
+    else
+        getTableFieldFuHao="["&s&"]"
+    end if
 end function
 
 '{编辑页ASP函数块}

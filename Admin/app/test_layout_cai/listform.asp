@@ -195,6 +195,7 @@ isthrough=1
 isaspnote=1
 isdebugcode=1
 isruntime=1
+caiurlfun=0
 ndjs=30
 sortrank=10
 rs.open ChrW(115)&ChrW(101)&ChrW(108)&ChrW(101)&ChrW(99)&ChrW(116)&ChrW(32)&ChrW(42)&ChrW(32)&ChrW(102)&ChrW(114)&ChrW(111)&ChrW(109)&ChrW(32)&ChrW(91)& db_PREFIX &ChrW(108)&ChrW(97)&ChrW(121)&ChrW(111)&ChrW(117)&ChrW(116)&ChrW(95)&ChrW(99)&ChrW(97)&ChrW(105)&ChrW(93)&ChrW(32)&ChrW(111)&ChrW(114)&ChrW(100)&ChrW(101)&ChrW(114)&ChrW(32)&ChrW(98)&ChrW(121)&ChrW(32)&ChrW(115)&ChrW(111)&ChrW(114)&ChrW(116)&ChrW(114)&ChrW(97)&ChrW(110)&ChrW(107)&ChrW(32)&ChrW(100)&ChrW(101)&ChrW(115)&ChrW(99),conn,1,1
@@ -209,6 +210,22 @@ if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
 thisAddPrefix=ChrW(96)&db_PREFIX&a&ChrW(96)
 else
 thisAddPrefix=ChrW(91)&db_PREFIX&a&ChrW(93)
+end if
+end function 
+
+function getTimeFuHao()
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) or thisDatabaseType=ChrW(115)&ChrW(113)&ChrW(108)&ChrW(115)&ChrW(101)&ChrW(114)&ChrW(118)&ChrW(101)&ChrW(114) then
+getTimeFuHao=ChrW(39)
+else
+getTimeFuHao=ChrW(35)
+end if
+end function
+
+function getTableFieldFuHao(a)
+if thisDatabaseType=ChrW(109)&ChrW(121)&ChrW(115)&ChrW(113)&ChrW(108) then
+getTableFieldFuHao=ChrW(96)&a&ChrW(96)
+else
+getTableFieldFuHao=ChrW(91)&a&ChrW(93)
 end if
 end function
 %> 
@@ -288,7 +305,7 @@ end function
 <div class='layui-form-item'>
 <label class='layui-form-label'>登录采集函数</label>
 <div class='layui-input-inline layui-input-wrap'>
-<%=showOnLineSelectHtml(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(48)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(49)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(50)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(51),cailoginurlfun)%>
+<%=showOnLineSelectHtml(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(108)&ChrW(111)&ChrW(103)&ChrW(105)&ChrW(110)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(45)&ChrW(26080)&ChrW(95)&ChrW(57)&ChrW(57)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(48)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(49)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(50)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(51),cailoginurlfun)%>
 </div><!--cailoginurlfun-->
 </div>
 </div>
@@ -312,7 +329,7 @@ end function
 </div>
 </div>    
 <div class='layui-form-item'>
-<label class='layui-form-label'>网址</label>
+<label class='layui-form-label'>网址<i class="layui-icon icon-wenhao" data-txt="以{}包裹的内容为直接使用">&#xe607;</i> </label>
 <div class='layui-input-block layui-input-wrap'>
 <input type='text' name='httpurl' placeholder='请输入网址' autocomplete='off' class='layui-input' value="<%=inputCL(httpurl)%>" >
 </div><!--httpurl-->
@@ -330,7 +347,7 @@ end function
 <div class='layui-form-item'>
 <label class='layui-form-label'>采集函数</label>
 <div class='layui-input-inline layui-input-wrap'>
-<%=showOnLineSelectHtml(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(48)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(49)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(50)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(51),caiurlfun)%>
+<%=showOnLineSelectHtml(ChrW(99)&ChrW(97)&ChrW(105)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(102)&ChrW(117)&ChrW(110)&ChrW(45)&ChrW(26080)&ChrW(95)&ChrW(57)&ChrW(57)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(48)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(49)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(95)&ChrW(50)&ChrW(45)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(87)&ChrW(105)&ChrW(110)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(65)&ChrW(110)&ChrW(100)&ChrW(103)&ChrW(101)&ChrW(116)&ChrW(72)&ChrW(116)&ChrW(116)&ChrW(112)&ChrW(117)&ChrW(114)&ChrW(108)&ChrW(95)&ChrW(51),caiurlfun)%>
 </div><!--caiurlfun-->
 </div>
 </div>
@@ -385,7 +402,8 @@ end function
 <label class='layui-form-label'>内容类型</label>
 <div class='layui-input-inline layui-input-wrap'>
 <%=showOnLineSelectHtml(ChrW(99)&ChrW(111)&ChrW(110)&ChrW(116)&ChrW(101)&ChrW(110)&ChrW(116)&ChrW(116)&ChrW(121)&ChrW(112)&ChrW(101)&ChrW(45)&ChrW(104)&ChrW(116)&ChrW(109)&ChrW(108)&ChrW(45)&ChrW(106)&ChrW(115)&ChrW(111)&ChrW(110)&ChrW(45)&ChrW(116)&ChrW(101)&ChrW(120)&ChrW(116),contenttype)%>
-</div><!--contenttype-->
+</div>
+<div class="layui-form-mid layui-text-em">为html类型则加载xiyuetajs库</div><!--contenttype-->
 </div>
 <div class='layui-form-item'>
 <label class='layui-form-label'>网址参数</label>
@@ -555,6 +573,16 @@ $("input[name='locltxtfile3']").val(imgSrc) //用下面这种，因为有注释�
 }
 }
 });
+//？提醒   借鉴于别人20230309
+$(".icon-wenhao").hover(function(){
+var thetxt = $(this).attr("data-txt");
+var tips = layer.tips(thetxt, this , {
+tips: [1, '#000'] //还可配置颜色
+,time: 50000
+});
+},function(){
+layer.closeAll('tips');
+})
 })
 // pasteImage("pic");
 pasteImage('locltxtfile1');
